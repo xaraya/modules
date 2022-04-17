@@ -120,9 +120,11 @@ function reminders_init()
     if (!$q->run($query)) return;
     $query = "CREATE TABLE " . $prefix . "_reminders_lookup_history (
         id                integer unsigned NOT NULL auto_increment,
-        lookup_id         integer unsigned NOT NULL default 0, 
+        lookup            integer unsigned NOT NULL default 0, 
         owner             integer unsigned NOT NULL default 0, 
         date              integer unsigned NOT NULL default 0, 
+        subject           varchar(255) NOT NULL default '',  
+        message           text, 
         promised          tinyint(1) unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)

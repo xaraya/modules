@@ -125,14 +125,22 @@ function reminders_user_compose_lookup_email($args)
                     }
                 } elseif (!empty($data['message_body'])) {
                     // We have only a message body
-                    $args['message'] = $data['message_body'];
                     $args['subject'] = $data['subject'];
+                    $args['message'] = $data['message_body'];
                     // In this case we set the mail type to "text to html"
                     $args['mail_type'] = 2;
                 }
                 
                 // This sends the mail
                 $data['result']['code'] = xarMod::apiFunc('mailer','user','send', $args);
+                
+                // Now record this email in the history table
+                $tables = xarDB::getTables();
+                $q = Query('INSERT', $tables['reminders_lookup_history']);
+                $q-> addfield('lookup', $args['message']);
+                $q-> addfield('owner', $args['message']);
+                $q-> addfield('subject', $args['subject']);
+                $q-> addfield('message', $args['message']);
                 
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
