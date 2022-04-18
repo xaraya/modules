@@ -42,7 +42,11 @@
               &#160;
             </div>
             <div class="xar-form-input-wrapper-before">
-                <xar:data-input type="codemirror" name="source_data" value="$data"/>
+                <xar:if condition="$template != 1">
+                    <xar:data-input type="codemirror" name="source_data" value="$data" tplmodule="workflow" template="codemirror-php"/>
+                <xar:else/>
+                    <xar:data-input type="codemirror" name="source_data" value="$data" tplmodule="workflow" template="codemirror-xml"/>
+                </xar:if>
             </div>
             <xar:if condition="$template != 1">
                 <div class="xar-form-input-wrapper-before">

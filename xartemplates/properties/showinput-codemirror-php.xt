@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+
+    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/lib/codemirror.js" type="text/javascript"/>
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/lib/codemirror.css"/>
+    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/xml/xml.js"/>
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/xml/xml.css"/>
+    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.js"/>
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.css"/>
+    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/css/css.js"/>
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/css/css.css"/>
+    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/clike/clike.js"/>
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/clike/clike.css"/>
+    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/php/php.js"/>
+
+    <script src="#sys::code()#properties/codemirror/codemirrorui/js/codemirror-ui.js" type="text/javascript"/>
+    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/css/codemirror-ui.css" type="text/css" media="screen" />
+
+
+    <xar:if condition="empty($style)">
+        <xar:set name="style">''</xar:set>
+    </xar:if>
+    <xar:if condition="empty($class)">
+        <xar:set name="class">''</xar:set>
+    </xar:if>
+    <xar:if condition="empty($rows)">
+        <xar:set name="rows">0</xar:set>
+    </xar:if>
+    <xar:if condition="empty($cols)">
+        <xar:set name="cols">0</xar:set>
+    </xar:if>
+    <div style="clear:both; border: 1px dotted black; padding: 3px; background-color: ##F8F8F8">
+        <xar:data-input type="textarea" id="$name" name="$name" style="$style" rows="$rows" cols="$cols" value="$value"/>
+    </div>
+    
+    <script>
+      var textarea = document.getElementById('#$name#');
+      var editor = new CodeMirrorUI(textarea,
+       {
+        path : '#sys::code()#properties/codemirror/codemirrorui/js/',
+          searchMode : 'inline',
+          buttons : ['undo','redo','jump','reindent','about']
+       },
+       {
+          mode: "application/x-httpd-php"
+       });
+    </script>
+</xar:template>
