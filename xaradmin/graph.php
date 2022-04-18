@@ -44,7 +44,7 @@ function workflow_admin_graph()
 
     if ($_REQUEST["pid"]) {
         xarLog::message("WORKFLOW: Getting process");
-        $process = new Process($_REQUEST['pid']);
+        $process = new \Galaxia\Api\Process($_REQUEST['pid']);
         $procNName = $process->getNormalizedName();
 
         $info = $processManager->get_process($_REQUEST["pid"]);
