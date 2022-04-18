@@ -10,18 +10,18 @@ include_once(GALAXIA_LIBRARY.'/managers/activities.php');
 include_once(GALAXIA_LIBRARY.'/managers/graphviz.php');
 
 /// $roleManager is the object that will be used to manipulate roles.
-$roleManager = new RoleManager();
+$roleManager = new \Galaxia\Managers\RoleManager();
 /// $activityManager is the object that will be used to manipulate activities.
-$activityManager = new ActivityManager();
+$activityManager = new \Galaxia\Managers\ActivityManager();
 /// $processManager is the object that will be used to manipulate processes.
-$processManager = new ProcessManager();
+$processManager = new \Galaxia\Managers\ProcessManager();
 /// $instanceManager is the object that will be used to manipulate instances.
-$instanceManager = new InstanceManager();
+$instanceManager = new \Galaxia\Managers\InstanceManager();
 
 if (defined('GALAXIA_LOGFILE') && GALAXIA_LOGFILE) {
     include_once(GALAXIA_LIBRARY.'/observers/logger.php');
 
-    $logger = new Logger(GALAXIA_LOGFILE);
+    $logger = new \Galaxia\Observers\Logger(GALAXIA_LOGFILE);
     $processManager->attach_all($logger);
     $activityManager->attach_all($logger);
     $roleManager->attach_all($logger);

@@ -48,12 +48,12 @@ function workflow_user_run_activity()
         return xarTpl::module('workflow', 'user', 'errors', $data);
     }
 
-    $activity = WorkFlowActivity::get($_REQUEST['activityId']);
+    $activity = \Galaxia\Api\WorkflowActivity::get($_REQUEST['activityId']);
     if (empty($activity)) {
         $data['msg'] = xarML("Invalid workflow activity specified");
         return xarTpl::module('workflow', 'user', 'errors', $data);
     }
-    $process = new Process($activity->getProcessId());
+    $process = new \Galaxia\Api\Process($activity->getProcessId());
     $instance->pId =$activity->getProcessId();
 
     // Get user roles

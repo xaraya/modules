@@ -42,8 +42,8 @@ function workflow_userapi_run_activity($args)
         throw new Exception(xarML("No workflow activity indicated"));
     }
 
-    $activity = WorkFlowActivity::get($args['activityId']);
-    $process = new Process($activity->getProcessId());
+    $activity = \Galaxia\Api\WorkflowActivity::get($args['activityId']);
+    $process = new \Galaxia\Api\Process($activity->getProcessId());
 
     if (!empty($args['iid']) && empty($instance->instanceId)) {
         $instance->getInstance($args['iid']);

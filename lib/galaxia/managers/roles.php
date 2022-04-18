@@ -1,6 +1,9 @@
 <?php
 
+namespace Galaxia\Managers;
+
 include_once(GALAXIA_LIBRARY.'/managers/base.php');
+
 //!! RoleManager
 //! A class to maniplate roles.
 /*!
@@ -164,7 +167,7 @@ class RoleManager extends BaseManager
                 $first = false;
             }
             $query .= " where pId=? and roleId=? ";
-            $bindvars[] = $pid;
+            $bindvars[] = $pId;
             $bindvars[] = $roleId;
             $this->query($query, $bindvars);
         } else {

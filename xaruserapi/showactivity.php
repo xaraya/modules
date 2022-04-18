@@ -34,8 +34,8 @@ function workflow_userapi_showactivity($args)
         return xarML("No activity found");
     }
 
-    $activity = WorkFlowActivity::get($args['activityId']);
-    $process = new Process($activity->getProcessId());
+    $activity = \Galaxia\Api\WorkflowActivity::get($args['activityId']);
+    $process = new \Galaxia\Api\Process($activity->getProcessId());
 
     if (empty($user)) {
         $user = xarUser::getVar('id');

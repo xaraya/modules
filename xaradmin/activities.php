@@ -47,7 +47,7 @@ function workflow_admin_activities()
     $data['activity']->properties['process_id']->value = $data['pid'];
 
     // Create a process object
-    $process = new Process($data['pid']);
+    $process = new \Galaxia\Api\Process($data['pid']);
 
     // @todo: use the object above
     $procNName = $process->getNormalizedName();
@@ -62,7 +62,7 @@ function workflow_admin_activities()
         $data['activity']->getItem(['itemid' => $data['activityId']]);
     }
 
-    $activity  = WorkFlowActivity::get($data['activityId']);
+    $activity  = \Galaxia\Api\WorkflowActivity::get($data['activityId']);
     /*    if ($_REQUEST["activityId"]) {
             $info = array('name'            => $activity->getName(),
                           'description'     => $activity->getDescription(),
@@ -159,7 +159,7 @@ function workflow_admin_activities()
         }
 
         // FIXME: we already do this in the createItem and updateItem methods
-        $activity = WorkFlowActivity::get($newaid);
+        $activity = \Galaxia\Api\WorkflowActivity::get($newaid);
 
         $rid = 0;
         if (isset($_REQUEST['userole']) && $_REQUEST['userole']) {
@@ -279,7 +279,7 @@ function workflow_admin_activities()
         for ($i=0, $na=count($activities['data']); $i < $na; $i++) {
             // Make id a bit more accessible
             $id = $activities["data"][$i]['activityId'];
-            $activity = WorkflowActivity::get($id);
+            $activity = \Galaxia\Api\WorkflowActivity::get($id);
 
             // Is activity interactive?
             $ia = isset($_REQUEST['activity_inter'][$id]) ? 1 : 0;

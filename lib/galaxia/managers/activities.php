@@ -1,7 +1,11 @@
 <?php
 
+namespace Galaxia\Managers;
+
 include_once(GALAXIA_LIBRARY.'/managers/base.php');
 include_once(GALAXIA_LIBRARY.'/api/activity.php');
+use Galaxia\Api\WorkflowActivity;
+use Galaxia\Api\Process;
 
 /**
  * A class to maniplate process activities and transitions
@@ -36,14 +40,14 @@ class ActivityManager extends BaseManager
             return false;
         }
         // Rule: if act is not spl-x or spl-a it can't have more than 1 outbound transition.
-        $actFrom = WorkFlowActivity::get($actFromId);
-        $actTo   = WorkFlowActivity::get($actToId);
+        $actFrom = WorkflowActivity::get($actFromId);
+        $actTo   = WorkflowActivity::get($actToId);
         if (!$actFrom || !$actTo) {
             return false;
         }
         if (!in_array($actFrom->getType(), ['switch','split'])) {
             if ($this->getOne("select count(*) from ".self::tbl('transitions')."  where actFromId=?", [$actFromId])) {
-                $this->error = xarML('Cannot add transition only split activities can have more than one outbound transition');
+                $this->error = \xarML('Cannot add transition only split activities can have more than one outbound transition');
                 return false;
             }
         }
@@ -183,17 +187,17 @@ class ActivityManager extends BaseManager
         // Pre rule no cricular activities
         $cant = $this->getOne("select count(*) from ".self::tbl('transitions')." where pId=? and actFromId=actToId", [$pId]);
         if ($cant) {
-            $errors[] = xarML('Circular reference found some activity has a transition leading to itself');
+            $errors[] = \xarML('Circular reference found some activity has a transition leading to itself');
         }
 
         // Rule 1 must have exactly one start and end activity
         $cant = $this->getOne("select count(*) from ".self::tbl('activities')." where pId=? and type=?", [$pId, 'start']);
         if ($cant < 1) {
-            $errors[] = xarML('Process does not have a start activity');
+            $errors[] = \xarML('Process does not have a start activity');
         }
         $cant = $this->getOne("select count(*) from ".self::tbl('activities')."where pId=? and type=?", [$pId, 'end']);
         if ($cant != 1) {
-            $errors[] = xarML('Process does not have exactly one end activity');
+            $errors[] = \xarML('Process does not have exactly one end activity');
         }
 
         // Rule 2 end must be reachable from start
@@ -228,8 +232,8 @@ class ActivityManager extends BaseManager
 
         if (!$this->_node_in_list($start_node, $nodes)) {
             // Start node is NOT reachable from the end node
-            $link = '<a href="' . xarController::URL('workflow', 'admin', 'activities', ['pid' => $pId]) . '"><img src="' . xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
-            $errors[] = $link . xarML('End activity is not reachable from start activity');
+            $link = '<a href="' . \xarController::URL('workflow', 'admin', 'activities', ['pid' => $pId]) . '"><img src="' . \xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
+            $errors[] = $link . \xarML('End activity is not reachable from start activity');
         }
 
         //Rule 3: interactive activities must have a role
@@ -242,22 +246,22 @@ class ActivityManager extends BaseManager
             if ($res['isInteractive'] == 1) {
                 $cant = $this->getOne("select count(*) from ".self::tbl('activity_roles')." where activityId=?", [$res['activityId']]);
                 if (!$cant) {
-                    $link = '<a href="' . xarController::URL('workflow', 'admin', 'activities', ['pid' => $pId, 'activityId' => $aid]) . '"><img src="' . xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
-                    $errors[] = $link . xarML('Activity').': <b>'.$res['name'].xarML('</b> is interactive but has no role assigned');
+                    $link = '<a href="' . \xarController::URL('workflow', 'admin', 'activities', ['pid' => $pId, 'activityId' => $aid]) . '"><img src="' . \xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
+                    $errors[] = $link . \xarML('Activity').': <b>'.$res['name'].xarML('</b> is interactive but has no role assigned');
                 }
             } else {
                 if ($res['type'] != 'end' && $res['isAutoRouted'] == 0) {
                     $cant = $this->getOne("select count(*) from".self::tbl('activity_roles')." where activityId=?", [$res['activityId']]);
                     if (!$cant) {
-                        $link = '<a href="' . xarController::URL('workflow', 'admin', 'roles', ['pid' => $pId]) . '"><img src="' . xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
-                        $errors[] = $link . xarML('Activity').': <b>'.$res['name'].xarML('</b> is non-interactive and non-autorouted but has no role assigned');
+                        $link = '<a href="' . \xarController::URL('workflow', 'admin', 'roles', ['pid' => $pId]) . '"><img src="' . \xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
+                        $errors[] = $link . \xarML('Activity').': <b>'.$res['name'].xarML('</b> is non-interactive and non-autorouted but has no role assigned');
                     }
                 }
             }
             if ($res['type']=='standalone') {
                 if ($this->getOne("select count(*) from ".self::tbl('transitions')."where actFromId=? or actToId=?", [$aid,$aid])) {
-                    $link = '<a href="' . xarController::URL('workflow', 'admin', 'roles', ['pid' => $pId]) . '"><img src="' . xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
-                    $errors[] = $link . xarML('Activity').': <b>'.$res['name'].xarML('</b> is standalone but has transitions');
+                    $link = '<a href="' . \xarController::URL('workflow', 'admin', 'roles', ['pid' => $pId]) . '"><img src="' . \xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
+                    $errors[] = $link . \xarML('Activity').': <b>'.$res['name'].xarML('</b> is standalone but has transitions');
                 }
             }
         }
@@ -269,8 +273,8 @@ class ActivityManager extends BaseManager
         while ($res = $result->fetchRow()) {
             $cant = $this->getOne("select count(*) from ".self::tbl('user_roles')." where roleId=?", [$res['roleId']]);
             if (!$cant) {
-                $link = '<a href="' . xarController::URL('workflow', 'admin', 'roles', ['pid' => $pId]) . '"><img src="' . xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
-                $errors[] = $link . xarML('Role').': <b>'.$res['name'].xarML('</b> is not mapped');
+                $link = '<a href="' . \xarController::URL('workflow', 'admin', 'roles', ['pid' => $pId]) . '"><img src="' . \xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
+                $errors[] = $link . \xarML('Role').': <b>'.$res['name'].xarML('</b> is not mapped');
             }
         }
 
@@ -323,22 +327,22 @@ class ActivityManager extends BaseManager
             fclose($fp);
             if ($res['type']=='standalone') {
                 if (strstr($data, '$instance')) {
-                    $errors[] = xarML('Activity '.$res['name'].' is standalone and is using the $instance object');
+                    $errors[] = \xarML('Activity '.$res['name'].' is standalone and is using the $instance object');
                 }
             } else {
                 if ($res['isInteractive']== 1) {
                     if (!strstr($data, '$instance->complete()')) {
-                        $link = '<a href="' . xarController::URL('workflow', 'admin', 'shared_source', ['pid' => $pid]) . '"><img src="' . xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
-                        $errors[] = $link . xarML('Activity <b>'.$res['name'].'</b> is interactive so it must use the $instance->complete() method');
+                        $link = '<a href="' . \xarController::URL('workflow', 'admin', 'shared_source', ['pid' => $pid]) . '"><img src="' . \xarTpl::getImage('red_dot.gif', 'workflow') . '"/></a> ';
+                        $errors[] = $link . \xarML('Activity <b>'.$res['name'].'</b> is interactive so it must use the $instance->complete() method');
                     }
                 } else {
                     if (strstr($data, '$instance->complete()')) {
-                        $errors[] = xarML('Activity <b>'.$res['name'].'</b> is non-interactive so it must not use the $instance->complete() method');
+                        $errors[] = \xarML('Activity <b>'.$res['name'].'</b> is non-interactive so it must not use the $instance->complete() method');
                     }
                 }
                 if ($res['type']=='switch') {
                     if (!strstr($data, '$instance->setNextActivity(')) {
-                        $errors[] = xarML('Activity <b>'.$res['name'].'</b> is switch so it must use $instance->setNextActivity($actname) method');
+                        $errors[] = \xarML('Activity <b>'.$res['name'].'</b> is switch so it must use $instance->setNextActivity($actname) method');
                     }
                 }
             }
@@ -452,7 +456,7 @@ class ActivityManager extends BaseManager
             $activityId = $this->getOne("select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
             $ret = $activityId;
             if (!$activityId) {
-                throw new Exception("No result from: select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
+                throw new \Exception("No result from: select max(activityId) from $TABLE_NAME where pId=$pId and lastModif=$now");
             }
             // Should create the code file
             $fw = fopen(GALAXIA_PROCESSES."/$procNName/code/activities/".$vars['normalized_name'].'.php', 'w');

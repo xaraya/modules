@@ -1,6 +1,11 @@
 <?php
 
+namespace Galaxia\Managers;
+
 include_once(GALAXIA_LIBRARY.'/managers/base.php');
+use Galaxia\Api\WorkflowActivity;
+use Galaxia\Api\Process;
+
 //!! ProcessManager
 //! A class to maniplate processes.
 /*!
@@ -232,7 +237,7 @@ class ProcessManager extends BaseManager
             ];
 
             $actid = $am->replace_activity($pid, 0, $vars);
-            $act = WorkFlowActivity::get($actid);
+            $act = WorkflowActivity::get($actid);
             $actname = $act->getNormalizedName();
 
             $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php', "w");
@@ -258,7 +263,7 @@ class ProcessManager extends BaseManager
                     $rid = $rm->get_role_id($pid, $role);
                 }
                 if ($actid && $rid) {
-                    $act = WorkFlowActivity::get($actid);
+                    $act = WorkflowActivity::get($actid);
                     $act->addRole($rid);
                 }
             }
@@ -275,7 +280,7 @@ class ProcessManager extends BaseManager
         $am->build_process_graph($pid);
         unset($am);
         unset($rm);
-        $msg = sprintf(xarML('Process %s %s imported'), $process->getName(), $process->getVersion());
+        $msg = sprintf(\xarML('Process %s %s imported'), $process->getName(), $process->getVersion());
         $this->notify_all(2, $msg);
         return $pid;
     }
@@ -363,7 +368,7 @@ class ProcessManager extends BaseManager
                 if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
                     continue;
                 }
-                $act = WorkFlowActivity::get($newaid[$res['activityId']]);
+                $act = WorkflowActivity::get($newaid[$res['activityId']]);
                 $act->addRole($newrid[$res['roleId']]);
             }
         }
@@ -459,7 +464,7 @@ class ProcessManager extends BaseManager
         // And finally remove the proc
         $query = "delete from ".self::tbl('processes')." where pId=?";
         $this->query($query, [$pId]);
-        $msg = sprintf(xarML('Process %s removed'), $name);
+        $msg = sprintf(\xarML('Process %s removed'), $name);
         $this->notify_all(5, $msg);
 
         return true;
@@ -503,7 +508,7 @@ class ProcessManager extends BaseManager
             if ($newname != $oldname) {
                 rename(GALAXIA_PROCESSES."/$oldname", GALAXIA_PROCESSES."/$newname");
             }
-            $msg = sprintf(xarML('Process %s has been updated'), $vars['name']);
+            $msg = sprintf(\xarML('Process %s has been updated'), $vars['name']);
             $this->notify_all(3, $msg);
         } else {
             unset($vars['pId']);
@@ -554,7 +559,7 @@ class ProcessManager extends BaseManager
                 $aM->replace_activity($pId, 0, $vars1);
                 $aM->replace_activity($pId, 0, $vars2);
             }
-            $msg = sprintf(xarML('Process %s has been created'), $vars['name']);
+            $msg = sprintf(\xarML('Process %s has been created'), $vars['name']);
             $this->notify_all(4, $msg);
         }
         // Get the id

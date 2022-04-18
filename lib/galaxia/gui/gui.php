@@ -1,6 +1,10 @@
 <?php
 
+namespace Galaxia\Gui;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
+
 //!! GUI
 //! A GUI class for use in typical user interface scripts
 /*!
@@ -8,18 +12,18 @@ This class provides methods for use in typical user interface scripts
 */
 class GUI extends Base
 {
-  /*!
-  List user processes, user processes should follow one of these conditions:
-  1) The process has an instance assigned to the user
-  2) The process has a begin activity with a role compatible to the
-     user roles
-  3) The process has an instance assigned to '*' and the
-     roles for the activity match the roles assigned to
-     the user
-  The method returns the list of processes that match this
-  and it also returns the number of instances that are in the
-  process matching the conditions.
-  */
+    /*!
+    List user processes, user processes should follow one of these conditions:
+    1) The process has an instance assigned to the user
+    2) The process has a begin activity with a role compatible to the
+       user roles
+    3) The process has an instance assigned to '*' and the
+       roles for the activity match the roles assigned to
+       the user
+    The method returns the list of processes that match this
+    and it also returns the number of instances that are in the
+    process matching the conditions.
+    */
     public function gui_list_user_processes($user, $offset, $maxRecords, $sort_mode, $find, $where='')
     {
         // FIXME: this doesn't support multiple sort criteria
@@ -230,7 +234,7 @@ class GUI extends Base
             return false;
         }
         include_once(GALAXIA_LIBRARY.'/api/instance.php');
-        $instance = new Instance($this->db);
+        $instance = new \Galaxia\Api\Instance($this->db);
         $instance->getInstance($instanceId);
         if (!empty($instance->instanceId)) {
             $instance->abort($activityId, $user);
@@ -302,7 +306,7 @@ class GUI extends Base
             return false;
         }
         include_once(GALAXIA_LIBRARY.'/api/instance.php');
-        $instance = new Instance($this->db);
+        $instance = new \Galaxia\Api\Instance($this->db);
         $instance->getInstance($instanceId);
         $instance->complete($activityId, true, false);
         unset($instance);

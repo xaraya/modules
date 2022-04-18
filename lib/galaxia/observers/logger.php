@@ -1,6 +1,10 @@
 <?php
 
+namespace Galaxia\Observers;
+
 include_once(GALAXIA_LIBRARY.'/common/observer.php');
+use Galaxia\Common\Observer;
+
 //!! Logger
 //! Log
 /*!
@@ -16,7 +20,7 @@ class Logger extends Observer
         $this->_filename = $filename;
         $fp = fopen($this->_filename, "a");
         if (!$fp) {
-            trigger_error("Logger cannot append to log file: ".$this->filename, E_USER_WARNING);
+            trigger_error("Logger cannot append to log file: ".$this->_filename, E_USER_WARNING);
         }
         if ($fp) {
             fclose($fp);

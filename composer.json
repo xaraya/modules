@@ -7,6 +7,6 @@
     "require": {},
     "autoload": {
         "classmap": ["./"],
-        "exclude-from-classmap": ["/vendor/", "/lib/"]
+        "exclude-from-classmap": ["/vendor/"]
     }
 }

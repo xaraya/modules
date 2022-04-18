@@ -3,7 +3,7 @@
   <label>Workflow Activities</label>
   <module_id>182</module_id>
   <itemtype>13</itemtype>
-  <class>Activity</class>
+  <class>ActivityObject</class>
   <filepath>modules/workflow/class/activity.php</filepath>
   <urlparam>itemid</urlparam>
   <maxid>0</maxid>

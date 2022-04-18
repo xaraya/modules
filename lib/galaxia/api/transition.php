@@ -6,7 +6,11 @@
  * @package modules
  * @subpackage workflow
  **/
+
+namespace Galaxia\Api;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
 
 /**
  * Class modelling a transition between two activities

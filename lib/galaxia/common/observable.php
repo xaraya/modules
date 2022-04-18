@@ -1,5 +1,7 @@
 <?php
 
+namespace Galaxia\Common;
+
 //!! Observable
 //! An abstract class implementing observable objects
 /*!

@@ -1,6 +1,10 @@
 <?php
 
+namespace Galaxia\Managers;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
+
 //!! Abstract class representing the base of the API
 //! An abstract class representing the API base
 /*!

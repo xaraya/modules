@@ -1,6 +1,10 @@
 <?php
 
+namespace Galaxia\Monitors;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
+
 //!! ProcessMonitor
 //! ProcessMonitor class
 /*!

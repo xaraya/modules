@@ -46,7 +46,7 @@ function workflow_admin_roles()
     $data['pid'] =  $pid;
 
     // Retrieve the relevant process info
-    $process = new Process($pid);
+    $process = new \Galaxia\Api\Process($pid);
     $proc_info = $processManager->get_process($pid);
     $proc_info['graph']=$process->getGraph();
 

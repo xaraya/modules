@@ -51,7 +51,7 @@ function workflow_admin_processes()
         $_REQUEST['pid'] = 0;
     }
     if ($_REQUEST['pid']) {
-        $process = new Process($_REQUEST['pid']);
+        $process = new \Galaxia\Api\Process($_REQUEST['pid']);
         $data['proc_info'] = $processManager->get_process($_REQUEST["pid"]);
         $data['proc_info']['graph'] = $process->getGraph();
     }
@@ -82,7 +82,7 @@ function workflow_admin_processes()
 
             $process_data = $processManager->unserialize_process($xml);
 
-            if (Process::exists($process_data['name'], $process_data['version'])) {
+            if (\Galaxia\Api\Process::exists($process_data['name'], $process_data['version'])) {
                 $data['msg'] =  xarML("The process name already exists");
                 return xarTpl::module('workflow', 'admin', 'errors', $data);
             } else {
@@ -117,7 +117,7 @@ function workflow_admin_processes()
                       ];
 
         // If process is known and we're not updating, error out.
-        if (Process::Exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
+        if (\Galaxia\Api\Process::Exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
             $data['msg'] =  xarML("Process already exists");
             return xarTpl::module('workflow', 'admin', 'errors', $data);
         }
@@ -127,7 +127,7 @@ function workflow_admin_processes()
 
         // Replace the info on the process with the new values (or create them)
         $pid = $processManager->replace_process($_REQUEST['pid'], $vars);
-        $process = new Process($pid);
+        $process = new \Galaxia\Api\Process($pid);
         // Validate the process and deactivate it if it turns out to be invalid.
         $valid = $activityManager->validate_process_activities($pid);
         if (!$valid) {
@@ -135,7 +135,7 @@ function workflow_admin_processes()
         }
 
         // Reget the process info for the UI
-        $process = new Process($pid);
+        $process = new \Galaxia\Api\Process($pid);
         $data['proc_info'] = $processManager->get_process($pid);
         $data['proc_info']['graph'] = $process->getGraph();
     }
@@ -168,7 +168,7 @@ function workflow_admin_processes()
         $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
         $data['errors'] = [];
         if (!$valid) {
-            $process = new Process($_REQUEST['pid']);
+            $process = new \Galaxia\Api\Process($_REQUEST['pid']);
             $process->deactivate();
             $data['errors'] = $activityManager->get_error();
         }

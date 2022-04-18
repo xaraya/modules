@@ -1,0 +1,13 @@
+# includes:
+#     - phpstan-baseline.neon
+
+parameters:
+    level: 0
+    paths:
+        - lib/galaxia
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    excludePaths:
+        - lib/galaxia/docs/*
+    parallel:
+        processTimeout: 300.0

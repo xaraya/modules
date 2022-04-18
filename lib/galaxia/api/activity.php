@@ -1,6 +1,10 @@
 <?php
 
+namespace Galaxia\Api;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
+
 /**
  * Base class for Workflow activities
  *
@@ -24,6 +28,9 @@ class WorkflowActivity extends Base
     public $activityId;
     public $expirationTime = 0;
 
+    protected $type;
+    protected $shape;
+
     /**
      * Factory method returning an activity of the desired type
      * loading the information from the database.
@@ -44,31 +51,31 @@ class WorkflowActivity extends Base
         switch ($res['type']) {
           case 'start':
             include_once(GALAXIA_LIBRARY.'/api/activities/start.php');
-            $act = new StartActivity();
+            $act = new \Galaxia\Api\Activities\StartActivity();
             break;
           case 'end':
             include_once(GALAXIA_LIBRARY.'/api/activities/end.php');
-            $act = new EndActivity();
+            $act = new \Galaxia\Api\Activities\EndActivity();
             break;
           case 'join':
             include_once(GALAXIA_LIBRARY.'/api/activities/join.php');
-            $act = new JoinActivity();
+            $act = new \Galaxia\Api\Activities\JoinActivity();
             break;
           case 'split':
             include_once(GALAXIA_LIBRARY.'/api/activities/split.php');
-            $act = new SplitActivity();
+            $act = new \Galaxia\Api\Activities\SplitActivity();
             break;
           case 'standalone':
             include_once(GALAXIA_LIBRARY.'/api/activities/standalone.php');
-            $act = new StandaloneActivity();
+            $act = new \Galaxia\Api\Activities\StandaloneActivity();
             break;
           case 'switch':
             include_once(GALAXIA_LIBRARY.'/api/activities/switch.php');
-            $act = new SwitchActivity();
+            $act = new \Galaxia\Api\Activities\SwitchActivity();
             break;
           case 'activity':
             include_once(GALAXIA_LIBRARY.'/api/activities/standard.php');
-            $act = new StandardActivity();
+            $act = new \Galaxia\Api\Activities\StandardActivity();
             break;
           default:
             trigger_error('Unknown activity type:'.$res['type'], E_USER_WARNING);

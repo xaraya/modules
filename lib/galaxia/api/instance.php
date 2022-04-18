@@ -1,6 +1,9 @@
 <?php
 
+namespace Galaxia\Api;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
 
 /**
  * A class representing a process instance.
@@ -80,7 +83,7 @@ class Instance extends Base
 //            return xarTpl::module('workflow', 'user', 'errors', array('layout' => 'unknown_activity', 'id' => $aid));
 
             //REMOVEME
-            trigger_error(xarML('Fatal error: setting next activity to an unexisting activity'), E_USER_WARNING);
+            trigger_error(\xarML('Fatal error: setting next activity to an unexisting activity'), E_USER_WARNING);
         }
         $this->nextActivity=$aid;
         $query = "update ".self::tbl('instances')." set `nextActivity`=? where `instanceId`=?";
@@ -474,13 +477,13 @@ class Instance extends Base
                     } else {
 //            return xarTpl::module('workflow', 'user', 'errors', array('layout' => 'unknown_activity', 'id' => $this->nextActivity));
                         // REMOVEME
-                        trigger_error(xarML('Fatal error: nextActivity does not match any candidate in autorouting switch activity'), E_USER_WARNING);
+                        trigger_error(\xarML('Fatal error: nextActivity does not match any candidate in autorouting switch activity'), E_USER_WARNING);
                     }
                 } else {
                     if (count($candidates)>1) {
-                        trigger_error(xarML('Fatal error: non-deterministic decision for autorouting activity'), E_USER_WARNING);
+                        trigger_error(\xarML('Fatal error: non-deterministic decision for autorouting activity'), E_USER_WARNING);
                     } elseif (count($candidates)==0) {
-                        trigger_error(xarML('Fatal error: no next activity found'), E_USER_WARNING);
+                        trigger_error(\xarML('Fatal error: no next activity found'), E_USER_WARNING);
                     } else {
                         $this->sendTo((int)$activityId, (int)$candidates[0]);
                     }
@@ -585,7 +588,7 @@ class Instance extends Base
 
         // Verify the existance of a transition
         if (!$this->getOne("select count(*) from ".self::tbl('transitions')."where `actFromId`=? and `actToId`=?", [$from,(int)$activityId])) {
-            trigger_error(xarML('Fatal error: trying to send an instance to an activity but no transition found'), E_USER_WARNING);
+            trigger_error(\xarML('Fatal error: trying to send an instance to an activity but no transition found'), E_USER_WARNING);
         }
 
         //try to determine the user or *
@@ -658,15 +661,15 @@ class Instance extends Base
             $this->complete($activityId);
         } else {
             // This activity is interactive: just execute it as running
-            xarController::redirect(
-                xarController::URL(
-                                    'workflow',
-                                    'user',
-                                    'run_activity',
-                                    ['activityId' => $activityId,
+            \xarController::redirect(
+                \xarController::URL(
+                    'workflow',
+                    'user',
+                    'run_activity',
+                    ['activityId' => $activityId,
                                       'iid' => $iid,
                                       'auto' => 0, ]
-                                )
+                )
             );
         }
     }

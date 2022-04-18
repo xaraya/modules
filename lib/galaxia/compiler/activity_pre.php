@@ -8,8 +8,8 @@ if (empty($instance->instanceId)) {
     if (isset($_REQUEST['iid'])) {
         $instance->getInstance($_REQUEST['iid']);
     } else {
-        $tplData['msg'] =  xarML("No instance indicated");
-        return xarTpl::module('workflow', 'admin', 'errors', $tplData);
+        $tplData['msg'] = \xarML("No instance indicated");
+        return \xarTpl::module('workflow', 'admin', 'errors', $tplData);
     }
 }
 // Set the current user for this activity

@@ -45,7 +45,7 @@ function workflow_admin_shared_source()
         $_REQUEST['save'] = 'y';
     }
 
-    $process = new Process($_REQUEST['pid']);
+    $process = new \Galaxia\Api\Process($_REQUEST['pid']);
     $proc_info = $processManager->get_process($_REQUEST['pid']);
     $proc_info['graph']=$process->getGraph();
     $data['proc_info'] =& $proc_info;
@@ -61,7 +61,7 @@ function workflow_admin_shared_source()
     $data['activityId'] =  $_REQUEST['activityId'];
 
     if ($_REQUEST['activityId']) {
-        $act = WorkFlowActivity::get($_REQUEST['activityId']);
+        $act = \Galaxia\Api\WorkflowActivity::get($_REQUEST['activityId']);
 
         $actname = $act->getNormalizedName();
 
@@ -103,7 +103,7 @@ function workflow_admin_shared_source()
             fwrite($fp, $source_data);
             fclose($fp);
             if ($_REQUEST['activityId']) {
-                $act = WorkflowActivity::get($_REQUEST['activityId']);
+                $act = \Galaxia\Api\WorkflowActivity::get($_REQUEST['activityId']);
                 $act->compile();
             }
         } else {

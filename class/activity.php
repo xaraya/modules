@@ -15,7 +15,7 @@
 sys::import('modules.workflow.class.object');
 sys::import('modules.dynamicdata.class.objects.list');
 
-class Activity extends WorkflowObject
+class ActivityObject extends WorkflowObject
 {
     public function createItem(array $args = [])
     {
@@ -25,7 +25,7 @@ class Activity extends WorkflowObject
 
         $this->properties['normalized_name']->value = $this->normalize($this->properties['name']->value);
 
-        $process = new Process($this->properties['process_id']->value);
+        $process = new \Galaxia\Api\Process($this->properties['process_id']->value);
         $procNName = $process->getNormalizedName();
 
         // Activity names musr be unique
@@ -49,7 +49,7 @@ class Activity extends WorkflowObject
         }
         $itemid = parent::createItem($args);
 
-        $newAct = WorkflowActivity::get($itemid);
+        $newAct =  \Galaxia\Api\WorkflowActivity::get($itemid);
         $newAct->compile();
 
         return $itemid;
@@ -69,7 +69,7 @@ class Activity extends WorkflowObject
         // Rename the files if required
         $newname = $this->properties['normalized_name']->value;
         if (isset($args['oldname']) && !empty($args['oldname']) && ($newname != $args['oldname'])) {
-            $process = new Process($this->properties['process_id']->value);
+            $process = new \Galaxia\Api\Process($this->properties['process_id']->value);
             $procNName = $process->getNormalizedName();
 
             $user_file_old = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$args['oldname'].'.php';
@@ -86,7 +86,7 @@ class Activity extends WorkflowObject
             if (file_exists($compiled_file)) {
                 unlink($compiled_file);
             }
-            $newAct = WorkflowActivity::get($itemid);
+            $newAct = \Galaxia\Api\WorkflowActivity::get($itemid);
             $newAct->compile();
         }
 
@@ -103,6 +103,6 @@ class Activity extends WorkflowObject
         return $itemid;
     }
 }
-class ActivityList extends DataObjectList
+class ActivityObjectList extends DataObjectList
 {
 }

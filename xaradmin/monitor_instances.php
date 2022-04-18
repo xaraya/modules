@@ -73,7 +73,7 @@ function workflow_admin_monitor_instances()
         //and we have to send it to some activity to be determined
         include_once(GALAXIA_LIBRARY.'/api/instance.php');
 
-        $instance = new Instance();
+        $instance = new \Galaxia\Api\Instance();
         $instance->getInstance($_REQUEST['sendInstance']);
         // Do not add a workitem since the instance must be already completed!
         $instance->complete($_REQUEST['activityId'], true, false);

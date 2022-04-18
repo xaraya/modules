@@ -1,6 +1,10 @@
 <?php
 
+namespace Galaxia\Api;
+
 include_once(GALAXIA_LIBRARY.'/common/base.php');
+use Galaxia\Common\Base;
+
 /**
  * Workflow process class
  *
@@ -59,7 +63,7 @@ class Process extends Base
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
         $this->query($query, [$value ? 1 : 0,$this->pId]);
-        $msg = sprintf(xarML('Process %d has been (de)-activated'), $this->pId);
+        $msg = sprintf(\xarML('Process %d has been (de)-activated'), $this->pId);
         // Object
         $this->active = $value;
         $this->notify_all(3, $msg);
@@ -83,7 +87,7 @@ class Process extends Base
     }
     public function validate()
     {
-        throw new Exception('Not implemented');
+        throw new \Exception('Not implemented');
     }
 
     /**
@@ -189,7 +193,7 @@ class Process extends Base
         $result = $this->query($query, [$this->pId]);
         $ret = [];
         while ($res = $result->fetchRow()) {
-            $ret[] = WorkFlowActivity::get($res['activityId']);
+            $ret[] = WorkflowActivity::get($res['activityId']);
         }
         return $ret;
     }

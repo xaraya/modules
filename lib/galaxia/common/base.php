@@ -1,6 +1,9 @@
 <?php
 
+namespace Galaxia\Common;
+
 include_once(GALAXIA_LIBRARY.'/common/observable.php');
+
 //!! Abstract class representing the base of the API
 //! An abstract class representing the API base
 /*!
@@ -20,7 +23,7 @@ class Base extends Observable
             global $dbGalaxia;
             if (!isset($dbGalaxia)) {
                 // Show the childs class which errored out, but also show we detected it here
-                throw new Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
+                throw new \Exception("Invalid db object passed to :'".get_class($this)."' constructor. (detected in: '".__CLASS__."')");
             }
             $this->db = $dbGalaxia;
         } else {
@@ -65,7 +68,7 @@ class Base extends Observable
     {
         global $ADODB_LASTDB;
 
-        throw new Exception($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+        throw new \Exception($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
         // only for debugging.
         // print_r($values);
         //echo "<br />";
