@@ -60,7 +60,9 @@ class Base extends Observable
         if ($res === false) {
             return (null);
         } //simulate pears behaviour
-        [$key, $value] = each($res);
+        //[$key, $value] = each($res);
+        $key = key($res);
+        $value = current($res);
         return $value;
     }
 
