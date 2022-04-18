@@ -17,14 +17,15 @@ function reminders_adminapi_send_email_lookup($data)
 #
 # Get some properties for use in the template
 #
-    $data['name'] = DataPropertyMaster::getProperty(array('name' => 'name'));
-    $data['checkbox'] = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
-    $data['date'] = DataPropertyMaster::getProperty(array('name' => 'date'));
-    $data['number'] = DataPropertyMaster::getProperty(array('name' => 'number'));
-    $data['integerbox'] = DataPropertyMaster::getProperty(array('name' => 'integerbox'));
-    $data['floatbox'] = DataPropertyMaster::getProperty(array('name' => 'floatbox'));
-    $data['textbox'] = DataPropertyMaster::getProperty(array('name' => 'textbox'));
-    $data['textarea'] = DataPropertyMaster::getProperty(array('name' => 'textarea'));
+    $data['name']        = DataPropertyMaster::getProperty(array('name' => 'name'));
+    $data['lookup_name'] = DataPropertyMaster::getProperty(array('name' => 'name'));
+    $data['checkbox']    = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
+    $data['date']        = DataPropertyMaster::getProperty(array('name' => 'date'));
+    $data['number']      = DataPropertyMaster::getProperty(array('name' => 'number'));
+    $data['integerbox']  = DataPropertyMaster::getProperty(array('name' => 'integerbox'));
+    $data['floatbox']    = DataPropertyMaster::getProperty(array('name' => 'floatbox'));
+    $data['textbox']     = DataPropertyMaster::getProperty(array('name' => 'textbox'));
+    $data['textarea']    = DataPropertyMaster::getProperty(array('name' => 'textarea'));
 
 # --------------------------------------------------------
 #
@@ -58,8 +59,9 @@ function reminders_adminapi_send_email_lookup($data)
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
 
-    // We also need the first name of the recipient for the mailto address
-    $components = $data['name']->getValueArray();
+    // We also need the first name of the recipient of the subsequent email to the lookup
+    $data['name']->value = $data['lookup_name'];
+    $components = $data['lookup_name']->getValueArray();
     $data['first_name']   = $components[1]['value'];
     
     $data['encoded']      = $data['info']['encoded'];
