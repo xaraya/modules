@@ -62,7 +62,7 @@ function reminders_adminapi_send_email_lookup($data)
     $data['name']->value = $data['lookup_name'];
     $components = $data['name']->getValueArray();
     $data['lookup_first_name']   = $components[1]['value'];
-    // Set the property back to its previous value
+    // Set the property back to its previous value. We use this for the salutation in this email
     $data['name']->value = $data['info']['name'];
     
     $data['encoded']      = $data['info']['encoded'];
