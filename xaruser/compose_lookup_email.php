@@ -119,10 +119,6 @@ function reminders_user_compose_lookup_email($args)
                         $message = $object->properties['body']->value;
                         $args['message'] = str_replace('#$message#', $data['message'], $message);
                         $args['mail_type'] = $object->properties['mail_type']->value;
-                        $sendername = $object->properties['sender_name']->value;
-                        if (!empty($sendername)) $args['sendername'] = $sendername;
-                        $senderaddress = $object->properties['sender_address']->value;
-                        if (!empty($senderaddress)) $args['senderaddress'] = $senderaddress;
                         unset($args['id']);
                     }
                 } elseif (!empty($data['message'])) {
