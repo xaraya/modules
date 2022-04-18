@@ -18,7 +18,6 @@ function reminders_adminapi_send_email_lookup($data)
 # Get some properties for use in the template
 #
     $data['name']        = DataPropertyMaster::getProperty(array('name' => 'name'));
-    $data['lookup_name'] = DataPropertyMaster::getProperty(array('name' => 'name'));
     $data['checkbox']    = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
     $data['date']        = DataPropertyMaster::getProperty(array('name' => 'date'));
     $data['number']      = DataPropertyMaster::getProperty(array('name' => 'number'));
@@ -61,8 +60,10 @@ function reminders_adminapi_send_email_lookup($data)
 
     // We also need the first name of the recipient of the subsequent email to the lookup
     $data['name']->value = $data['lookup_name'];
-    $components = $data['lookup_name']->getValueArray();
-    $data['first_name']   = $components[1]['value'];
+    $components = $data['name']->getValueArray();
+    $data['lookup_first_name']   = $components[1]['value'];
+    // Set the property back to its previous value
+    $data['name']->value = $data['info']['name'];
     
     $data['encoded']      = $data['info']['encoded'];
 
