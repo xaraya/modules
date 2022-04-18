@@ -28,6 +28,9 @@
     
     <script>
       var textarea = document.getElementById('#$name#');
+      // undo prepForDisplay() for textarea showinput
+      var cleanup = textarea.value;
+      textarea.value = cleanup.replaceAll(String.fromCharCode(38)+'lt;', String.fromCharCode(60)).replaceAll(String.fromCharCode(38)+'gt;', String.fromCharCode(62)).replace(String.fromCharCode(38)+'amp;', String.fromCharCode(38)).replaceAll(String.fromCharCode(38)+'quot;', String.fromCharCode(34));
       var editor = new CodeMirrorUI(textarea,
        {
         path : '#sys::code()#properties/codemirror/codemirrorui/js/',
