@@ -21,7 +21,7 @@
       <seq>1</seq>
       <configuration></configuration>
     </property>
-    <property name="name">
+    <property name="title">
       <id>187</id>
       <label>Title</label>
       <type>textbox</type>

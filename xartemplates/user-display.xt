@@ -37,7 +37,9 @@
                         <a href="#xarController::URL('workflow','user','run_activity',array('activityId'=>$activity['id']))#">#$activity['name']#</a>
                     </td>
                     <td>
-                        #$activity['description']#
+                        <xar:if condition="!empty($activity['description'])">
+                            #$activity['description']#
+                        </xar:if>
                     </td>
                 </tr>
             </xar:foreach>

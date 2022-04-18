@@ -203,7 +203,7 @@ class WorkflowActivity extends Base
     public function addRole($roleId)
     {
         $this->removeRole($roleId);
-        $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values(?,?)";
+        $query = "insert into ".self::tbl('activity_roles')." (`activityId`,`roleId`) values (?,?)";
         $this->query($query, [$this->activityId, $roleId]);
     }
     public function removeRole($roleId)
@@ -234,48 +234,53 @@ class WorkflowActivity extends Base
         $user_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/activities/'.$actname.'.php';
         $pre_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pre.php';
         $pos_file = GALAXIA_LIBRARY.'/compiler/'.$acttype.'_pos.php';
-        $fw = fopen($compiled_file, "wb");
+        $fw = fopen($compiled_file, "w");
 
         // First of all add an include to the shared code
         $shared_file = GALAXIA_PROCESSES.'/'.$procNName.'/code/shared.php';
-        fwrite($fw, '<'."?php include_once('$shared_file'); ?".'>'."\n");
+        fwrite($fw, '<'."?php include_once('$shared_file');\n");
 
         // Before pre shared
-        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pre.php', "rb");
+        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pre.php', "r");
         while (!feof($fp)) {
             $data = fread($fp, 4096);
+            $data = $this->stripPHPTags($data);
             fwrite($fw, $data);
         }
         fclose($fp);
 
         // Now get pre and pos files for the activity
-        $fp = fopen($pre_file, "rb");
+        $fp = fopen($pre_file, "r");
         while (!feof($fp)) {
             $data = fread($fp, 4096);
+            $data = $this->stripPHPTags($data);
             fwrite($fw, $data);
         }
         fclose($fp);
 
         // Get the user data for the activity
-        $fp = fopen($user_file, "rb");
+        $fp = fopen($user_file, "r");
         while (!feof($fp)) {
             $data = fread($fp, 4096);
+            $data = $this->stripPHPTags($data);
             fwrite($fw, $data);
         }
         fclose($fp);
 
         // Get pos and write
-        $fp = fopen($pos_file, "rb");
+        $fp = fopen($pos_file, "r");
         while (!feof($fp)) {
             $data = fread($fp, 4096);
+            $data = $this->stripPHPTags($data);
             fwrite($fw, $data);
         }
         fclose($fp);
 
         // Shared pos
-        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pos.php', "rb");
+        $fp = fopen(GALAXIA_LIBRARY.'/compiler/_shared_pos.php', "r");
         while (!feof($fp)) {
             $data = fread($fp, 4096);
+            $data = $this->stripPHPTags($data);
             fwrite($fw, $data);
         }
         fclose($fp);
@@ -301,6 +306,13 @@ class WorkflowActivity extends Base
             // and make a fresh one
             copy($template_file, GALAXIA_TEMPLATES.'/'.$procNName."/$actname.xt");
         }
+    }
+
+    protected function stripPHPTags($data)
+    {
+        $patterns = ['/^\s*<\?php\s*/s', '/\s*\?>\s*$/s'];
+        $replacements = ['', ''];
+        return preg_replace($patterns, $replacements, $data);
     }
 
     /** METHODS WHICH BELONG SOMEWHERE ELSE */

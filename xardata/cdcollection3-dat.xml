@@ -1,109 +1,109 @@
 <items>
   <cdcollection itemid="3">
     <id>3</id>
-    <name>Avalon - Roxy Music</name>
+    <title>Avalon - Roxy Music</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="4">
     <id>4</id>
-    <name>Abacab - Genesis</name>
+    <title>Abacab - Genesis</title>
     <status>not available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="5">
     <id>5</id>
-    <name>Four Seasons - Vivaldi</name>
+    <title>Four Seasons - Vivaldi</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="6">
     <id>6</id>
-    <name>Rubber Soul - Beatles</name>
+    <title>Rubber Soul - Beatles</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="7">
     <id>7</id>
-    <name>Back in Black - AC/DC</name>
+    <title>Back in Black - AC/DC</title>
     <status>not available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="8">
     <id>8</id>
-    <name>Kashmir - Led Zeppelin</name>
+    <title>Kashmir - Led Zeppelin</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="9">
     <id>9</id>
-    <name>Aqualung - Jethro Tull</name>
+    <title>Aqualung - Jethro Tull</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="10">
     <id>10</id>
-    <name>Curse of the Pheromones - Startled Insects</name>
+    <title>Curse of the Pheromones - Startled Insects</title>
     <status>not available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="11">
     <id>11</id>
-    <name>Autobahm - Kraftwerk</name>
+    <title>Autobahm - Kraftwerk</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="12">
     <id>12</id>
-    <name>Bolero - Ravel</name>
+    <title>Bolero - Ravel</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="13">
     <id>13</id>
-    <name>Rumours - Fleetwood Mac</name>
+    <title>Rumours - Fleetwood Mac</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="14">
     <id>14</id>
-    <name>Come on Over - Shania Twain</name>
+    <title>Come on Over - Shania Twain</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="15">
     <id>15</id>
-    <name>Pyramid - Alan Parsons Project</name>
+    <title>Pyramid - Alan Parsons Project</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="16">
     <id>16</id>
-    <name>Friday Night in SF - de Lucia/di Meola/McLaughlin</name>
+    <title>Friday Night in SF - de Lucia/di Meola/McLaughlin</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="17">
     <id>17</id>
-    <name>A Night at the Opera - Queen</name>
+    <title>A Night at the Opera - Queen</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="18">
     <id>18</id>
-    <name>Sevilla - Romero San Juan</name>
+    <title>Sevilla - Romero San Juan</title>
     <status>not available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="19">
     <id>19</id>
-    <name>Tubular Bells - Mike Oldfield</name>
+    <title>Tubular Bells - Mike Oldfield</title>
     <status>not available</status>
     <user>5</user>
   </cdcollection>
   <cdcollection itemid="20">
     <id>20</id>
-    <name>The Nutcracker - Pyotr Tschaikovsky</name>
+    <title>The Nutcracker - Pyotr Tschaikovsky</title>
     <status>available</status>
     <user>5</user>
   </cdcollection>

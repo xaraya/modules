@@ -87,19 +87,20 @@ function workflow_admin_shared_source()
     }
 
     //First of all save
-    xarVar::fetch('source', 'str', $source_data, '', xarVar::NOT_REQUIRED);
+    xarVar::fetch('source_data', 'str', $source_data, '', xarVar::NOT_REQUIRED);
     if (!empty($source_data)) {
+        $source_data = htmlspecialchars_decode($source_data);
         //var_dump($source);exit;
         // security check on paths
         $basedir = GALAXIA_PROCESSES . "/$procname/code/";
         $basepath = realpath($basedir);
         $sourcepath = realpath($_REQUEST['source_name']);
         if (substr($sourcepath, 0, strlen($basepath)) == $basepath) {
-            $fp = fopen($_REQUEST['source_name'], "wb");
+            $fp = fopen($_REQUEST['source_name'], "w");
 
-            if (get_magic_quotes_gpc()) {
-                $source_data = stripslashes($source_data);
-            }
+            //if (get_magic_quotes_gpc()) {
+            //    $source_data = stripslashes($source_data);
+            //}
             fwrite($fp, $source_data);
             fclose($fp);
             if ($_REQUEST['activityId']) {
@@ -113,7 +114,7 @@ function workflow_admin_shared_source()
 
     $data['source_name'] =  $source;
 
-    $fp = fopen($source, "rb");
+    $fp = fopen($source, "r");
     $data['data'] = '';
     while (!feof($fp)) {
         $filestring = fread($fp, 4096);
