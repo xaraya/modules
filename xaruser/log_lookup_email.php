@@ -48,6 +48,6 @@ function reminders_user_log_lookup_email($args)
 	$q->addfield('timecreated', time());
 	$q->run();
     
-    return array();
+    return $data;
 }
 ?>
