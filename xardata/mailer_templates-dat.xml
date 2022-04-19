@@ -846,7 +846,11 @@ Sizes: [
 							&lt;/div&gt;
                         &lt;/xar:if&gt;
 						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
-                            To send a composable elegant email, click here:
+                            To log that you have sent an email to the address above, click here:
+							&lt;a href=&quot;#xarModURL('reminders','user','log_lookup_email',array('code'=&gt;$encoded))#&quot;&gt;Log email&lt;/a&gt;
+                        &lt;/div&gt;
+						&lt;div style=&quot;text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:10px;color:##5F5F5F;line-height:135%;&quot;&gt;
+                            To send a composable elegant email that is automatically logged, click here:
 							&lt;a href=&quot;#xarModURL('reminders','user','compose_lookup_email',array('code'=&gt;$encoded))#&quot;&gt;Compose&lt;/a&gt;
                         &lt;/div&gt;
 																					&lt;/div&gt;
