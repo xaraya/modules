@@ -31,7 +31,7 @@ function reminders_user_log_lookup_email($args)
 	$data['lookup_id'] = $args['params']['lookup_id'];
 	$data['owner_id'] = $args['params']['owner_id'];
 	$data['subject'] = $args['params']['lookup_subject'];
-	$data['message'] = $args['params']['lookup_message']);
+	$data['message'] = $args['params']['lookup_message'];
 	
 # --------------------------------------------------------
 #
