@@ -17,8 +17,7 @@ function reminders_user_log_lookup_email($args)
     if (!xarSecurityCheck('ManageReminders')) return;
     xarTpl::setPageTitle('Log Lookup Email');
 
-    if (!xarVarFetch('confirm',     'int', $confirm,            0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('code',        'str', $code,               '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('code',        'str', $data['code'],               '', XARVAR_NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
 #
@@ -26,7 +25,7 @@ function reminders_user_log_lookup_email($args)
 #
 	if (empty($code)) die(xarML('No code passed'));
 	
-	$args['params'] = unserialize(base64_decode($code));
+	$args['params'] = unserialize(base64_decode($data['code']));
 	
 	$data['lookup_id'] = $args['params']['lookup_id'];
 	$data['owner_id'] = $args['params']['owner_id'];
