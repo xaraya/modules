@@ -16,47 +16,19 @@
 					The email has been logged
 				</div>
 				<div class="xar-col">
-					<xar:if condition="$remaining eq 0">
-						This was the last email of this reminder.
-					<xar:elseif condition="$remaining eq 1"/>
-						<xar:ml>
-							You will receive #(1) more email before the due date above. 
-							<xar:mlvar>#$remaining#</xar:mlvar>
-						</xar:ml>
-						<br/>If you remove this reminder, you will not receive any more emails.
-					<xar:else/>
-						<xar:ml>
-							You will receive #(1) more emails before the due date above. 
-							<xar:mlvar>#$remaining#</xar:mlvar>
-						</xar:ml>
-						<br/>If you remove this reminder, you will not receive any more emails.
-					</xar:if>
 				</div>
 			</div>
         <xar:else/>
-			<xar:if condition="empty($removed)">
-				<div class="xar-row">
-					<div class="xar-col-condensed">
-					</div>
-					<div class="xar-col">
-					<h3>Sorry!</h3>
-						<div>
-							You do not have access to this page
-						</div>
+			<div class="xar-row">
+				<div class="xar-col-condensed">
+				</div>
+				<div class="xar-col">
+				<h3>Sorry!</h3>
+					<div>
+						You do not have access to this page
 					</div>
 				</div>
-			<xar:else/>
-				<div class="xar-row">
-					<div class="xar-col-condensed">
-					</div>
-					<div class="xar-col">
-					<h3>Done!</h3>
-						<div>
-							The reminder has been removed.
-						</div>
-					</div>
-				</div>
-			</xar:if>
+			</div>
         </xar:if>
     </div>
 </xar:template>
