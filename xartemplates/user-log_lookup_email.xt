@@ -15,8 +15,6 @@
 				<div class="">
 					The email has been logged
 				</div>
-				<div class="xar-col">
-				</div>
 			</div>
         <xar:else/>
 			<div class="xar-row">
