@@ -23,7 +23,7 @@ function reminders_user_log_lookup_email($args)
 #
 # Unpack the code that was passed
 #
-	if (empty($code)) die(xarML('No code passed'));
+	if (empty($data['code'])) return array();
 	
 	$args['params'] = unserialize(base64_decode($data['code']));
 	
