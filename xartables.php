@@ -19,12 +19,13 @@
 function reminders_xartables()
 {
     // Initialise table array
-    $xartable = [];
+    $xartable = array();
 
-    $xartable['reminders_emails']          = xarDB::getPrefix() . '_reminders_emails';
+    $xartable['reminders_emails']           = xarDB::getPrefix() . '_reminders_emails';
     $xartable['reminders_entries']          = xarDB::getPrefix() . '_reminders_entries';
     $xartable['reminders_history']          = xarDB::getPrefix() . '_reminders_history';
     $xartable['reminders_lookups']          = xarDB::getPrefix() . '_reminders_lookups';
+    $xartable['reminders_lookup_history']   = xarDB::getPrefix() . '_reminders_lookup_history';
 
     // Return the table information
     return $xartable;

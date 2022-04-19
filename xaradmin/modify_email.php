@@ -34,6 +34,8 @@ function reminders_admin_modify_email()
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(['name' => $name]);
     $data['object']->getItem(['itemid' => $data['itemid']]);
+    // Unserialize the message
+    $data['object']->properties['message']->value = unserialize($data['object']->properties['message']->value);
 
     $data['tplmodule'] = 'reminders';
     $data['authid'] = xarSec::genAuthKey('reminders');
@@ -53,6 +55,8 @@ function reminders_admin_modify_email()
             return xarTpl::module('reminders', 'admin', 'modify_email', $data);
         } else {
             // Good data: proceed
+            // Serialize the message
+            $data['object']->properties['message']->value = serialize($data['object']->properties['message']->value);
             // Update the time_modified field
             $data['object']->properties['time_modified']->value = time();
             // Save the item

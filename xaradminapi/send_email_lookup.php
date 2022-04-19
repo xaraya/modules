@@ -28,7 +28,7 @@ function reminders_adminapi_send_email_lookup($data)
 
     # --------------------------------------------------------
 #
-# Send the owner an email
+    # Send the owner an email
 #
 
     $result = [];
@@ -55,16 +55,17 @@ function reminders_adminapi_send_email_lookup($data)
     // Maybe we'll add a BCC at some point
     $bccaddress = $data['copy_emails'] ? [xarUser::getVar('email')] : [];
 
-    $data['reminder_text'] = trim($data['info']['message']);
-    $data['lookup_id']     = (int)$data['info']['id'];
+    $data['lookup_id']     = (int)$data['info']['lookup_id'];
     $data['lookup_name']   = $data['info']['lookup_name'];
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
-    $data['entry_id']      = (int)$data['info']['id'];
-    // We also neede the first name of the recipient for the mailto address
+
+    // We also need the first name of the recipient of the subsequent email to the lookup
     $data['name']->value = $data['lookup_name'];
     $components = $data['name']->getValueArray();
     $data['lookup_first_name']   = $components[1]['value'];
+    // Set the property back to its previous value. We use this for the salutation in this email
+    $data['name']->value = $data['info']['name'];
 
     $data['encoded']      = $data['info']['encoded'];
 
@@ -139,6 +140,7 @@ function reminders_adminapi_send_email_lookup($data)
         $result['code'] = xarMod::apiFunc('mailer', 'user', 'send', $args);
 
         // Save to the database if called for
+/*
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
             $history = DataObjectMaster::getObject(['name' => 'reminders_history']);
             $history->createItem([
@@ -147,6 +149,7 @@ function reminders_adminapi_send_email_lookup($data)
                                     'address'  => $recipientaddress,
                                 ]);
         }
+*/
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
     }

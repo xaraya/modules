@@ -18,7 +18,7 @@
             <div class="xar-row">
                 <xar:if condition="isset($result['exception'])">
                     <xar:set name="isdebug">
-                        xarModVars::get('grader','debugmode')
+                        xarModVars::get('reminders','debugmode')
                     </xar:set>
                     <xar:set name="isadmin">
                         in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))
@@ -107,16 +107,18 @@
         <form method="post" action="#xarServer::getCurrentURL()#" enctype="#$enctype#" style="margin-top: 10px; margin-bottom: 10px;" class="thisForm basic_layout send_custom_email">
                   
 			<div class="xar-row">
+			<!--
 				<div class="xar-col-label">
 					<xar:var name="label">Mailer mail messages found</xar:var>
 					<label for="import" title="#$label#">
 						Available mail messages
 					</label>
 				</div>
+				-->
 				<div class="xar-col">
 					<xar:var name="firstline">Choose a mail message</xar:var>
 					<xar:set name="firstline">"0,$firstline"</xar:set>
-					<xar:data-input type="dropdown" name="message_id" value="$message_id" options="$message_options" firstline="$firstline"/>
+					<xar:data-input type="integerbox" name="message_id" value="$lookup_template" options="$lookup_template" firstline="$firstline" hidden="hidden"/>
 				</div>
 			</div>
 			<div class="xar-row">
@@ -139,7 +141,7 @@
 					</label>
 				</div>
 				<div class="" style="">
-					<xar:data-input type="editor" name="message_body" value="$message_body" style=""/>
+					<xar:data-input type="editor" name="message" value="$message" style=""/>
 				</div>
 			</div>
 

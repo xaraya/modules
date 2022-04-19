@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:template file="user-mod-head"/>
+    <div class="xar-mod-body">
+		<div class="xar-row">
+			<div class="xar-col-condensed">
+			</div>
+			<div class="xar-col">
+				<h3>Log Email</h3>
+			</div>
+		</div>
+        <xar:if condition="!empty($code)">
+			<div class="xar-row">
+				<div class="">
+					The email has been logged
+				</div>
+			</div>
+        <xar:else/>
+			<div class="xar-row">
+				<div class="xar-col-condensed">
+				</div>
+				<div class="xar-col">
+				<h3>Sorry!</h3>
+					<div>
+						You do not have access to this page
+					</div>
+				</div>
+			</div>
+        </xar:if>
+    </div>
+</xar:template>

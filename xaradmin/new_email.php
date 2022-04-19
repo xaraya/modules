@@ -52,6 +52,8 @@ function reminders_admin_new_email()
             // Bad data: redisplay the form with error messages
             return xarTpl::module('reminders', 'admin', 'new_email', $data);
         } else {
+            // Serialize the message
+            $data['object']->properties['message']->value = serialize($data['object']->properties['message']->value);
             // Good data: create the item
             $itemid = $data['object']->createItem();
 

@@ -25,14 +25,11 @@ function reminders_user_compose_lookup_email($args)
     if (!xarVarFetch('code', 'str', $code, '', XARVAR_NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('message_id', 'int', $data['message_id'], 0, XARVAR_NOT_REQUIRED)) {
-        return;
-    }
 
     $data['copy_emails'] = true;
 
     // Get the available email messages
-    $data['message_options'] = xarMod::apiFunc('mailer' , 'user' , 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')));
+    $data['message_options'] = xarMod::apiFunc('mailer', 'user', 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')));
 
     # --------------------------------------------------------
 #
@@ -44,9 +41,12 @@ function reminders_user_compose_lookup_email($args)
 
     $args['params'] = unserialize(base64_decode($code));
 
-    $data['subject'] = $args['params']['subject'];
-    $data['message_body'] = unserialize($args['params']['message']);
-    $name = DataPropertyMaster::getProperty(['name' => 'name']);
+    $data['lookup_id'] = $args['params']['lookup_id'];
+    $data['owner_id'] = $args['params']['owner_id'];
+    $data['subject'] = $args['params']['lookup_subject'];
+    $data['message'] = unserialize($args['params']['lookup_message']);
+    $data['lookup_template'] = $args['params']['lookup_template'];
+    $name = DataPropertyMaster::getProperty(array('name' => 'name'));
 
     // Get the name components of the recipient to pass to the template
     $name->value = $args['params']['lookup_name'];
@@ -88,7 +88,7 @@ function reminders_user_compose_lookup_email($args)
         $bccaddress = $checkbox->value ? [xarUser::getVar('email')] : [];
 
         // Bail if no message was chosen
-        if (empty($data['message_id']) && empty($data['message_body'])) {
+        if (empty($data['lookup_template']) && empty($data['message'])) {
             $data['message_warning'] = xarML('No message was defined');
             return $data;
         }
@@ -109,8 +109,8 @@ function reminders_user_compose_lookup_email($args)
             $recipientaddress = $emailargs['lookup_email'];
         }
         // Only send if we don't have any errors
-        if (empty($data['message'])) {
-            $data['result'] = [];
+        if (empty($data['message_warning'])) {
+            $data['result'] = array();
             try {
                 $args = ['sendername'       => $emailargs['my_name'],
                               'senderaddress'    => $emailargs['my_email'],
@@ -119,44 +119,50 @@ function reminders_user_compose_lookup_email($args)
                               'bccaddresses'     => $bccaddress,
                               'data'             => $emailargs,
                                             ];
-                if (!empty($data['message_id'])) {
+                if (!empty($data['lookup_template'])) {
                     // We have a message ID
-                    $args['id'] = (int)$data['message_id'];
-                    if (!empty($data['message_body'])) {
+                    $args['id'] = (int)$data['lookup_template'];
+                    if (!empty($data['message'])) {
                         // We have a message ID (which indicates a template) and also a message body
                         $args['subject'] = $data['subject'];
                         // In this case we insert the latter into the former
                         $object = DataObjectMaster::getObject(['name' => 'mailer_mails']);
                         $object->getItem(['itemid' => $args['id']]);
                         $message = $object->properties['body']->value;
-                        $args['message'] = str_replace('#$message#', $data['message_body'], $message);
+                        $args['message'] = str_replace('#$message#', $data['message'], $message);
                         $args['mail_type'] = $object->properties['mail_type']->value;
-                        $sendername = $object->properties['sender_name']->value;
-                        if (!empty($sendername)) {
-                            $args['sendername'] = $sendername;
-                        }
-                        $senderaddress = $object->properties['sender_address']->value;
-                        if (!empty($senderaddress)) {
-                            $args['senderaddress'] = $senderaddress;
-                        }
                         unset($args['id']);
                     }
-                } elseif (!empty($data['message_body'])) {
+                } elseif (!empty($data['message'])) {
                     // We have only a message body
-                    $args['message'] = $data['message_body'];
                     $args['subject'] = $data['subject'];
+                    $args['message'] = $data['message'];
                     // In this case we set the mail type to "text to html"
                     $args['mail_type'] = 2;
                 }
 
                 // This sends the mail
                 $data['result']['code'] = xarMod::apiFunc('mailer', 'user', 'send', $args);
+
+                // Now record this email in the history table, if the email was successfully sent
+                if ($data['result']['code'] == 0) {
+                    sys::import('xaraya.structures.query');
+                    $tables = xarDB::getTables();
+                    $q = new Query('INSERT', $tables['reminders_lookup_history']);
+                    $q->addfield('lookup_id', (int)$data['lookup_id']);
+                    $q->addfield('owner_id', (int)$data['owner_id']);
+                    $q->addfield('date', time());
+                    $q->addfield('subject', $data['subject']);
+                    $q->addfield('message', $data['message']);
+                    $q->addfield('timecreated', time());
+                    $q->run();
+                }
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
             }
-            
-			$data['result']['name'] = $emailargs['lookup_name'];
-			$data['result']['email'] = $emailargs['lookup_email'];
+
+            $data['result']['name'] = $emailargs['lookup_name'];
+            $data['result']['email'] = $emailargs['lookup_email'];
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;
