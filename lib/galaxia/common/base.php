@@ -52,7 +52,8 @@ class Base extends Observable
         $this->num_queries++;
         if ($res === false)
             return (NULL); //simulate pears behaviour
-        list($key, $value) = each($res);
+        $key = key($res);
+        $value = current($res);
         return $value;
     }
 

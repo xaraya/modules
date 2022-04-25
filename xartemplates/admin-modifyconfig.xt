@@ -6,7 +6,10 @@
         <h2>Modify Configuration</h2>
 
     <form method="post" action="&xar-modurl-workflow-admin-updateconfig;" enctype="application/x-www-form-urlencoded">
-        <xar:data-form object="$module_settings"/>
+        <fieldset>
+          <legend>General Options</legend>
+          <xar:data-form object="$module_settings"/>
+        </fieldset>
 
         <fieldset>
           <legend>Configuration of Hooked Modules</legend>

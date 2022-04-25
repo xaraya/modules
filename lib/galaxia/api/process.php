@@ -48,7 +48,7 @@ class Process extends Base
     function deactivate() { $this->SetActiveFlag(false); }
     private function SetActiveFlag($value)
     {
-        assert('$value === true or $value===false');
+        assert($value === true or $value===false);
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
         $this->query($query,array($value ? 1 : 0,$this->pId));
