@@ -55,7 +55,6 @@ function reminders_adminapi_send_email_lookup($data)
     // Maybe we'll add a BCC at some point
     $bccaddress = $data['copy_emails'] ? [xarUser::getVar('email')] : [];
 
-    $data['lookup_id']     = (int)$data['info']['lookup_id'];
     $data['lookup_name']   = $data['info']['lookup_name'];
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
