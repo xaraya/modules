@@ -332,8 +332,6 @@ function scheduler_userapi_runjobs($args)
 #
 # Update this job
 #
-        // Reset this job as having not yet run
-        $job['last_run'] = 0;
         $jobobject->setFieldValues($job);
         $jobobject->updateItem(array('itemid' => $job['id']));
         $log = xarML('#(2) Updated: #(1)', $jobname, $log_identifier);
