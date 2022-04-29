@@ -56,6 +56,7 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
  * Xaraya-specific adaptations
  */
 
+// FIXME: this does not work (yet) with PDO
 // Database handler
 if (!isset($GLOBALS['dbGalaxia'])) {
     if (defined('xarCore::GENERATION') && \xarCore::GENERATION == 2) {
@@ -73,7 +74,7 @@ if (!isset($GLOBALS['dbGalaxia'])) {
         // Hope that everything works out :-)
     }
 }
-assert('isset($GLOBALS[\'dbGalaxia\'])');
+assert(isset($GLOBALS['dbGalaxia']));
 
 // Specify how to execute a non-interactive activity (for use in /api/instance.php)
 if (!function_exists('galaxia_execute_activity')) {

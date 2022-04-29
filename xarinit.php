@@ -75,13 +75,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -103,13 +111,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -141,13 +157,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -184,13 +208,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -228,13 +260,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -270,13 +310,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -305,13 +353,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -337,13 +393,21 @@ function workflow_init()
 
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -369,13 +433,21 @@ function workflow_init()
 
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }
@@ -411,13 +483,21 @@ function workflow_init()
     ];
 
     // Create the table DDL
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return false;
+    } // throw back
+    $result = $dbconn->Execute($query);
+    if (!$result) {
+        return false;
+    }
     $query = xarTableDDL::createTable($table, $fields);
     if (empty($query)) {
         return false;
     } // throw back
 
     // Pass the Table Create DDL to adodb to create the table
-    $result =& $dbconn->Execute($query);
+    $result = $dbconn->Execute($query);
     if (!$result) {
         return;
     }

@@ -52,7 +52,7 @@
         <code>var/processes</code> (chmod 777 or equivalent)
       </li>
       <li>
-        install <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a>
+        install <a href="https://graphviz.org/">GraphViz</a>
         if you want to generate some nice process graphs, and adapt
         GRAPHVIZ_DIR in <code>modules/workflow/lib/galaxia/config.php</code> if necessary;
       </li>

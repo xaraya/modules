@@ -59,7 +59,7 @@ class Process extends Base
     }
     private function SetActiveFlag($value)
     {
-        assert('$value === true or $value===false');
+        assert($value === true or $value===false);
         // DB
         $query = "update ".self::tbl('processes')." set isActive=? where pId=?";
         $this->query($query, [$value ? 1 : 0,$this->pId]);
