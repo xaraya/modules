@@ -103,11 +103,11 @@ function scheduler_userapi_runjobs($args)
 			xarLog::message($log, xarLog::LEVEL_INFO);  
             continue;
 
+        } elseif ((int)$job['job_trigger'] != 1) {
 # --------------------------------------------------------
 #
 # Checks for jobs not called by an external scheduler, such as a scheduler block or the sheduler main user page
 #
-        } elseif ((int)$job['job_trigger'] != 1) {
             
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
@@ -210,11 +210,11 @@ function scheduler_userapi_runjobs($args)
                     continue;
                 }
             }
+        } else {
 # --------------------------------------------------------
 #
 # Checks for jobs called by an external scheduler, such as linux crontab
 #
-        } else {
             
             $sourcetype = (int)$job['source_type'];  // Localhost, IP with or without proxy, host name
             $source = $job['source'];           // IP or host name
