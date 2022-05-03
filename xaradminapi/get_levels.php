@@ -16,8 +16,7 @@
 function logconfig_adminapi_get_levels()
 {
     sys::import('xaraya.log.loggers.xarLogger');
-    $logger = new xarLogger();
-    $levels = $logger->levels;
+    $levels = xarLogger::$levels;
 
     return $levels;
 }
