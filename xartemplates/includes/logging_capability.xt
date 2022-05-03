@@ -44,6 +44,7 @@
 	<xar:if condition="!($read_sys AND $write_sys AND $read_sys AND $write_log)">
 		For best performance both files should be readable and writeable
 	</xar:if>
+	<br/>
 	<div>
 		With this setup:
 	</div>
