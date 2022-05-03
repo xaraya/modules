@@ -40,6 +40,8 @@
                 <input type="hidden" name="tab" id="tab" value="#$tab#"/>
                 <xar:template file="update-button" module="base" />
             </form>
+	    	<br/>
+	    	<xar:template file="logging_capability"/>
         <!--
              - - - - - - - - - - - - - - - - - - - Begin Tab2 Options  - - - - - - - - - - - - - - - - - - -
         -->

@@ -64,5 +64,7 @@
 				Fallback logging is currently not active.
 			</div>
 		</xar:if>
+		<br />
+	    <xar:template file="logging_capability"/>
 	</div>
 </xar:template>

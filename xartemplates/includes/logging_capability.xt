@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="read_sys">is_readable(sys::varpath() . '/config.system.php')</xar:set>
+    <xar:set name="read_log">is_readable(sys::varpath() . '/logs/config.log.php')</xar:set>
+    <xar:set name="write_sys">is_writeable(sys::varpath() . '/config.system.php')</xar:set>
+    <xar:set name="write_log">is_writeable(sys::varpath() . '/logs/config.log.php')</xar:set>
+    
+    <xar:if condition="$read_sys">
+		<div style="color: green">
+    		The system configuration file config.system.php is readable.
+    	</div>
+    <xar:else/>
+ 		<div style="color: red">
+    		The system configuration file config.system.php is not readable.
+    	</div>
+	</xar:if>
+    <xar:if condition="$write_sys">
+		<div style="color: green">
+    		The system configuration file config.system.php is writeable.
+    	</div>
+    <xar:else/>
+ 		<div style="color: red">
+    		The system configuration file config.system.php is not writeable.
+    	</div>
+	</xar:if>
+    <xar:if condition="$read_log">
+		<div style="color: green">
+    		The logging configuration file config.log.php is readable.
+    	</div>
+    <xar:else/>
+ 		<div style="color: red">
+    		The logging configuration file config.log.php is not readable.
+    	</div>
+	</xar:if>
+    <xar:if condition="$write_log">
+		<div style="color: green">
+    		The logging configuration file config.log.php is writeable.
+    	</div>
+    <xar:else/>
+ 		<div style="color: red">
+    		The logging configuration file config.log.php is not writeable.
+    	</div>
+	</xar:if>
+	<xar:if condition="!($read_sys AND $write_sys AND $read_sys AND $write_log)">
+		For best performance both files should be readable and writeable
+	</xar:if>
+	<div>
+		With this setup:
+	</div>
+	<div>
+		<xar:if condition="$read_sys AND !$read_log">
+			You cannot turn logging on or off
+		<xar:elseif condition="$write_sys AND !$read_log"/>
+			You can turn logging on or off, and you can configure and enable fallback logging. You cannot run any of the loggers.
+		<xar:elseif condition="$write_sys AND $read_log AND !$write_log"/>
+			You can turn logging on or off, and you can configure and enable fallback logging. You can also run the different loggers as they are, but you cannot configure them.
+		<xar:elseif condition="$write_sys AND $write_log"/>
+			You can turn logging on or off, and you can configure and enable fallback logging. You can also configure and run the different loggers.
+		</xar:if>
+	</div>
+</xar:template>
