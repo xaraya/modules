@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div class="xar-mod-head">
-      <span class="xar-mod-title">LogConfig Administration</span>
-    </div>
-    <xar:template file="menu" />
-    
-    <h2>Modify a Logger</h2>
-    
-    <table width="100%" border="1" cellspacing="0" cellpadding="4">
-      <tr>
-        <td align="center">
-          <b>Preview</b>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <xar:data-display object="$object" />
-        </td>
-      </tr>
-    </table>
-    <br />
-    
-    <form method="POST" action="#xarModURL('logconfig', 'admin', 'update')#">
-      <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
-      <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
-      <input type="hidden" name="itemtype" id="itemtype" value="#$itemtype#" />
-      
-      <!-- this does most of the hard work :) -->
-      <xar:data-form object="$object" />
-      <input type="submit" name="preview" value="#xarML('Preview')#" />
-      &#160;&#160;&#160;
-      <input type="submit" value="#xarML('Update')#" />
-      
-    </form>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="admin-mod-head"/>
+
+    <div class="xar-mod-body">
+		<h2>Configure a Logger</h2>
+	
+        <form method="post" action="#xarServer::getCurrentURL()#">
+            <fieldset>
+                <legend>Logger Configuration</legend>
+                <xar:data-form object="$object" tplmodule="$tplmodule"/>
+            </fieldset>
+            <div class="xar-row">
+                <div class="xar-col">
+                </div>
+                <div class="xar-col">
+                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('logconfig')#"/>
+                    <input type="hidden" name="name" id="name" value="#$object:name#"/>
+                    <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
+                    <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>
+                    <input type="hidden" name="confirm" id="confirm" value="true"/>
+                    <xar:var name="label">Cancel</xar:var>
+                    <xar:button type="cancel" name="cancel" value="$label" />&#160;
+                    <xar:var name="label">Update</xar:var>
+                    <xar:button type="submit" name="post" value="$label"/>&#160;
+                    <xar:var name="label">Update and Exit</xar:var>
+                    <xar:button type="submit" name="exit" label="$label"/>
+                </div>
+            </div>
+        </form>
+	</div>
 </xar:template>

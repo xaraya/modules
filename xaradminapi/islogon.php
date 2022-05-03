@@ -16,7 +16,8 @@
  */
 function logconfig_adminapi_islogon()
 {
-    return xarLogConfigReadable();
+	$logon = xarSystemVars::get(sys::CONFIG, 'Log.Enabled') && xarLog::ConfigReadable();
+    return $logon;
 }
 
 ?>

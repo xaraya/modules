@@ -27,21 +27,18 @@ function logconfig_init()
 
     $module = 'logconfig';
     $objects = array(
-                     'html_logger',
-                     'javascript_logger',
-                     'mail_logger',
-                     'mozilla_logger',
-                     'simple_logger',
-                     'sql_logger',
-                     'syslog_logger',
+                     'logconfig_html',
+                     'logconfig_javascript',
+                     'logconfig_mail',
+                     'logconfig_mozilla',
+                     'logconfig_simple',
+                     'logconfig_sql',
+                     'logconfig_syslog',
                      );
-    if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+    if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
-    //This is used in admin/view
-    xarModVars::set('logconfig','itemstypenumber',7);
-
-    xarRegisterMask('ManageLogConfig','All','logconfig','Item','All','ACCESS_DELETE');
-    xarRegisterMask('AdminLogConfig','All','logconfig','Item','All','ACCESS_ADMIN');
+    xarMasks::register('ManageLogConfig','All','logconfig','Item','All','ACCESS_DELETE');
+    xarMasks::register('AdminLogConfig','All','logconfig','Item','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return logconfig_upgrade('0.1.1');

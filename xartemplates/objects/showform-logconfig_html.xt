@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <div class="xar-row">
+        <div class="xar-col">
+        	Logger
+        </div>
+        <div class="xar-col">
+           HTML Logger
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Type</xar:var>
+            <xar:data-label property="$properties['type']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['type']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Description</xar:var>
+            <xar:data-label property="$properties['description']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['description']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">File</xar:var>
+            <xar:data-label property="$properties['filename']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['filename']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">File mode</xar:var>
+            <xar:data-label property="$properties['mode']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['mode']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Maximum File Size</xar:var>
+            <xar:data-label property="$properties['maxfilesize']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['maxfilesize']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Time Format</xar:var>
+            <xar:data-label property="$properties['timeformat']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['timeformat']" />
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">Log Levels</xar:var>
+            <xar:data-label property="$properties['loglevel']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['loglevel']" layout="vertical"/>
+        </div>
+    </div>
+    <div class="xar-row">
+        <div class="xar-col">
+            <xar:var name="label">State</xar:var>
+            <xar:data-label property="$properties['state']" for="id" label="$label" />
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['state']" />
+        </div>
+    </div>
+</xar:template>

@@ -1,0 +1,42 @@
+<menu>
+    <menuitems>
+    <!--
+        <menuitem>
+            <mask>ManageLogConfig</mask>
+            <includes>
+                <includeitem>newloggers</includeitem>
+            </includes>
+            <target>newloggers</target>
+            <title>Adds a new logger to the configuration</title>
+            <label>Add logger</label>
+        </menuitem>
+    -->
+        <menuitem>
+            <mask>ManageLogConfig</mask>
+            <includes>
+                <includeitem>view</includeitem>
+            </includes>
+            <target>view</target>
+            <title>View all loggers currently configured</title>
+            <label>List loggers</label>
+        </menuitem>
+        <menuitem>
+            <mask>AdminAssyria</mask>
+            <includes>
+                <includeitem>modifyconfig</includeitem>
+            </includes>
+            <target>modifyconfig</target>
+            <title>Modify the configuration settings of this module</title>
+            <label>Modify Configuration</label>
+        </menuitem>
+        <menuitem>
+            <includes>
+                <includeitem>main</includeitem>
+                <includeitem>overview</includeitem>
+            </includes>
+            <target>main</target>
+            <title>Short documentation of this module</title>
+            <label>LogConfig Overview</label>
+        </menuitem>
+    </menuitems>
+</menu>

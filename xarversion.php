@@ -1,19 +1,18 @@
 <?php
 /**
- * Logconfig initialization functions
- *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage logconfig
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2002-2022 The Digital Development Foundation
+ * @copyright (C) 2022 Luetolf-Carroll GmbH
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Logconfig Module
- * @link http://xaraya.com/index.php/release/6969.html
  * @author Logconfig module development team
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 $modversion['name']         = 'Log Configuration Module';
 $modversion['id']           = '6969';
-$modversion['version']      = '0.1.1';
+$modversion['version']      = '1.0.0';
 $modversion['displayname']  = xarML('LogConfig');
 $modversion['description']  = 'Module for Configuration the Logging System';
 $modversion['credits']      = 'xardocs/credits.txt';
@@ -27,6 +26,12 @@ $modversion['admin']        = 1;
 $modversion['user']         = 0;
 $modversion['class']        = 'Admin';
 $modversion['category']     = 'System';
-$modversion['dependency']   = array(182);
+$modversion['dependency']     = array();
+$modversion['dependencyinfo'] = array(
+								0 => array(
+										'name' => 'Xaraya Core',
+										'version_ge' => '2.4.0'
+									 ),
+								);
 
 ?>

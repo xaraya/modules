@@ -16,14 +16,10 @@
  */
 function logconfig_admin_main()
 {
-    if (!xarSecurityCheck('AdminLogConfig')) return;
-
-    $data = xarModAPIFunc('logconfig','admin','menu');
-
-    xarController::redirect(xarModURL('logconfig', 'admin', 'view'));
+    if (!xarSecurityCheck('ManageLogConfig')) return;
 
     // Return the template variables defined in this function
-    return $data;
+    return array();
 }
 
 ?>

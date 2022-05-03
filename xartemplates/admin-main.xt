@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <div class="xar-mod-head">
-        <span class="xar-mod-title">LogConfig Administration</span>
-    </div>
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="admin-mod-head"/>
+
     <div class="xar-mod-body">
-        <xar:template file="menu" />
+      <xar:var name="label">Official Icon</xar:var>
+      <img src="#xarTplGetImage('module-generic.png','base')#" class="xar-module-icon" alt="#$label#" width="96" height="96"/>
         <h2>Overview</h2>
-            <img src="#xarTplGetImage('admin_generic.gif','base')#" class="xar-module-icon" alt="official icon" width="96" height="96" />
             <h3>What is it?</h3>
     
-            <p>The LogConfig Module controls the Xaraya logging system.</p>
+            <p>
+            	The LogConfig module lets you configure the Xaraya logging system. It is essentially a wrapper for the logging parts of the configuration files found at
+            <ul>
+                <li>
+                	var/config.system.php
+                </li>
+                <li>
+                	var/logs/config.log.php
+                </li>
+            </ul>
+            In other words, anything this module does can be done by directly editing those two files. Nonetheless, unless you know what you're doing, using this module to configure logging is the recommended way to go.
+            </p>
     
             <h3>How to use it?</h3>
-            <p>From the menu, you have three choices. </p>
+            <p>You can: </p>
             <ul>
-                <li>Add logger -- Allows you add&#160; a new logger to the configuration. You can choose the type most applicable to your situation.</li>
-                <li>List loggers -- List the loggers that are currently configured. From here you can also edit the settings for each logger.</li>
-                <li>Turn logging on/off -- Makes Xaraya log according to the loggers configured or not.</li>
+                <li>
+                	List the loggers that are currently configured. From here you can then edit the settings for each logger, including whether or not it is active.
+                </li>
+                <li>
+                	Turn Xaraya logging on/off globally. This makes Xaraya log (or not) according to the loggers configured. This setting in the modifyconfig page is identical to the setting found under the logging tab in the modifyconfig page of the base module. The latter can be found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
+                </li>
             </ul>
             <p>
-                The Xaraya loggers are shipped with the core and are located in lib/xaraya/log/loggers
+                The loggers are shipped with the Xaraya core and are located in lib/xaraya/log/loggers
             </p>
     
             <h3>Fallback System:</h3>
-            <p>If the logging is set to off in this module (if this module is not active, it turns off logging automatically) and there is no logging configuration in config.system.php (old configuration style) then there is a fallback system that will log to var/logs/log.txt whenever it is present .</p>
+            <p>If logging is set to on in this module and none of the loggers are active, then there is a fallback system that will log to a text file. This fallback can be configured under the logging tab in the modifyconfig page of the base module, found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
+            </p>
             <h3>
                 Available loggers
             </h3>
             <ul>
-                <li>The sql logger</li>
-                <li>The mail logger</li>
                 <li>The html logger</li>
+                <li>The javascript logger</li>
+                <li>The mail logger</li>
                 <li>The mozilla logger</li>
                 <li>The simple logger</li>
+                <li>The sql logger</li>
                 <li>The syslog logger</li>
             </ul>
             <h3>
@@ -42,8 +58,7 @@
             <p>
                 The sql logger needs a database table to write its data to. This table should be added to your database with the following code:
             </p>
-                <code>
-    
+                <pre>
                 CREATE TABLE `xar_log_messages` (
                   `id` int(10) NOT NULL auto_increment,
                   `ident` varchar(32) NOT NULL,
@@ -52,8 +67,7 @@
                   `message` text NOT NULL,
                   PRIMARY KEY  (`id`)
                 )
-    
-                </code>
+                </pre>
             <p>
                 The sql logger will log all messages to a database table. Currently, there is no interface to manage the entries.
             </p>
@@ -70,17 +84,10 @@
                 Further Information
             </h3>
             <p>
-                Further information on the LogConfig module can be found at
+                To be added on occasion!
             </p>
-            <ul>
-                <li>LogConfig Extension page at <a title="#xarML('LogConfig Module - Xaraya Extension 6969')#" href="http://www.xaraya.com/index.php/release/6969.html">Xaraya Extension and Releases</a>.
-                     Click on Version History tab at the bottom to get the latest release information.
-                </li>
-                <li>Related tutorials and documentation on LogConfig found at <a href="http://www.xaraya.com/index.php/keywords/logconfig/" title="#xarML('Related documentation on LogConfig')#">Xaraya Documentation.</a>
-                </li>
-            </ul>
             <p class="xar-sub">
-                <strong>&#160;LogConfig Module Overview</strong><br />&#160;Version 1.1.0&#160; 2007-12-05
+                <strong>&#160;LogConfig Module Overview</strong><br />&#160;Version 1.0.0&#160; 2022-5-01
             </p>
     </div>
 </xar:template>

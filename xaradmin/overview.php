@@ -22,7 +22,6 @@ function logconfig_admin_overview()
 {
     if (!xarSecurityCheck('AdminLogConfig')) return;
 
-    $data = xarModAPIFunc('logconfig','admin','menu');
 
     return xarTplModule('logconfig', 'admin', 'main', $data,'main');
 

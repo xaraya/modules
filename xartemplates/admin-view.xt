@@ -1,90 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <div class="xar-mod-head"><span class="xar-mod-title">LogConfig Administration</span></div>
-    <xar:template file="menu" />
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:style scope="module" module="base" file="navtabs"/>
+    <xar:template file="admin-mod-head"/>
         
-    <h2>List of Loggers</h2>
+    <div class="xar-mod-body">
+		<h2>List of Loggers</h2>
 
-    <div style="text-align: center;">
-    <table width="100%" border="1" cellspacing="0" cellpadding="4">
-        <tr>
-                <th>Type</th>
-                <th width="100">Description</th>
-                <th>Configuration</th>
-                <th>Options</th>
-        </tr>
+		<div style="text-align: center;">
+			<table width="80%" border="1" cellspacing="2" cellpadding="2">
+				<tr>
+					<th>Type</th>
+					<th>Description</th>
+					<th>State</th>
+					<th>Action</th>
+				</tr>
 
-        <xar:for start="$i = 1" test="$i le $itemsnum" iter="$i++">
+				<xar:foreach in="$loggers" key="$itemid" value="$logger">
+					<xar:set name="properties">$logger->properties</xar:set>
+					<tr>
+						<td>
+							<xar:data-output property="$properties['type']"/>
+						</td>
+						<td>
+							<xar:data-output property="$properties['description']" />
+						</td>
+						<td>
+							<xar:data-output property="$properties['state']"/>
+						</td>
+						<td style="text-align: center">
+							<a href="#xarModURL('logconfig','admin','modify',array('logger' => $properties['type']->value))#">Configure</a>
+						</td>
 
-            <xar:data-getitems properties="properties" values="values" module="logconfig" itemtype="$i" />
+					</tr>
+				</xar:foreach>
+			</table>
+		</div>
 
-            <xar:foreach in="$values" key="$itemid" value="$fields">
-                <tr>
-                    <td>
-                        <xar:if condition="!empty($fields['type'])">
-                               <xar:data-output property="$properties['type']" value="$fields['type']" />
-                        <xar:else />
-                               &#160;
-                        </xar:if>
-                    </td>
-                    <td>
-                        <xar:if condition="!empty($fields['description'])">
-                               <xar:data-output property="$properties['description']" value="$fields['description']" />
-                        <xar:else />
-                               &#160;
-                        </xar:if>
-                    </td>
-
-                    <td><table border="1">
-                        <tr>
-                            <xar:foreach in="$properties" key="$name">
-                                <xar:if condition="($name ne 'type') and ($name ne 'description')">
-                                    <th><xar:data-label property="$properties[$name]" /></th>
-                                </xar:if>
-                            </xar:foreach>
-                          </tr>
-                          <tr>
-                            <xar:foreach in="$properties" key="$name">
-                                <xar:if condition="($name ne 'type') and ($name ne 'description')">
-                                    <xar:if condition="!empty($fields[$name])">
-                                           <td><xar:data-output property="$properties[$name]" value="$fields[$name]" /></td>
-                                    <xar:else />
-                                           <td>&#160;</td>
-                                    </xar:if>
-                                </xar:if>
-                            </xar:foreach>
-                        </tr>
-                    </table></td>
-                    <td>
-                        <a href="#xarModURL('logconfig','admin','modify',array('itemtype'=>$i, 'itemid' => $itemid))#">Edit</a>
-                        <br />
-                        <a href="#xarModURL('logconfig','admin','delete',array('itemtype'=>$i, 'itemid' => $itemid))#">Delete</a>
-                    </td>
-
-                </tr>
-            </xar:foreach>
-
-        </xar:for>
-    </table>
-    </div>
-
-    <br />
-    <br />
-
-    <xar:ml>
-        <xar:mlstring>There exists a fallback mechanism which will log to file #(1) even if the logging is turned off, so admins can still log if unable to install/use the logconfig module.</xar:mlstring>
-        <xar:mlvar>#$fallbackFile#</xar:mlvar>
-    </xar:ml>
-    <br />
-    For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user.
-    <xar:if condition="$fallbackOn">
-        <br />
-        <div style="color: ##9ACD32">
-            <xar:ml>
-                <xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
-                <xar:mlvar>#$fallbackFile#</xar:mlvar>
-            </xar:ml>
-        </div>
-        <br />
-    </xar:if>
+		<xar:ml>
+			<xar:mlstring>There is a fallback mechanism which will log to file <em>#(1)</em> if logging is enabled even if no loggers are active, so admins can still log if unable to install/use the logconfig module.</xar:mlstring>
+			<xar:mlvar>#$fallbackFile#</xar:mlvar>
+		</xar:ml>
+		<br />
+		For this fallback mechanism to work, it is necessary for this file to exist and be writable by the http server user. It also requires that logging be enabled but all available loggers be inactive.
+		<xar:if condition="xarMod::apiFunc('logconfig', 'admin', 'islogon')">
+			<div style="color: green">
+				Logging is currently enabled
+			</div>
+		<xar:else/>
+			<div style="color: red">
+				Logging is currently disabled
+			</div>
+		</xar:if>
+		<xar:if condition="$fallbackOn">
+			<div style="color: green">
+				<xar:ml>
+					<xar:mlstring>Because the file #(1) is present and writable, it is being used as the fallback mechanism for logging purposes.</xar:mlstring>
+					<xar:mlvar>#$fallbackFile#</xar:mlvar>
+				</xar:ml>
+			</div>
+		<xar:else/>
+			<div style="color: red">
+				Fallback logging is currently not active.
+			</div>
+		</xar:if>
+	</div>
 </xar:template>

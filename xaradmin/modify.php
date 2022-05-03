@@ -1,32 +1,25 @@
 <?php
 /**
- * Logconfig initialization functions
- *
  * @package modules
- * @copyright (C) 2002-2007 The Digital Development Foundation
+ * @subpackage logconfig
+ * @category Third Party Xaraya Module
+ * @version 1.0.0
+ * @copyright (C) 2002-2022 The Digital Development Foundation
+ * @copyright (C) 20229 Luetolf-Carroll GmbH
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
- * @link http://www.xaraya.com
- *
- * @subpackage Logconfig Module
- * @link http://xaraya.com/index.php/release/6969.html
  * @author Logconfig module development team
+ * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 /**
- * modify an item
+ * Configure a logger
  */
 function logconfig_admin_modify($args)
 {
-    extract($args);
+    if (!xarVar::fetch('logger',   'str',      $logger,          '',    xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',  'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('exit',     'checkbox', $data['exit'],    false, xarVar::NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('itemid',   'id',   $itemid)) return;
-    if (!xarVarFetch('objectid', 'id',     $objectid, $objectid, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype', 'id',     $itemtype, $itemtype, XARVAR_NOT_REQUIRED)) return;
-
-    if (!empty($objectid)) {
-        $itemid = $objectid;
-    }
-
-    if (empty($itemid)) {
+    if (empty($logger)) {
         $msg = xarML('Invalid #(1) for #(2) function #(3)() in module #(4)',
                     'item id', 'admin', 'modify', 'logconfig');
         xarErrorSet(XAR_USER_EXCEPTION, 'BAD_PARAM',
@@ -34,25 +27,35 @@ function logconfig_admin_modify($args)
         return $msg;
     }
 
-    // get the Dynamic Object defined for this module (and itemtype, if relevant)
-    $object = xarModAPIFunc('dynamicdata','user','getobject',
-                             array('module' => 'logconfig',
-                                   'itemid' => $itemid,
-                                   'itemtype' => $itemtype));
-    if (!isset($object)) return;
+    sys::import('modules.dynamicdata.class.objects.base');
+    $objectname = 'logconfig_' . $logger;
+	$data['object'] = DataObjectMaster::getObject(['name' => $objectname]);
+	$data['object'] = xarMod::apiFunc('logconfig', 'admin', 'charge_loggerobject', array('logger' => $data['object']));
 
-    // get the values for this item
-    $newid = $object->getItem();
-    if (!isset($newid) || $newid != $itemid) return;
+    $data['tplmodule'] = 'logconfig';
 
-    if (!xarSecurityCheck('AdminLogConfig')) return;
+    if ($data['confirm']) {
+    
+        // Check for a valid confirmation key
+        if(!xarSecConfirmAuthKey()) return;
 
-    $data = xarModAPIFunc('logconfig','admin','menu');
-    $data['itemid'] = $itemid;
-    $data['itemtype'] = $itemtype;
-    $data['object'] =& $object;
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
+        
+        if (!$isvalid) {
+            // Bad data: redisplay the form with error messages
+            return xarTplModule('logconfig','admin','modify', $data);        
+        } else {
+            // Good data: save the data
+            xarMod::apiFunc('logconfig', 'admin', 'discharge_loggerobject', array('logger' => $data['object']));
 
-    // Return the template variables defined in this function
+            if ($data['exit']) {
+				// Jump to the next page
+				xarController::redirect(xarModURL('logconfig','admin','view'));
+				return true;
+            }
+        }
+    }
     return $data;
 }
 
