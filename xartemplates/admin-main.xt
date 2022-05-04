@@ -78,7 +78,7 @@
                 The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.
             </p>
             <p>
-                The logging level can be set with the dynamic "Logging Level" property.
+                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful email can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarModURL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
             </p>
             <h3>
                 Further Information
