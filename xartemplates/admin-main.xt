@@ -90,12 +90,12 @@
                 Available loggers
             </h3>
             <ul>
-                <li>The html logger</li>
+                <li>The html logger: writes log data to an HTML file</li>
                 <li>The javascript logger</li>
-                <li>The mail logger</li>
+                <li>The mail logger: sends log data to a recipient via email</li>
                 <li>The mozilla logger</li>
-                <li>The simple logger</li>
-                <li>The sql logger</li>
+                <li>The simple logger: writes log data to a text file</li>
+                <li>The sql logger: writes log data to a database table</li>
                 <li>The syslog logger</li>
             </ul>
             <p>
