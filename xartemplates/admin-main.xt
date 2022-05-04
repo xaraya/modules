@@ -41,6 +41,52 @@
             <p>If logging is set to on in this module and none of the loggers are active, then there is a fallback system that will log to a text file. This fallback can be configured under the logging tab in the modifyconfig page of the base module, found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
             </p>
             <h3>
+                Message levels
+            </h3>
+            <p>
+            	The Xaraya loggers recognize the following message levels. Each logger can be configured to track one or more of these message levels.
+            </p>
+            <div class="xar-row">
+            	<div class="xar-col-condensed">
+            	</div>
+            	<div class="xar-col">
+					<table style="border: 1px solid; width: 220px">
+						<tr>
+							<th>
+								Name
+							</th>
+							<th>
+								Numeric Value
+							</th>
+						</tr>
+						<tr>
+							<td>EMERGENCY</td><td style="text-align: center">1</td>
+						</tr>
+						<tr>
+							<td>ALERT</td><td style="text-align: center">2</td>
+						</tr>
+						<tr>
+							<td>CRITICAL</td><td style="text-align: center">3</td>
+						</tr>
+						<tr>
+							<td>ERROR</td><td style="text-align: center">4</td>
+						</tr>
+						<tr>
+							<td>WARNING</td><td style="text-align: center">5</td>
+						</tr>
+						<tr>
+							<td>NOTICE</td><td style="text-align: center">6</td>
+						</tr>
+						<tr>
+							<td>INFO</td><td style="text-align: center">7</td>
+						</tr>
+						<tr>
+							<td>DEBUG</td><td style="text-align: center">8</td>
+						</tr>
+					</table>
+            	</div>
+            </div>
+            <h3>
                 Available loggers
             </h3>
             <ul>
@@ -52,11 +98,19 @@
                 <li>The sql logger</li>
                 <li>The syslog logger</li>
             </ul>
+            <p>
+            	The loggers are all subclasses of a parent xarLogger class, found at lib/xaraya/log/loggers/xarLogger.php. This class is responsible for:
+            </p>
+            <ul>
+                <li>Defining the log message levels that Xaraya uses (see above)</li>
+                <li>Defining the timestamp formats that are used in displays.</li>
+                <li>Creating a unique universal identifier (UUID) based on PHP's random_bytes function. This is used by several of the loggers to differentiate between one pageview and the next.</li>
+            </ul>
             <h3>
-                Notes on the sql logger
+                Notes on the SQL logger
             </h3>
             <p>
-                The sql logger needs a database table to write its data to. This table should be added to your database. For MySQL you can use the following code:
+                The SQL logger needs a database table to write its data to. This table should be added to your database. For MySQL you can use the following code:
             </p>
                 <pre>
                 CREATE TABLE `xar_log_messages` (
@@ -69,7 +123,7 @@
                 );
                 </pre>
             <p>
-                The sql logger will log all messages to this database table. Currently, there is no interface to manage the entries. In configuring this logger, make sure that your entry for the SQL Table parameter corresponds to the name of the database table you have created.
+                The SQL logger will log all messages to this database table. Currently, there is no interface to manage the entries. In configuring this logger, make sure that your entry for the SQL Table parameter corresponds to the name of the database table you have created.
             </p>
             <h3>
                 Notes on the mail logger
@@ -78,7 +132,7 @@
                 The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.
             </p>
             <p>
-                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful email can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarModURL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
+                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful information can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarModURL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
             </p>
             <h3>
                 Further Information
