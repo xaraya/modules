@@ -56,7 +56,7 @@
                 Notes on the sql logger
             </h3>
             <p>
-                The sql logger needs a database table to write its data to. This table should be added to your database. For MySQL use the following code:
+                The sql logger needs a database table to write its data to. This table should be added to your database. For MySQL you can use the following code:
             </p>
                 <pre>
 				CREATE TABLE `xar_log_messages` (
