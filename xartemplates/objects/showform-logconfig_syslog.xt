@@ -29,10 +29,25 @@
     <div class="xar-row">
         <div class="xar-col">
             <xar:var name="label">Facility</xar:var>
-            <xar:data-label property="$properties['facility']" for="id" label="$label" />
+            <xar:data-label type="$properties['facility']" for="id" label="$label"/>
         </div>
         <div class="xar-col">
-            <xar:data-input property="$properties['facility']" />
+            <xar:set name="options">
+            	array(
+            			array('id' => 'LOG_AUTH',     'name' => 'LOG_AUTH'),
+            			array('id' => 'LOG_AUTHPRIV', 'name' => 'LOG_AUTHPRIV'),
+            			array('id' => 'LOG_CRON',     'name' => 'LOG_CRON'),
+            			array('id' => 'LOG_DAEMON',   'name' => 'LOG_DAEMON'),
+            			array('id' => 'LOG_KERN',     'name' => 'LOG_KERN'),
+            			array('id' => 'LOG_LPR',      'name' => 'LOG_LPR'),
+            			array('id' => 'LOG_MAIL',     'name' => 'LOG_MAIL'),
+            			array('id' => 'LOG_NEWS',     'name' => 'LOG_NEWS'),
+            			array('id' => 'LOG_SYSLOG',   'name' => 'LOG_SYSLOG'),
+            			array('id' => 'LOG_USER',     'name' => 'LOG_USER'),
+            			array('id' => 'LOG_UUCP',     'name' => 'LOG_UUCP'),
+            		)
+            </xar:set>
+            <xar:data-input property="$properties['facility']"  options="$options"/>
         </div>
     </div>
     <div class="xar-row">
