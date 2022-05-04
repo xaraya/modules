@@ -90,13 +90,14 @@
                 Available loggers
             </h3>
             <ul>
+                <li>The errorlog logger: writes log data to the web server's error log</li>
                 <li>The html logger: writes log data to an HTML file</li>
                 <li><s>The javascript logger: opens a debug window with the log information</s></li>
                 <li>The mail logger: sends log data to a recipient via email</li>
                 <li><s>The mozilla logger: opens a debug window with the log information</s></li>
                 <li>The simple logger: writes log data to a text file</li>
                 <li>The sql logger: writes log data to a database table</li>
-                <li>The syslog logger</li>
+                <li>The syslog logger: write log data to server logs</li>
             </ul>
             <p>
             	The loggers are all subclasses of a parent xarLogger class, found at lib/xaraya/log/loggers/xarLogger.php. This class is responsible for:

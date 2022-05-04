@@ -16,6 +16,7 @@
 function logconfig_adminapi_get_loggers()
 {
     $loggers = array(
+    	['id' => 'error_log',   'name' => 'Error Log',      'object' => 'logconfig_errorlog'],
     	['id' => 'html',        'name' => 'HTML',           'object' => 'logconfig_html'],
     	['id' => 'javascript',  'name' => 'Javascript Log', 'object' => 'logconfig_javascript'],
     	['id' => 'mail',        'name' => 'Mail',           'object' => 'logconfig_mail'],
