@@ -134,6 +134,8 @@ function scheduler_userapi_runjobs($args)
     
             // if this is the first time we run this job and it's not a crontab job, always run it
             } elseif (empty($job['last_run']) && $job['job_interval'] != '0c') {
+                $log = xarML('#(2) First run for #(1). Will send.', $jobname, $log_identifier);
+				$logs[] = $log;
     
             // if the job already ran, check if we need to run it again
             } else {
