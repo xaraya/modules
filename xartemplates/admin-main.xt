@@ -108,6 +108,21 @@
                 <li>Creating a unique universal identifier (UUID) based on PHP's random_bytes function. This is used by several of the loggers to differentiate between one pageview and the next.</li>
             </ul>
             <h3>
+                Notes on the errorlog logger
+            </h3>
+            <p>
+            	This logger writes to PHP's error log, which can be accessed by the PHP funcion error_log(), as described <a href="https://www.php.net/manual/en/function.error-log.php" target="_blank">here</a>.
+            </p>
+            <h3>
+                Notes on the mail logger
+            </h3>
+            <p>
+                The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.
+            </p>
+            <p>
+                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful information can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarModURL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
+            </p>
+            <h3>
                 Notes on the SQL logger
             </h3>
             <p>
@@ -127,13 +142,10 @@
                 The SQL logger will log all messages to this database table. Currently, there is no interface to manage the entries. In configuring this logger, make sure that your entry for the SQL Table parameter corresponds to the name of the database table you have created.
             </p>
             <h3>
-                Notes on the mail logger
+                Notes on the syslog logger
             </h3>
             <p>
-                The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.
-            </p>
-            <p>
-                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful information can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarModURL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
+            	Depending on its configuration, this logger writes to a server log. as described <a href="https://www.php.net/manual/en/function.syslog.php" target="_blank">here</a>. It should be noted that different server operating systems have different types of logs. We make no claims about which of this loggers configurations will work in any given case.
             </p>
             <h3>
                 Further Information
