@@ -27,6 +27,7 @@ function logconfig_init()
 
     $module = 'logconfig';
     $objects = array(
+                     'logconfig_errorlog',
                      'logconfig_html',
                      'logconfig_javascript',
                      'logconfig_mail',
