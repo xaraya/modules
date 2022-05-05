@@ -76,7 +76,7 @@ function scheduler_userapi_runjobs($args)
     $log_identifier = 'Scheduler runjobs:';
     $log = xarML('#(1) Starting jobs', $log_identifier);
 	$logs[] = $log;
-	xarLog::message($log, xarLog::LEVEL_INFO);  
+	xarLog::message($log, xarLog::LEVEL_NOTICE);  
 	
     $hasrun = array();
     $now = time();
@@ -160,22 +160,22 @@ function scheduler_userapi_runjobs($args)
                             $skip = 1;
                         }
                         break;
-                    case 'h':
+                    case 'h':    // Hours
                         if ($now - $job['last_run'] < $count * 60 * 60) {
                             $skip = 1;
                         }
                         break;
-                    case 'd':
+                    case 'd':    // Days
                         if ($now - $job['last_run'] < $count * 24 * 60 * 60) {
                             $skip = 1;
                         }
                         break;
-                    case 'w':
+                    case 'w':    // Weeks
                         if ($now - $job['last_run'] < $count * 7 * 24 * 60 * 60) {
                             $skip = 1;
                         }
                         break;
-                    case 'm': // work with day of the month here
+                    case 'm':	// work with day of the month here
                         $new = getdate($now);
                         $old = getdate($job['last_run']);
                         $new['mon'] += 12 * ($new['year'] - $old['year']);
@@ -185,7 +185,7 @@ function scheduler_userapi_runjobs($args)
                             $skip = 1;
                         }
                         break;
-                    case 'c': // crontab
+                    case 'c':	// crontab
                         if (empty($job['crontab'])) {
                             $job['crontab'] = array();
                         }
@@ -215,7 +215,6 @@ function scheduler_userapi_runjobs($args)
 #
 # Checks for jobs called by an external scheduler, such as linux crontab
 #
-            
             $sourcetype = (int)$job['source_type'];  // Localhost, IP with or without proxy, host name
             $source = $job['source'];           // IP or host name
 
@@ -341,7 +340,7 @@ function scheduler_userapi_runjobs($args)
     }
     $log = xarML('#(1) Done', $log_identifier);
 	$logs[] = $log;
-	xarLog::message($log, xarLog::LEVEL_INFO);  
+	xarLog::message($log, xarLog::LEVEL_NOTICE);  
 
     // we didn't run anything, so return now
     if (count($hasrun) == 0) {
