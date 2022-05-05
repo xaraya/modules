@@ -111,7 +111,7 @@ function scheduler_userapi_runjobs($args)
             
             // If the interval is 'never', always skip this job
             if ($job['job_interval'] == '0t') {
-                $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
+                $log = xarML('#(2) Skipped: #(1) because interval is never', $jobname, $log_identifier);
 				$logs[] = $log;
 				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
@@ -119,7 +119,7 @@ function scheduler_userapi_runjobs($args)
             // if we are outside the start- or end-date, skip it
             } elseif ((!empty($job['startdate']) && $now < $job['startdate']) ||
                       (!empty($job['enddate']) && $now > $job['enddate'])) {
-                $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
+                $log = xarML('#(2) Skipped: #(1) because not within time limits', $jobname, $log_identifier);
 				$logs[] = $log;
 				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
@@ -127,7 +127,7 @@ function scheduler_userapi_runjobs($args)
             // if this is a crontab job and the next run is later, skip it
             } elseif ($job['job_interval'] == '0c' && !empty($job['crontab']) &&
                       !empty($job['crontab']['nextrun']) && $now < $job['crontab']['nextrun'] + 60) {
-                $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
+                $log = xarML('#(2) Skipped: #(1) because bext cron defined run is later', $jobname, $log_identifier);
 				$logs[] = $log;
 				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
