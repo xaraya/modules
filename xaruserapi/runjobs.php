@@ -86,21 +86,21 @@ function scheduler_userapi_runjobs($args)
 
         $log = xarML('#(2) Starting: #(1)', $jobname, $log_identifier);
         $logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
+		xarLog::message($log, xarLog::LEVEL_NOTICE);  
 	  
 		$log = xarML('#(2) Trigger is: #(1)', (int)$job['job_trigger'], $log_identifier);
 		$logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
+		xarLog::message($log, xarLog::LEVEL_NOTICE);  
 
 		$log = xarML('#(2) Interval is: #(1)', $job['job_interval'], $log_identifier);
 		$logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
+		xarLog::message($log, xarLog::LEVEL_NOTICE);  
 
         if((int)$job['job_trigger'] == 0) {
             // Ignore disabled jobs
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+			xarLog::message($log, xarLog::LEVEL_NOTICE);  
             continue;
 
         } elseif ((int)$job['job_trigger'] != 1) {
@@ -113,7 +113,7 @@ function scheduler_userapi_runjobs($args)
             if ($job['job_interval'] == '0t') {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
     
             // if we are outside the start- or end-date, skip it
@@ -121,7 +121,7 @@ function scheduler_userapi_runjobs($args)
                       (!empty($job['enddate']) && $now > $job['enddate'])) {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
     
             // if this is a crontab job and the next run is later, skip it
@@ -129,22 +129,27 @@ function scheduler_userapi_runjobs($args)
                       !empty($job['crontab']['nextrun']) && $now < $job['crontab']['nextrun'] + 60) {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
     
             // if this is the first time we run this job and it's not a crontab job, always run it
             } elseif (empty($job['last_run']) && $job['job_interval'] != '0c') {
                 $log = xarML('#(2) First run for #(1). Will send.', $jobname, $log_identifier);
 				$logs[] = $log;
+				xarLog::message($log, xarLog::LEVEL_NOTICE);  
     
             // if the job already ran, check if we need to run it again
             } else {
                 if (!preg_match('/(\d+)(\w)/',$job['job_interval'],$matches)) {
                     $log = xarML('#(1) invalid interval', $log_identifier);
 					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+					xarLog::message($log, xarLog::LEVEL_WARNING);  
                     continue;
                 }
+                $log = xarML('#(2) Recurring run for #(1). Checking interval since last run.', $jobname, $log_identifier);
+				$logs[] = $log;
+				xarLog::message($log, xarLog::LEVEL_NOTICE);
+				
                 $count = $matches[1];
                 $interval = $matches[2];
                 $skip = 0;
@@ -208,7 +213,7 @@ function scheduler_userapi_runjobs($args)
                 if ($skip) {
 					$log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+					xarLog::message($log, xarLog::LEVEL_NOTICE);  
                     continue;
                 }
             }
@@ -229,7 +234,7 @@ function scheduler_userapi_runjobs($args)
                     }
                     $log = xarML('#(1) Source type: localhost', $log_identifier);
 					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+					xarLog::message($log, xarLog::LEVEL_NOTICE);  
                     break;
                 case 2: // IP direct connection
                     if (empty($proxy) && !empty($ip) && $ip == $source) {
@@ -237,7 +242,7 @@ function scheduler_userapi_runjobs($args)
                     }
                     $log = xarML('#(1) Source type: IP direct connection', $log_identifier);
 					$logs[] = $log;
-					xarLog::message($log, xarLog::LEVEL_INFO);  
+					xarLog::message($log, xarLog::LEVEL_NOTICE);  
                     break;
                 case 3: // IP behind proxy
                     if (!empty($proxy) && !empty($ip) && $ip == $source) {
@@ -253,7 +258,7 @@ function scheduler_userapi_runjobs($args)
                         }
                         $log = xarML('#(2) Source type: host #(1)', $hostname, $log_identifier);
 						$logs[] = $log;
-						xarLog::message($log, xarLog::LEVEL_INFO);  
+						xarLog::message($log, xarLog::LEVEL_NOTICE);  
                         if (!empty($hostname) && $hostname == $source) {
                             $isvalid = true;
                         }
@@ -280,12 +285,12 @@ function scheduler_userapi_runjobs($args)
             if (!$isvalid) {
                 $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+				xarLog::message($log, xarLog::LEVEL_NOTICE);  
                 continue;
             } else {
                 $log = xarML('#(2) Host: #(1)', $hostname, $log_identifier);
 				$logs[] = $log;
-				xarLog::message($log, xarLog::LEVEL_INFO);  
+				xarLog::message($log, xarLog::LEVEL_NOTICE);  
             }
         }
 
@@ -294,7 +299,7 @@ function scheduler_userapi_runjobs($args)
         if (!xarMod::isAvailable($job['module'])) {
             $log = xarML('#(2) Skipped: #(1)', $jobname, $log_identifier);
 			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+			xarLog::message($log, xarLog::LEVEL_NOTICE);  
             continue;
         }
         if (!empty($job['params'])) {
@@ -313,18 +318,18 @@ function scheduler_userapi_runjobs($args)
             $jobs[$id]['result'] = xarML('failed');
             $log = xarML('#(2) Failed: #(1)', $jobname, $log_identifier);
 			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+			xarLog::message($log, xarLog::LEVEL_NOTICE);  
             $log = isset($output) ? $output : xarML('No output');
 			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+			xarLog::message($log, xarLog::LEVEL_NOTICE);  
         } else {
             $jobs[$id]['result'] = xarML('OK');
             $log = xarML('#(2) Succeeded: #(1)', $jobname, $log_identifier);
 			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+			xarLog::message($log, xarLog::LEVEL_NOTICE);  
             $log = $output;
 			$logs[] = $log;
-			xarLog::message($log, xarLog::LEVEL_INFO);  
+			xarLog::message($log, xarLog::LEVEL_NOTICE);  
         }
         $job['last_run'] = $now;
         $hasrun[$id] = $job;
@@ -337,7 +342,7 @@ function scheduler_userapi_runjobs($args)
         $jobobject->updateItem(array('itemid' => $job['id']));
         $log = xarML('#(2) Updated: #(1)', $jobname, $log_identifier);
 		$logs[] = $log;
-		xarLog::message($log, xarLog::LEVEL_INFO);  
+		xarLog::message($log, xarLog::LEVEL_NOTICE);  
 
     }
     $log = xarML('#(1) Done', $log_identifier);
