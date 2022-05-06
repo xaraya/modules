@@ -47,6 +47,7 @@ function scheduler_userapi_runjobs($args)
 			xarLog::message($message, xarLog::LEVEL_WARNING);  
         	return $message;
         }
+        // CHECKME: there are no calls to this function with a parameter $trigger or $triggers
         if((int)$job['job_trigger'] != $trigger) {
             $message =  xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[(int)$job['trigger']], $triggers[$trigger]);
 			xarLog::message($message, xarLog::LEVEL_WARNING);  
@@ -100,7 +101,7 @@ function scheduler_userapi_runjobs($args)
 		$logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_NOTICE);  
 
-		$log = xarML('#(2) Start date is: #(1), end date is: #(3)', (int)$job['startdate'], $log_identifier, (int)$job['enddate']);
+		$log = xarML('#(2) Start date is: #(1), end date is: #(3)', (int)$job['start_date'], $log_identifier, (int)$job['end_date']);
 		$logs[] = $log;
 		xarLog::message($log, xarLog::LEVEL_NOTICE);  
 
@@ -125,8 +126,8 @@ function scheduler_userapi_runjobs($args)
                 continue;
     
             // if we are outside the start- or end-date, skip it
-            } elseif ((!empty($job['startdate']) && $now < $job['startdate']) ||
-                      (!empty($job['enddate']) && $now > $job['enddate'])) {
+            } elseif ((!empty($job['start_date']) && $now < $job['start_date']) ||
+                      (!empty($job['end_date']) && $now > $job['end_date'])) {
                 $log = xarML('#(2) Skipped: #(1) because not within time limits', $jobname, $log_identifier);
 				$logs[] = $log;
 				xarLog::message($log, xarLog::LEVEL_NOTICE);  
@@ -310,8 +311,8 @@ function scheduler_userapi_runjobs($args)
 			xarLog::message($log, xarLog::LEVEL_NOTICE);  
             continue;
         }
-        if (!empty($job['params'])) {
-            @eval('$output = xarMod::apiFunc("'.$job['module'].'", "'.$job['type'].'", "'.$job['function'].'", '.$job['params'].', 0);');
+        if (!empty($job['parameters'])) {
+            @eval('$output = xarMod::apiFunc("'.$job['module'].'", "'.$job['type'].'", "'.$job['function'].'", '.$job['parameters'].', 0);');
         } else {
             try {
                 $output = xarMod::apiFunc($job['module'], $job['type'], $job['function']);
