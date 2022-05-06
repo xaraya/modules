@@ -58,30 +58,41 @@
 							<th>
 								Numeric Value
 							</th>
+							<th>
+								Application
+							</th>
 						</tr>
 						<tr>
 							<td>EMERGENCY</td><td style="text-align: center">1</td>
+							<td>Tracks errors that call for immediate intervention</td>
 						</tr>
 						<tr>
 							<td>ALERT</td><td style="text-align: center">2</td>
+							<td>Tracks errors that call for intervention</td>
 						</tr>
 						<tr>
 							<td>CRITICAL</td><td style="text-align: center">3</td>
+							<td>Tracks errors that result in major consequences for processing</td>
 						</tr>
 						<tr>
 							<td>ERROR</td><td style="text-align: center">4</td>
+							<td>Tracks behavior that is unexpected or undesired, with minor consequences for processing</td>
 						</tr>
 						<tr>
 							<td>WARNING</td><td style="text-align: center">5</td>
+							<td>Tracks anomalities or abnormal behavior without consequences for processing</td>
 						</tr>
 						<tr>
 							<td>NOTICE</td><td style="text-align: center">6</td>
+							<td>Tracks high level core processes and main module processes</td>
 						</tr>
 						<tr>
 							<td>INFO</td><td style="text-align: center">7</td>
+							<td>Tracks low level core and module processes</td>
 						</tr>
 						<tr>
 							<td>DEBUG</td><td style="text-align: center">8</td>
+							<td>Used for fine grained debugging</td>
 						</tr>
 					</table>
             	</div>
