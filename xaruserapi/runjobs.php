@@ -43,11 +43,15 @@ function scheduler_userapi_runjobs($args)
         $job = xarMod::apiFunc('scheduler','user','get',$args);
 
         if(empty($job)) {
-            return xarML('Invalid job ID');
+            $message =  xarML('Invalid job ID');
+			xarLog::message($message, xarLog::LEVEL_WARNING);  
+        	return $message;
         }
         if((int)$job['job_trigger'] != $trigger) {
-            return xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[(int)$job['trigger']], $triggers[$trigger]);
-        }
+            $message =  xarML('This job has a trigger (#(1)) other than the one specified (#(2))', $triggers[(int)$job['trigger']], $triggers[$trigger]);
+			xarLog::message($message, xarLog::LEVEL_WARNING);  
+        	return $message;
+        	}
 
         $jobs[$job['id']] = $job;
     } else {
