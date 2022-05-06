@@ -27,14 +27,17 @@
             <p>You can: </p>
             <ul>
                 <li>
-                	List the loggers that are currently configured. From here you can then edit the settings for each logger, including whether or not it is active.
+                	List the loggers that are currently configured. From here you can then edit the settings for each logger, including whether or not it is active. Note that an active logger will not do anything until you enable loggind in the modifyconfig page (see below).
                 </li>
                 <li>
                 	Turn Xaraya logging on/off globally. This makes Xaraya log (or not) according to the loggers configured. This setting in the modifyconfig page is identical to the setting found under the logging tab in the modifyconfig page of the base module. The latter can be found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
                 </li>
             </ul>
             <p>
-                The loggers are shipped with the Xaraya core and are located in lib/xaraya/log/loggers
+                The loggers are shipped with the Xaraya core and are located in lib/xaraya/log/loggers. You can, of course, run several loggers simultaneously, but be aware that this many degrade performance, not to mention using up disk space faster for loggers that write to disk or database.
+            </p>
+            <p>
+                The logging system depends on the timezone settings found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'other'))#" target="_blank">here</a>. You should set the Host Timezone to the timezone you want the timestamps of the logged messages to show.
             </p>
     
             <h3>Fallback System:</h3>
