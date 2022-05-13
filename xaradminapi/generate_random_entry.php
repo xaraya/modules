@@ -30,7 +30,9 @@ function reminders_adminapi_generate_random_entry($args)
     $q = new Query('SELECT', $tables['reminders_lookups']);
     $q->addfield('max(id) AS highest');
     // Only get lookups of this user
-    $q->eq('owner', $args['user']);
+    $q->eq('owner', $args['user']['id']);
+    // Only get lookups whose last contact interval is greater the user's interval
+    $q->lt('last_lookup', time() - $args['user']['interval']);
     
 //    $q->qecho();
 
@@ -45,13 +47,13 @@ function reminders_adminapi_generate_random_entry($args)
     $q->clearconditions();
     
     // Only get lookups of this user
-    $q->eq('owner', $args['user']);
+    $q->eq('owner', $args['user']['id']);
     // Ignore lookups we contacted recently
-    if (!empty($recent_lookups)) $q->notin('id', $recent_lookups);
+    $q->lt('last_lookup', time() - $args['user']['interval']);
 
     $q->setstartat($random_id);
     // Get a bunch of items so we can skip over deleted ones and recently sent, and still get one to send
-    $q->setrowstodo(100);
+    $q->setrowstodo(1);
     
 //    $q->qecho();
 

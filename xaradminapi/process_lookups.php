@@ -68,7 +68,7 @@ function reminders_adminapi_process_lookups($args)
 		$data['results'] = array();
 		foreach ($owners as $owner) {
 			// Get the entry which will figure in the email
-			$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owner['id']));
+			$row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owner));
 
 			// Rename the parameters for sending to the email template
 			$row['lookup_name'] = $row['name'];
