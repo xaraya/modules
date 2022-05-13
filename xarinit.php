@@ -110,6 +110,7 @@ function reminders_init()
         template_id       integer unsigned NOT NULL default 0, 
         phone             varchar(255) NOT NULL default '', 
         email             varchar(255) NOT NULL default '', 
+        last_lookup       integer unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         timemodified      integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
