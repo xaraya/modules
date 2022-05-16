@@ -137,7 +137,7 @@ function reminders_adminapi_send_email_lookup($data)
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_lookup_history'));
 			$history->createItem(array(
 									'lookup'      => $data['lookup_id'],
-									'owner'       => $data['lookup_id'],
+									'owner'       => $data['owner']['id'],
 									'subject'     => $args['subject'],
 									'message'     => $args['message'],
 									'timecreated' => time(),
