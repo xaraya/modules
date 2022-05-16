@@ -141,7 +141,7 @@ function reminders_adminapi_send_email_lookup($data)
 			if (!$data['test']) {
 				// Use the Query functionality to only update 1 field
 				$tables = xarDB::getTables();
-				$q = new Query('UPDATE', $tables['reminders_lookups'];
+				$q = new Query('UPDATE', $tables['reminders_lookups']);
 				$q->addfield('last_lookup', time());
 				$q->eq('id', $data['lookup_id']);
 				$q->run();
