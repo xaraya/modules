@@ -53,6 +53,7 @@ function reminders_adminapi_send_email_lookup($data)
     // Maybe we'll add a BCC at some point
     $bccaddress = $data['copy_emails'] ? array(xarUser::getVar('email')) : array();
 
+    $data['lookup_id']     = $data['info']['id'];
     $data['lookup_name']   = $data['info']['lookup_name'];
     $data['lookup_email']  = $data['info']['lookup_email'];
     $data['lookup_phone']  = $data['info']['lookup_phone'];
@@ -128,7 +129,7 @@ function reminders_adminapi_send_email_lookup($data)
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
 
         // Save to the database if called for
-/*
+
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
 			$history->createItem(array(
@@ -136,8 +137,16 @@ function reminders_adminapi_send_email_lookup($data)
 									'message'  => $data['reminder_text'],
 									'address'  => $recipientaddress,
 								));
+			// Update the lookup as sent, but only if this is not a test
+			if (!$data['test']) {
+				// Use the Query functionality to only update 1 field
+				$tables = xarDB::getTables();
+				$q = new Query('UPDATE', $tables['reminders_lookups'];
+				$q->addfield('last_lookup', time());
+				$q->eq('id', $data['lookup_id']);
+				$q->run();
+			}			
         }
-*/      
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
     }
