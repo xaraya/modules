@@ -106,7 +106,7 @@ function reminders_adminapi_process_lookups($args)
 			
 			
 			// Send the email
-			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
+			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('owner' => $owner, 'info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 			$data['results'] = array_merge($data['results'], array($data['result']));
 		}
 	}

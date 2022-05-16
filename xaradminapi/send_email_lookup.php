@@ -129,23 +129,26 @@ function reminders_adminapi_send_email_lookup($data)
         $result['code'] = xarMod::apiFunc('mailer','user','send', $args);
 
         // Save to the database if called for
-
-        if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0)) {
-			$history = DataObjectMaster::getObject(array('name' => 'reminders_history'));
+        // We only save to the history file if
+        // 1. It is enabled
+        // 2. The email was sent successfully
+        // 3. This is not a test
+        if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0) && !$data['test']) {
+			$history = DataObjectMaster::getObject(array('name' => 'reminders_lookup_history'));
 			$history->createItem(array(
-									'entry_id' => $data['entry_id'],
-									'message'  => $data['reminder_text'],
-									'address'  => $recipientaddress,
+									'lookup'      => $data['lookup_id'],
+									'owner'       => $data['lookup_id'],
+									'subject'     => $args['subject'],
+									'message'     => $args['message'],
+									'timecreated' => time(),
 								));
 			// Update the lookup as sent, but only if this is not a test
-			if (!$data['test']) {
-				// Use the Query functionality to only update 1 field
-				$tables = xarDB::getTables();
-				$q = new Query('UPDATE', $tables['reminders_lookups']);
-				$q->addfield('last_lookup', time());
-				$q->eq('id', $data['lookup_id']);
-				$q->run();
-			}			
+			// Use the Query functionality to only update 1 field
+			$tables = xarDB::getTables();
+			$q = new Query('UPDATE', $tables['reminders_lookups']);
+			$q->addfield('last_lookup', time());
+			$q->eq('id', $data['lookup_id']);
+			$q->run();
         }
     } catch (Exception $e) {
         $result['exception'] = $e->getMessage();
