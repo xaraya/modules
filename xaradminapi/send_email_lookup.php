@@ -136,11 +136,10 @@ function reminders_adminapi_send_email_lookup($data)
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0) && !$data['test']) {
 			$history = DataObjectMaster::getObject(array('name' => 'reminders_lookups_history'));
 			$history->createItem(array(
-									'lookup'      => $data['lookup_id'],
-									'owner'       => $data['owner']['id'],
+									'lookup'      => (int)$data['lookup_id'],
+									'owner'       => (int)$data['owner']['id'],
 									'subject'     => $args['subject'],
 									'message'     => $args['message'],
-									'timecreated' => time(),
 								));
 			// Update the lookup as sent, but only if this is not a test
 			// Use the Query functionality to only update 1 field
