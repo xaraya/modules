@@ -134,7 +134,7 @@ function reminders_adminapi_send_email_lookup($data)
         // 2. The email was sent successfully
         // 3. This is not a test
         if (xarModVars::get('reminders', 'save_history') && ($result['code'] == 0) && !$data['test']) {
-			$history = DataObjectMaster::getObject(array('name' => 'reminders_lookup_history'));
+			$history = DataObjectMaster::getObject(array('name' => 'reminders_lookups_history'));
 			$history->createItem(array(
 									'lookup'      => $data['lookup_id'],
 									'owner'       => $data['owner']['id'],
