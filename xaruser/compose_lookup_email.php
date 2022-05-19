@@ -38,6 +38,10 @@ function reminders_user_compose_lookup_email($args)
 	$data['subject'] = $args['params']['subject'];
 	$data['message'] = unserialize($args['params']['message']);
 	$data['lookup_template'] = $args['params']['template_id'];
+		
+	// FIXME: obviously
+	$data['lookup_template'] = 20;
+	
 	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
 	
 	// Get the name components of the recipient to pass to the template
