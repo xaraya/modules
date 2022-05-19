@@ -44,10 +44,8 @@ function reminders_user_compose_lookup_email($args)
 	$name->value = $args['params']['lookup_name'];
 	$components = $name->getValueArray();
 	foreach ($components as $component) $emailargs[$component['id']] =  $component['value'];
-	$emailargs['lookup_first_name'] = $emailargs['first_name'];
-	$emailargs['lookup_last_name'] = $emailargs['last_name'];
-	$emailargs['lookup_name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
-	$emailargs['lookup_email'] = $args['params']['lookup_email'];
+	$emailargs['name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
+	$emailargs['email'] = $args['params']['lookup_email'];
 	
 	// Get the name components of the sender to pass to the template
 	$name->value = $args['params']['name'];
@@ -61,7 +59,7 @@ function reminders_user_compose_lookup_email($args)
 #
 # Get some properties for use in the template
 #
-    $emailargs['name'] = DataPropertyMaster::getProperty(array('name' => 'name'));
+    $emailargs['name_property'] = DataPropertyMaster::getProperty(array('name' => 'name'));
     $emailargs['checkbox'] = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
     $emailargs['date'] = DataPropertyMaster::getProperty(array('name' => 'date'));
     $emailargs['number'] = DataPropertyMaster::getProperty(array('name' => 'number'));

@@ -171,25 +171,25 @@
  			<b>Available variables</b>
  		</div>
  		<div class="xar-row">
- 			<div class="xar-col-condensed">$lookup_first_name</div>
+ 			<div class="xar-col-condensed">$first_name</div>
  			<div class="xar-col">First name of the recipient</div>
  			<div class="xar-col-condensed">$my_first_name</div>
  			<div class="xar-col">First name of the sender</div>
  		</div>
  		<div class="xar-row">
- 			<div class="xar-col-condensed">$lookup_last_name</div>
+ 			<div class="xar-col-condensed">$last_name</div>
  			<div class="xar-col">Last name of the recipient</div>
  			<div class="xar-col-condensed">$my_last_name</div>
  			<div class="xar-col">Last name of the sender</div>
  		</div>
  		<div class="xar-row">
- 			<div class="xar-col-condensed">$lookup_name</div>
+ 			<div class="xar-col-condensed">$name</div>
  			<div class="xar-col">Full name of the recipient</div>
  			<div class="xar-col-condensed">$my_name</div>
  			<div class="xar-col">Full name of the sender</div>
  		</div>
  		<div class="xar-row">
- 			<div class="xar-col-condensed">$lookup_email</div>
+ 			<div class="xar-col-condensed">$email</div>
  			<div class="xar-col">Email address of the recipient</div>
  			<div class="xar-col-condensed">$my_email</div>
  			<div class="xar-col">Email address of the sender</div>
