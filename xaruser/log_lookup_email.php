@@ -43,8 +43,8 @@ function reminders_user_log_lookup_email($args)
 	$q->addfield('lookup_id',   (int)$data['lookup_id']);
 	$q->addfield('owner_id',    (int)$data['owner_id']);
 	$q->addfield('date',        time());
-	$q->addfield('subject',     $data['subject']);
-	$q->addfield('message',     $data['message']);
+//	$q->addfield('subject',     $data['subject']);
+//	$q->addfield('message',     $data['message']);
 	$q->addfield('promised',    1);
 	$q->addfield('timecreated', time());
 	$q->run();
