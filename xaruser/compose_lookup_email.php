@@ -17,11 +17,11 @@ function reminders_user_compose_lookup_email($args)
     if (!xarSecurityCheck('ManageReminders')) return;
     xarTpl::setPageTitle('Send Lookup Email');
 
-    if (!xarVarFetch('confirm',     'int',   $confirm,            0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('code',        'str',   $code,               '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('subject',     'isset', $subject,            NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('message',     'isset', $message,            NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('copy_emails', 'bool',  $data['copy_emails', true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('confirm',     'int',   $confirm,             0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('code',        'str',   $code,                '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('subject',     'isset', $subject,             NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('message',     'isset', $message,             NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('copy_emails', 'bool',  $data['copy_emails'], true, XARVAR_NOT_REQUIRED)) return;
 
     $data['copy_emails'] = true;
     
