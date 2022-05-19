@@ -34,10 +34,10 @@ function reminders_user_compose_lookup_email($args)
 	$args['params'] = unserialize(base64_decode($code));
 	
 	$data['lookup_id'] = $args['params']['lookup_id'];
-	$data['owner_id'] = $args['params']['owner_id'];
-	$data['subject'] = $args['params']['lookup_subject'];
-	$data['message'] = unserialize($args['params']['lookup_message']);
-	$data['lookup_template'] = $args['params']['lookup_template'];
+	$data['owner_id'] = $args['params']['owner'];
+	$data['subject'] = $args['params']['subject'];
+	$data['message'] = unserialize($args['params']['message']);
+	$data['lookup_template'] = $args['params']['template_id'];
 	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
 	
 	// Get the name components of the recipient to pass to the template
