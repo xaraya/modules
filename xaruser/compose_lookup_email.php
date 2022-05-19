@@ -102,8 +102,8 @@ function reminders_user_compose_lookup_email($args)
             $bccaddress = array();
         } else {
             // If we are not testing, then send to the chosen participant
-            $recipientname    = $emailargs['lookup_name'];
-            $recipientaddress = $emailargs['lookup_email'];
+            $recipientname    = $emailargs['name'];
+            $recipientaddress = $emailargs['email'];
         }
         // Only send if we don't have any errors
         if (empty($data['message_warning'])) {
