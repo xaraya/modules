@@ -29,7 +29,7 @@ function reminders_user_log_lookup_email($args)
 	$args['params'] = unserialize(base64_decode($data['code']));
 	
 	$data['lookup_id'] = $args['params']['lookup_id'];
-	$data['owner_id'] = $args['params']['owner_id'];
+	$data['owner_id'] = $args['params']['owner'];
 	$data['subject'] = $args['params']['lookup_subject'];
 	$data['message'] = $args['params']['lookup_message'];
 	
