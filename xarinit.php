@@ -124,6 +124,7 @@ function reminders_init()
         template_id       integer unsigned NOT NULL default 0, 
         phone             varchar(255) NOT NULL default '', 
         email             varchar(255) NOT NULL default '', 
+        last_lookup       integer unsigned NOT NULL default 0, 
         timecreated       integer unsigned NOT NULL default 0, 
         timemodified      integer unsigned NOT NULL default 0, 
         PRIMARY KEY  (id)
@@ -219,7 +220,7 @@ I wanted to get in touch.</p>
 
     # --------------------------------------------------------
 #
-    # Default data for other modules
+# Default data from other modules
 #
     // Add basic mailer templates
     if (xarMod::isAvailable('mailer')) {
@@ -246,12 +247,18 @@ function reminders_delete()
 {
     $this_module = 'reminders';
 
-    // Remove entries of this module in the mailer mails table
-    xarMod::load('mailer');
-    $tables = xarDB::getTables();
-    $q = new Query('DELETE', $tables['mailer_mails']);
-    $q->eq('module_id', xarMod::getRegid($this_module));
-    $q->run();
+# --------------------------------------------------------
+#
+# Remove data from other modules
+#
+    // Remove mailer templates
+    if (xarMod::isAvailable('mailer')) {
+		xarMod::load('mailer');
+		$tables = xarDB::getTables();
+		$q = new Query('DELETE', $tables['mailer_mails']);
+		$q->eq('module_id', xarMod::getRegid($this_module));
+		$q->run();
+    }
 
     // Remove everything else concerning the module
     return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);

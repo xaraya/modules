@@ -19,12 +19,11 @@ function reminders_user_compose_lookup_email($args)
     }
     xarTpl::setPageTitle('Send Lookup Email');
 
-    if (!xarVarFetch('confirm', 'int', $confirm, 0, XARVAR_NOT_REQUIRED)) {
-        return;
-    }
-    if (!xarVarFetch('code', 'str', $code, '', XARVAR_NOT_REQUIRED)) {
-        return;
-    }
+    if (!xarVarFetch('confirm',     'int',   $confirm,             0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('code',        'str',   $code,                '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('subject',     'isset', $subject,             NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('message',     'isset', $message,             NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('copy_emails', 'bool',  $data['copy_emails'], true, XARVAR_NOT_REQUIRED)) return;
 
     $data['copy_emails'] = true;
 
@@ -35,49 +34,51 @@ function reminders_user_compose_lookup_email($args)
 #
     # Unpack the code that was passed
 #
-    if (empty($code)) {
-        die(xarML('No code passed'));
-    }
-
-    $args['params'] = unserialize(base64_decode($code));
-
-    $data['lookup_id'] = $args['params']['lookup_id'];
-    $data['owner_id'] = $args['params']['owner_id'];
-    $data['subject'] = $args['params']['lookup_subject'];
-    $data['message'] = unserialize($args['params']['lookup_message']);
-    $data['lookup_template'] = $args['params']['lookup_template'];
-    $name = DataPropertyMaster::getProperty(array('name' => 'name'));
-
-    // Get the name components of the recipient to pass to the template
-    $name->value = $args['params']['lookup_name'];
-    $components = $name->getValueArray();
-    foreach ($components as $component) {
-        $emailargs[$component['id']] =  $component['value'];
-    }
-    $emailargs['lookup_name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
-    $emailargs['lookup_email'] = $args['params']['lookup_email'];
-
-    // Get the name components of the sender to pass to the template
-    $name->value = $args['params']['name'];
-    $components = $name->getValueArray();
-    $emailargs['my_first_name'] = $components[1]['value'];
-    $emailargs['my_last_name'] = $components[2]['value'];
-    $emailargs['my_name'] = $emailargs['my_first_name'] . " " . $emailargs['my_last_name'];
-    $emailargs['my_email'] = $args['params']['address'];
-
-    # --------------------------------------------------------
+	if (empty($code)) die(xarML('No code passed'));
+	
+	$args['params'] = unserialize(base64_decode($code));
+	
+	$data['lookup_id'] = $args['params']['lookup_id'];
+	$data['owner_id'] = $args['params']['owner'];
+	$data['subject'] = $args['params']['subject'];
+	if (isset($subject)) $data['subject'] = $subject;
+	$data['message'] = unserialize($args['params']['message']);
+	if (isset($message)) $data['message'] = $message;
+	$data['lookup_template'] = $args['params']['template_id'];
+		
+	// FIXME: obviously
+	$data['lookup_template'] = 20;
+	
+	$name = DataPropertyMaster::getProperty(array('name' => 'name'));
+	
+	// Get the name components of the recipient to pass to the template
+	$name->value = $args['params']['lookup_name'];
+	$components = $name->getValueArray();
+	foreach ($components as $component) $emailargs[$component['id']] =  $component['value'];
+	$emailargs['name'] = $emailargs['first_name'] . " " . $emailargs['last_name'];
+	$emailargs['email'] = $args['params']['lookup_email'];
+	
+	// Get the name components of the sender to pass to the template
+	$name->value = $args['params']['name'];
+	$components = $name->getValueArray();
+	$emailargs['my_first_name'] = $components[1]['value'];
+	$emailargs['my_last_name'] = $components[2]['value'];
+	$emailargs['my_name'] = $emailargs['my_first_name'] . " " . $emailargs['my_last_name'];
+	$emailargs['my_email'] = $args['params']['address'];
+	
+# --------------------------------------------------------
 #
     # Get some properties for use in the template
 #
-    $emailargs['name'] = DataPropertyMaster::getProperty(['name' => 'name']);
-    $emailargs['checkbox'] = DataPropertyMaster::getProperty(['name' => 'checkbox']);
-    $emailargs['date'] = DataPropertyMaster::getProperty(['name' => 'date']);
-    $emailargs['number'] = DataPropertyMaster::getProperty(['name' => 'number']);
-    $emailargs['integerbox'] = DataPropertyMaster::getProperty(['name' => 'integerbox']);
-    $emailargs['floatbox'] = DataPropertyMaster::getProperty(['name' => 'floatbox']);
-    $emailargs['textbox'] = DataPropertyMaster::getProperty(['name' => 'textbox']);
-    $emailargs['textarea'] = DataPropertyMaster::getProperty(['name' => 'textarea']);
-
+    $emailargs['name_property'] = DataPropertyMaster::getProperty(array('name' => 'name'));
+    $emailargs['checkbox'] = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
+    $emailargs['date'] = DataPropertyMaster::getProperty(array('name' => 'date'));
+    $emailargs['number'] = DataPropertyMaster::getProperty(array('name' => 'number'));
+    $emailargs['integerbox'] = DataPropertyMaster::getProperty(array('name' => 'integerbox'));
+    $emailargs['floatbox'] = DataPropertyMaster::getProperty(array('name' => 'floatbox'));
+    $emailargs['textbox'] = DataPropertyMaster::getProperty(array('name' => 'textbox'));
+    $emailargs['textarea'] = DataPropertyMaster::getProperty(array('name' => 'textarea'));
+    
     if ($confirm) {
         # --------------------------------------------------------
 #
@@ -105,8 +106,8 @@ function reminders_user_compose_lookup_email($args)
             $bccaddress = [];
         } else {
             // If we are not testing, then send to the chosen participant
-            $recipientname    = $emailargs['lookup_name'];
-            $recipientaddress = $emailargs['lookup_email'];
+            $recipientname    = $emailargs['name'];
+            $recipientaddress = $emailargs['email'];
         }
         // Only send if we don't have any errors
         if (empty($data['message_warning'])) {
@@ -160,9 +161,9 @@ function reminders_user_compose_lookup_email($args)
             } catch (Exception $e) {
                 $data['result']['exception'] = $e->getMessage();
             }
-
-            $data['result']['name'] = $emailargs['lookup_name'];
-            $data['result']['email'] = $emailargs['lookup_email'];
+            
+			$data['result']['name'] = $emailargs['name'];
+			$data['result']['email'] = $emailargs['email'];
 
             if ($data['test']) {
                 $data['result']['test_name'] = $recipientname;

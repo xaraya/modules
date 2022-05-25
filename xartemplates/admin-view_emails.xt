@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:template file="admin-mod-head"/>
-    <h2>View Emails</h2>
+    <h2>View Owners</h2>
     <div class="xar-mod-body">
         <xar:data-input type="listing" objectname="$objectname" tplmodule="reminders"/>
     </div>
