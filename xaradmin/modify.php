@@ -48,6 +48,11 @@ function scheduler_admin_modify()
             exit;
             xarController::redirect(xarController::URL('scheduler', 'admin', 'modify', ['itemid' => $itemid]));
         }
+        
+        // Reset this job as having not yet run
+        $data['object']->properties['last_run']->setValue(0);
+
+        $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
 
         $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
 
