@@ -27,33 +27,31 @@ function reminders_user_log_lookup_email($args)
 #
     # Unpack the code that was passed
 #
-    // FIXME: this is not robust enough to deter attacks
-    if (empty($data['code'])) {
-        return array();
-    }
-
-    $args['params'] = unserialize(base64_decode($data['code']));
-
-    $data['lookup_id'] = $args['params']['lookup_id'];
-    $data['owner_id'] = $args['params']['owner_id'];
-    $data['subject'] = $args['params']['lookup_subject'];
-    $data['message'] = $args['params']['lookup_message'];
-
-    # --------------------------------------------------------
+	// FIXME: this is not robust enough to deter attacks
+	if (empty($data['code'])) return array();
+	
+	$args['params'] = unserialize(base64_decode($data['code']));
+	
+	$data['lookup_id'] = $args['params']['lookup_id'];
+	$data['owner_id'] = $args['params']['owner'];
+	$data['subject'] = $args['params']['subject'];
+	$data['message'] = $args['params']['message'];
+	
+# --------------------------------------------------------
 #
     # Log that the email was sent
 #
-    sys::import('xaraya.structures.query');
-    $tables = xarDB::getTables();
-    $q = new Query('INSERT', $tables['reminders_lookup_history']);
-    $q->addfield('lookup_id', (int)$data['lookup_id']);
-    $q->addfield('owner_id', (int)$data['owner_id']);
-    $q->addfield('date', time());
-    $q->addfield('subject', $data['subject']);
-    $q->addfield('message', $data['message']);
-    $q->addfield('promised', 1);
-    $q->addfield('timecreated', time());
-    $q->run();
-
+	sys::import('xaraya.structures.query');
+	$tables = xarDB::getTables();
+	$q = new Query('INSERT', $tables['reminders_lookup_history']);
+	$q->addfield('lookup_id',   (int)$data['lookup_id']);
+	$q->addfield('owner_id',    (int)$data['owner_id']);
+	$q->addfield('date',        time());
+	$q->addfield('subject',     'Untraced');
+	$q->addfield('message',     '');
+	$q->addfield('promised',    1);
+	$q->addfield('timecreated', time());
+	$q->run();
+    
     return $data;
 }
