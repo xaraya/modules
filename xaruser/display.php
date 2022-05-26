@@ -25,6 +25,12 @@ function ratings_user_display($args)
 {
     extract($args);
 
+    if (!empty($extrainfo['itemid'])) {
+        $itemid = $extrainfo['itemid'];
+    } else {
+        $itemid = $objectid;
+    }
+
     $data = [];
     $data['itemid'] = $itemid;
 
@@ -129,6 +135,7 @@ function ratings_user_display($args)
         $data['numratings'] = $rating[$key_id[0]]['numratings'];
     } else {
         // Use old fashioned way
+        $args['itemid'] = $itemid;
         $data['rawrating'] = xarMod::apiFunc(
             'ratings',
             'user',
