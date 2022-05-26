@@ -67,7 +67,7 @@ function ratings_userapi_get($args)
               AND itemtype = ?";
     $bindvars = [$modid, $itemid, $itemtype];
     $result =& $dbconn->Execute($query, $bindvars);
-    if (!$result) {
+    if (!$result || $result->EOF) {
         return;
     }
     $rating = $result->fields[0];
