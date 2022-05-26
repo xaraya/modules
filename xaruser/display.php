@@ -130,9 +130,8 @@ function ratings_user_display($args)
     );
     // Select the way to get the rating
     if (!empty($rating[$itemid])) {
-//        $key_id = array_keys($rating);
-        $data['rawrating'] = $rating[$key_id[0]]['rating'];
-        $data['numratings'] = $rating[$key_id[0]]['numratings'];
+        $data['rawrating'] = $rating[$itemid]['rating'];
+        $data['numratings'] = $rating[$itemid]['numratings'];
     } else {
         // Use old fashioned way
         $args['itemid'] = $itemid;
