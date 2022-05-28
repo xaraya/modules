@@ -17,6 +17,7 @@ function calendar_user_test()
     include_once('Benchmark/Timer.php');
     $t = new Benchmark_Timer();
     $t->start();
+    // @todo use johngrogg/ics-parser or sabre/vobject package
     $ical = xarMod::apiFunc('icalendar', 'user', 'factory', 'ical_parser');
     $t->setMarker('Class Instantiated');
     xarVar::fetch('file', 'str::', $file);

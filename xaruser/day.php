@@ -27,7 +27,6 @@ function calendar_user_day()
         'day' => &$Day,
     ];
     $day_endts = $DayEvents->getTimestamp() + xarModVars::get('calendar', 'day_end') + 3600;
-//        $events = xarMod::apiFunc('icalendar','user','getevents',$args);
 
     // get all the events. need to improve this query
     $xartable =& xarDB::getTables();

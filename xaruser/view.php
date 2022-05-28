@@ -21,6 +21,6 @@
         $args = [
             'day' => &$Day,
         ];
-        $events = xarMod::apiFunc('icalendar', 'user', 'getevents', $args);
+        $events = xarMod::apiFunc('calendar', 'user', 'getevents', $args);
         return $data;
     }

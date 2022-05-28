@@ -14,7 +14,7 @@
 
 $modversion['name']           = 'calendar';
 $modversion['id']             = '7';
-$modversion['version']        = '2.0.0';
+$modversion['version']        = '2.1.0';
 $modversion['displayname']    = xarML('Calendar');
 $modversion['description']    = 'Calendar System';
 $modversion['credits']        = 'credits.txt';
@@ -32,11 +32,6 @@ $modversion['dependencyinfo'] = [
                                     0 => [
                                             'name' => 'Xaraya Core',
                                             'version_ge' => '2.4.0',
-                                         ],
-                                    8 => [
-                                            'name' => 'icalendar',
-                                            'displayname' => 'icalendar',
-                                            'minversion' => '1.0.0',
                                          ],
                                 ];
 $modversion['securityschema'] = ['calendar::event'     => 'Event Title::Event ID',
