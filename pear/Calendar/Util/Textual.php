@@ -80,7 +80,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function monthNames($format = 'long')
+    public static function monthNames($format = 'long')
     {
         $formats = [
             'one'   => '%b',
@@ -117,7 +117,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function weekdayNames($format = 'long')
+    public static function weekdayNames($format = 'long')
     {
         $formats = [
             'one'   => '%a',
@@ -155,7 +155,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function prevMonthName($Calendar, $format = 'long')
+    public static function prevMonthName($Calendar, $format = 'long')
     {
         $months = Calendar_Util_Textual::monthNames($format);
         return $months[$Calendar->prevMonth()];
@@ -171,7 +171,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function thisMonthName($Calendar, $format = 'long')
+    public static function thisMonthName($Calendar, $format = 'long')
     {
         $months = Calendar_Util_Textual::monthNames($format);
         return $months[$Calendar->thisMonth()];
@@ -187,7 +187,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function nextMonthName($Calendar, $format = 'long')
+    public static function nextMonthName($Calendar, $format = 'long')
     {
         $months = Calendar_Util_Textual::monthNames($format);
         return $months[$Calendar->nextMonth()];
@@ -204,7 +204,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function prevDayName($Calendar, $format = 'long')
+    public static function prevDayName($Calendar, $format = 'long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
         $stamp = $Calendar->prevDay('timestamp');
@@ -229,7 +229,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function thisDayName($Calendar, $format='long')
+    public static function thisDayName($Calendar, $format='long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
         include_once 'Date/Calc.php';
@@ -247,7 +247,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function nextDayName($Calendar, $format='long')
+    public static function nextDayName($Calendar, $format='long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
         $stamp = $Calendar->nextDay('timestamp');
@@ -273,7 +273,7 @@ class Calendar_Util_Textual
      * @access public
      * @static
      */
-    public function orderedWeekdays($Calendar, $format = 'long')
+    public static function orderedWeekdays($Calendar, $format = 'long')
     {
         $days = Calendar_Util_Textual::weekdayNames($format);
 

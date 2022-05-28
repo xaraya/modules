@@ -306,9 +306,10 @@ class Calendar_Validator
      */
     public function fetch()
     {
-        $error = each($this->errors);
+        $error = current($this->errors);
         if ($error) {
-            return $error['value'];
+            next($this->errors);
+            return $error;
         } else {
             reset($this->errors);
             return false;

@@ -84,7 +84,7 @@ class Calendar_Engine_Factory
      * @return object instance of a calendar calculation engine
      * @access protected
      */
-    public function & getEngine()
+    public static function & getEngine()
     {
         static $engine = false;
         switch (CALENDAR_ENGINE) {
@@ -418,9 +418,10 @@ class Calendar
      */
     public function fetch()
     {
-        $child = each($this->children);
+        $child = current($this->children);
         if ($child) {
-            return $child['value'];
+            next($this->children);
+            return $child;
         } else {
             reset($this->children);
             return false;

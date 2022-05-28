@@ -2469,7 +2469,7 @@ class Date_Calc
     {
         $month  = strtolower($month);
         $months = Date_Calc::getMonthNames();
-        while ([$id, $name] = each($months)) {
+        foreach ($months as $id => $name) {
             if (preg_match('/' . $month . '/', strtolower($name))) {
                 return $id;
             }

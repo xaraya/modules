@@ -112,9 +112,10 @@
             if (empty($this->calendar->children)) {
                 return [];
             }
-            $child = each($this->calendar->children);
+            $child = current($this->calendar->children);
             if ($child) {
-                return $child['value'];
+                next($this->calendar->children);
+                return $child;
             } else {
                 reset($this->calendar->children);
                 return false;

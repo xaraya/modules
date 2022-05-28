@@ -47,9 +47,10 @@ class Event extends Calendar_Decorator
 
     public function getEntry1()
     {
-        $entry = each($this->entries);
+        $entry = current($this->entries);
         if ($entry) {
-            return $entry['value'];
+            next($this->entries);
+            return $entry;
         } else {
             reset($this->entries);
             return false;

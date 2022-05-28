@@ -88,9 +88,10 @@
             if (empty($this->children)) {
                 return [];
             }
-            $child = each($this->children);
+            $child = current($this->children);
             if ($child) {
-                return $child['value'];
+                next($this->children);
+                return $child;
             } else {
                 reset($this->children);
                 return false;
