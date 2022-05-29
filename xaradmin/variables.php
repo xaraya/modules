@@ -30,6 +30,16 @@ function xarcachemanager_admin_variables($args)
         return $data;
     }
 
+    xarVar::fetch('reset', 'str', $reset, '');
+    if (!empty($reset)) {
+        // Confirm authorisation code
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
+        xarConfigVars::delete(null, 'Site.Variable.CacheSettings');
+        xarModVars::delete('dynamicdata', 'variablecache_settings');
+    }
+
     xarVar::fetch('submit', 'str', $submit, '');
     if (!empty($submit)) {
         // Confirm authorisation code

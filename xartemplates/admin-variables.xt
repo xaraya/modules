@@ -47,7 +47,8 @@
             <input type="hidden" name="authid" value="#$authid#" />
             <input type="submit" name="submit" value="#xarML('Submit')#" />
           </td>
-          <td>
+          <td class="xar-align-center">
+            <input type="submit" name="reset" value="#xarML('Reset All')#" />
           </td>
         </tr>
         </table>
