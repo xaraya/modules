@@ -35,8 +35,8 @@ function messages_userapi_encode_shorturl($args)
             case 'func':
                 $func = $value;
                 break;
-            case 'to':
-                $to = $value;
+            case 'to_id':
+                $to_id = $value;
                 break;
             case 'folder':
                 $folder = $value;
@@ -77,9 +77,9 @@ function messages_userapi_encode_shorturl($args)
             break;
         case 'new':
             $path .= '/new';
-            if (isset($to)) {
-                $path .= '/' . $to;
-                unset($to);
+            if (isset($to_id)) {
+                $path .= '/' . $to_id;
+                unset($to_id);
             }
             if (isset($opt) && $opt) {
                 $path .= '/opt';

@@ -4,7 +4,7 @@
         $properties['postanon']->value
     </xar:set>
     <xar:set name="recipient">
-        $properties['to']->value
+        $properties['to_id']->value
     </xar:set>
     <xar:if condition="empty($recipient)">
         <xar:set name="is_sendtouser">
@@ -21,9 +21,9 @@
     </xar:if> -->
 <!--     <div class="xar-form-input-wrapper">
         <xar:var name="title">The author of the message</xar:var>
-        <xar:data-label property="$properties['from']" title="$title" for="id"/>
+        <xar:data-label property="$properties['from_id']" title="$title" for="id"/>
         #xarUser::getVar('name')#
-        <xar:data-input property="$properties['from']" hidden="$hidden"/>
+        <xar:data-input property="$properties['from_id']" hidden="$hidden"/>
 
          
         <xar:if condition="xarModVars::get('messages', 'allowanonymous')">
@@ -38,16 +38,16 @@
      <div class="xar-form-input-wrapper">
         <xar:if condition="$reply">
 	<h3>Your reply:</h3> 
-            <xar:data-input property="$properties['to']" hidden="hidden" value="$to" />   
+            <xar:data-input property="$properties['to_id']" hidden="hidden" value="$to_id" />
         <xar:else/>
 		<xar:var name="title">To whom the message will be sent</xar:var>
-		<xar:data-label property="$properties['to']" title="$title" for="id"/>
-            <xar:set name="users">$properties['to']->getOptions()</xar:set>
+		<xar:data-label property="$properties['to_id']" title="$title" for="id"/>
+            <xar:set name="users">$properties['to_id']->getOptions()</xar:set>
             <xar:if condition="empty($users)">
                 No recipients available
-                <xar:data-input property="$properties['to']" hidden="hidden"/>
+                <xar:data-input property="$properties['to_id']" hidden="hidden"/>
             <xar:else />
-                <xar:data-input property="$properties['to']"/>
+                <xar:data-input property="$properties['to_id']"/>
             </xar:if>
         </xar:if>
 	<input type="hidden" name="replyto" value="#$replyto#" />

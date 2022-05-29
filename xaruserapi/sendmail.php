@@ -15,7 +15,7 @@
  * Send an email to a message recipient
  * @author Ryan Walker (ryan@webcommunicate.net)
  * @param int	$id the id of the message
- * @param int	$to the uid of the recipient
+ * @param int	$to_id the uid of the recipient
  * @return true
  */
 
@@ -24,15 +24,15 @@ function messages_userapi_sendmail($args)
     extract($args);
 
     $msgurl = xarController::URL('messages', 'user', 'display', ['id' => $id]);
-    $from = xarUser::getVar('name');
-    $msgdata['info'] = xarUser::getVar('email', $to);
-    $msgdata['name'] = xarUser::getVar('name', $to);
+    $from_name = xarUser::getVar('name');
+    $msgdata['info'] = xarUser::getVar('email', $to_id);
+    $msgdata['name'] = xarUser::getVar('name', $to_id);
 
     $data['msgurl'] = $msgurl;
     $data['id'] = $id; // message id
     $data['from_id'] = xarUser::getVar('id');
-    $data['from_name'] = $from;
-    $data['to_id'] = $to;
+    $data['from_name'] = $from_name;
+    $data['to_id'] = $to_id;
     $data['to_name'] = $msgdata['name'];
     $data['to_email'] = $msgdata['info'];
     $subject = xarTpl::module('messages', 'user', 'email-subject', $data);

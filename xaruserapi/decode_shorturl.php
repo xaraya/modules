@@ -32,7 +32,7 @@ function messages_userapi_decode_shorturl($params)
         case 'new':
             $args = [];
             if (isset($params[2])) {
-                $args['to'] = $params[2];
+                $args['to_id'] = $params[2];
             }
             if (isset($params[3]) && $params[3] == 'opt') {
                 $args['opt'] = true;

@@ -4,19 +4,19 @@
      <div class="xar-form-input-wrapper">
         <xar:if condition="$reply">
 	<h3>Your reply:</h3> 
-            <xar:data-input property="$properties['to']" hidden="hidden" value="$to" />   
+            <xar:data-input property="$properties['to_id']" hidden="hidden" value="$to_id" />
         <xar:else/>
 		<xar:var name="title">To whom the message will be sent</xar:var>
-		<xar:data-label property="$properties['to']" title="$title" for="id"/>
-            <xar:set name="users">$properties['to']->getOptions()</xar:set>
+		<xar:data-label property="$properties['to_id']" title="$title" for="id"/>
+            <xar:set name="users">$properties['to_id']->getOptions()</xar:set>
             <xar:if condition="empty($users)">
                 No recipients available
-                <xar:data-input property="$properties['to']" hidden="hidden"/>
-            <xar:elseif condition="!isset($to) or $opt" />
-                <xar:data-input property="$properties['to']" value="$to" />
+                <xar:data-input property="$properties['to_id']" hidden="hidden"/>
+            <xar:elseif condition="!isset($to_id) or $opt" />
+                <xar:data-input property="$properties['to_id']" value="$to_id" />
 	    <xar:else />
-		#xarUser::getVar('name',$to)#
-                <xar:data-input property="$properties['to']" value="$to" hidden="hidden" />
+		#xarUser::getVar('name',$to_id)#
+                <xar:data-input property="$properties['to_id']" value="$to_id" hidden="hidden" />
             </xar:if>
         </xar:if>
 	<input type="hidden" name="replyto" value="#$replyto#" />

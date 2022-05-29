@@ -9,10 +9,10 @@
         $properties['postanon']->value
     </xar:set>
     <xar:set name="recipient">
-        $properties['to']->value
+        $properties['to_id']->value
     </xar:set>
     <xar:set name="author">
-        $properties['from']->value
+        $properties['from_id']->value
     </xar:set>
    <!--  <xar:set name="vettor">
         xarSession::getVar('role_id') == $recipient ? $recipient : $author

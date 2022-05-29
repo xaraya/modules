@@ -36,7 +36,7 @@ function messages_user_new()
     if (!xarVar::fetch('saveandedit', 'str', $saveandedit, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVar::fetch('to', 'id', $data['to'], null, xarVar::NOT_REQUIRED)) {
+    if (!xarVar::fetch('to_id', 'id', $data['to_id'], null, xarVar::NOT_REQUIRED)) {
         return;
     }
     if (!xarVar::fetch('opt', 'bool', $data['opt'], false, xarVar::NOT_REQUIRED)) {
@@ -75,7 +75,7 @@ function messages_user_new()
     if ($reply) {
         $reply = DataObjectMaster::getObject(['name' => 'messages_messages']);
         $reply->getItem(['itemid' => $replyto]); // get the message we're replying to
-        $data['to'] = $reply->properties['from']->value; // get the user we're replying to
+        $data['to_id'] = $reply->properties['from_id']->value; // get the user we're replying to
         $data['display'] = $reply;
         xarTpl::setPageTitle(xarML('Reply to Message'));
         $data['input_title']    = xarML('Reply to Message');
@@ -96,7 +96,7 @@ function messages_user_new()
             $object->properties['replyto']->setValue(0);
         }
 
-        $object->properties['from']->setValue(xarUser::getVar('uname'));
+        $object->properties['from_id']->setValue(xarUser::getVar('uname'));
 
         if (!$isvalid) {
             return xarTpl::module('messages', 'user', 'new', $data);
@@ -112,13 +112,13 @@ function messages_user_new()
 
         $id = $object->createItem();
 
-        $to = $object->properties['to']->value;
+        $to_id = $object->properties['to_id']->value;
 
         // admin setting
         if ($send && xarModVars::get('messages', 'sendemail')) {
             // user setting
-            if (xarModItemVars::get('messages', "user_sendemail", $to)) {
-                xarMod::apiFunc('messages', 'user', 'sendmail', ['id' => $id, 'to' => $to]);
+            if (xarModItemVars::get('messages', "user_sendemail", $to_id)) {
+                xarMod::apiFunc('messages', 'user', 'sendmail', ['id' => $id, 'to_id' => $to_id]);
             }
         }
 
@@ -127,15 +127,15 @@ function messages_user_new()
         // Send the autoreply if one is enabled by the admin and by the recipient
         if ($send && xarModVars::get('messages', 'allowautoreply')) {
             $autoreply = '';
-            if (xarModItemVars::get('messages', "enable_autoreply", $to)) {
-                $autoreply = xarModItemVars::get('messages', "autoreply", $to);
+            if (xarModItemVars::get('messages', "enable_autoreply", $to_id)) {
+                $autoreply = xarModItemVars::get('messages', "autoreply", $to_id);
             }
             if (!empty($autoreply)) {
                 $autoreplyobj = DataObjectMaster::getObject(['name' => 'messages_messages']);
                 $autoreplyobj->properties['author_status']->setValue(MESSAGES_STATUS_UNREAD);
-                $autoreplyobj->properties['from']->setValue(xarUser::getVar('uname', $to));
-                $autoreplyobj->properties['to']->setValue($uid);
-                $data['from_name'] = xarUser::getVar('name', $to);
+                $autoreplyobj->properties['from_id']->setValue(xarUser::getVar('uname', $to_id));
+                $autoreplyobj->properties['to_id']->setValue($uid);
+                $data['from_name'] = xarUser::getVar('name', $to_id);
                 $subject = xarTpl::module('messages', 'user', 'autoreply-subject', $data);
                 $data['autoreply'] = $autoreply;
                 $autoreply = xarTpl::module('messages', 'user', 'autoreply-body', $data);

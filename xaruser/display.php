@@ -46,8 +46,8 @@ function messages_user_display($args)
     $current_user = xarSession::getVar('role_id');
 
     // Check that the current user is either author or recipient
-    if (($object->properties['to']->value != $current_user) &&
-        ($object->properties['from']->value != $current_user)) {
+    if (($object->properties['to_id']->value != $current_user) &&
+        ($object->properties['from_id']->value != $current_user)) {
         return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
     }
 
@@ -68,14 +68,14 @@ function messages_user_display($args)
      * Mark this message as read
      * Handle author and recipient for 'mark unread' (future)
      */
-    if ($current_user == $object->properties['from']->value) {
+    if ($current_user == $object->properties['from_id']->value) {
         // don't update drafts
         if ($object->properties['author_status']->value != MESSAGES_STATUS_DRAFT) {
             $object->properties['author_status']->setValue(MESSAGES_STATUS_READ);
             $object->updateItem();
         }
     }
-    if ($current_user == $object->properties['to']->value) {
+    if ($current_user == $object->properties['to_id']->value) {
         $object->properties['recipient_status']->setValue(MESSAGES_STATUS_READ);
         $object->updateItem();
     }

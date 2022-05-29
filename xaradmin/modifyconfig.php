@@ -31,7 +31,7 @@ function messages_admin_modifyconfig()
         return;
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'banks']);
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'messages']);
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
     $data['module_settings']->getItem();
 

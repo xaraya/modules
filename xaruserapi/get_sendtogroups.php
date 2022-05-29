@@ -35,7 +35,7 @@ sys::import('modules.messages.xarincludes.defines');
         $q->join('r.id', 'rm.role_id');
 
         $q->addfield('rm.parent_id');
-        $q->eq('id', $currentuser);
+        $q->eq('r.id', $currentuser);
 
         if (!$q->run()) {
             return;

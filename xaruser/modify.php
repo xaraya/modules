@@ -67,12 +67,12 @@ function messages_user_modify()
 
     $data['object'] = $object;
 
-    $data['to'] = null;
+    $data['to_id'] = null;
 
     if ($data['reply']) {
         $reply = DataObjectMaster::getObject(['name' => 'messages_messages']);
         $reply->getItem(['itemid' => $replyto]); // get the message we're replying to
-        $data['to'] = $reply->properties['from']->value; // get the user we're replying to
+        $data['to_id'] = $reply->properties['from_id']->value; // get the user we're replying to
         $data['display'] = $reply;
         xarTpl::setPageTitle(xarML('Reply to Message'));
         $data['input_title']    = xarML('Reply to Message');
@@ -110,8 +110,8 @@ function messages_user_modify()
                 return true;
             } elseif ($send) {
                 if (xarModVars::get('messages', 'sendemail')) {
-                    $to = $object->properties['to']->value;
-                    xarMod::apiFunc('messages', 'user', 'sendmail', ['id' => $id, 'to' => $to]);
+                    $to_id = $object->properties['to_id']->value;
+                    xarMod::apiFunc('messages', 'user', 'sendmail', ['id' => $id, 'to_id' => $to_id]);
                 }
                 xarResponse::redirect(xarController::URL('messages', 'user', 'view'));
                 return true;

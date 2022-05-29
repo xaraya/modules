@@ -50,17 +50,17 @@ function messages_user_delete()
     // Check the folder, and that the current user is either author or recipient
     switch ($folder) {
         case 'inbox':
-            if ($data['object']->properties['to']->value != xarSession::getVar('role_id')) {
+            if ($data['object']->properties['to_id']->value != xarSession::getVar('role_id')) {
                 return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             }
             break;
         case 'drafts':
-            if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
+            if ($data['object']->properties['from_id']->value != xarSession::getVar('role_id')) {
                 return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             }
             break;
         case 'sent':
-            if ($data['object']->properties['from']->value != xarSession::getVar('role_id')) {
+            if ($data['object']->properties['from_id']->value != xarSession::getVar('role_id')) {
                 return xarTpl::module('messages', 'user', 'message_errors', ['layout' => 'bad_id']);
             }
             break;

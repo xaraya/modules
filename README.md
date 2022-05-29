@@ -42,19 +42,19 @@ These settings are available in the **Admin Settings** fieldset:
 
 In these examples, 11 is the user ID of the recipient:
 
-    ##xarController::URL('messages','user','new',array('to' => 11))##
+    ##xarController::URL('messages','user','new',array('to_id' => 11))##
 
 Optionally, set the 'opt' argument to true if you would like the form to
 display a userlist dropdown with the value set to the specified user:
 
-    ##xarController::URL('messages','user','new',array('to' => 11, 'opt' => true))##
+    ##xarController::URL('messages','user','new',array('to_id' => 11, 'opt' => true))##
 
 If you don't set 'opt' to true, the form will display the recipient's
 username and pass the user ID in a hidden input.
 
 Depending on context, a link might look something like...
 
-    <a href="##xarController::URL('messages','user','new',array('to' => $uid))##">
+    <a href="##xarController::URL('messages','user','new',array('to_id' => $uid))##">
             Send a PM to ##xarUser::getVar('name',$uid)##
         </a>
 

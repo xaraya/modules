@@ -60,7 +60,7 @@ sys::import('modules.messages.xarincludes.defines');
         $users = $q->output();
 
         // Need to transform the display name values we got
-        $nameproperty = DataPropertyMaster::getProperty(['name' => 'name']);
+        $nameproperty = DataPropertyMaster::getProperty(['name' => 'username']);
         foreach ($users as $key => $value) {
             $nameproperty->value = $users[$key]['name'];
             $users[$key]['name'] = $nameproperty->getValue();

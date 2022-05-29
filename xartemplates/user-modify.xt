@@ -22,7 +22,7 @@
 		</xar:if>
 
 
-                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" to="$to" />
+                <xar:data-form object="$object" tplmodule="messages" template="modify" reply="$reply" replyto="$replyto" to_id="$to_id" />
 		
            <div class="xar-form-input-wrapper-after">
                 <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>

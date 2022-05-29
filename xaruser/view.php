@@ -43,18 +43,18 @@ function messages_user_view()
 
     switch ($folder) {
         case 'inbox':
-            $where = 'to eq ' . xarUser::getVar('id');
+            $where = 'to_id eq ' . xarUser::getVar('id');
             $where .= ' and recipient_delete eq ' . MESSAGES_NOTDELETED;
             $where .= ' and author_status ne ' . MESSAGES_STATUS_DRAFT;
-            $data['fieldlist'] = 'from,subject,time,recipient_status';
+            $data['fieldlist'] = 'from_id,subject,time,recipient_status';
             xarTpl::setPageTitle(xarML('Inbox'));
             $data['input_title']    = xarML('Inbox');
             break;
         case 'sent':
-            $where = 'from eq ' . xarUser::getVar('id');
+            $where = 'from_id eq ' . xarUser::getVar('id');
             $where .= ' and author_delete eq ' . MESSAGES_NOTDELETED;
             $where .= ' and author_status ne ' . MESSAGES_STATUS_DRAFT;
-            $data['fieldlist'] = 'to,subject,time,author_status,recipient_status';
+            $data['fieldlist'] = 'to_id,subject,time,author_status,recipient_status';
             if (xarModVars::get('messages', 'allowanonymous')) {
                 $data['fieldlist'] .= ',postanon';
             }
@@ -63,9 +63,9 @@ function messages_user_view()
             break;
         case 'drafts':
             $where = 'author_status eq 0';
-            $where .= ' and from eq ' . xarUser::getVar('id');
+            $where .= ' and from_id eq ' . xarUser::getVar('id');
             $where .= ' and author_delete eq ' . MESSAGES_NOTDELETED;
-            $data['fieldlist'] = 'to,subject,time,author_status';
+            $data['fieldlist'] = 'to_id,subject,time,author_status';
             xarTpl::setPageTitle(xarML('Drafts'));
             $data['input_title']    = xarML('Drafts');
             break;
