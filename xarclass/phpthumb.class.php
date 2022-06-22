@@ -3711,7 +3711,6 @@ class phpthumb
                             $this->DebugMessage('gif_loadFileToGDimageResource('.$tempfilename.') completed', __FILE__, __LINE__);
                             unlink($tempfilename);
                             return $gdimg_source;
-                            break;
                         } else {
                             $ErrorMessage = 'Failed to open tempfile in '.__FILE__.' on line '.__LINE__;
                             $this->DebugMessage($ErrorMessage, __FILE__, __LINE__);
