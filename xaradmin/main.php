@@ -32,5 +32,3 @@ function calendar_admin_main()
     }
     return true;
 }
-?>
-
