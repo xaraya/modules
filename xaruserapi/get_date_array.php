@@ -54,6 +54,8 @@ function reminders_userapi_get_date_array($args)
 		echo "Due date: " . $datetime->display() . "<br/>";
 		echo "Reminder steps array: " . "<br/>";
 		foreach($steps as $step) {
+			// Ignore slots with no chosen date
+			if ($step['date'] == 0) continue;
 			$datetime->setTimestamp($step['date']);
 			echo $step['index'] . " " . $datetime->display() . "<br/>";
 		}
