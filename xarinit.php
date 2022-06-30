@@ -220,7 +220,7 @@ I wanted to get in touch.</p>
 
     # --------------------------------------------------------
 #
-# Default data from other modules
+    # Default data from other modules
 #
     // Add basic mailer templates
     if (xarMod::isAvailable('mailer')) {
@@ -247,17 +247,17 @@ function reminders_delete()
 {
     $this_module = 'reminders';
 
-# --------------------------------------------------------
+    # --------------------------------------------------------
 #
-# Remove data from other modules
+    # Remove data from other modules
 #
     // Remove mailer templates
     if (xarMod::isAvailable('mailer')) {
-		xarMod::load('mailer');
-		$tables = xarDB::getTables();
-		$q = new Query('DELETE', $tables['mailer_mails']);
-		$q->eq('module_id', xarMod::getRegid($this_module));
-		$q->run();
+        xarMod::load('mailer');
+        $tables = xarDB::getTables();
+        $q = new Query('DELETE', $tables['mailer_mails']);
+        $q->eq('module_id', xarMod::getRegid($this_module));
+        $q->run();
     }
 
     // Remove everything else concerning the module

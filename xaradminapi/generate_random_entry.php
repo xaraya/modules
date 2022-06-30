@@ -35,7 +35,7 @@ function reminders_adminapi_generate_random_entry($args)
     $q->eq('owner', $args['user']['id']);
     // Only get lookups whose last contact interval is greater the user's interval
     $q->lt('last_lookup', time() - $args['user']['lookup_interval']);
-    
+
 //    $q->qecho();
 
     $q->run();
@@ -56,7 +56,7 @@ function reminders_adminapi_generate_random_entry($args)
     $q->setstartat($random_id);
     // Get a bunch of items so we can skip over deleted ones and recently sent, and still get one to send
     $q->setrowstodo(1);
-    
+
 //    $q->qecho();
 
     // Get one row
