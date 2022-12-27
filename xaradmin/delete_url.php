@@ -39,7 +39,6 @@ function scraper_admin_delete_url()
     $data['authid'] = xarSec::genAuthKey('scraper');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

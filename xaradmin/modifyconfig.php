@@ -90,7 +90,6 @@ function scraper_admin_modifyconfig()
             xarController::redirect(xarController::URL('scraper', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
-
     }
     $data['authid'] = xarSec::genAuthKey();
     return $data;
