@@ -34,7 +34,6 @@ function reminders_admin_new_email()
     $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
-
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
         if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;

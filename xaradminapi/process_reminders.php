@@ -62,7 +62,6 @@ function reminders_adminapi_process_reminders($args)
 
     $data['results'] = [];
     foreach ($items as $key => $row) {
-
         // Prepare the data we need to send an email
         // Get the template information for this message
         $this_template_id = $row['template_id'];
@@ -93,7 +92,6 @@ function reminders_adminapi_process_reminders($args)
 
         // If we are past the due date, then make this reminder inactive and spawn a new one if need be
         if ($row['due_date'] < $today) {
-
             // Retire the reminder
             xarMod::apiFunc('reminders', 'admin', 'retire', ['itemid' => $row['id'], 'recurring' => $row['recurring']]);
 
@@ -125,7 +123,6 @@ function reminders_adminapi_process_reminders($args)
         $done = false;
         $sent_ids = [];
         foreach ($dates as $step) {
-
             // An empty step means that no date was defined
             if ($step['date'] == 0) {
                 continue;

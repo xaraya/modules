@@ -39,7 +39,6 @@ function reminders_admin_modify_lookup()
     $data['authid'] = xarSecGenAuthKey('reminders');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSecConfirmAuthKey()) {
             return;

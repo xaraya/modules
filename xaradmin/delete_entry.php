@@ -35,7 +35,6 @@ function reminders_admin_delete_entry()
     $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

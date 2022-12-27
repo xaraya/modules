@@ -26,7 +26,6 @@ function reminders_admin_test_lookups()
     }
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSecConfirmAuthKey()) {
             return;
