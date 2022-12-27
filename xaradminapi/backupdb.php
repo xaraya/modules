@@ -127,7 +127,7 @@ function sitetools_adminapi_backupdb($args)
                     $SelectedTables["$dbname"][] = $tablename;
                 }
             }
-            //headers for partial - selected tables
+        //headers for partial - selected tables
         } elseif ($SelectedTables) {
             if ($GZ_enabled) {
                 gzwrite($zp, "Selected Tables Only\n\n", strlen("Selected Tables Only\n\n"));
@@ -441,18 +441,18 @@ end the backup that is moved to class
     //Return data for display
     return $items;
 }
- //A few formatting functions
- function FormattedTimeRemaining($seconds, $precision=1)
- {
-     if ($seconds > 86400) {
-         return number_format($seconds / 86400, $precision).' days';
-     } elseif ($seconds > 3600) {
-         return number_format($seconds / 3600, $precision).' hours';
-     } elseif ($seconds > 60) {
-         return number_format($seconds / 60, $precision).' minutes';
-     }
-     return number_format($seconds, $precision).' seconds';
- }
+//A few formatting functions
+function FormattedTimeRemaining($seconds, $precision=1)
+{
+    if ($seconds > 86400) {
+        return number_format($seconds / 86400, $precision).' days';
+    } elseif ($seconds > 3600) {
+        return number_format($seconds / 3600, $precision).' hours';
+    } elseif ($seconds > 60) {
+        return number_format($seconds / 60, $precision).' minutes';
+    }
+    return number_format($seconds, $precision).' seconds';
+}
 function FileSizeNiceDisplay($filesize, $precision=2)
 {
     if ($filesize < 1000) {

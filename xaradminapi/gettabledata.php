@@ -29,8 +29,7 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
     $items =[];
 
     switch ($dbtype) {
-
-    default:
+        default:
             $dbtables=[];
             $dbconn = xarDB::getConn();
             $dbname= xarDB::getName();
@@ -51,7 +50,6 @@ function sitetools_adminapi_gettabledata($dbname='', $dbtype='')
             $items['tabletotal']= mysql_numrows($tables);
             $items['dbtables']  = $dbtables;
             $items['dbname']    = $dbname;
-
     }
     //Return data for display
     return $items;

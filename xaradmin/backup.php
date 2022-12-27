@@ -87,7 +87,7 @@ function sitetools_admin_backup($args)
 
         $confirm='';
 
-    /* Start actual backup for all types here */
+        /* Start actual backup for all types here */
     } elseif ($startbackup) {
         $confirm='';
         if ($startbackup =='partial') {

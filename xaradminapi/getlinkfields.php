@@ -38,8 +38,8 @@ function sitetools_adminapi_getlinkfields($args)
                 switch ($info['format']) {
                     case 'url':
                     case 'image':
-                // skip imagelists here
-                    //case 'imagelist':
+                        // skip imagelists here
+                        //case 'imagelist':
                     case 'urltitle':
                         if (isset($fieldformats[$info['format']])) {
                             $type = $fieldformats[$info['format']];
@@ -66,8 +66,8 @@ function sitetools_adminapi_getlinkfields($args)
                     switch ($proptypes[$property->type]['name']) {
                         case 'url':
                         case 'image':
-                    // skip imagelists here
-                        //case 'imagelist':
+                            // skip imagelists here
+                            //case 'imagelist':
                         case 'urlicon':
                         case 'urltitle':
                             $fields[] = ['name' => $property->label,
@@ -99,8 +99,8 @@ function sitetools_adminapi_getlinkfields($args)
             switch ($proptypes[$property->type]['name']) {
                 case 'url':
                 case 'image':
-            // skip imagelists here
-                //case 'imagelist':
+                    // skip imagelists here
+                    //case 'imagelist':
                 case 'urlicon':
                 case 'urltitle':
                     $fields[] = ['name' => $property->label,

@@ -12,10 +12,10 @@
  * @author Jo Dalle Nogare <jojodee@xaraya.com>
  */
 
- /* A simple sql terminal for Sitetools
-  * @author jojodee
-  * @author Marcel van der Boom - supplied original script on which this is based
-  */
+/* A simple sql terminal for Sitetools
+ * @author jojodee
+ * @author Marcel van der Boom - supplied original script on which this is based
+ */
 function sitetools_admin_terminal()
 {
     if (!xarVar::fetch('term_input', 'str::', $term_input, '')) {

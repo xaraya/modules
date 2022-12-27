@@ -178,7 +178,7 @@ class dbSiteTools_mysql extends dbSiteTools
                             case 'mediumblob':
                             case 'longtext':
                             case 'longblob':
-                            // no default values
+                                // no default values
                                 break;
                             default:
                                 $structureline .= ' default \''.$row['Default'].'\'';
