@@ -63,7 +63,6 @@ function messages_userapi_usermenu($args)
 
     $object->setFieldList(join(',', $fieldlist));
     switch (strtolower($phase)) {
-
         /**
          * The showform phase is called whenever the usermenu form is displayed
          * This data is passed to /roles/xartemplates/objects/showform-usermenu.xt
@@ -100,12 +99,12 @@ function messages_userapi_usermenu($args)
             $data['authid'] = xarSec::genAuthKey('messages');
             // finally return data to the calling function
             return $data;
-        break;
+            break;
 
-        /**
-         * The checkinput phase allows you to perform validations. Use this
-         * when a standard $object->checkInput() call just isn't enough.
-        **/
+            /**
+             * The checkinput phase allows you to perform validations. Use this
+             * when a standard $object->checkInput() call just isn't enough.
+            **/
         case 'checkinput':
             $isvalid = $object->checkInput();
 
@@ -134,12 +133,12 @@ function messages_userapi_usermenu($args)
 
             // return the bool result to the calling function
             return $isvalid == true ? true : false;
-        break;
+            break;
 
-        /**
-         * The updateitem phase allows you to update user settings. Use this
-         * when a standard $object->updateItem() call just isn't enough.
-        **/
+            /**
+             * The updateitem phase allows you to update user settings. Use this
+             * when a standard $object->updateItem() call just isn't enough.
+            **/
         case 'updateitem':
             // if you added the module name when you generated the authkey,
             // be sure to use it here when confirming :)
@@ -159,7 +158,7 @@ function messages_userapi_usermenu($args)
             */
             // let the calling function know the update was a success
             return true;
-        break;
+            break;
     }
     // if we got here, we don't know what went wrong, just return false
     return false;

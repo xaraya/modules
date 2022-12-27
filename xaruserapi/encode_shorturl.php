@@ -43,7 +43,7 @@ function messages_userapi_encode_shorturl($args)
                 break;
             default:
                 $rest[$name] = $value;
-       }
+        }
     }
 
     // kind of a assertion :-))

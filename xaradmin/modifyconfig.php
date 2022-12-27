@@ -17,7 +17,6 @@
  */
 function messages_admin_modifyconfig()
 {
-
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
     if (!xarSecurity::check('AdminMessages')) {
@@ -125,18 +124,18 @@ function messages_admin_modifyconfig()
             # and this file dispensed with.
             #
 
-                // Load the DD master object class. This line will likely disappear in future versions
-                sys::import('modules.dynamicdata.class.objects.master');
-                // Get the object we'll be working with
-                $object = DataObjectMaster::getObject(['name' => 'messages_module_settings']);
-                // Get the data from the form
-                $isvalid = $object->checkInput();
-                // Update the item with itemid = 0
+            // Load the DD master object class. This line will likely disappear in future versions
+            sys::import('modules.dynamicdata.class.objects.master');
+            // Get the object we'll be working with
+            $object = DataObjectMaster::getObject(['name' => 'messages_module_settings']);
+            // Get the data from the form
+            $isvalid = $object->checkInput();
+            // Update the item with itemid = 0
 
 
-                $item = $object->updateItem(['itemid' => 0]);
+            $item = $object->updateItem(['itemid' => 0]);
 
-                xarResponse::redirect(xarController::URL('messages', 'admin', 'modifyconfig'));
+            xarResponse::redirect(xarController::URL('messages', 'admin', 'modifyconfig'));
 
             # --------------------------------------------------------
             #
@@ -151,9 +150,9 @@ function messages_admin_modifyconfig()
             # This needs to be the last thing happening on this page because it redirects. Code below
             # this point will not execute
 
-                if (!xarMod::guiFunc('messages', 'admin', 'update')) {
-                    return;
-                }
+            if (!xarMod::guiFunc('messages', 'admin', 'update')) {
+                return;
+            }
 
             break;
     }

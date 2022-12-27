@@ -81,7 +81,6 @@ function messages_user_modify()
     $data['label'] = $object->label;
 
     if ($send || $draft || $saveandedit) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
