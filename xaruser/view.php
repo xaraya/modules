@@ -172,7 +172,7 @@ function keywords_user_view($args)
                 $data['items_per_page'] = $items_per_page;
                 $data['total'] = $total;
                 $data['items'] = $items;
-            break;
+                break;
             case 'cloud':
                 $items = xarMod::apiFunc(
                     'keywords',
@@ -207,7 +207,7 @@ function keywords_user_view($args)
                 $data['items'] = $items;
                 $data['unit'] = $font_unit;
 
-            break;
+                break;
         }
         $data['user_layout'] = $user_layout;
     }
@@ -327,9 +327,9 @@ function keywords_user_view($args)
                             $modinfo['name'],
                             'user',
                             'display',
-                        //$items[$id]['url'] = xarController::URL($modinfo['name'],'user','main',
-                                                       ['itemtype' => $itemtype,
-                                                             'itemid' => $itemid, ]
+                            //$items[$id]['url'] = xarController::URL($modinfo['name'],'user','main',
+                            ['itemtype' => $itemtype,
+                                  'itemid' => $itemid, ]
                         );
                         // you could skip those in the template
                     }

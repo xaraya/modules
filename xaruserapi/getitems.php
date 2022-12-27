@@ -104,10 +104,10 @@ function keywords_userapi_getitems($args)
     while (!$result->EOF) {
         $item = [];
         [$item['id'],
-             $item['itemid'],
-             $item['keyword'],
-             $item['module_id'],
-             $item['itemtype']] = $result->fields;
+            $item['itemid'],
+            $item['keyword'],
+            $item['module_id'],
+            $item['itemtype']] = $result->fields;
         $items[$item['id']] = $item;
         $result->MoveNext();
     }

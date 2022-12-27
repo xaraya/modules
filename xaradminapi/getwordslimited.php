@@ -59,7 +59,7 @@ function keywords_adminapi_getwordslimited($args)
     }
     while (!$result->EOF) {
         [$id,
-             $word] = $result->fields;
+            $word] = $result->fields;
         $keywords[$id] = $word;
         $result->MoveNext();
     }

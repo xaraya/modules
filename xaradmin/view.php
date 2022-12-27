@@ -206,7 +206,6 @@ function keywords_admin_view($args)
 
 
     switch ($data['tab']) {
-
         case 'list':
 
 
@@ -239,12 +238,11 @@ function keywords_admin_view($args)
                 );
             }
 
-        break;
+            break;
 
         case 'cloud':
 
-        break;
-
+            break;
     }
 
 
@@ -349,70 +347,70 @@ function keywords_admin_view($args)
                     ]
                 );
             }
-        break;
+            break;
         case 'assoc':
             // list items
             // get a list of item associations
-                $data['items'] = xarMod::apiFunc(
-                    'keywords',
-                    'words',
-                    'getitems',
-                    [
-                        'module' => $modname,
-                        'itemtype' => $itemtype,
-                        'skip_restricted' => true,
-                    ]
-                );
+            $data['items'] = xarMod::apiFunc(
+                'keywords',
+                'words',
+                'getitems',
+                [
+                    'module' => $modname,
+                    'itemtype' => $itemtype,
+                    'skip_restricted' => true,
+                ]
+            );
 
-        break;
+            break;
         case 'cloud':
-                // list keywords
-                // same as list but with weighting applied
-                // get a list of keywords (with counts)
-                $data['items'] = xarMod::apiFunc(
-                    'keywords',
-                    'words',
-                    'getwordcounts',
-                    [
-                        'module' => $modname,
-                        'itemtype' => $itemtype,
-                        'skip_restricted' => true,
-                    ]
-                );
-/*
-  // how wordpress does it
-    $min_count = min( $counts );
-    $spread = max( $counts ) - $min_count;
-    if ( $spread <= 0 )
-         $spread = 1;
-            $font_spread = $largest - $smallest;
-            if ( $font_spread < 0 )
-                    $font_spread = 1;
-            $font_step = $font_spread / $spread;
+            // list keywords
+            // same as list but with weighting applied
+            // get a list of keywords (with counts)
+            $data['items'] = xarMod::apiFunc(
+                'keywords',
+                'words',
+                'getwordcounts',
+                [
+                    'module' => $modname,
+                    'itemtype' => $itemtype,
+                    'skip_restricted' => true,
+                ]
+            );
+            /*
+              // how wordpress does it
+                $min_count = min( $counts );
+                $spread = max( $counts ) - $min_count;
+                if ( $spread <= 0 )
+                     $spread = 1;
+                        $font_spread = $largest - $smallest;
+                        if ( $font_spread < 0 )
+                                $font_spread = 1;
+                        $font_step = $font_spread / $spread;
 
-        $a = array();
+                    $a = array();
 
-        foreach ( $tags as $key => $tag ) {
-                $count = $counts[ $key ];
-                $real_count = $real_counts[ $key ];
-                $tag_link = '#' != $tag->link ? esc_url( $tag->link ) : '#';
-                $tag_id = isset($tags[ $key ]->id) ? $tags[ $key ]->id : $key;
-                $tag_name = $tags[ $key ]->name;
-                    $a[] = "<a href='$tag_link' class='tag-link-$tag_id' title='" . esc_attr( call_user_func( $topic_count_text_callback, $real_count ) ) . "' style='font-size: " .
-                        ( $smallest + ( ( $count - $min_count ) * $font_step ) )
-                            . "$unit;'>$tag_name</a>";
+                    foreach ( $tags as $key => $tag ) {
+                            $count = $counts[ $key ];
+                            $real_count = $real_counts[ $key ];
+                            $tag_link = '#' != $tag->link ? esc_url( $tag->link ) : '#';
+                            $tag_id = isset($tags[ $key ]->id) ? $tags[ $key ]->id : $key;
+                            $tag_name = $tags[ $key ]->name;
+                                $a[] = "<a href='$tag_link' class='tag-link-$tag_id' title='" . esc_attr( call_user_func( $topic_count_text_callback, $real_count ) ) . "' style='font-size: " .
+                                    ( $smallest + ( ( $count - $min_count ) * $font_step ) )
+                                        . "$unit;'>$tag_name</a>";
+                        }
+            */
+
+            $min_ems = 1;
+            $max_ems = 3;
+            $num_tags = count($data['items']);
+            foreach ($data['items'] as $k => $item) {
+                $item['weight'] = $item['count'] == 1 ? $min_ems :
+                    round((($item['count']/$num_tags)*($max_ems-$min_ems))+$min_ems, 2);
+                $data['items'][$k] = $item;
             }
-*/
-
-                $min_ems = 1;
-                $max_ems = 3;
-                $num_tags = count($data['items']);
-                foreach ($data['items'] as $k => $item) {
-                    $item['weight'] = $item['count'] == 1 ? $min_ems :
-                        round((($item['count']/$num_tags)*($max_ems-$min_ems))+$min_ems, 2);
-                    $data['items'][$k] = $item;
-                }
-        break;
+            break;
         case 'config':
             // config is supplied by our modifyconfig hook
             $data['config'] = xarMod::guiFunc(
@@ -424,7 +422,7 @@ function keywords_admin_view($args)
                     'extrainfo' => ['module' => $modname, 'itemtype' => $itemtype],
                 ]
             );
-        break;
+            break;
     }
 
     $data['subjects'] = $subjects;

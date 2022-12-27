@@ -169,7 +169,6 @@ class KeywordsProperty extends TextAreaProperty
 
         $q = new Query('INSERT', $table['keywords']);
         foreach ($this->value as $word) {
-
             // If we already have this keyword in the database, move on
             if (isset($keywords[$word])) {
                 continue;

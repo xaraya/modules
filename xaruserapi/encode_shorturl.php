@@ -47,7 +47,6 @@ function keywords_userapi_encode_shorturl($args)
             }
         }
     } else {
-
         // anything else that you haven't defined a short URL equivalent for
         // -> don't create a path here
     }

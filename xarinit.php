@@ -167,50 +167,50 @@ function keywords_upgrade($oldversion)
         case '1.0':
         case '1.0.0':
 
-                xarModVars::set('keywords', 'restricted', 0);
-                xarModVars::set('keywords', 'default', 'xaraya');
+            xarModVars::set('keywords', 'restricted', 0);
+            xarModVars::set('keywords', 'default', 'xaraya');
 
-                $dbconn = xarDB::getConn();
-                $xartable =& xarDB::getTables();
-                $query = xarTableDDL::createTable(
-                    $xartable['keywords_restr'],
-                    ['id'         => ['type'        => 'integer',
-                                                            'null'       => false,
-                                                            'increment'  => true,
-                                                            'primary_key' => true, ],
-                                   'keyword'    => ['type'        => 'varchar',
-                                                            'size'        => 254,
-                                                            'null'        => false,
-                                                            'default'     => '', ],
-                                   'module_id'   => ['type'        => 'integer',
-                                                            'unsigned'    => true,
-                                                            'null'        => false,
-                                                            'default'     => '0', ],
-                                  ]
-                );
+            $dbconn = xarDB::getConn();
+            $xartable =& xarDB::getTables();
+            $query = xarTableDDL::createTable(
+                $xartable['keywords_restr'],
+                ['id'         => ['type'        => 'integer',
+                                                        'null'       => false,
+                                                        'increment'  => true,
+                                                        'primary_key' => true, ],
+                               'keyword'    => ['type'        => 'varchar',
+                                                        'size'        => 254,
+                                                        'null'        => false,
+                                                        'default'     => '', ],
+                               'module_id'   => ['type'        => 'integer',
+                                                        'unsigned'    => true,
+                                                        'null'        => false,
+                                                        'default'     => '0', ],
+                              ]
+            );
 
-                if (empty($query)) {
-                    return;
-                } // throw back
+            if (empty($query)) {
+                return;
+            } // throw back
 
-                // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
-                $result = $dbconn->Execute($query);
-                if (!$result) {
-                    return;
-                }
+            // Pass the Table Create DDL to adodb to create the table and send exception if unsuccessful
+            $result = $dbconn->Execute($query);
+            if (!$result) {
+                return;
+            }
 
-                if (!xarModHooks::register(
-                    'item',
-                    'search',
-                    'GUI',
-                    'keywords',
-                    'user',
-                    'search'
-                )) {
-                    return;
-                }
+            if (!xarModHooks::register(
+                'item',
+                'search',
+                'GUI',
+                'keywords',
+                'user',
+                'search'
+            )) {
+                return;
+            }
 
-                // no break
+            // no break
         case '1.0.2':
             //Alter table restr to add itemtype
             // Get database information
@@ -218,14 +218,14 @@ function keywords_upgrade($oldversion)
             $xartable =& xarDB::getTables();
 
             // Add column 'itemtype' to table
-             $query = xarTableDDL::alterTable(
-                 $xartable['keywords_restr'],
-                 ['command' => 'add',
-                                           'field' => 'itemtype',
-                                           'type' => 'integer',
-                                           'null' => false,
-                                           'default' => '0', ]
-             );
+            $query = xarTableDDL::alterTable(
+                $xartable['keywords_restr'],
+                ['command' => 'add',
+                                          'field' => 'itemtype',
+                                          'type' => 'integer',
+                                          'null' => false,
+                                          'default' => '0', ]
+            );
             $result = & $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -251,7 +251,7 @@ function keywords_upgrade($oldversion)
                 return;
             }
 
-                            // no break
+            // no break
         case '1.0.3':
             xarModVars::set('keywords', 'useitemtype', 0);
 
@@ -280,7 +280,6 @@ function keywords_upgrade($oldversion)
  */
 function keywords_delete()
 {
-
     // hooks are removed automatically
     // blocks are removed automatically
     sys::import('xaraya.structures.query');
