@@ -15,16 +15,16 @@
  *
  */
 
-    function sitemapper_xartables()
-    {
-        // Initialise table array
-        $xartable = [];
+function sitemapper_xartables()
+{
+    // Initialise table array
+    $xartable = [];
 
-        $xartable['sitemapper_links'] = xarDB::getPrefix() . '_sitemapper_links';
-        $xartable['sitemapper_maps'] = xarDB::getPrefix() . '_sitemapper_maps';
-        $xartable['sitemapper_engines'] = xarDB::getPrefix() . '_sitemapper_engines';
-        $xartable['sitemapper_sources'] = xarDB::getPrefix() . '_sitemapper_sources';
+    $xartable['sitemapper_links'] = xarDB::getPrefix() . '_sitemapper_links';
+    $xartable['sitemapper_maps'] = xarDB::getPrefix() . '_sitemapper_maps';
+    $xartable['sitemapper_engines'] = xarDB::getPrefix() . '_sitemapper_engines';
+    $xartable['sitemapper_sources'] = xarDB::getPrefix() . '_sitemapper_sources';
 
-        // Return the table information
-        return $xartable;
-    }
+    // Return the table information
+    return $xartable;
+}

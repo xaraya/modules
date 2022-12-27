@@ -14,19 +14,19 @@
  *
  */
 
-    function sitemapper_adminapi_getconfighook($args)
-    {
-        extract($args);
-        if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = [];
-        }
-        $module = 'sitemapper';
-        $tabinfo = [
-                'module'  => $module,
-                'configarea'  => 'general',
-                'configtitle'  => xarML('Sitemapper'),
-                'configcontent' => '',
-        ];
-        $extrainfo['tabs'][] = $tabinfo;
-        return $extrainfo;
+function sitemapper_adminapi_getconfighook($args)
+{
+    extract($args);
+    if (!isset($extrainfo['tabs'])) {
+        $extrainfo['tabs'] = [];
     }
+    $module = 'sitemapper';
+    $tabinfo = [
+            'module'  => $module,
+            'configarea'  => 'general',
+            'configtitle'  => xarML('Sitemapper'),
+            'configcontent' => '',
+    ];
+    $extrainfo['tabs'][] = $tabinfo;
+    return $extrainfo;
+}
