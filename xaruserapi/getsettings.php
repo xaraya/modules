@@ -60,7 +60,7 @@ function crispbb_userapi_getsettings($args)
                 }
             }
 
-        break;
+            break;
         case 'fprivileges':
             $presets = xarMod::apiFunc(
                 'crispbb',
@@ -88,7 +88,7 @@ function crispbb_userapi_getsettings($args)
                     }
                 }
             }
-        break;
+            break;
         case 'usettings':
             if (!empty($uid) && is_numeric($uid)) {
                 $string = xarModUserVars::get('crispbb', 'usettings', $uid);
@@ -107,7 +107,7 @@ function crispbb_userapi_getsettings($args)
                 );
                 $settings = $presets['usettings'];
             }
-        break;
+            break;
         default:
             if (!empty($uid) && is_numeric($uid)) {
                 $value = xarModUserVars::get('crispbb', $setting, $uid);
@@ -115,7 +115,7 @@ function crispbb_userapi_getsettings($args)
                 $value = xarModVars::get('crispbb', $setting);
             }
             $settings[$setting] = $value;
-        break;
+            break;
     }
 
     return $settings;

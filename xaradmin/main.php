@@ -11,13 +11,13 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * The main administration function
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @access public
- * @return true on redirect
- */
+/**
+* The main administration function
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @access public
+* @return true on redirect
+*/
 function crispbb_admin_main()
 {
     // since the user entered here, we try and determine where to redirect them to

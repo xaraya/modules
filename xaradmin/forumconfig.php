@@ -54,7 +54,7 @@ function crispbb_admin_forumconfig($args)
     $pageTitle = '';
     switch (strtolower($sublink)) {
         case 'forum':
-            default:
+        default:
             sys::import('modules.dynamicdata.class.objects.master');
             $data['settings'] = DataObjectMaster::getObject(['name' => 'crispbb_forum_settings']);
             $fieldlist = ['topicsperpage', 'topicsortorder', 'topicsortfield', 'postsperpage', 'postsortorder', 'hottopicposts', 'hottopichits', 'showstickies', 'showannouncements', 'showfaqs', 'topictitlemin', 'topictitlemax', 'topicdescmin', 'topicdescmax', 'topicpostmin', 'topicpostmax', 'floodcontrol', 'postbuffer', 'topicapproval', 'replyapproval', 'iconfolder', 'icondefault'];
@@ -126,7 +126,7 @@ function crispbb_admin_forumconfig($args)
             }
 
             $pageTitle = xarML('Default Forum Configuration');
-        break;
+            break;
 
         case 'forumhooks':
         case 'topichooks':
@@ -250,7 +250,7 @@ function crispbb_admin_forumconfig($args)
                                 );
                                 $isupdated = true;
                             }
-                            // No setting
+                        // No setting
                         } else {
                             // unhook if currently hooked
                             if ($checkvals['ishooked']) {
@@ -304,7 +304,7 @@ function crispbb_admin_forumconfig($args)
             foreach ($hooks as $hookmodname => $hookvals) {
                 $hooksettings[$hookmodname]['output'] = $hookvals;
             }
-        break;
+            break;
 
         case 'privileges':
             if (!xarVar::fetch('privs', 'list', $privs, [], xarVar::NOT_REQUIRED)) {
@@ -402,7 +402,7 @@ function crispbb_admin_forumconfig($args)
             $data['actions'] = $actionlabels;
             $data['levels'] = $presets['privleveloptions'];
             $data['privs'] = $privs;
-        break;
+            break;
     }
 
     $data['invalid'] = $invalid;

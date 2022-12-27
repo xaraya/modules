@@ -215,7 +215,7 @@ function crispbb_admin_modify($args)
 
             $pageTitle = 'Edit ' . $pageTitle;
             xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
-        break;
+            break;
 
         case 'forumhooks':
         case 'topichooks':
@@ -361,7 +361,7 @@ function crispbb_admin_modify($args)
                                 );
                                 $isupdated = true;
                             }
-                            // No setting
+                        // No setting
                         } else {
                             // unhook if currently hooked
                             if ($checkvals['ishooked']) {
@@ -415,7 +415,7 @@ function crispbb_admin_modify($args)
             $data['hooksettings'] = $hooksettings;
             $pageTitle .= $component == 'forum' ? ' Hooks' : ' ' . ucfirst($component) . ' Hooks';
             xarMod::apiFunc('crispbb', 'user', 'getitemtypes');
-        break;
+            break;
 
         case 'privileges':
             if (empty($data['forum']->itemlinks['privileges'])) {
@@ -498,7 +498,7 @@ function crispbb_admin_modify($args)
             $data['levels'] = $presets['privleveloptions'];
             $data['privs'] = $privs;
             $pageTitle .= ' Privileges';
-        break;
+            break;
         default:
             $presets = xarMod::apiFunc(
                 'crispbb',
@@ -508,7 +508,7 @@ function crispbb_admin_modify($args)
             );
             $data['actions'] = $presets['privactionlabels'];
             $data['levels'] = $presets['privleveloptions'];
-        break;
+            break;
     }
 
     $data['fid'] = $fid;

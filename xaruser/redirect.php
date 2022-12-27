@@ -69,20 +69,20 @@ function crispbb_user_redirect($args)
                             $return_args['start'] = $userpanel['lastvisit'];
                         }
                     }
-                break;
+                    break;
                 case 'latest':
-                    default:
+                default:
                     $return_args['start'] = 1;
-                break;
+                    break;
                 case 'unanswered':
                     $return_args['noreplies'] = 1;
-                break;
+                    break;
                 case 'unread':
 
-                break;
+                    break;
                 case 'towner':
                     $return_args['towner'] = xarUser::getVar('id');
-                break;
+                    break;
             }
         }
     }

@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Utility function to pass individual item links to whoever
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @return array
- */
+/**
+* Utility function to pass individual item links to whoever
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @return array
+*/
 function crispbb_userapi_getitemlinks($args)
 {
     $itemlinks = [];
@@ -51,7 +51,7 @@ function crispbb_userapi_getitemlinks($args)
 
     switch ($component) {
         case 'forum':
-            default:
+        default:
             $bycat = empty($args['itemids']) ? true : null;
             $forums = xarMod::apiFunc('crispbb', 'user', 'getforums', ['fid' => $args['itemids'], 'bycat' => $bycat]);
             if (!empty($forums)) {

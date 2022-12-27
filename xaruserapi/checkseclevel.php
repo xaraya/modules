@@ -11,16 +11,16 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Standard function to check sec level for current user for a given component and privilege mask
- * (note, privilege masks here are internal masks used by crispBB,
- *  and not the module masks used by the privileges module)
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @param array $args['check'] component to check privileges against (either forum, topic, or post)
- * @param string $args['priv'] privilege to check for specified component
- * @return array
- */
+/**
+* Standard function to check sec level for current user for a given component and privilege mask
+* (note, privilege masks here are internal masks used by crispBB,
+*  and not the module masks used by the privileges module)
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @param array $args['check'] component to check privileges against (either forum, topic, or post)
+* @param string $args['priv'] privilege to check for specified component
+* @return array
+*/
 function crispbb_userapi_checkseclevel($args)
 {
     extract($args);
@@ -78,7 +78,7 @@ function crispbb_userapi_checkseclevel($args)
                     if (!empty($privs['viewforum'])) {
                         return $userLevel;
                     }
-                break;
+                    break;
                 case 'readforum':
                     if (!empty($privs['readforum'])) {
                         return $userLevel;
@@ -94,7 +94,7 @@ function crispbb_userapi_checkseclevel($args)
                         }
                         */
                     }
-                break;
+                    break;
                 case 'newtopic':
                     if (!$loggedin) {
                         return false;
@@ -105,7 +105,7 @@ function crispbb_userapi_checkseclevel($args)
                     if ($check['fstatus'] == 0 && !empty($privs['newtopic'])) {
                         return $userLevel;
                     }
-                break;
+                    break;
                 case 'newreply':
                     if (!$loggedin) {
                         return false;
@@ -133,7 +133,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'editowntopic':
                 case 'edittopics':
                     if (!$loggedin) {
@@ -162,7 +162,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'editownreply':
                 case 'editreplies':
                     if (!$loggedin) {
@@ -191,7 +191,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'closeowntopic':
                 case 'closetopics':
                     if (!$loggedin) {
@@ -213,13 +213,13 @@ function crispbb_userapi_checkseclevel($args)
                                 if (!empty($privs['locktopics'])) {
                                     return $userLevel;
                                 }
-                                //return false;
+                            //return false;
                             } elseif ($check['tstatus'] == 5) {
                                 return false;
                             }
                         }
                     }
-                break;
+                    break;
                 case 'stickies':
                     if (!$loggedin) {
                         return false;
@@ -247,7 +247,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'announcements':
                     if (!$loggedin) {
                         return false;
@@ -276,7 +276,7 @@ function crispbb_userapi_checkseclevel($args)
                         }
                     }
 
-                break;
+                    break;
                 case 'faqs':
                     if (!$loggedin) {
                         return false;
@@ -304,61 +304,61 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'bbcode':
                     if (!$loggedin) {
                         return false;
                     }
 
-                break;
+                    break;
                 case 'bbcodedeny':
                     if (!$loggedin) {
                         return false;
                     }
 
-                break;
+                    break;
                 case 'smilies':
                     if (!$loggedin) {
                         return false;
                     }
 
-                break;
+                    break;
                 case 'smiliesdeny':
                     if (!$loggedin) {
                         return false;
                     }
 
-                break;
+                    break;
                 case 'html':
                     if (!$loggedin) {
                         return false;
                     }
 
-                break;
+                    break;
                 case 'htmldeny':
                     if (!$loggedin) {
                         return false;
                     }
 
-                break;
-                /*
-                case 'edittopics':
-                    if (!$loggedin) return false;
+                    break;
+                    /*
+                    case 'edittopics':
+                        if (!$loggedin) return false;
 
-                break;
-                case 'editreplies':
-                    if (!$loggedin) return false;
+                    break;
+                    case 'editreplies':
+                        if (!$loggedin) return false;
 
-                break;
-                case 'closetopics':
-                    if (!$loggedin) return false;
+                    break;
+                    case 'closetopics':
+                        if (!$loggedin) return false;
 
-                break;
-                */
+                    break;
+                    */
                 case 'locktopics':
-                     if (!$loggedin) {
-                         return false;
-                     }
+                    if (!$loggedin) {
+                        return false;
+                    }
                     if ($check['fstatus'] == 0 || !empty($privs['editforum'])) {
                         if (!empty($privs['locktopics'])) {
                             if ($check['tstatus'] == 0) {
@@ -380,7 +380,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'movetopics':
                     if (!$loggedin) {
                         return false;
@@ -408,7 +408,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'splittopics':
                     if (!$loggedin) {
                         return false;
@@ -436,7 +436,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'approvetopics':
                     if (!$loggedin) {
                         return false;
@@ -462,7 +462,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'approvereplies':
                     if (!$loggedin) {
                         return false;
@@ -495,7 +495,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'deletetopics':
                     if (!$loggedin) {
                         return false;
@@ -523,7 +523,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'deletereplies':
                     if (!$loggedin) {
                         return false;
@@ -551,7 +551,7 @@ function crispbb_userapi_checkseclevel($args)
                             }
                         }
                     }
-                break;
+                    break;
                 case 'ismoderator':
                     if (!$loggedin) {
                         return false;
@@ -572,7 +572,7 @@ function crispbb_userapi_checkseclevel($args)
                             return $userLevel;
                         }
                     }
-                break;
+                    break;
 
                 case 'addforum':
                     if (!$loggedin) {
@@ -584,7 +584,7 @@ function crispbb_userapi_checkseclevel($args)
                     if (!empty($privs['addforum'])) {
                         return $userLevel;
                     }
-                break;
+                    break;
                 case 'editforum':
                     if (!$loggedin) {
                         return false;
@@ -592,7 +592,7 @@ function crispbb_userapi_checkseclevel($args)
                     if (!empty($privs['editforum'])) {
                         return $userLevel;
                     }
-                break;
+                    break;
                 case 'deleteforum':
                     if (!$loggedin) {
                         return false;
@@ -600,7 +600,7 @@ function crispbb_userapi_checkseclevel($args)
                     if (!empty($privs['deleteforum'])) {
                         return $userLevel;
                     }
-                break;
+                    break;
                 case 'adminforum':
                     if (!$loggedin) {
                         return false;
@@ -608,9 +608,7 @@ function crispbb_userapi_checkseclevel($args)
                     if ($userLevel == 800) {
                         return $userLevel;
                     }
-                break;
-
-
+                    break;
             }
         } elseif (!empty($urlparam)) {
         }

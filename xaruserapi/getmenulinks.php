@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Utility function to pass individual menu items to whoever
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @return array
- */
+/**
+* Utility function to pass individual menu items to whoever
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @return array
+*/
 function crispbb_userapi_getmenulinks()
 {
     $secLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');

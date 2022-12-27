@@ -16,7 +16,7 @@
  * @author crisp <crisp@crispcreations.co.uk>
  * @return array
  */
- sys::import('modules.base.class.pager');
+sys::import('modules.base.class.pager');
 function crispbb_user_view($args)
 {
     extract($args);
@@ -130,20 +130,20 @@ function crispbb_user_view($args)
         switch ($period) {
             case 'day':
                 $starttime = $now-(24*60*60);
-            break;
+                break;
             case 'week':
                 $starttime = $now-(7*24*60*60);
-            break;
+                break;
             case 'month':
                 $starttime = $now-(30*24*60*60);
-            break;
+                break;
             case 'year':
                 $starttime = $now-(365*24*60*60);
-            break;
+                break;
             case 'beginning':
-                default:
+            default:
                 $starttime = 1;
-            break;
+                break;
         }
     }
     $timeoptions = [];
@@ -343,7 +343,7 @@ function crispbb_user_view($args)
                     } elseif ($unread && $ishot) { // unread, hot
                         $timeimage = 3;
                     }
-                break;
+                    break;
                 case '1': // closed
                     if (!$unread && !$ishot) { // read, closed
                         $timeimage = 4;
@@ -354,16 +354,16 @@ function crispbb_user_view($args)
                     } elseif ($unread && $ishot) { // unread, hot, closed
                         $timeimage = 7;
                     }
-                break;
+                    break;
                 case '2': // requires approval
                     $timeimage = 10;
-                break;
+                    break;
                 case '3':
                     $timeimage = 9; // moved topic
-                break;
+                    break;
                 case '4':
                     $timeimage = 8; // locked topic
-                break;
+                    break;
             }
             $item['timeimage'] = $timeimage;
             if (!empty($topic['topicicon']) && isset($iconlist[$item['topicicon']])) {

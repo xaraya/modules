@@ -569,8 +569,8 @@ function crispbb_upgrade($oldversion)
         // see xardocs/changelog.txt for full details of changes
         // module pushed to repo's
         case '2.0.0':
-        // current version
-        break;
+            // current version
+            break;
     }
     // Update successful
     return true;

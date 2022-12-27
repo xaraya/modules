@@ -180,7 +180,7 @@ function crispbb_userapi_getitemtypes($args)
                                     $hookcache[$hookmod][$k] = false;
                                     $isupdated = true;
                                 }
-                                // else if module is hitcount
+                            // else if module is hitcount
                             } elseif ($hookmod == 'hitcount') {
                                 // should be hooked to topics component (all topics)
                                 if ($component == 'topics') {
@@ -199,7 +199,7 @@ function crispbb_userapi_getitemtypes($args)
                                         );
                                         $isupdated = true;
                                     }
-                                    // should not be hooked to all items other components
+                                // should not be hooked to all items other components
                                 } else {
                                     if ($hookcache[$hookmod][$k]) {
                                         // if it is, unhook it now
@@ -217,7 +217,7 @@ function crispbb_userapi_getitemtypes($args)
                                         $isupdated = true;
                                     }
                                 }
-                                // else if module is crispsubs
+                            // else if module is crispsubs
                             } elseif ($hookmod == 'crispsubs') {
                                 // can only be hooked to topics component
                                 if ($component != 'topics') {
@@ -238,7 +238,7 @@ function crispbb_userapi_getitemtypes($args)
                                     }
                                 }
                             }
-                            // any other id is a regular forum itemtype
+                        // any other id is a regular forum itemtype
                         } else {
                             // check if this module is hooked to all items of this component
                             if ($hookcache[$hookmod][$types[$component]]) {
@@ -276,7 +276,7 @@ function crispbb_userapi_getitemtypes($args)
                                         $isupdated = true;
                                     }
                                 }
-                                // if it isn't hooked to all items, we need to know if it changed
+                            // if it isn't hooked to all items, we need to know if it changed
                             } elseif (isset($cachedhooks[$hookmod][$types[$component]]) && $cachedhooks[$hookmod][$types[$component]]) {
                                 // it was previously hooked to all items
                                 if ($hookcache[$hookmod][$k] || ($hookmod == 'crispsubs' && $component != 'topics')) {

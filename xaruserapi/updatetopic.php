@@ -11,22 +11,22 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Update a forum
- *
- * This is a standard adminapi function to update a forum
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @param  int      $args['fid']        forum id
- * @param  string   $args['fname']      forum name
- * @param  string   $args['fdesc']      forum description
- * @param  int      $args['fstatus']    forum status id
- * @param  int      $args['fowner']     forum owner id
- * @param  int      $args['forder']     forum order
- * @param  array    $args['fsettings']  forum settings
- * @return bool true on success, false on failure
- * @throws BAD_PARAM, DATABASE_ERROR
- */
+/**
+* Update a forum
+*
+* This is a standard adminapi function to update a forum
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @param  int      $args['fid']        forum id
+* @param  string   $args['fname']      forum name
+* @param  string   $args['fdesc']      forum description
+* @param  int      $args['fstatus']    forum status id
+* @param  int      $args['fowner']     forum owner id
+* @param  int      $args['forder']     forum order
+* @param  array    $args['fsettings']  forum settings
+* @return bool true on success, false on failure
+* @throws BAD_PARAM, DATABASE_ERROR
+*/
 function crispbb_userapi_updatetopic($args)
 {
     extract($args);

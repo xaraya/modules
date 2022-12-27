@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Get the IDs of all posts later than a given time
- *
- * @author crisp <marc@luetolf-carroll.com>
- * @return array
- */
+/**
+* Get the IDs of all posts later than a given time
+*
+* @author crisp <marc@luetolf-carroll.com>
+* @return array
+*/
 function crispbb_userapi_getlaterposts($args)
 {
     // If we don't have a topic ID, return nothing

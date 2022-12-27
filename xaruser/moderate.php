@@ -28,7 +28,7 @@
  * phase        form
  * confirm      false
  */
- sys::import('modules.base.class.pager');
+sys::import('modules.base.class.pager');
 function crispbb_user_moderate($args)
 {
     extract($args);
@@ -92,10 +92,10 @@ function crispbb_user_moderate($args)
     switch ($component) {
         case 'waiting':
             $pageTitle = xarML('Waiting Content');
-        break;
+            break;
         case 'topics':
-# --------------------------------------------------------
-# We are performing an action on one or more topics
+            # --------------------------------------------------------
+            # We are performing an action on one or more topics
 #
             if (!xarVar::fetch('fid', 'id', $fid, null, xarVar::NOT_REQUIRED)) {
                 return;
@@ -167,7 +167,7 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                             case 'approve':
                                 if (!xarMod::apiFunc(
                                     'crispbb',
@@ -177,10 +177,10 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                             case 'move':
-                                    $allowed = false;
-                            break;
+                                $allowed = false;
+                                break;
                             case 'lock':
                             case 'unlock':
                                 if (!xarMod::apiFunc(
@@ -191,7 +191,7 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                             case 'delete':
                             case 'undelete':
                                 if (!xarMod::apiFunc(
@@ -202,7 +202,7 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                             case 'purge':
                                 if (!xarMod::apiFunc(
                                     'crispbb',
@@ -212,7 +212,7 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                         }
                     }
 
@@ -258,7 +258,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'close':
                                     if (!xarMod::apiFunc(
                                         'crispbb',
@@ -272,7 +272,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'approve':
                                     if (!xarMod::apiFunc(
                                         'crispbb',
@@ -335,18 +335,18 @@ function crispbb_user_moderate($args)
                                             );
                                         }
                                     }
-                                break;
+                                    break;
 
-                                /* // don't need disapprove, just delete, or lock
-                                case 'disapprove': // status?
-                                    if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
-                                        array(
-                                            'tid' => $topic['tid'],
-                                            'tstatus' => 6,
-                                            'nohooks' => true
-                                        ))) return;
-                                break;
-                                */
+                                    /* // don't need disapprove, just delete, or lock
+                                    case 'disapprove': // status?
+                                        if (!xarMod::apiFunc('crispbb', 'user', 'updatetopic',
+                                            array(
+                                                'tid' => $topic['tid'],
+                                                'tstatus' => 6,
+                                                'nohooks' => true
+                                            ))) return;
+                                    break;
+                                    */
                                 case 'unlock':
                                     if (!xarMod::apiFunc(
                                         'crispbb',
@@ -360,7 +360,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'lock':
                                     if (!xarMod::apiFunc(
                                         'crispbb',
@@ -374,7 +374,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'delete':
                                     // Store the current tstatus before deleting
                                     // especially important for moved topics
@@ -393,7 +393,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'undelete':
                                     // Restore previous tstatus
                                     // especially important for moved topics
@@ -415,7 +415,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'purge':
                                     // Perform a permanent delete
                                     if (!xarMod::apiFunc(
@@ -427,7 +427,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                             }
                             $seenposters[$topic['towner']] = 1;
                         }
@@ -624,7 +624,7 @@ function crispbb_user_moderate($args)
                 $data['forumoptions'] = $forumoptions;
                 $data['tstatus'] = $tstatus;
             # --------------------------------------------------------
-# We are moving a topic
+            # We are moving a topic
 #
             } else {
                 if (!xarVar::fetch('movefid', 'id', $movefid, null, xarVar::NOT_REQUIRED)) {
@@ -1027,10 +1027,10 @@ function crispbb_user_moderate($args)
                 $data['movetid'] = $movetid;
                 $data['mergetid'] = $mergetid;
             }
-        break;
+            break;
         case 'posts':
-# --------------------------------------------------------
-# We are performing an action on one or more posts
+            # --------------------------------------------------------
+            # We are performing an action on one or more posts
 #
             if (!xarVar::fetch('tid', 'int', $tid, null, xarVar::NOT_REQUIRED)) {
                 return;
@@ -1135,10 +1135,10 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                             case 'split':
-                                    $allowed = false;
-                            break;
+                                $allowed = false;
+                                break;
                             case 'delete':
                             case 'undelete':
                                 if (!xarMod::apiFunc(
@@ -1149,7 +1149,7 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                             case 'purge':
                                 if (!xarMod::apiFunc(
                                     'crispbb',
@@ -1159,7 +1159,7 @@ function crispbb_user_moderate($args)
                                 )) {
                                     $allowed = false;
                                 }
-                            break;
+                                break;
                         }
                     }
 
@@ -1228,7 +1228,7 @@ function crispbb_user_moderate($args)
                                             );
                                         }
                                     }
-                                break;
+                                    break;
                                 case 'delete':
                                     if (!xarMod::apiFunc(
                                         'crispbb',
@@ -1242,7 +1242,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                                 case 'purge':
                                     if (!xarMod::apiFunc(
                                         'crispbb',
@@ -1254,7 +1254,7 @@ function crispbb_user_moderate($args)
                                     )) {
                                         return;
                                     }
-                                break;
+                                    break;
                             }
                             $seenposters[$post['powner']] = 1;
                         }
@@ -1447,7 +1447,7 @@ function crispbb_user_moderate($args)
                     $numitems
                 );
             # --------------------------------------------------------
-# We are splitting or merging one or more posts
+            # We are splitting or merging one or more posts
 #
             } else {
                 if (!xarVar::fetch('movefid', 'id', $movefid, null, xarVar::NOT_REQUIRED)) {
@@ -1970,7 +1970,7 @@ function crispbb_user_moderate($args)
 
             // Create the title string for this page
             $pageTitle = xarML('Moderate #(1) #(2)', $data['ttitle'], $component);
-        break;
+            break;
     }
 
     // Collect general data for the page to be displayed

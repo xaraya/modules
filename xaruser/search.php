@@ -11,15 +11,15 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Do something
- *
- * Standard function
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @return array
- * @throws none
- */
+/**
+* Do something
+*
+* Standard function
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @return array
+* @throws none
+*/
 sys::import('modules.base.class.pager');
 function crispbb_user_search()
 {
@@ -243,7 +243,7 @@ function crispbb_user_search()
         $search['pstatus'] = 0;
         switch ($component) {
             case 'topics':
-                default:
+            default:
                 if (!empty($towner)) {
                     $search['towner'] = $towner;
                 } elseif (!empty($authorid)) {
@@ -256,7 +256,7 @@ function crispbb_user_search()
                 $search['order'] = 'DESC';
                 $results = xarMod::apiFunc('crispbb', 'user', 'gettopics', $search);
                 $totalitems = xarMod::apiFunc('crispbb', 'user', 'counttopics', $search);
-            break;
+                break;
             case 'replies':
                 if (!empty($towner)) {
                     $search['author'] = $towner;
@@ -268,8 +268,9 @@ function crispbb_user_search()
                 $search['sort'] = 'ptime';
                 $search['order'] = 'DESC';
                 $results = xarMod::apiFunc('crispbb', 'user', 'getposts', $search);
-                $totalitems = xarMod::apiFunc('crispbb', 'user', 'countposts', $search);;
-            break;
+                $totalitems = xarMod::apiFunc('crispbb', 'user', 'countposts', $search);
+                ;
+                break;
         }
         if (!empty($starttime) && (empty($endtime) || $endtime == $now)) {
             $condition = 'since ' . xarLocale::formatDate("%Y-%m-%d %H:%M:%S", $starttime);
@@ -353,7 +354,7 @@ function crispbb_user_search()
                             } elseif ($unread && $ishot) { // unread, hot
                                 $timeimage = 3;
                             }
-                        break;
+                            break;
                         case '1': // closed
                             if (!$unread && !$ishot) { // read, closed
                                 $timeimage = 4;
@@ -364,13 +365,13 @@ function crispbb_user_search()
                             } elseif ($unread && $ishot) { // unread, hot, closed
                                 $timeimage = 7;
                             }
-                        break;
+                            break;
                         case '3':
                             $timeimage = 9; // moved topic
-                        break;
+                            break;
                         case '4':
                             $timeimage = 8; // locked topic
-                        break;
+                            break;
                     }
                     $item['timeimage'] = $timeimage;
                     if (!empty($topic['topicicon']) && (!empty($topic['iconfolder']))) {

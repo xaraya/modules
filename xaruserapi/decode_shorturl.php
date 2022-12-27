@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Standard function to decode short urls for the module
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @return array
- */
+/**
+* Standard function to decode short urls for the module
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @return array
+*/
 function crispbb_userapi_decode_shorturl($params)
 {
     $args = [];

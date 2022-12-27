@@ -144,198 +144,198 @@ function crispbb_adminapi_getmenulinks($args)
             case 'topics':
             case 'deletetopic':
             case 'trashcan':
-            $activelinks = ['view', 'modify', 'delete'];
-            if (!empty($secLevels[$userLevel]['addforum'])) {
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'view');
-                $sublinks['view'] = [
-                'url' => $link,
-                'title' => xarML('Overview of forum listings'),
-                'label' => xarML('Forums'),
-                'active' => in_array($modfunc, $activelinks) ? true : false,
-            ];
-            }
-            $activelinks = ['modify', 'delete'];
-            if (in_array($modfunc, $activelinks)) {
-                $tablinks = [];
-                if (!empty($fid)) {
-                    $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $fid]);
-                }
+                $activelinks = ['view', 'modify', 'delete'];
                 if (!empty($secLevels[$userLevel]['addforum'])) {
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid]);
-                    $tablinks['view'] = [
+                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'view');
+                    $sublinks['view'] = [
                     'url' => $link,
-                    'title' => xarML('Forum Overview'),
-                    'label' => xarML('Overview'),
-                    'active' => $modfunc == 'modify' && empty($current_sublink) ? true : false,
-                ];
+                    'title' => xarML('Overview of forum listings'),
+                    'label' => xarML('Forums'),
+                    'active' => in_array($modfunc, $activelinks) ? true : false,
+            ];
                 }
-                if (!empty($secLevels[$userLevel]['editforum'])) {
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'edit']);
-                    $tablinks['modify'] = [
-                    'url' => $link,
-                    'title' => xarML('Modify forum configuration'),
-                    'label' => xarML('Edit'),
-                    'active' => $current_sublink == 'edit' ? true : false,
+                $activelinks = ['modify', 'delete'];
+                if (in_array($modfunc, $activelinks)) {
+                    $tablinks = [];
+                    if (!empty($fid)) {
+                        $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', ['fid' => $fid]);
+                    }
+                    if (!empty($secLevels[$userLevel]['addforum'])) {
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid]);
+                        $tablinks['view'] = [
+                        'url' => $link,
+                        'title' => xarML('Forum Overview'),
+                        'label' => xarML('Overview'),
+                        'active' => $modfunc == 'modify' && empty($current_sublink) ? true : false,
                 ];
-                    if ($forum['ftype'] != 1) {
-                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'forumhooks']);
-                        $tablinks['forumhooks'] = [
+                    }
+                    if (!empty($secLevels[$userLevel]['editforum'])) {
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'edit']);
+                        $tablinks['modify'] = [
                         'url' => $link,
-                        'title' => xarML('Set forum hooks configuration'),
-                        'label' => xarML('Forum Hooks'),
-                        'active' => $current_sublink == 'forumhooks' ? true : false,
+                        'title' => xarML('Modify forum configuration'),
+                        'label' => xarML('Edit'),
+                        'active' => $current_sublink == 'edit' ? true : false,
+                ];
+                        if ($forum['ftype'] != 1) {
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'forumhooks']);
+                            $tablinks['forumhooks'] = [
+                            'url' => $link,
+                            'title' => xarML('Set forum hooks configuration'),
+                            'label' => xarML('Forum Hooks'),
+                            'active' => $current_sublink == 'forumhooks' ? true : false,
                     ];
-                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'topichooks']);
-                        $tablinks['topichooks'] = [
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'topichooks']);
+                            $tablinks['topichooks'] = [
+                            'url' => $link,
+                            'title' => xarML('Set forum topic hooks configuration'),
+                            'label' => xarML('Topic Hooks'),
+                            'active' => $current_sublink == 'topichooks' ? true : false,
+                    ];
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'posthooks']);
+                            $tablinks['posthooks'] = [
+                            'url' => $link,
+                            'title' => xarML('Set forum post hooks configuration'),
+                            'label' => xarML('Post Hooks'),
+                            'active' => $current_sublink == 'posthooks' ? true : false,
+                    ];
+                            $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'privileges']);
+                            $tablinks['privileges'] = [
+                            'url' => $link,
+                            'title' => xarML('Modify privileges for this forum'),
+                            'label' => xarML('Privileges'),
+                            'active' => $current_sublink == 'privileges' ? true : false,
+                    ];
+                        }
+                    }
+                    if (!empty($secLevels[$userLevel]['deleteforum'])) {
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'delete', ['fid' => $fid]);
+                        $tablinks['delete'] = [
                         'url' => $link,
-                        'title' => xarML('Set forum topic hooks configuration'),
-                        'label' => xarML('Topic Hooks'),
-                        'active' => $current_sublink == 'topichooks' ? true : false,
-                    ];
-                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'posthooks']);
-                        $tablinks['posthooks'] = [
-                        'url' => $link,
-                        'title' => xarML('Set forum post hooks configuration'),
-                        'label' => xarML('Post Hooks'),
-                        'active' => $current_sublink == 'posthooks' ? true : false,
-                    ];
-                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'modify', ['fid' => $fid, 'sublink' => 'privileges']);
-                        $tablinks['privileges'] = [
-                        'url' => $link,
-                        'title' => xarML('Modify privileges for this forum'),
-                        'label' => xarML('Privileges'),
-                        'active' => $current_sublink == 'privileges' ? true : false,
-                    ];
+                        'title' => xarML('Delete this forum'),
+                        'label' => xarML('Delete'),
+                        'active' => $modfunc == 'delete' ? true : false,
+                ];
                     }
                 }
-                if (!empty($secLevels[$userLevel]['deleteforum'])) {
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'delete', ['fid' => $fid]);
-                    $tablinks['delete'] = [
+                if (!empty($secLevels[$userLevel]['addforum'])) {
+                    $activelinks = ['new'];
+                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'new');
+                    $sublinks['new'] = [
                     'url' => $link,
-                    'title' => xarML('Delete this forum'),
-                    'label' => xarML('Delete'),
-                    'active' => $modfunc == 'delete' ? true : false,
-                ];
-                }
-            }
-            if (!empty($secLevels[$userLevel]['addforum'])) {
-                $activelinks = ['new'];
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'new');
-                $sublinks['new'] = [
-                'url' => $link,
-                'title' => xarML('Add a new forum to the system'),
-                'label' => xarML('Add Forum'),
-                'active' => in_array($modfunc, $activelinks) ? true : false,
+                    'title' => xarML('Add a new forum to the system'),
+                    'label' => xarML('Add Forum'),
+                    'active' => in_array($modfunc, $activelinks) ? true : false,
             ];
-            }
-            if ($userLevel == 800) {
-                $activelinks = ['forumconfig'];
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig');
-                $sublinks['forumconfig'] = [
-                    'url' => $link,
-                    'title' => xarML('Set default configuration for new forums'),
-                    'label' => xarML('Set Defaults'),
-                    'active' => in_array($modfunc, $activelinks) ? true : false,
-                ];
-                if (in_array($modfunc, $activelinks)) {
-                    $tablinks = [];
-                    $tablinks['forumconfig'] = [
-                        'url' => $link,
-                        'title' => xarML('Set default forum configuration'),
-                        'label' => xarML('Forum Config'),
-                        'active' => empty($current_sublink) ? true : false,
-                    ];
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'forumhooks']);
-                    $tablinks['forumhooks'] = [
-                        'url' => $link,
-                        'title' => xarML('Set default forum hooks configuration'),
-                        'label' => xarML('Forum Hooks'),
-                        'active' => $current_sublink == 'forumhooks' ? true : false,
-                    ];
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'topichooks']);
-                    $tablinks['topichooks'] = [
-                        'url' => $link,
-                        'title' => xarML('Set default topic hooks configuration'),
-                        'label' => xarML('Topic Hooks'),
-                        'active' => $current_sublink == 'topichooks' ? true : false,
-                    ];
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'posthooks']);
-                    $tablinks['posthooks'] = [
-                        'url' => $link,
-                        'title' => xarML('Set default post hooks configuration'),
-                        'label' => xarML('Post Hooks'),
-                        'active' => $current_sublink == 'posthooks' ? true : false,
-                    ];
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'privileges']);
-                    $tablinks['setdefaults'] = [
-                        'url' => $link,
-                        'title' => xarML('Set default privileges configuration'),
-                        'label' => xarML('Privileges'),
-                        'active' => $current_sublink == 'privileges' ? true : false,
-                    ];
                 }
-                $activelinks = ['posters'];
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'posters');
-                $sublinks['posters'] = [
-                    'url' => $link,
-                    'title' => xarML('Overview of forum posters'),
-                    'label' => xarML('Posters'),
-                    'active' => in_array($modfunc, $activelinks) ? true : false,
-                ];
-                $activelinks = ['categories', 'newcat', 'modifycat', 'deletecat'];
-                $link = LinkCache::getCachedURL('crispbb', 'admin', 'categories');
-                $sublinks[in_array($modfunc, $activelinks) ? $modfunc : 'categories'] = [
-                    'url' => $link,
-                    'title' => xarML('Category configuration for forums'),
-                    'label' => xarML('Categories'),
-                    'active' => in_array($modfunc, $activelinks) ? true : false,
-                ];
-                if (in_array($modfunc, $activelinks)) {
-                    $tablinks = [];
+                if ($userLevel == 800) {
+                    $activelinks = ['forumconfig'];
+                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig');
+                    $sublinks['forumconfig'] = [
+                        'url' => $link,
+                        'title' => xarML('Set default configuration for new forums'),
+                        'label' => xarML('Set Defaults'),
+                        'active' => in_array($modfunc, $activelinks) ? true : false,
+                    ];
+                    if (in_array($modfunc, $activelinks)) {
+                        $tablinks = [];
+                        $tablinks['forumconfig'] = [
+                            'url' => $link,
+                            'title' => xarML('Set default forum configuration'),
+                            'label' => xarML('Forum Config'),
+                            'active' => empty($current_sublink) ? true : false,
+                        ];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'forumhooks']);
+                        $tablinks['forumhooks'] = [
+                            'url' => $link,
+                            'title' => xarML('Set default forum hooks configuration'),
+                            'label' => xarML('Forum Hooks'),
+                            'active' => $current_sublink == 'forumhooks' ? true : false,
+                        ];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'topichooks']);
+                        $tablinks['topichooks'] = [
+                            'url' => $link,
+                            'title' => xarML('Set default topic hooks configuration'),
+                            'label' => xarML('Topic Hooks'),
+                            'active' => $current_sublink == 'topichooks' ? true : false,
+                        ];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'posthooks']);
+                        $tablinks['posthooks'] = [
+                            'url' => $link,
+                            'title' => xarML('Set default post hooks configuration'),
+                            'label' => xarML('Post Hooks'),
+                            'active' => $current_sublink == 'posthooks' ? true : false,
+                        ];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'forumconfig', ['sublink' => 'privileges']);
+                        $tablinks['setdefaults'] = [
+                            'url' => $link,
+                            'title' => xarML('Set default privileges configuration'),
+                            'label' => xarML('Privileges'),
+                            'active' => $current_sublink == 'privileges' ? true : false,
+                        ];
+                    }
+                    $activelinks = ['posters'];
+                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'posters');
+                    $sublinks['posters'] = [
+                        'url' => $link,
+                        'title' => xarML('Overview of forum posters'),
+                        'label' => xarML('Posters'),
+                        'active' => in_array($modfunc, $activelinks) ? true : false,
+                    ];
+                    $activelinks = ['categories', 'newcat', 'modifycat', 'deletecat'];
                     $link = LinkCache::getCachedURL('crispbb', 'admin', 'categories');
-                    $tablinks['categories'] = [
+                    $sublinks[in_array($modfunc, $activelinks) ? $modfunc : 'categories'] = [
                         'url' => $link,
-                        'title' => xarML('View forum categories'),
-                        'label' => xarML('View'),
-                        'active' =>  $modfunc == 'deletecat' || ($modfunc == 'categories' && empty($current_sublink)) ? true : false,
+                        'title' => xarML('Category configuration for forums'),
+                        'label' => xarML('Categories'),
+                        'active' => in_array($modfunc, $activelinks) ? true : false,
                     ];
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'newcat');
-                    $tablinks['newcat'] = [
-                        'url' => $link,
-                        'title' => xarML('Add new forum category'),
-                        'label' => xarML('New Category'),
-                        'active' => $modfunc == 'newcat' ? true : false,
-                    ];
-                    $link = LinkCache::getCachedURL('crispbb', 'admin', 'categories', ['sublink' => 'mastercat']);
-                    $tablinks['mastercat'] = [
-                        'url' => $link,
-                        'label' => xarML('Base Category'),
-                        'title' => xarML('Set Base Category for crispBB Forums'),
-                        'active' => $current_sublink == 'mastercat' ? true : false,
-                    ];
+                    if (in_array($modfunc, $activelinks)) {
+                        $tablinks = [];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'categories');
+                        $tablinks['categories'] = [
+                            'url' => $link,
+                            'title' => xarML('View forum categories'),
+                            'label' => xarML('View'),
+                            'active' =>  $modfunc == 'deletecat' || ($modfunc == 'categories' && empty($current_sublink)) ? true : false,
+                        ];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'newcat');
+                        $tablinks['newcat'] = [
+                            'url' => $link,
+                            'title' => xarML('Add new forum category'),
+                            'label' => xarML('New Category'),
+                            'active' => $modfunc == 'newcat' ? true : false,
+                        ];
+                        $link = LinkCache::getCachedURL('crispbb', 'admin', 'categories', ['sublink' => 'mastercat']);
+                        $tablinks['mastercat'] = [
+                            'url' => $link,
+                            'label' => xarML('Base Category'),
+                            'title' => xarML('Set Base Category for crispBB Forums'),
+                            'active' => $current_sublink == 'mastercat' ? true : false,
+                        ];
+                    }
+                    /*
+                    $activelinks = array('trashcan');
+                    $sublinks['trashcan'] = array(
+                        'url' => xarController::URL('crispbb', 'admin', 'trashcan'),
+                        'title' => xarML('Overview of deleted items'),
+                        'label' => xarML('Trashcan'),
+                        'active' => in_array($modfunc, $activelinks) ? true : false
+                    );
+                    */
                 }
                 /*
-                $activelinks = array('trashcan');
-                $sublinks['trashcan'] = array(
-                    'url' => xarController::URL('crispbb', 'admin', 'trashcan'),
-                    'title' => xarML('Overview of deleted items'),
-                    'label' => xarML('Trashcan'),
+                $activelinks = array('topics', 'deletetopic');
+                $sublinks['topics'] = array(
+                    'url' => xarController::URL('crispbb', 'admin', 'topics'),
+                    'title' => xarML('Manage forum topics'),
+                    'label' => xarML('Topics'),
                     'active' => in_array($modfunc, $activelinks) ? true : false
                 );
                 */
-            }
-            /*
-            $activelinks = array('topics', 'deletetopic');
-            $sublinks['topics'] = array(
-                'url' => xarController::URL('crispbb', 'admin', 'topics'),
-                'title' => xarML('Manage forum topics'),
-                'label' => xarML('Topics'),
-                'active' => in_array($modfunc, $activelinks) ? true : false
-            );
-            */
 
-            $activefunc = 'view';
-           break;
+                $activefunc = 'view';
+                break;
 
             case 'modifyconfig':
                 if ($userLevel == 800) {
@@ -349,7 +349,7 @@ function crispbb_adminapi_getmenulinks($args)
                     ];
                     $activefunc = 'modifyconfig';
                 }
-            break;
+                break;
             case 'modifyhooks':
             case 'unlinkhooks':
                 if ($userLevel == 800) {
@@ -363,12 +363,12 @@ function crispbb_adminapi_getmenulinks($args)
                     ];
                     $activefunc = 'modifyhooks';
                 }
-            break;
+                break;
 
             case 'overview':
             default:
 
-            break;
+                break;
         }
     }
     if (!empty($activefunc) && !empty($sublinks)) {

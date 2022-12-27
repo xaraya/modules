@@ -11,17 +11,17 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Create a new forum
- *
- * This is a standard adminapi function to create a component itemtype
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @param  string   $args['fid']        forum id
- * @param  string   $args['component']  crispbb component (forum|topics|posts)
- * @return int itemtype id on success, false on failure
- * @throws BAD_PARAM, DATABASE_ERROR
- */
+/**
+* Create a new forum
+*
+* This is a standard adminapi function to create a component itemtype
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @param  string   $args['fid']        forum id
+* @param  string   $args['component']  crispbb component (forum|topics|posts)
+* @return int itemtype id on success, false on failure
+* @throws BAD_PARAM, DATABASE_ERROR
+*/
 function crispbb_adminapi_createitemtype($args)
 {
     extract($args);

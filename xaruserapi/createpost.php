@@ -11,21 +11,21 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Create a new forum
- *
- * This is a standard adminapi function to create a forum
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @param  string   $args['fname']      forum name
- * @param  string   $args['fdesc']      forum description
- * @param  int      $args['fstatus']    forum status id
- * @param  int      $args['fowner']     forum owner id
- * @param  int      $args['forder']     forum order
- * @param  array    $args['fsettings']  forum settings
- * @return int forum id on success, false on failure
- * @throws BAD_PARAM, DATABASE_ERROR
- */
+/**
+* Create a new forum
+*
+* This is a standard adminapi function to create a forum
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @param  string   $args['fname']      forum name
+* @param  string   $args['fdesc']      forum description
+* @param  int      $args['fstatus']    forum status id
+* @param  int      $args['fowner']     forum owner id
+* @param  int      $args['forder']     forum order
+* @param  array    $args['fsettings']  forum settings
+* @return int forum id on success, false on failure
+* @throws BAD_PARAM, DATABASE_ERROR
+*/
 function crispbb_userapi_createpost($args)
 {
     extract($args);

@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Standard function to do something
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @return array
- */
+/**
+* Standard function to do something
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @return array
+*/
 function crispbb_userapi_getposts($args)
 {
     extract($args);

@@ -11,15 +11,15 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Get forums
- *
- * Standard function of a module to retrieve forums
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @return mixed  item array, or false on failure
- * @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
- */
+/**
+* Get forums
+*
+* Standard function of a module to retrieve forums
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @return mixed  item array, or false on failure
+* @throws BAD_PARAM, DATABASE_ERROR, NO_PERMISSION
+*/
 function crispbb_userapi_getforums($args)
 {
     extract($args);

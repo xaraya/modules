@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/970.html
  * @author crisp <crisp@crispcreations.co.uk>
  */
- /**
- * Manage crispBB hooks
- *
- * @author crisp <crisp@crispcreations.co.uk>
- * @access public
- */
+/**
+* Manage crispBB hooks
+*
+* @author crisp <crisp@crispcreations.co.uk>
+* @access public
+*/
 function crispbb_admin_modifyhooks($args)
 {
     // Admin only function
@@ -61,8 +61,8 @@ function crispbb_admin_modifyhooks($args)
                 $modinfo['name'],
                 'user',
                 'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                // don't throw an exception if this function doesn't exist
+                [],
                 0
             );
             foreach ($itemtypes as $itemtype => $stats) {
@@ -119,8 +119,8 @@ function crispbb_admin_modifyhooks($args)
                 $modinfo['name'],
                 'user',
                 'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                // don't throw an exception if this function doesn't exist
+                [],
                 0
             );
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {

@@ -179,7 +179,7 @@ function crispbb_user_newtopic($args)
         } elseif ($tstatus == 4) {
             $invalid['tstatus'] = xarML('You can not post locked topics');
         }
-        // topics require approval
+    // topics require approval
     } else {
         if (!empty($privs['approvetopics'])) {
             $tstatusoptions[0] = $presets['tstatusoptions'][0];
@@ -461,13 +461,13 @@ function crispbb_user_newtopic($args)
                     'newreply',
                     ['modname' => $modname, 'itemtype' => $itemtype, 'objectid' => $itemid, 'tid' => $tid]
                 );
-            /*
-            // preserve the return url (links to the hooked module item)
-            $real_return_url = xarController::URL('crispbb', 'user', 'newreply',
-                array('tid' => $tid, 'return_url' => $return_url));
-            xarSession::setVar('crispbb_hook_active', $now);
-            $return_url = $real_return_url;
-            */
+                /*
+                // preserve the return url (links to the hooked module item)
+                $real_return_url = xarController::URL('crispbb', 'user', 'newreply',
+                    array('tid' => $tid, 'return_url' => $return_url));
+                xarSession::setVar('crispbb_hook_active', $now);
+                $return_url = $real_return_url;
+                */
             } elseif (!empty($data['postbuffer']) || $tstatus == 2) {
                 if ($tstatus == 2) {
                     $return_url = xarController::URL(
