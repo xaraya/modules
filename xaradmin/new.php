@@ -15,51 +15,50 @@
  * Create a new item of a mimeobject
  *
  */
-    sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
-    function mime_admin_new()
-    {
-        if (!xarSecurity::check('AddMime')) {
-            return;
-        }
-
-        if (!xarVar::fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
-            return;
-        }
-
-        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
-        $data['tplmodule'] = 'mime';
-        $data['authid'] = xarSec::genAuthKey('mime');
-
-        if ($data['confirm']) {
-
-            // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
-                return;
-            }
-
-            // Check for a valid confirmation key
-            if (!xarSec::confirmAuthKey()) {
-                return;
-            }
-
-            // Get the data from the form
-            $isvalid = $data['object']->checkInput();
-
-            if (!$isvalid) {
-                // Bad data: redisplay the form with error messages
-                return xarTpl::module('mime', 'admin', 'new', $data);
-            } else {
-                // Good data: create the item
-                $itemid = $data['object']->createItem();
-
-                // Jump to the next page
-                xarController::redirect(xarController::URL('mime', 'admin', 'view'));
-                return true;
-            }
-        }
-        return $data;
+function mime_admin_new()
+{
+    if (!xarSecurity::check('AddMime')) {
+        return;
     }
+
+    if (!xarVar::fetch('name', 'str', $name, 'mime_types', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['tplmodule'] = 'mime';
+    $data['authid'] = xarSec::genAuthKey('mime');
+
+    if ($data['confirm']) {
+        // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
+        if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
+            return;
+        }
+
+        // Check for a valid confirmation key
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
+
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
+
+        if (!$isvalid) {
+            // Bad data: redisplay the form with error messages
+            return xarTpl::module('mime', 'admin', 'new', $data);
+        } else {
+            // Good data: create the item
+            $itemid = $data['object']->createItem();
+
+            // Jump to the next page
+            xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+            return true;
+        }
+    }
+    return $data;
+}

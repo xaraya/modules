@@ -12,15 +12,15 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get the name of a mime type
-  *
-  *  @author Carl P. Corliss
-  *  @access public
-  *  @param  integer    $subtypeId      the subtype ID to add an extension for
-  *  @param  string     $extensionName  the extension name to add
-  *  returns array      An array of (subtypeId, extension) or an empty array
-  */
+/**
+ *  Get the name of a mime type
+ *
+ *  @author Carl P. Corliss
+ *  @access public
+ *  @param  integer    $subtypeId      the subtype ID to add an extension for
+ *  @param  string     $extensionName  the extension name to add
+ *  returns array      An array of (subtypeId, extension) or an empty array
+ */
 
 function mime_userapi_add_extension($args)
 {

@@ -17,7 +17,7 @@
  *
  */
 
-    function mime_adminapi_getmenulinks()
-    {
-        return xarMod::apiFunc('base', 'admin', 'menuarray', ['module' => 'mime']);
-    }
+function mime_adminapi_getmenulinks()
+{
+    return xarMod::apiFunc('base', 'admin', 'menuarray', ['module' => 'mime']);
+}

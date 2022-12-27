@@ -16,19 +16,19 @@
  *
  */
 
-    function mime_admin_main()
-    {
-        xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+function mime_admin_main()
+{
+    xarController::redirect(xarController::URL('mime', 'admin', 'view'));
 
-        if (!xarSecurity::check('ManageMime')) {
-            return;
-        }
-
-        if (xarModVars::get('modules', 'disableoverview') == 0) {
-            return [];
-        } else {
-            xarController::redirect(xarController::URL('mime', 'admin', 'view'));
-        }
-        // success
-        return true;
+    if (!xarSecurity::check('ManageMime')) {
+        return;
     }
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return [];
+    } else {
+        xarController::redirect(xarController::URL('mime', 'admin', 'view'));
+    }
+    // success
+    return true;
+}

@@ -12,15 +12,15 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get the name of a mime type
-  *
-  *  @author Carl P. Corliss
-  *  @access public
-  *  @param  integer    extensionId        the ID of the extension to lookup   (optional)
-  *  @param  integer    extensionName     the Name of the extension to lookup (optional)
-  *  returns array      An array of (subtypeId, extension) or an empty array
-  */
+/**
+ *  Get the name of a mime type
+ *
+ *  @author Carl P. Corliss
+ *  @access public
+ *  @param  integer    extensionId        the ID of the extension to lookup   (optional)
+ *  @param  integer    extensionName     the Name of the extension to lookup (optional)
+ *  returns array      An array of (subtypeId, extension) or an empty array
+ */
 
 function mime_userapi_get_extension($args)
 {

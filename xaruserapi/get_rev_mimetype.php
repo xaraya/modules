@@ -12,14 +12,14 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get the typeId and subtypeId for a named mimeType (ie: application/octet-stream)
-  *
-  *  @author Carl P. Corliss
-  *  @access public
-  *  @param  string     the mime type we want to lookup id's for
-  *  returns array      An array of (subtypeId, subtypeName) or an empty array
-  */
+/**
+ *  Get the typeId and subtypeId for a named mimeType (ie: application/octet-stream)
+ *
+ *  @author Carl P. Corliss
+ *  @access public
+ *  @param  string     the mime type we want to lookup id's for
+ *  returns array      An array of (subtypeId, subtypeName) or an empty array
+ */
 
 function mime_userapi_get_rev_mimetype($args)
 {

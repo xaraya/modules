@@ -12,16 +12,16 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get the name of a mime type
-  *
-  *  @author Carl P. Corliss
-  *  @access public
-  *  @param  integer    $typeId      the type ID of the mime type to attch subtypes to
-  *  @param  string     $subtypeName the name of the subtype to add
-  *  @param  string     $subtypeDesc the description of the subtype to add
-  *  returns array      false on error, the sub type id otherwise
-  */
+/**
+ *  Get the name of a mime type
+ *
+ *  @author Carl P. Corliss
+ *  @access public
+ *  @param  integer    $typeId      the type ID of the mime type to attch subtypes to
+ *  @param  string     $subtypeName the name of the subtype to add
+ *  @param  string     $subtypeDesc the description of the subtype to add
+ *  returns array      false on error, the sub type id otherwise
+ */
 
 function mime_userapi_add_subtype($args)
 {

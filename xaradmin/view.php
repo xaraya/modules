@@ -15,32 +15,32 @@
  * View items of the mime objects
  *
  */
-    function mime_admin_view($args)
-    {
-        if (!xarSecurity::check('ManageMime')) {
-            return;
-        }
-
-        $modulename = 'mime';
-
-        // Define which object will be shown
-        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
-            return;
-        }
-        if (!empty($objectname)) {
-            xarModUserVars::set($modulename, 'defaultmastertable', $objectname);
-        }
-
-        // Get the available dropdown options
-        $object = DataObjectMaster::getObjectList(['objectid' => 1]);
-        $data['objectname'] = xarModUserVars::get($modulename, 'defaultmastertable');
-        $items = $object->getItems();
-        $options = [];
-        foreach ($items as $item) {
-            if (strpos($item['name'], $modulename) !== false) {
-                $options[] = ['id' => $item['name'], 'name' => $item['name']];
-            }
-        }
-        $data['options'] = $options;
-        return $data;
+function mime_admin_view($args)
+{
+    if (!xarSecurity::check('ManageMime')) {
+        return;
     }
+
+    $modulename = 'mime';
+
+    // Define which object will be shown
+    if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) {
+        return;
+    }
+    if (!empty($objectname)) {
+        xarModUserVars::set($modulename, 'defaultmastertable', $objectname);
+    }
+
+    // Get the available dropdown options
+    $object = DataObjectMaster::getObjectList(['objectid' => 1]);
+    $data['objectname'] = xarModUserVars::get($modulename, 'defaultmastertable');
+    $items = $object->getItems();
+    $options = [];
+    foreach ($items as $item) {
+        if (strpos($item['name'], $modulename) !== false) {
+            $options[] = ['id' => $item['name'], 'name' => $item['name']];
+        }
+    }
+    $data['options'] = $options;
+    return $data;
+}

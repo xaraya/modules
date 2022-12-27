@@ -91,7 +91,6 @@ function mime_userapi_analyze_file($args)
 
 
         foreach ($mime_list as $mime_type => $mime_info) {
-
             // if this mime_type doesn't have a
             // magic string to check against, then
             // go ahead and skip to the next one

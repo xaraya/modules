@@ -12,19 +12,19 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get details for mime subtypes
-  *
-  *  @author Carl P. Corliss
-  *  @author Jason Judge
-  *  @access public
-  *  @param  integer    typeId the type ID of the mime type to grab subtypes for
-  *  @param  integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
-  *  @param  string     subtypeName the subtype name of the mime type, which should fetch just one subtype
-  *  @param  string     typeName the type name of the mime type
-  *  @param  string     mimeName the full two-part mime name
-  *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
-  */
+/**
+ *  Get details for mime subtypes
+ *
+ *  @author Carl P. Corliss
+ *  @author Jason Judge
+ *  @access public
+ *  @param  integer    typeId the type ID of the mime type to grab subtypes for
+ *  @param  integer    subtypeId the subtype ID of the mime type, which should fetch just one subtype
+ *  @param  string     subtypeName the subtype name of the mime type, which should fetch just one subtype
+ *  @param  string     typeName the type name of the mime type
+ *  @param  string     mimeName the full two-part mime name
+ *  returns array      An array of (typeid, subtypeId, subtypeName, subtypeDesc) or an empty array
+ */
 
 function mime_userapi_getall_subtypes($args)
 {

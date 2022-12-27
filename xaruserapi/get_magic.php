@@ -12,15 +12,15 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get the magic number(s) for a particular mime subtype
-  *
-  *  @author Carl P. Corliss
-  *  @access public
-  *  @param  integer    matgicId     the magicId of the magic # to lookup   (optional)
-  *  @param  string     magicValue   the magic value of the magic # to lookup (optional)
-  *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
-  */
+/**
+ *  Get the magic number(s) for a particular mime subtype
+ *
+ *  @author Carl P. Corliss
+ *  @access public
+ *  @param  integer    matgicId     the magicId of the magic # to lookup   (optional)
+ *  @param  string     magicValue   the magic value of the magic # to lookup (optional)
+ *  returns array      An array of (subtypeid, magicId, magic, offset, length) or an empty array
+ */
 
 function mime_userapi_get_magic($args)
 {

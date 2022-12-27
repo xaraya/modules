@@ -12,14 +12,14 @@
  * @author Carl Corliss <rabbitt@xaraya.com>
  */
 
- /**
-  *  Get all mime types
-  *
-  *  @author Carl P. Corliss
-  *  @access public
-  *  @param  integer    typeName  the Name of the mime type to lookup (optional)
-  *  returns array      An array of (typeId, typeName) or an empty array
-  */
+/**
+ *  Get all mime types
+ *
+ *  @author Carl P. Corliss
+ *  @access public
+ *  @param  integer    typeName  the Name of the mime type to lookup (optional)
+ *  returns array      An array of (typeId, typeName) or an empty array
+ */
 
 function mime_userapi_add_type($args)
 {
