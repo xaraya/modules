@@ -49,7 +49,6 @@ function html_admin_deletetype()
 
     // Check for confirmation.
     if (!$confirm) {
-
         // Specify for which html tag you want confirmation
         $data['id'] = $id;
 

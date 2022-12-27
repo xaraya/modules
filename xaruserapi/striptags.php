@@ -67,8 +67,10 @@ function html_userapi_striptags($args)
             }
         } else {
             switch ($v) {
-                case 0: $stripTag[] = $k; break;
-                case 1: $stripAttrs[] = $k; break;
+                case 0: $stripTag[] = $k;
+                    break;
+                case 1: $stripAttrs[] = $k;
+                    break;
             }
         }
     }

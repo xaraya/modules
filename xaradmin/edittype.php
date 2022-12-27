@@ -52,7 +52,6 @@ function html_admin_edittype()
 
     // Check for confirmation.
     if (!$confirm) {
-
         // Specify for which html tag you want confirmation
         $data['id'] = $id;
 

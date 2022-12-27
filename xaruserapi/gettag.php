@@ -58,10 +58,10 @@ function html_userapi_gettag($args)
         return;
     }
     [$id,
-         $tid,
-         $type,
-         $tag,
-         $allowed] = $result->fields;
+        $tid,
+        $type,
+        $tag,
+        $allowed] = $result->fields;
     $result->Close();
     $tag = ['id'       => $id,
                  'tid'      => $tid,

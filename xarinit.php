@@ -412,14 +412,14 @@ function html_upgrade($oldversion)
             $htmltypeid = $dbconn->PO_Insert_ID($htmltypestable, 'id');
 
             // Add the column 'tid' to the xar_html table
-             $query = xarTableDDL::alterTable(
-                 $htmltable,
-                 ['command' => 'add',
-                                           'field' => 'tid',
-                                           'type' => 'integer',
-                                           'null' => false,
-                                           'default' => $htmltypeid, ]
-             );
+            $query = xarTableDDL::alterTable(
+                $htmltable,
+                ['command' => 'add',
+                                          'field' => 'tid',
+                                          'type' => 'integer',
+                                          'null' => false,
+                                          'default' => $htmltypeid, ]
+            );
             $result = & $dbconn->Execute($query);
             if (!$result) {
                 return;
@@ -486,7 +486,6 @@ function html_upgrade($oldversion)
  */
 function html_delete()
 {
-
     // Remove module variables
     xarModVars::delete('html', 'itemsperpage');
     xarMasks::removemasks('html');
