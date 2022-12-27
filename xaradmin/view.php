@@ -127,11 +127,11 @@ function uploads_admin_view()
 
         switch ($action) {
             case _UPLOADS_STATUS_APPROVED:
-                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'    => _UPLOADS_STATUS_APPROVED]);
-                    break;
+                xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'    => _UPLOADS_STATUS_APPROVED]);
+                break;
             case _UPLOADS_STATUS_SUBMITTED:
-                    xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'    => _UPLOADS_STATUS_SUBMITTED]);
-                    break;
+                xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'    => _UPLOADS_STATUS_SUBMITTED]);
+                break;
             case _UPLOADS_STATUS_REJECTED:
                 xarMod::apiFunc('uploads', 'user', 'db_change_status', $args + ['newStatus'   => _UPLOADS_STATUS_REJECTED]);
                 if (xarModVars::get('uploads', 'file.auto-purge')) {

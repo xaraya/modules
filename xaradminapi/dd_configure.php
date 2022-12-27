@@ -95,7 +95,6 @@ function uploads_adminapi_dd_configure($confString = null)
                                 $methods['stored'] = $modifier;
                                 break;
                             default:
-
                         }
                     }
                 }

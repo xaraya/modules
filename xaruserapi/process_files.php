@@ -72,15 +72,14 @@ function uploads_userapi_process_files($args)
     }
 
     switch ($action) {
-
         case _UPLOADS_GET_UPLOAD:
             if (!isset($upload) || empty($upload)) {
                 $msg = xarML('Missing parameter [#(1)] to API function [#(2)] in module [#(3)].', 'upload', 'process_files', 'uploads');
                 throw new Exception($msg);
             }
 
-        // Set in the uploads method
-        //$allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
+            // Set in the uploads method
+            //$allow_duplicate = xarModVars::get('uploads', 'file.allow-duplicate-upload');
 
             // Rearange the uploads array so we can pass the uploads one by one
             $uploadarray = [];
@@ -245,10 +244,8 @@ function uploads_userapi_process_files($args)
         default:
             $msg = xarML("Invalid parameter [#(1)] to API function [#(2)] in module [#(3)].", 'action', 'process_files', 'uploads');
             throw new Exception($msg);
-
     }
     foreach ($fileList as $fileInfo) {
-
         // If the file has errors, add the file to the storeList (with it's errors intact),
         // and continue to the next file in the list. Note: it's up to the calling function
         // to deal with the error (or not) - however, we won't be adding the file with errors :-)

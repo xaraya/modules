@@ -100,7 +100,6 @@ function uploads_userapi_file_push($args)
 
 
     if ($storeType & _UPLOADS_STORE_FILESYSTEM || ($storeType == _UPLOADS_STORE_DB_ENTRY)) {
-
         // Start buffering for the file
         ob_start();
 
@@ -134,7 +133,6 @@ function uploads_userapi_file_push($args)
         //       ending Xaraya in a safe manner
         $finished = true;
     } elseif ($storeType & _UPLOADS_STORE_DB_DATA) {
-
         // Start buffering for the file
         ob_start();
 

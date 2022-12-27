@@ -49,7 +49,6 @@ function uploads_user_download()
         // File has been pushed to the client, now shut down.
         exit();
     } else {
-
         // the file should be the first indice in the array
         $fileInfo = end($fileInfo);
 
@@ -58,12 +57,12 @@ function uploads_user_download()
             // No download permitted
             case 0:
                 $permitted = false;
-            break;
-            // Personally files only
+                break;
+                // Personally files only
             case 1:
                 $permitted = $fileInfo['userId'] == xarSession::getVar('role_id') ? true : false;
-            break;
-            // Group files only
+                break;
+                // Group files only
             case 2:
                 $rawfunction = xarModVars::get('uploads', 'permit_download_function');
                 if (empty($rawfunction)) {
@@ -76,10 +75,10 @@ function uploads_user_download()
                     $permitted = false;
                 }
             break;
-            // All files
+                // All files
             case 3:
                 $permitted = true;
-            break;
+                break;
         }
         if (!$permitted) {
             return xarResponse::NotFound();

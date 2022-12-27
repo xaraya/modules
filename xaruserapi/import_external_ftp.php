@@ -162,7 +162,7 @@ function uploads_userapi_import_external_ftp($args)
                 }
             }
         }
-        // Otherwise we have to do it the "hard" way ;-)
+    // Otherwise we have to do it the "hard" way ;-)
     } else {
         if (($ftpId = fopen($ftpURI, 'rb')) === false) {
             $msg = xarML(
@@ -182,7 +182,6 @@ function uploads_userapi_import_external_ftp($args)
                 );
                 throw new Exception($msg);
             } else {
-
                 // Note that this is a -blocking- process - the connection will
                 // NOT resume until the file transfer has finished - hence, the
                 // much needed  'ignore_user_abort()' up above

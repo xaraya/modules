@@ -29,8 +29,7 @@
 
 function uploads_adminapi_delete_associations($args)
 {
-
-// FIXME: don't use this as such in the uploads_guimods version, because you'd
+    // FIXME: don't use this as such in the uploads_guimods version, because you'd
 //        loose information about the categories and direct file associations
 
     extract($args);

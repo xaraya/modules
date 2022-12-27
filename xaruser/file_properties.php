@@ -95,8 +95,6 @@ function uploads_user_file_properties($args)
         }
 
         if ($fileInfo['fileStatus'] == _UPLOADS_STATUS_APPROVED || xarSecurity::check('ViewUploads', 1, 'File', $instance)) {
-
-
             // we don't want the theme to show up, so
             // get rid of everything in the buffer
             ob_end_clean();
@@ -148,7 +146,7 @@ function uploads_user_file_properties($args)
                         }
                     }
 
-                    // check if someone else already stored this information
+                // check if someone else already stored this information
                 } elseif (!empty($fileInfo['extrainfo']) && !empty($fileInfo['extrainfo']['width'])) {
                     $fileInfo['image']['height'] = $fileInfo['extrainfo']['height'];
                     $fileInfo['image']['width']  = $fileInfo['extrainfo']['width'];

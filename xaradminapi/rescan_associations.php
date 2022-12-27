@@ -27,8 +27,7 @@
 
 function uploads_adminapi_rescan_associations($args)
 {
-
-// FIXME: don't use this as such in the uploads_guimods version, because you'd
+    // FIXME: don't use this as such in the uploads_guimods version, because you'd
 //        loose information about the categories and direct file associations
 
     // 1. delete any existing associations for these arguments

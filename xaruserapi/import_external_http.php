@@ -107,7 +107,6 @@ function uploads_userapi_import_external_http($args)
             );
             throw new Exception($msg);
         } else {
-
             // Note that this is a -blocking- process - the connection will
             // NOT resume until the file transfer has finished - hence, the
             // much needed  'ignore_user_abort()' up above

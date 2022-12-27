@@ -148,7 +148,7 @@ class UploadProperty extends FileUploadProperty
                 }
 
                 $data['upload'] =& $_FILES[$name . '_attach_upload'];
-//array_pop($data['upload']);
+                //array_pop($data['upload']);
                 if (empty($data['upload']['name'])) {
                     // No file name entered, ignore
                     $this->value = '';
@@ -184,7 +184,7 @@ class UploadProperty extends FileUploadProperty
                     return;
                 }
 
-            // CHECKME: use 'imports' name like in db_get_file() ?
+                // CHECKME: use 'imports' name like in db_get_file() ?
                 // replace /trusted coming from showinput() again
                 $importDir = $this->initialization_import_directory;
                 $data['fileList'] = [];
@@ -229,16 +229,16 @@ class UploadProperty extends FileUploadProperty
                     uploads_sync_associations($moduleid, $itemtype, $itemid, $fileList);
                 }
 
-                    return true;
+                return true;
                 break;
             case '-1':
-                    return true;
+                return true;
                 break;
             case '-2':
                 // clear stored value
-                    $this->value = '';
-                    xarVar::setCached('DynamicData.Upload', $name, $this->value);
-                    return true;
+                $this->value = '';
+                xarVar::setCached('DynamicData.Upload', $name, $this->value);
+                return true;
                 break;
             default:
                 if (isset($value)) {
@@ -275,7 +275,6 @@ class UploadProperty extends FileUploadProperty
     {
         $data = $this->propertydata;
         if (!empty($data['action'])) {
-
 //            if (isset($storeType)) $data['storeType'] = $storeType;
 
             // This is where the actual saves happen

@@ -38,8 +38,7 @@ function uploads_userapi_db_group_associations($args)
     $fileassoctable = $xartable['file_associations'];
 
     if ($dbconn->databaseType == 'sqlite') {
-
-    // TODO: see if we can't do this some other way in SQLite
+        // TODO: see if we can't do this some other way in SQLite
 
         $bindvars = [];
         // Get links

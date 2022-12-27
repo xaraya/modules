@@ -56,7 +56,7 @@ function uploads_userapi_db_change_status($args)
         } else {
             $where = " WHERE xar_fileEntry_id = $fileId";
         }
-        // Otherwise, we're changing based on MIME type
+    // Otherwise, we're changing based on MIME type
     } else {
         if (!$inverse) {
             $where = " WHERE xar_mime_type LIKE '$fileType'";

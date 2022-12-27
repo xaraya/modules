@@ -43,7 +43,6 @@ function uploads_userapi_validate_file($args)
     // TODO: add functionality to validate properly formatted filename
 
     switch ($fileInfo['error']) {
-
         case 1: // The uploaded file exceeds the upload_max_filesize directive in php.ini
             $msg = xarML('File size exceeds the maximum allowable based on your system settings.');
             throw new Exception($msg);

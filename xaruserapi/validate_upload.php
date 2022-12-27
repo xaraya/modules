@@ -42,7 +42,6 @@ function uploads_userapi_validate_upload($args)
     }
 
     switch ($fileInfo['error']) {
-
         case 1: // The uploaded file exceeds the upload_max_filesize directive in php.ini
             $msg = xarML('File size exceeds the maximum allowable based on the server\'s settings.');
             return xarController::redirect(xarController::URL('uploads', 'user', 'errors', ['layout' => 'maxfilesize','maxallowed' => ini_get('upload_max_filesize')]));

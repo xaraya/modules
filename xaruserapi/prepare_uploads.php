@@ -136,7 +136,7 @@ function uploads_userapi_prepare_uploads($args)
     if (!empty($fileInfo['fileDest']) && file_exists($fileInfo['fileDest'])) {
         // OK then
 
-    // Check to see if we need to obfuscate the filename
+        // Check to see if we need to obfuscate the filename
     } elseif ($obfuscate_fileName) {
         $obf_fileName = xarMod::apiFunc(
             'uploads',
