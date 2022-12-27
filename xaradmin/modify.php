@@ -39,7 +39,6 @@ function cacher_admin_modify()
     $data['authid'] = xarSec::genAuthKey('cacher');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

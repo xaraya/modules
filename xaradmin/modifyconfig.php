@@ -90,7 +90,6 @@ function cacher_admin_modifyconfig()
             xarController::redirect(xarController::URL('cacher', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
-
     }
     $data['authid'] = xarSec::genAuthKey();
     return $data;
