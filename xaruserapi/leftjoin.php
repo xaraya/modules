@@ -106,13 +106,13 @@ function hitcount_userapi_leftjoin($args)
     if (count($itemids) > 0) {
         $allids = join(', ', $itemids);
         $leftjoin['where'] = $xartable['hitcount'] . '.itemid IN (' . $allids . ')';
-    /*
-            if (!empty($modid)) {
-                $leftjoin['where'] .= ' AND ' .
-                                      $xartable['hitcount'] . '.module_id = ' .
-                                      $modid;
-            }
-    */
+        /*
+                if (!empty($modid)) {
+                    $leftjoin['where'] .= ' AND ' .
+                                          $xartable['hitcount'] . '.module_id = ' .
+                                          $modid;
+                }
+        */
     } else {
         /*
                 if (!empty($modid)) {

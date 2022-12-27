@@ -57,8 +57,8 @@ function hitcount_admin_delete()
                     $modinfo['name'],
                     'user',
                     'getitemtypes',
-                                         // don't throw an exception if this function doesn't exist
-                                         [],
+                    // don't throw an exception if this function doesn't exist
+                    [],
                     0
                 );
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {

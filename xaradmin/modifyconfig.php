@@ -60,7 +60,7 @@ function hitcount_admin_modifyconfig()
                 default:
                     break;
             }
-        break;
+            break;
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
@@ -96,13 +96,13 @@ function hitcount_admin_modifyconfig()
                     xarController::redirect(xarController::URL('hitcount', 'admin', 'modifyconfig'));
                     // Return
                     return true;
-                        break;
-                    case 'tab2':
-                        break;
-                    case 'tab3':
-                        break;
-                    default:
-                        break;
+                    break;
+                case 'tab2':
+                    break;
+                case 'tab3':
+                    break;
+                default:
+                    break;
             }
             break;
     }

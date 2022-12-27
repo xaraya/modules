@@ -55,8 +55,8 @@ function hitcount_admin_view()
                 $modinfo['name'],
                 'user',
                 'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                // don't throw an exception if this function doesn't exist
+                [],
                 0
             );
             foreach ($itemtypes as $itemtype => $stats) {
@@ -109,8 +109,8 @@ function hitcount_admin_view()
                 $modinfo['name'],
                 'user',
                 'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                // don't throw an exception if this function doesn't exist
+                [],
                 0
             );
             if (isset($mytypes) && !empty($mytypes[$itemtype])) {
