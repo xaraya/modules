@@ -134,12 +134,12 @@ function eav_admin_configure_attribute(array $args=[])
                 xarController::redirect($return_url);
                 return true;
             }
-            // show preview/updated values
+        // show preview/updated values
         } else {
             $attribute->properties['configuration']->invalid = $property->invalid;
         }
 
-        // pass the current value as configuration rule
+    // pass the current value as configuration rule
     } elseif (!empty($attribute->properties['configuration'])) {
         $data['configuration'] = $attribute->properties['configuration']->value;
     } else {
@@ -206,7 +206,7 @@ function eav_config_propval($proptype)
             $data['invalid'] = $property->invalid;
         }
 
-        // pass the current value as configuration rule
+    // pass the current value as configuration rule
     } elseif (!empty($property->configuration)) {
         $data['configuration'] = $property->configuration;
     } else {

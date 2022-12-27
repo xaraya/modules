@@ -14,7 +14,7 @@
  * Call a generic test page
  *
  */
-    function eav_user_test()
-    {
-        return [];
-    }
+function eav_user_test()
+{
+    return [];
+}

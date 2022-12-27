@@ -16,11 +16,11 @@
  */
 
 // TODO: turn this into an xml file
-    function eav_dataapi_adminmenu()
-    {
-        return [
-            ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('EAV Overview')],
-            ['mask' => 'ManageEAV', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
-            ['mask' => 'AdminEAV', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the EAV configuration'), 'label' => xarML('Modify Config')],
-        ];
-    }
+function eav_dataapi_adminmenu()
+{
+    return [
+        ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('EAV Overview')],
+        ['mask' => 'ManageEAV', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
+        ['mask' => 'AdminEAV', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the EAV configuration'), 'label' => xarML('Modify Config')],
+    ];
+}

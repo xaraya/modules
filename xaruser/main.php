@@ -15,14 +15,14 @@
  *
  */
 
-    function eav_user_main()
-    {
-        // Security Check
-        if (!xarSecurity::check('ReadEAV')) {
-            return;
-        }
+function eav_user_main()
+{
+    // Security Check
+    if (!xarSecurity::check('ReadEAV')) {
+        return;
+    }
 
 //        xarController::redirect(xarController::URL('eav', 'user', 'view'));
         // success
-        return []; //true;
-    }
+    return []; //true;
+}

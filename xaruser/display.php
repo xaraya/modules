@@ -14,26 +14,26 @@
  * Display an item of the eav object
  *
  */
-    sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
-    function eav_user_display()
-    {
-        if (!xarSecurity::check('ReadEAV')) {
-            return;
-        }
-
-        if (!xarVar::fetch('name', 'str', $name, 'eav_eav', xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
-            return;
-        }
-
-        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
-        $data['object']->getItem(['itemid' => $data['itemid']]);
-
-        $data['tplmodule'] = 'eav';
-        $data['authid'] = xarSec::genAuthKey('eav');
-
-        return $data;
+function eav_user_display()
+{
+    if (!xarSecurity::check('ReadEAV')) {
+        return;
     }
+
+    if (!xarVar::fetch('name', 'str', $name, 'eav_eav', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
+
+    $data['tplmodule'] = 'eav';
+    $data['authid'] = xarSec::genAuthKey('eav');
+
+    return $data;
+}

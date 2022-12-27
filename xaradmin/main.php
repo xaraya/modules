@@ -15,17 +15,17 @@
  *
  */
 
-    function eav_admin_main()
-    {
-        if (!xarSecurity::check('ManageEAV')) {
-            return;
-        }
-
-        if (xarModVars::get('modules', 'disableoverview') == 0) {
-            return [];
-        } else {
-            xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig'));
-        }
-        // success
-        return true;
+function eav_admin_main()
+{
+    if (!xarSecurity::check('ManageEAV')) {
+        return;
     }
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return [];
+    } else {
+        xarController::redirect(xarController::URL('eav', 'admin', 'modifyconfig'));
+    }
+    // success
+    return true;
+}

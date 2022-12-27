@@ -15,19 +15,19 @@
  *
  */
 
-    function eav_adminapi_getconfighook($args)
-    {
-        extract($args);
-        if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = [];
-        }
-        $module = 'eav';
-        $tabinfo = [
-                'module'  => $module,
-                'configarea'  => 'general',
-                'configtitle'  => xarML('EAV'),
-                'configcontent' => '',
-        ];
-        $extrainfo['tabs'][] = $tabinfo;
-        return $extrainfo;
+function eav_adminapi_getconfighook($args)
+{
+    extract($args);
+    if (!isset($extrainfo['tabs'])) {
+        $extrainfo['tabs'] = [];
     }
+    $module = 'eav';
+    $tabinfo = [
+            'module'  => $module,
+            'configarea'  => 'general',
+            'configtitle'  => xarML('EAV'),
+            'configcontent' => '',
+    ];
+    $extrainfo['tabs'][] = $tabinfo;
+    return $extrainfo;
+}

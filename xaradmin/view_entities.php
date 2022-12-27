@@ -14,20 +14,20 @@
  * View items of the entities object
  *
  */
-    function eav_admin_view_entities($args)
-    {
-        if (!xarSecurity::check('ManageEAV')) {
-            return;
-        }
-
-        $data['object'] = DataObjectMaster::getObjectList(['name' => 'eav_entities']);
-
-        if (!isset($data['object'])) {
-            return;
-        }
-        if (!$data['object']->checkAccess('view')) {
-            return xarResponse::Forbidden(xarML('View #(1) is forbidden', $data['object']->label));
-        }
-
-        return $data;
+function eav_admin_view_entities($args)
+{
+    if (!xarSecurity::check('ManageEAV')) {
+        return;
     }
+
+    $data['object'] = DataObjectMaster::getObjectList(['name' => 'eav_entities']);
+
+    if (!isset($data['object'])) {
+        return;
+    }
+    if (!$data['object']->checkAccess('view')) {
+        return xarResponse::Forbidden(xarML('View #(1) is forbidden', $data['object']->label));
+    }
+
+    return $data;
+}
