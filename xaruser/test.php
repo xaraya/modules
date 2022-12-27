@@ -15,7 +15,7 @@
  * Call a generic test page
  *
  */
-    function realms_user_test()
-    {
-        return [];
-    }
+function realms_user_test()
+{
+    return [];
+}

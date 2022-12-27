@@ -15,19 +15,19 @@
  * View realms
  *
  */
-    function realms_admin_view_realms($args)
-    {
-        if (!xarSecurity::check('ManageRealms')) {
-            return;
-        }
-
-        // Get the object containing the members
-        $data['realms'] = DataObjectMaster::getObjectList(['name' => 'realms_realms']);
-
-        // Kludge
-        sys::import('xaraya.structures.query');
-        $q = new Query('SELECT');
-        $q->eq('realms.state', 3);
-        $data['conditions'] = $q;
-        return $data;
+function realms_admin_view_realms($args)
+{
+    if (!xarSecurity::check('ManageRealms')) {
+        return;
     }
+
+    // Get the object containing the members
+    $data['realms'] = DataObjectMaster::getObjectList(['name' => 'realms_realms']);
+
+    // Kludge
+    sys::import('xaraya.structures.query');
+    $q = new Query('SELECT');
+    $q->eq('realms.state', 3);
+    $data['conditions'] = $q;
+    return $data;
+}

@@ -16,14 +16,14 @@
  *
  */
 
-    function realms_user_main()
-    {
-        // Security Check
-        if (!xarSecurity::check('ReadRealms')) {
-            return;
-        }
+function realms_user_main()
+{
+    // Security Check
+    if (!xarSecurity::check('ReadRealms')) {
+        return;
+    }
 
 //        xarController::redirect(xarController::URL('realms', 'user', 'view'));
         // success
-        return []; //true;
-    }
+    return []; //true;
+}

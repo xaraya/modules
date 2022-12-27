@@ -16,17 +16,17 @@
  *
  */
 
-    function realms_admin_main()
-    {
-        if (!xarSecurity::check('AdminRealms')) {
-            return;
-        }
-
-        if (xarModVars::get('modules', 'disableoverview') == 0) {
-            return [];
-        } else {
-            xarController::redirect(xarController::URL('realms', 'admin', 'modifyconfig'));
-        }
-        // success
-        return true;
+function realms_admin_main()
+{
+    if (!xarSecurity::check('AdminRealms')) {
+        return;
     }
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return [];
+    } else {
+        xarController::redirect(xarController::URL('realms', 'admin', 'modifyconfig'));
+    }
+    // success
+    return true;
+}

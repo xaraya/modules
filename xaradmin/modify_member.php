@@ -15,50 +15,49 @@
  * Modify an item of the members object
  *
  */
-    sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
-    function realms_admin_modify_member()
-    {
-        if (!xarSecurity::check('EditRealms')) {
-            return;
-        }
-
-        if (!xarVar::fetch('name', 'str', $name, 'realms_members', xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
-            return;
-        }
-
-        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
-        $data['object']->getItem(['itemid' => $data['itemid']]);
-
-        $data['tplmodule'] = 'realms';
-
-        if ($data['confirm']) {
-
-            // Check for a valid confirmation key
-            if (!xarSec::confirmAuthKey()) {
-                return;
-            }
-
-            // Get the data from the form
-            $isvalid = $data['object']->checkInput();
-
-            if (!$isvalid) {
-                // Bad data: redisplay the form with error messages
-                return xarTpl::module('realms', 'admin', 'modify_member', $data);
-            } else {
-                // Good data: create the item
-                $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
-
-                // Jump to the next page
-                xarController::redirect(xarController::URL('realms', 'admin', 'view_members'));
-                return true;
-            }
-        }
-        return $data;
+function realms_admin_modify_member()
+{
+    if (!xarSecurity::check('EditRealms')) {
+        return;
     }
+
+    if (!xarVar::fetch('name', 'str', $name, 'realms_members', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
+
+    $data['tplmodule'] = 'realms';
+
+    if ($data['confirm']) {
+        // Check for a valid confirmation key
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
+
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
+
+        if (!$isvalid) {
+            // Bad data: redisplay the form with error messages
+            return xarTpl::module('realms', 'admin', 'modify_member', $data);
+        } else {
+            // Good data: create the item
+            $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
+
+            // Jump to the next page
+            xarController::redirect(xarController::URL('realms', 'admin', 'view_members'));
+            return true;
+        }
+    }
+    return $data;
+}

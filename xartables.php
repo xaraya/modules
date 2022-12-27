@@ -17,14 +17,14 @@
  *
  */
 
-    function realms_xartables()
-    {
-        // Initialise table array
-        $xartable = [];
+function realms_xartables()
+{
+    // Initialise table array
+    $xartable = [];
 
-        $xartable['realms_realms']          = xarDB::getPrefix() . '_realms_realms';
-        $xartable['realms_members']         = xarDB::getPrefix() . '_realms_members';
+    $xartable['realms_realms']          = xarDB::getPrefix() . '_realms_realms';
+    $xartable['realms_members']         = xarDB::getPrefix() . '_realms_members';
 
-        // Return the table information
-        return $xartable;
-    }
+    // Return the table information
+    return $xartable;
+}
