@@ -26,7 +26,7 @@ class WURFL_FileUtils
      * @param string $path
      * @param int $mode
      */
-    public static function mkdir($path, $mode=0755)
+    public static function mkdir($path, $mode=0o755)
     {
         @mkdir($path, $mode, true);
     }
@@ -90,11 +90,11 @@ class WURFL_FileUtils
     public static function write($path, $data, $mtime = 0)
     {
         if (!file_exists(dirname($path))) {
-            self::mkdir(dirname($path), 0755, true);
+            self::mkdir(dirname($path), 0o755, true);
         }
         if (file_put_contents($path, serialize($data), LOCK_EX)) {
             $mtime = ($mtime > 0) ? $mtime : time();
-            @chmod($path, 0777);
+            @chmod($path, 0o777);
             @touch($path, $mtime);
         }
     }

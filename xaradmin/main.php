@@ -13,17 +13,17 @@
  *
  */
 
-    function wurfl_admin_main()
-    {
-        if (!xarSecurity::check('ManageWurfl')) {
-            return;
-        }
-
-        if (xarModVars::get('modules', 'disableoverview') == 0) {
-            return [];
-        } else {
-            xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig'));
-        }
-        // success
-        return true;
+function wurfl_admin_main()
+{
+    if (!xarSecurity::check('ManageWurfl')) {
+        return;
     }
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return [];
+    } else {
+        xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig'));
+    }
+    // success
+    return true;
+}

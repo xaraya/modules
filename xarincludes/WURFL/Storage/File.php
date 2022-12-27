@@ -49,7 +49,7 @@ class WURFL_Storage_File extends WURFL_Storage_Base
     private function createCacheDirIfNotExist()
     {
         if (!is_dir($this->root)) {
-            @mkdir($this->root, 0777, true);
+            @mkdir($this->root, 0o777, true);
             if (!is_dir($this->root)) {
                 throw new WURFL_Storage_Exception("The file cache directory does not exist and could not be created. Please make sure the cache directory is writeable: ".$this->root);
             }

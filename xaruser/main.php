@@ -13,13 +13,13 @@
  *
  */
 
-    function wurfl_user_main()
-    {
-        // Security Check
-        if (!xarSecurity::check('ReadWurfl')) {
-            return;
-        }
+function wurfl_user_main()
+{
+    // Security Check
+    if (!xarSecurity::check('ReadWurfl')) {
+        return;
+    }
 
         // success
-        return []; //true;
-    }
+    return []; //true;
+}

@@ -261,7 +261,8 @@ class ScientiaMobileIntrospector_HtmlPageRenderer
 {
     public $title = 'WURFL Introspector';
     public $api_version = '';
-    protected function sendHeader() { ?>
+    protected function sendHeader()
+    { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -284,7 +285,8 @@ class ScientiaMobileIntrospector_HtmlPageRenderer
 		</div>
 		<div>
 		<?php }
-    protected function sendFooter() { ?>
+    protected function sendFooter()
+    { ?>
 		</div>
 	</div>
 </body>

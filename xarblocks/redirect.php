@@ -39,7 +39,7 @@ class Wurfl_RedirectBlock extends BasicBlock
 
             case '1.0.0':
                 // upgrades from 1.0.0 go here...
-            break;
+                break;
         }
         // replace content with updated array
         $this->content = $data;

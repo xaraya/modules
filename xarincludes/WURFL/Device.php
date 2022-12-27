@@ -57,10 +57,10 @@ class WURFL_Device
                 case "fallBack":
                 case "actualDeviceRoot":
                     return $this->_modelDevice->$name;
-                break;
+                    break;
                 default:
                     throw new WURFL_WURFLException("the field " . $name . " is not defined");
-                break;
+                    break;
             }
         }
 
