@@ -14,13 +14,13 @@
  * Create a new item of the karma object
  *
  */
-    function karma_admin_new()
-    {
-        if (!xarSecurity::check('AddKarma')) {
-            return;
-        }
-
-        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'karma']);
-        $data['tplmodule'] = 'karma';
-        return $data;
+function karma_admin_new()
+{
+    if (!xarSecurity::check('AddKarma')) {
+        return;
     }
+
+    $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'karma']);
+    $data['tplmodule'] = 'karma';
+    return $data;
+}

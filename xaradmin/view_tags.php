@@ -14,13 +14,13 @@
  * View items of the karma_tags object
  *
  */
-    function karma_admin_view_tags($args)
-    {
-        if (!xarSecurity::check('EditKarma')) {
-            return;
-        }
-
-        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'karma_tags']);
-        $data['object']->getItems();
-        return $data;
+function karma_admin_view_tags($args)
+{
+    if (!xarSecurity::check('EditKarma')) {
+        return;
     }
+
+    $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'karma_tags']);
+    $data['object']->getItems();
+    return $data;
+}

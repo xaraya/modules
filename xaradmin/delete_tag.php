@@ -39,7 +39,6 @@ function karma_admin_delete_tag()
     $data['authid'] = xarSec::genAuthKey('karma');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

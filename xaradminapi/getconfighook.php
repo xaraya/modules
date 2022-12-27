@@ -15,19 +15,19 @@
  *
  */
 
-    function karma_adminapi_getconfighook($args)
-    {
-        extract($args);
-        if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = [];
-        }
-        $module = 'karma';
-        $tabinfo = [
-                'module'  => $module,
-                'configarea'  => 'general',
-                'configtitle'  => xarML('Karma'),
-                'configcontent' => '',
-        ];
-        $extrainfo['tabs'][] = $tabinfo;
-        return $extrainfo;
+function karma_adminapi_getconfighook($args)
+{
+    extract($args);
+    if (!isset($extrainfo['tabs'])) {
+        $extrainfo['tabs'] = [];
     }
+    $module = 'karma';
+    $tabinfo = [
+            'module'  => $module,
+            'configarea'  => 'general',
+            'configtitle'  => xarML('Karma'),
+            'configcontent' => '',
+    ];
+    $extrainfo['tabs'][] = $tabinfo;
+    return $extrainfo;
+}

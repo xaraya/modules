@@ -15,14 +15,14 @@
  *
  */
 
-    function karma_user_main()
-    {
-        // Security Check
-        if (!xarSecurity::check('ReadKarma')) {
-            return;
-        }
+function karma_user_main()
+{
+    // Security Check
+    if (!xarSecurity::check('ReadKarma')) {
+        return;
+    }
 
 //        xarResponse::redirect(xarController::URL('karma', 'user', 'view'));
         // success
-        return []; //true;
-    }
+    return []; //true;
+}

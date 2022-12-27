@@ -14,7 +14,7 @@
  * Call a generic test page
  *
  */
-    function karma_user_test()
-    {
-        return [];
-    }
+function karma_user_test()
+{
+    return [];
+}

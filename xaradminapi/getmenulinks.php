@@ -15,7 +15,7 @@
  *
  */
 
-    function karma_adminapi_getmenulinks()
-    {
-        return xarMod::apiFunc('base', 'admin', 'menuarray', ['module' => 'karma']);
-    }
+function karma_adminapi_getmenulinks()
+{
+    return xarMod::apiFunc('base', 'admin', 'menuarray', ['module' => 'karma']);
+}
