@@ -162,8 +162,7 @@ function images_adminapi_getderivatives($args)
 
                 // this may be the md5 hash of the file location for some uploaded/imported file
                 } elseif (preg_match('/^(.*\/)?([0-9a-f]{32})$/i', $file, $matches)) {
-
-                // CHECKME: watch out for duplicates here too
+                    // CHECKME: watch out for duplicates here too
                     $fileinfo[$file] = xarMod::apiFunc(
                         'uploads',
                         'user',

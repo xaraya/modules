@@ -161,12 +161,11 @@ function ImageCopyResampleBicubic(
     $dst_h,
     $src_w,
     $src_h
-)
+) {
     /*
     port to PHP by John Jensen July 10 2001 (updated June 13, 2002 by tim@smoothdeity.com) --
     original code (in C, for the PHP GD Module) by jernberg@fairytale.se
     */
-{
     $palsize = ImageColorsTotal($src_img);
     for ($i = 0; $i < $palsize; $i++) {  // get palette.
         $colors = ImageColorsForIndex($src_img, $i);
@@ -266,13 +265,13 @@ function createthumbnetpbm($file, $thumbwidth, $thumbheight, $newfile)
             $tothumb = "ppmtogif";
             $quant = "ppmquant 256";
             break;
-        // JPEG
+            // JPEG
         case 2:
             $topnm = "jpegtopnm";
             $tothumb = "ppmtojpeg";
             $quant = "";
             break;
-        // PNG
+            // PNG
         case 3:
             $topnm = "pngtopnm";
             $tothumb = "pnmtopng";

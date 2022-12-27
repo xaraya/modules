@@ -42,7 +42,6 @@ class phpUnsharpMask
 {
     public function applyUnsharpMask(&$img, $amount, $radius, $threshold)
     {
-
         // $img is an image that is already created within php using
         // imgcreatetruecolor. No url! $img must be a truecolor image.
 
@@ -130,7 +129,6 @@ class phpUnsharpMask
         // and set the pixels
         for ($x = 0; $x < $w; $x++) { // each row
             for ($y = 0; $y < $h; $y++) { // each pixel
-
                 $rgbOrig = ImageColorAt($imgCanvas2, $x, $y);
                 $rOrig = (($rgbOrig >> 16) & 0xFF);
                 $gOrig = (($rgbOrig >>  8) & 0xFF);

@@ -711,7 +711,6 @@ class phpthumb_filters
             }
 
             if ($radius_x && $radius_y) {
-
                 // PHP bug: ImageArc() with thicknesses > 1 give bad/undesirable/unpredicatable results
                 // Solution: Draw multiple 1px arcs side-by-side.
 
@@ -763,7 +762,6 @@ class phpthumb_filters
             $background_color = phpthumb_functions::ImageHexColorAllocate($gdimg_source, $config_background_hexcolor);
 
             if ((phpthumb_functions::gd_version() >= 2) && !$bg && ($rotate_angle % 90)) {
-
                 //$this->DebugMessage('Using alpha rotate', __FILE__, __LINE__);
                 if ($gdimg_rotate_mask = phpthumb_functions::ImageCreateFunction(ImageSX($gdimg_source), ImageSY($gdimg_source))) {
                     for ($i = 0; $i <= 255; $i++) {
@@ -1173,8 +1171,7 @@ class phpthumb_filters
                     $text_origin_y += ($text_height + $margin);
                 }
             } else {
-
-            // this block for background color only
+                // this block for background color only
                 switch ($alignment) {
                     case '*':
                         // handled separately
@@ -1460,13 +1457,13 @@ class phpthumb_filters
                         break;
 
                     case 'BL':
-    //echo '<pre>';
-    ////var_dump($watermark_destination_x);
-    ////var_dump($watermark_destination_y);
-    //var_dump($watermark_margin_x);
-    //var_dump($img_source_height);
-    //var_dump($watermark_source_height);
-    //var_dump($watermark_margin_y);
+                        //echo '<pre>';
+                        ////var_dump($watermark_destination_x);
+                        ////var_dump($watermark_destination_y);
+                        //var_dump($watermark_margin_x);
+                        //var_dump($img_source_height);
+                        //var_dump($watermark_source_height);
+                        //var_dump($watermark_margin_y);
                         $watermark_destination_x = $watermark_margin_x;
                         $watermark_destination_y = $img_source_height - $watermark_source_height - $watermark_margin_y;
                         break;

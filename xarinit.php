@@ -76,14 +76,14 @@ function images_upgrade($oldversion)
             if (!empty($thumbsdir) && is_dir($thumbsdir)) {
                 xarModVars::set('images', 'upgrade-1.0.0', 1);
                 // remove all old-style derivatives
-            /* skip this - too risky depending on site config
-                $images = xarMod::apiFunc('images','admin','getderivatives');
-                if (!empty($images)) {
-                    foreach ($images as $image) {
-                        @unlink($image['fileLocation']);
+                /* skip this - too risky depending on site config
+                    $images = xarMod::apiFunc('images','admin','getderivatives');
+                    if (!empty($images)) {
+                        foreach ($images as $image) {
+                            @unlink($image['fileLocation']);
+                        }
                     }
-                }
-            */
+                */
             }
             // Fall through to next upgrade
 

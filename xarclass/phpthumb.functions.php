@@ -866,8 +866,8 @@ class phpthumb_functions
                     // directory name already exists as a file
                     return false;
                 }
-                @mkdir($test_directory, 0755);
-                @chmod($test_directory, 0755);
+                @mkdir($test_directory, 0o755);
+                @chmod($test_directory, 0o755);
                 if (!@is_dir($test_directory) || !@is_writeable($test_directory)) {
                     return false;
                 }

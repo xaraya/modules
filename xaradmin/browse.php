@@ -181,7 +181,7 @@ function images_admin_browse()
                 $action = '';
             }
 
-            // if we're dealing with an individual fileId, get some additional information
+        // if we're dealing with an individual fileId, get some additional information
         } elseif (is_string($fileId) && !empty($data['images'][$fileId])) {
             $found = $data['images'][$fileId];
             // Get derivative images for this image

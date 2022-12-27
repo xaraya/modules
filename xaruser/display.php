@@ -68,7 +68,6 @@ function images_user_display($args)
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
                 $image->setWidth($parts[1]);
-
         }
 
         if (!isset($height) || empty($height)) {
@@ -87,7 +86,6 @@ function images_user_display($args)
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
                 $image->setHeight($parts[1]);
-
         }
 
         if (!isset($width) || empty($width)) {
@@ -129,7 +127,7 @@ function images_user_display($args)
             fclose($fp);
         }
 
-        // FIXME: make sure the file is indeed supposed to be stored in the database :-)
+    // FIXME: make sure the file is indeed supposed to be stored in the database :-)
     } elseif (is_numeric($fileId) && xarMod::isAvailable('uploads')) {
         $fileSize = 0;
 

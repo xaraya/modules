@@ -169,7 +169,7 @@ function images_userapi_resize($args)
             return sprintf('<img src="%s" alt="%s" %s />', $url, $label, $attribs);
         }
 
-        // use parameters for processing
+    // use parameters for processing
     } elseif (!empty($params)) {
         $location = xarMod::apiFunc(
             'images',
@@ -262,7 +262,6 @@ function images_userapi_resize($args)
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
                 $image->setWidth($parts[1]);
-
         }
 
         if ($constrain) {
@@ -280,7 +279,6 @@ function images_userapi_resize($args)
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
                 $image->setHeight($parts[1]);
-
         }
 
         if ($constrain) {

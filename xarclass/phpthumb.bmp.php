@@ -90,7 +90,6 @@ class phpthumb_bmp
 
     public function getid3_bmp(&$BMPdata, &$ThisFileInfo, $ExtractPalette=false, $ExtractData=false)
     {
-
         // shortcuts
         $ThisFileInfo['bmp']['header']['raw'] = [];
         $thisfile_bmp                         = &$ThisFileInfo['bmp'];
@@ -166,7 +165,6 @@ class phpthumb_bmp
         $ThisFileInfo['video']['pixel_aspect_ratio'] = (float) 1;
 
         if ($thisfile_bmp['type_os'] == 'OS/2') {
-
             // OS/2-format BMP
             // http://netghost.narod.ru/gff/graphics/summary/os2bmp.htm
 
@@ -240,7 +238,6 @@ class phpthumb_bmp
                 $ThisFileInfo['video']['codec'] = $thisfile_bmp_header['compression'].' '.$thisfile_bmp_header_raw['bits_per_pixel'].'-bit';
             }
         } elseif ($thisfile_bmp['type_os'] == 'Windows') {
-
             // Windows-format BMP
 
             // BITMAPINFOHEADER - [40 bytes] http://msdn.microsoft.com/library/en-us/gdi/bitmaps_1rw2.asp
@@ -391,7 +388,6 @@ class phpthumb_bmp
 
             $pixeldataoffset = 0;
             switch (@$thisfile_bmp_header_raw['compression']) {
-
                 case 0: // BI_RGB
                     switch ($thisfile_bmp_header_raw['bits_per_pixel']) {
                         case 1:
@@ -486,7 +482,6 @@ class phpthumb_bmp
                                 $firstbyte  = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
                                 $secondbyte = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
                                 if ($firstbyte == 0) {
-
                                     // escaped/absolute mode - the first byte of the pair can be set to zero to
                                     // indicate an escape character that denotes the end of a line, the end of
                                     // a bitmap, or a delta, depending on the value of the second byte.
@@ -531,7 +526,6 @@ class phpthumb_bmp
                                             break;
                                     }
                                 } else {
-
                                     // encoded mode - the first byte specifies the number of consecutive pixels
                                     // to be drawn using the color index contained in the second byte.
                                     for ($i = 0; $i < $firstbyte; $i++) {
@@ -560,7 +554,6 @@ class phpthumb_bmp
                                 $firstbyte  = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
                                 $secondbyte = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
                                 if ($firstbyte == 0) {
-
                                     // escaped/absolute mode - the first byte of the pair can be set to zero to
                                     // indicate an escape character that denotes the end of a line, the end of
                                     // a bitmap, or a delta, depending on the value of the second byte.
@@ -611,7 +604,6 @@ class phpthumb_bmp
                                             break;
                                     }
                                 } else {
-
                                     // encoded mode - the first byte of the pair contains the number of pixels to be
                                     // drawn using the color indexes in the second byte. The second byte contains two
                                     // color indexes, one in its high-order 4 bits and one in its low-order 4 bits.

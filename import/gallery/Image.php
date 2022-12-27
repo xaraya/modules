@@ -110,7 +110,7 @@ class Image
                 fs_unlink("$dir/$this->resizedName.$this->type");
             }
             $this->resizedName = "";
-        /* doing a resize */
+            /* doing a resize */
         } else {
             $name = $this->name;
             $type = $this->type;

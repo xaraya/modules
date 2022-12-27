@@ -34,7 +34,6 @@ function images_userapi_decode_shorturl($params)
         // nothing specified -> we'll go to the main function
         return ['display', $args];
     } elseif (preg_match('/^(\d+)\.(.*)/', $params[1], $matches)) {
-
         // something that starts with a number must be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
         $fileId = $matches[1];

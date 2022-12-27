@@ -989,20 +989,16 @@ class phpthumb
             //$AbsoluteFilename = $filename;
             return $filename;
         } elseif ($this->iswindows && ($filename[1] == ':')) {
-
             // absolute pathname (Windows)
             $AbsoluteFilename = $filename;
         } elseif ($this->iswindows && ((substr($filename, 0, 2) == '//') || (substr($filename, 0, 2) == '\\\\'))) {
-
             // absolute pathname (Windows)
             $AbsoluteFilename = $filename;
         } elseif ($filename[0] == '/') {
             if (@is_readable($filename) && !@is_readable($this->config_document_root.$filename)) {
-
                 // absolute filename (*nix)
                 $AbsoluteFilename = $filename;
             } elseif ($filename[1] == '~') {
-
                 // /~user/path
                 if ($ApacheLookupURIarray = phpthumb_functions::ApacheLookupURIarray($filename)) {
                     $AbsoluteFilename = $ApacheLookupURIarray['filename'];
@@ -1017,7 +1013,6 @@ class phpthumb
                     }
                 }
             } else {
-
                 // relative filename (any OS)
                 if (preg_match('/^'.preg_quote($this->config_document_root).'/', $filename)) {
                     $AbsoluteFilename = $filename;
@@ -1028,7 +1023,6 @@ class phpthumb
                 }
             }
         } else {
-
             // relative to current directory (any OS)
             $AbsoluteFilename = $this->config_document_root.dirname(@$_SERVER['PHP_SELF']).DIRECTORY_SEPARATOR.$filename;
             //if (!@file_exists($AbsoluteFilename) && @file_exists(realpath($this->DotPadRelativeDirectoryPath($filename)))) {
@@ -1115,7 +1109,6 @@ class phpthumb
             $IMversion     = $this->ImageMagickVersion();
 
             if ($which_convert && ($which_convert[0] == '/') && @file_exists($which_convert)) {
-
                 // `which convert` *should* return the path if "convert" exist, or nothing if it doesn't
                 // other things *may* get returned, like "sh: convert: not found" or "no convert in /usr/local/bin /usr/sbin /usr/bin /usr/ccs/bin"
                 // so only do this if the value returned exists as a file
@@ -2393,7 +2386,6 @@ class phpthumb
                                         $this->DebugMessage('phpthumb_functions::ImageCreateFunction('.ImageSX($this->gdimg_output).', '.ImageSY($this->gdimg_output).')', __FILE__, __LINE__);
                                     }
                                 } else { // overlay
-
                                     if ($img_watermark_resized = phpthumb_functions::ImageCreateFunction($resized_x, $resized_y)) {
                                         ImageAlphaBlending($img_watermark_resized, false);
                                         ImageSaveAlpha($img_watermark_resized, true);
@@ -2720,7 +2712,6 @@ class phpthumb
             $this->thumbnail_image_width  = $this->thumbnail_width;
             $this->thumbnail_image_height = $this->thumbnail_height;
         } elseif ($this->iar && $this->w && $this->h) {
-
             // Ignore Aspect Ratio
             // stretch image to fit exactly 'w' x 'h'
             $this->thumbnail_width  = $this->w;
@@ -2867,7 +2858,6 @@ class phpthumb
             if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.0', '>=')) {
                 $this->exif_thumbnail_data = @exif_thumbnail($this->sourceFilename, $this->exif_thumbnail_width, $this->exif_thumbnail_height, $this->exif_thumbnail_type);
             } else {
-
                 // older versions of exif_thumbnail output an error message but NOT return false on failure
                 ob_start();
                 $this->exif_thumbnail_data = exif_thumbnail($this->sourceFilename);
@@ -2926,7 +2916,6 @@ class phpthumb
         }
 
         if (($this->config_max_source_pixels > 0) && (($this->source_width * $this->source_height) > $this->config_max_source_pixels)) {
-
             // Source image is larger than would fit in available PHP memory.
             // If ImageMagick is installed, use it to generate the thumbnail.
             // Else, if an EXIF thumbnail is available, use that as the source image.
@@ -3153,7 +3142,6 @@ class phpthumb
         $this->DebugMessage('starting SourceImageToGD()', __FILE__, __LINE__);
 
         if ($this->ImageMagickThumbnailToGD()) {
-
             // excellent, we have a thumbnailed source image
             $this->DebugMessage('ImageMagickThumbnailToGD() succeeded', __FILE__, __LINE__);
         } elseif (!$this->gdimg_source && $this->rawImageData) {
@@ -3326,18 +3314,18 @@ class phpthumb
                         return $this->ErrorImage($this->ImageMagickVersion() ? 'ImageMagick failed on BMP source conversion' : 'phpthumb_bmp2gd() failed');
                     }
                     break;
-            //}
-            //switch (substr($this->rawImageData, 0, 4)) {
-            //  case 'II'."\x2A\x00":
-            //  case 'MM'."\x00\x2A":
+                    //}
+                    //switch (substr($this->rawImageData, 0, 4)) {
+                    //  case 'II'."\x2A\x00":
+                    //  case 'MM'."\x00\x2A":
                 case 7:
                 case 8:
                     return $this->ErrorImage($this->ImageMagickVersion() ? 'ImageMagick failed on TIFF source conversion' : 'ImageMagick is unavailable and phpThumb() does not support TIFF source images without it');
                     break;
 
-                //case "\xD7\xCD\xC6\x9A":
-                //  return $this->ErrorImage($this->ImageMagickVersion() ? 'ImageMagick failed on WMF source conversion' : 'ImageMagick is unavailable and phpThumb() does not support WMF source images without it');
-                //  break;
+                    //case "\xD7\xCD\xC6\x9A":
+                    //  return $this->ErrorImage($this->ImageMagickVersion() ? 'ImageMagick failed on WMF source conversion' : 'ImageMagick is unavailable and phpThumb() does not support WMF source images without it');
+                    //  break;
             }
 
             if (!$this->gdimg_source) {
@@ -3694,7 +3682,6 @@ class phpthumb
                 fwrite($fp_tempnam, $RawImageData);
                 fclose($fp_tempnam);
                 if (($ICFSreplacementFunctionName == 'ImageCreateFromGIF') && !function_exists($ICFSreplacementFunctionName)) {
-
                     // Need to create from GIF file, but ImageCreateFromGIF does not exist
                     ob_start();
                     if (!@include_once(dirname(__FILE__).'/phpthumb.gif.php')) {
@@ -3720,13 +3707,11 @@ class phpthumb
                         $this->DebugMessage($ErrorMessage, __FILE__, __LINE__);
                     }
                 } elseif (function_exists($ICFSreplacementFunctionName) && ($gdimg_source = @$ICFSreplacementFunctionName($tempnam))) {
-
                     // great
                     $this->DebugMessage($ICFSreplacementFunctionName.'('.$tempnam.') succeeded', __FILE__, __LINE__);
                     unlink($tempnam);
                     return $gdimg_source;
                 } else {
-
                     // GD functions not available, or failed to create image
                     $this->DebugMessage($ICFSreplacementFunctionName.'('.$tempnam.') '.(function_exists($ICFSreplacementFunctionName) ? 'failed' : 'does not exist'), __FILE__, __LINE__);
                     if (isset($_GET['phpThumbDebug'])) {

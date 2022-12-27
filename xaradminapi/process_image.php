@@ -121,8 +121,8 @@ function images_adminapi_process_image($args)
         $phpThumb->setSourceFilename($file);
 
     // If the image is stored in the database (uploads module)
-        // NOTE: the next line is the *only* place i could find which suppresses exceptions through the 0 parameter at the end
-        // NOTE: in the 2.x branch that parameter does not exist anymore, so the next code needs to be changed.
+    // NOTE: the next line is the *only* place i could find which suppresses exceptions through the 0 parameter at the end
+    // NOTE: in the 2.x branch that parameter does not exist anymore, so the next code needs to be changed.
     } elseif (is_numeric($image['fileId']) && xarMod::isAvailable('uploads') && xarMod::apiLoad('uploads', 'user', 0) &&
               defined('_UPLOADS_STORE_DB_DATA') && ($image['storeType'] & _UPLOADS_STORE_DB_DATA)) {
         $uploadsdir = xarModVars::get('uploads', 'path.uploads-directory');

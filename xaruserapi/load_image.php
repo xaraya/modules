@@ -69,7 +69,7 @@ function & images_userapi_load_image($args)
                 $location = $fileInfo;
             }
 
-            // if we get the whole file info
+        // if we get the whole file info
         } elseif (file_exists($fileLocation)) {
             $location = $fileLocation;
         } elseif (defined('_UPLOADS_STORE_DB_DATA') && ($storeType & _UPLOADS_STORE_DB_DATA)) {

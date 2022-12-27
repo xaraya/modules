@@ -156,7 +156,6 @@ function images_adminapi_resize_image($args)
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
                 $image->setWidth($parts[1]);
-
         }
 
         if ($constrain) {
@@ -174,7 +173,6 @@ function images_adminapi_resize_image($args)
             default:
             case _IMAGES_UNIT_TYPE_PIXELS:
                 $image->setHeight($parts[1]);
-
         }
 
         if ($constrain) {

@@ -57,7 +57,7 @@ function images_admin_phpthumb($args)
             $data['selimage'] = $data['images'][$fileId];
         }
 
-        // we're dealing with a derivative image here
+    // we're dealing with a derivative image here
     } elseif (preg_match('/^[0-9a-f]{32}$/i', $fileId)) {
         $data['thumbsdir'] = xarModVars::get('images', 'path.derivative-store');
         $data['images'] = xarMod::apiFunc(
@@ -74,7 +74,7 @@ function images_admin_phpthumb($args)
             }
         }
 
-        // we're dealing with a server image here
+    // we're dealing with a server image here
     } else {
         $data['images'] = xarMod::apiFunc(
             'images',

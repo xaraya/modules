@@ -147,7 +147,6 @@ function pruneFiles($FilesInDir, $image_import_dir)
 {
     // Now check to see if any of those files are already in the system
     if (isset($FilesInDir)) {
-
         // Get database setup
         $dbconn =& xarDB::getConn();
         $xartable =& xarDB::getTables();

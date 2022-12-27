@@ -174,7 +174,7 @@ function images_admin_uploads($args)
                 $action = '';
             }
 
-            // if we're dealing with an individual fileId, get some additional information
+        // if we're dealing with an individual fileId, get some additional information
         } elseif (is_numeric($fileId) && !empty($data['images'][$fileId])) {
             $found = $data['images'][$fileId];
             // Get derivative images for this image
@@ -235,8 +235,8 @@ function images_admin_uploads($args)
                         $modinfo['name'],
                         'user',
                         'getitemtypes',
-                                             // don't throw an exception if this function doesn't exist
-                                             [],
+                        // don't throw an exception if this function doesn't exist
+                        [],
                         0
                     );
                     foreach ($itemtypes as $itemtype => $items) {

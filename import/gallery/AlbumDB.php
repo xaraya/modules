@@ -200,7 +200,6 @@ class AlbumDB
 
     public function moveAlbum($user, $index, $newIndex)
     {
-
         // This is tricky.  The old and new indices are only relevant
         // within the list of albums that this user is able to see!
         // Find the location that the user desires and determine that it's

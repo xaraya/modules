@@ -23,7 +23,6 @@ class Image_GD extends Image_Properties
      */
     public function resize($forceResize = false)
     {
-
         // If the original height and widht are the same
         // as the new height and width, return true
         if ($this->_owidth == $this->width &&

@@ -13,7 +13,6 @@
  */
 function images_admin_modifyconfig()
 {
-
     // Security check
     if (!xarSecurity::check('AdminImages')) {
         return;

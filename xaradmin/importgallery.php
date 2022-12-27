@@ -284,7 +284,7 @@ function galleryTraverse($import_directory)
                 && (!strpos($file, '.thumb.'))         // Ignore thumbs
                 && (!strpos($file, '.highlight.'))     // Ignore thumbs
 
-               ) {
+            ) {
                 $RealPathName = realpath($import_directory.'/'.$file);
                 if (is_file($RealPathName)) {
                     $FilesInDir[] = [ 'filename' => substr($RealPathName, strlen($import_directory)),'filepath' => $RealPathName,'fileinfo' => $fileinfo[$file],
@@ -308,7 +308,6 @@ function pruneFiles($FilesInDir, $image_import_dir, $album)
 
     // Now check to see if any of those files are already in the system
     if (isset($FilesInDir)) {
-
         // Get database setup
         $dbconn =& xarDB::getConn();
         $xartable =& xarDB::getTables();
