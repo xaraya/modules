@@ -16,14 +16,14 @@
  *
  */
 
-    function otp_xartables()
-    {
-        // Initialise table array
-        $xartable = [];
+function otp_xartables()
+{
+    // Initialise table array
+    $xartable = [];
 
-        $xartable['otp_used_seeds']    = xarDB::getPrefix() . '_otp_used_seeds';
-        $xartable['otp_otps']          = xarDB::getPrefix() . '_otp_otps';
+    $xartable['otp_used_seeds']    = xarDB::getPrefix() . '_otp_used_seeds';
+    $xartable['otp_otps']          = xarDB::getPrefix() . '_otp_otps';
 
-        // Return the table information
-        return $xartable;
-    }
+    // Return the table information
+    return $xartable;
+}

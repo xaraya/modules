@@ -39,7 +39,6 @@ function otp_admin_modify()
     $data['authid'] = xarSec::genAuthKey('otp');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

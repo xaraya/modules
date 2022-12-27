@@ -15,27 +15,27 @@
  * Version information
  *
  */
-    $modversion['name']           = 'otp';
-    $modversion['id']             = '30053';
-    $modversion['version']        = '1.0.0';
-    $modversion['displayname']    = xarML('Otp');
-    $modversion['description']    = xarML('A generic Web 2.0 module');
-    $modversion['credits']        = 'credits.txt';
-    $modversion['help']           = 'help.txt';
-    $modversion['changelog']      = 'changelog.txt';
-    $modversion['license']        = 'license.txt';
-    $modversion['official']       = false;
-    $modversion['author']         = 'Marc Lutolf';
-    $modversion['contact']        = 'http://www.netspan.ch/';
-    $modversion['admin']          = true;
-    $modversion['user']           = false;
-    $modversion['class']          = 'Authentication';
-    $modversion['category']       = 'Users & Groups';
-    $modversion['securityschema'] = [];
-    $modversion['dependency']     = [];
-    $modversion['dependencyinfo'] = [
-                                    0 => [
-                                            'name' => 'Xaraya Core',
-                                            'version_ge' => '2.2.0',
-                                         ],
-                                          ];
+$modversion['name']           = 'otp';
+$modversion['id']             = '30053';
+$modversion['version']        = '1.0.0';
+$modversion['displayname']    = xarML('Otp');
+$modversion['description']    = xarML('A generic Web 2.0 module');
+$modversion['credits']        = 'credits.txt';
+$modversion['help']           = 'help.txt';
+$modversion['changelog']      = 'changelog.txt';
+$modversion['license']        = 'license.txt';
+$modversion['official']       = false;
+$modversion['author']         = 'Marc Lutolf';
+$modversion['contact']        = 'http://www.netspan.ch/';
+$modversion['admin']          = true;
+$modversion['user']           = false;
+$modversion['class']          = 'Authentication';
+$modversion['category']       = 'Users & Groups';
+$modversion['securityschema'] = [];
+$modversion['dependency']     = [];
+$modversion['dependencyinfo'] = [
+                                0 => [
+                                        'name' => 'Xaraya Core',
+                                        'version_ge' => '2.2.0',
+                                     ],
+                                      ];

@@ -15,19 +15,19 @@
  *
  */
 
-    function otp_adminapi_authenticate($args)
-    {
-        sys::import('modules.otp.xarincludes.php-otp.Otp');
-        $otp = new Otp();
-        $result = $otp->authAgainstHexOtp($userInput, $masterHexOtp, $masterHexOtpType, $sequence, $algorithm);
-        initializeOtp($args['passphrase'], $args['seed'], $args['seq_number'], $args['algorithm']);
+function otp_adminapi_authenticate($args)
+{
+    sys::import('modules.otp.xarincludes.php-otp.Otp');
+    $otp = new Otp();
+    $result = $otp->authAgainstHexOtp($userInput, $masterHexOtp, $masterHexOtpType, $sequence, $algorithm);
+    initializeOtp($args['passphrase'], $args['seed'], $args['seq_number'], $args['algorithm']);
 
-        // Debug code
-        if (xarModVars::get('otp', 'debugmode') &&
+    // Debug code
+    if (xarModVars::get('otp', 'debugmode') &&
     in_array(xarUser::getVar('id'), xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-            echo "Authentication result: ";
-            var_dump($result);
-            echo "<br />";
-        }
-        return $result;
+        echo "Authentication result: ";
+        var_dump($result);
+        echo "<br />";
     }
+    return $result;
+}

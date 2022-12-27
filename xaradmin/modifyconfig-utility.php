@@ -111,7 +111,6 @@ function otp_admin_modifyconfig_utility()
             // Return
             return true;
             break;
-
     }
     $data['hooks'] = $hooks;
     $data['tabmodule'] = $tabmodule;

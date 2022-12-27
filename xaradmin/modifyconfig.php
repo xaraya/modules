@@ -103,7 +103,6 @@ function otp_admin_modifyconfig()
             xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
-
     }
     $data['authid'] = xarSec::genAuthKey();
     return $data;

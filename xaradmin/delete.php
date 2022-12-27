@@ -35,7 +35,6 @@ function otp_admin_delete()
     $data['authid'] = xarSec::genAuthKey('otp');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

@@ -15,10 +15,10 @@
  *
  */
 
-    function otp_adminapi_setup($args)
-    {
-        sys::import('modules.otp.xarincludes.php-otp.Otp');
-        $otp = new Otp();
-        $result = $otp->initializeOtp($args['passphrase'], $args['seed'], $args['seq_number'], $args['algorithm']);
-        return $result;
-    }
+function otp_adminapi_setup($args)
+{
+    sys::import('modules.otp.xarincludes.php-otp.Otp');
+    $otp = new Otp();
+    $result = $otp->initializeOtp($args['passphrase'], $args['seed'], $args['seq_number'], $args['algorithm']);
+    return $result;
+}

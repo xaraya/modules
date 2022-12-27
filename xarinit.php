@@ -16,23 +16,22 @@
  *
  */
 
-    sys::import('xaraya.structures.query');
+sys::import('xaraya.structures.query');
 
-    function otp_init()
-    {
-
+function otp_init()
+{
     # --------------------------------------------------------
         #
-        # Set tables
+    # Set tables
         #
-        $q = new Query();
-        $prefix = xarDB::getPrefix();
+    $q = new Query();
+    $prefix = xarDB::getPrefix();
 
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_entries";
-        if (!$q->run($query)) {
-            return;
-        }
-        $query = "CREATE TABLE " . $prefix . "_otp_entries (
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_entries";
+    if (!$q->run($query)) {
+        return;
+    }
+    $query = "CREATE TABLE " . $prefix . "_otp_entries (
         id                integer unsigned NOT NULL auto_increment,
         module_id         integer unsigned NOT NULL default 0, 
         type              varchar(64) NOT NULL default '', 
@@ -47,15 +46,15 @@
         PRIMARY KEY  (id), 
         KEY i_key (access_key)
     )";
-        if (!$q->run($query)) {
-            return;
-        }
+    if (!$q->run($query)) {
+        return;
+    }
 
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_otps";
-        if (!$q->run($query)) {
-            return;
-        }
-        $query = "CREATE TABLE " . $prefix . "_otp_otps (
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_otps";
+    if (!$q->run($query)) {
+        return;
+    }
+    $query = "CREATE TABLE " . $prefix . "_otp_otps (
         id                integer unsigned NOT NULL auto_increment,
         user_ident        varchar(64) NOT NULL default '', 
         passphrase        varchar(64) NOT NULL default '', 
@@ -71,91 +70,91 @@
         KEY i_tag_module (module_id),
         KEY i_tag_reference (reference)
     )";
-        if (!$q->run($query)) {
-            return;
-        }
+    if (!$q->run($query)) {
+        return;
+    }
 
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_used_seeds";
-        if (!$q->run($query)) {
-            return;
-        }
-        $query = "CREATE TABLE " . $prefix . "_otp_used_seeds (
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_otp_used_seeds";
+    if (!$q->run($query)) {
+        return;
+    }
+    $query = "CREATE TABLE " . $prefix . "_otp_used_seeds (
         seed              varchar(64) NOT NULL default '',
         PRIMARY KEY  (seed) 
     )";
-        if (!$q->run($query)) {
-            return;
-        }
-
-        # --------------------------------------------------------
-        #
-        # Set up masks
-        #
-        xarMasks::register('ViewOtp', 'All', 'otp', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarMasks::register('ReadOtp', 'All', 'otp', 'All', 'All', 'ACCESS_READ');
-        xarMasks::register('CommentOtp', 'All', 'otp', 'All', 'All', 'ACCESS_COMMENT');
-        xarMasks::register('ModerateOtp', 'All', 'otp', 'All', 'All', 'ACCESS_MODERATE');
-        xarMasks::register('EditOtp', 'All', 'otp', 'All', 'All', 'ACCESS_EDIT');
-        xarMasks::register('AddOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADD');
-        xarMasks::register('ManageOtp', 'All', 'otp', 'All', 'All', 'ACCESS_DELETE');
-        xarMasks::register('AdminOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADMIN');
-
-        # --------------------------------------------------------
-        #
-        # Set up privileges
-        #
-        xarPrivileges::register('ViewOtp', 'All', 'otp', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarPrivileges::register('ReadOtp', 'All', 'otp', 'All', 'All', 'ACCESS_READ');
-        xarPrivileges::register('CommentOtp', 'All', 'otp', 'All', 'All', 'ACCESS_COMMENT');
-        xarPrivileges::register('ModerateOtp', 'All', 'otp', 'All', 'All', 'ACCESS_MODERATE');
-        xarPrivileges::register('EditOtp', 'All', 'otp', 'All', 'All', 'ACCESS_EDIT');
-        xarPrivileges::register('AddOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADD');
-        xarPrivileges::register('ManageOtp', 'All', 'otp', 'All', 'All', 'ACCESS_DELETE');
-        xarPrivileges::register('AdminOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADMIN');
-
-        # --------------------------------------------------------
-        #
-        # Create DD objects
-        #
-        $module = 'otp';
-        $objects = [
-                        'otp_entries',
-                         ];
-
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
-            return;
-        }
-
-        # --------------------------------------------------------
-        #
-        # Set up modvars
-        #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'otp']);
-        $module_settings->initialize();
-
-        // Add variables like this next one when creating utility modules
-        // This variable is referenced in the xaradmin/modifyconfig-utility.php file
-        // This variable is referenced in the xartemplates/includes/defaults.xd file
-        xarModVars::set('otp', 'defaultmastertable', 'otp_otp');
-        xarModVars::set('otp', 'sequence', 100);
-        xarModVars::set('otp', 'algorithm', 'md5');
-        xarModVars::set('otp', 'expires', 3600 * 24 * 3);
-
-        # --------------------------------------------------------
-        #
-        # Set up hooks
-        #
-
-        return true;
+    if (!$q->run($query)) {
+        return;
     }
 
-    function otp_upgrade()
-    {
-        return true;
+    # --------------------------------------------------------
+        #
+    # Set up masks
+        #
+    xarMasks::register('ViewOtp', 'All', 'otp', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadOtp', 'All', 'otp', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('CommentOtp', 'All', 'otp', 'All', 'All', 'ACCESS_COMMENT');
+    xarMasks::register('ModerateOtp', 'All', 'otp', 'All', 'All', 'ACCESS_MODERATE');
+    xarMasks::register('EditOtp', 'All', 'otp', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('AddOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADD');
+    xarMasks::register('ManageOtp', 'All', 'otp', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADMIN');
+
+    # --------------------------------------------------------
+        #
+    # Set up privileges
+        #
+    xarPrivileges::register('ViewOtp', 'All', 'otp', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadOtp', 'All', 'otp', 'All', 'All', 'ACCESS_READ');
+    xarPrivileges::register('CommentOtp', 'All', 'otp', 'All', 'All', 'ACCESS_COMMENT');
+    xarPrivileges::register('ModerateOtp', 'All', 'otp', 'All', 'All', 'ACCESS_MODERATE');
+    xarPrivileges::register('EditOtp', 'All', 'otp', 'All', 'All', 'ACCESS_EDIT');
+    xarPrivileges::register('AddOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADD');
+    xarPrivileges::register('ManageOtp', 'All', 'otp', 'All', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminOtp', 'All', 'otp', 'All', 'All', 'ACCESS_ADMIN');
+
+    # --------------------------------------------------------
+        #
+    # Create DD objects
+        #
+    $module = 'otp';
+    $objects = [
+                    'otp_entries',
+                     ];
+
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
+        return;
     }
 
-    function otp_delete()
-    {
-        $this_module = 'otp';
-        return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
-    }
+    # --------------------------------------------------------
+        #
+    # Set up modvars
+        #
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'otp']);
+    $module_settings->initialize();
+
+    // Add variables like this next one when creating utility modules
+    // This variable is referenced in the xaradmin/modifyconfig-utility.php file
+    // This variable is referenced in the xartemplates/includes/defaults.xd file
+    xarModVars::set('otp', 'defaultmastertable', 'otp_otp');
+    xarModVars::set('otp', 'sequence', 100);
+    xarModVars::set('otp', 'algorithm', 'md5');
+    xarModVars::set('otp', 'expires', 3600 * 24 * 3);
+
+    # --------------------------------------------------------
+        #
+    # Set up hooks
+        #
+
+    return true;
+}
+
+function otp_upgrade()
+{
+    return true;
+}
+
+function otp_delete()
+{
+    $this_module = 'otp';
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $this_module]);
+}

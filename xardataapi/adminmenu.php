@@ -16,11 +16,11 @@
  */
 
 // TODO: turn this into an xml file
-    function otp_dataapi_adminmenu()
-    {
-        return [
-            ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Otp Overview')],
-            ['mask' => 'ManageOtp', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
-            ['mask' => 'AdminOtp', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Otp configuration'), 'label' => xarML('Modify Config')],
-        ];
-    }
+function otp_dataapi_adminmenu()
+{
+    return [
+        ['includes' => ['main','overview'], 'target' => 'main', 'label' => xarML('Otp Overview')],
+        ['mask' => 'ManageOtp', 'includes' => 'view', 'target' => 'view', 'title' => xarML('Manage the master tables of thsi module'), 'label' => xarML('Master Tables')],
+        ['mask' => 'AdminOtp', 'includes' => 'modifyconfig', 'target' => 'modifyconfig', 'title' => xarML('Modify the Otp configuration'), 'label' => xarML('Modify Config')],
+    ];
+}

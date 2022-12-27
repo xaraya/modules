@@ -15,19 +15,19 @@
  *
  */
 
-    function otp_adminapi_getconfighook($args)
-    {
-        extract($args);
-        if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = [];
-        }
-        $module = 'otp';
-        $tabinfo = [
-                'module'  => $module,
-                'configarea'  => 'general',
-                'configtitle'  => xarML('Otp'),
-                'configcontent' => '',
-        ];
-        $extrainfo['tabs'][] = $tabinfo;
-        return $extrainfo;
+function otp_adminapi_getconfighook($args)
+{
+    extract($args);
+    if (!isset($extrainfo['tabs'])) {
+        $extrainfo['tabs'] = [];
     }
+    $module = 'otp';
+    $tabinfo = [
+            'module'  => $module,
+            'configarea'  => 'general',
+            'configtitle'  => xarML('Otp'),
+            'configcontent' => '',
+    ];
+    $extrainfo['tabs'][] = $tabinfo;
+    return $extrainfo;
+}

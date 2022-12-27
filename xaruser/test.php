@@ -14,7 +14,7 @@
  * Call a generic test page
  *
  */
-    function otp_user_test()
-    {
-        return [];
-    }
+function otp_user_test()
+{
+    return [];
+}
