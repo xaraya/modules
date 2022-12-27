@@ -51,28 +51,28 @@ function reminders_adminapi_spawn($data)
     switch ($fields['recur_period']) {
         case 1:
             $date->addDays(1);
-        break;
+            break;
         case 2:
             $date->addWeeks(1);
-        break;
+            break;
         case 3:
             $date->addWeeks(2);
-        break;
+            break;
         case 4:
             $date->addMonths(1);
-        break;
+            break;
         case 5:
             $date->addMonths(2);
-        break;
+            break;
         case 6:
             $date->addMonths(3);
-        break;
+            break;
         case 7:
             $date->addMonths(6);
-        break;
+            break;
         case 8:
             $date->addYears(1);
-        break;
+            break;
     }
     $fields['due_date'] = $date->getTimestamp();
 

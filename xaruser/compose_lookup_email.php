@@ -38,7 +38,7 @@ function reminders_user_compose_lookup_email($args)
     $data['copy_emails'] = true;
 
     // Get the available email messages
-    $data['message_options'] = xarMod::apiFunc('mailer', 'user', 'getall_mails', array('state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')));
+    $data['message_options'] = xarMod::apiFunc('mailer', 'user', 'getall_mails', ['state'=>3, 'module'=> "reminders", 'category' => xarModVars::get('reminders', 'lookup_emails')]);
 
     # --------------------------------------------------------
 #
@@ -65,7 +65,7 @@ function reminders_user_compose_lookup_email($args)
     // FIXME: obviously
     $data['lookup_template'] = 20;
 
-    $name = DataPropertyMaster::getProperty(array('name' => 'name'));
+    $name = DataPropertyMaster::getProperty(['name' => 'name']);
 
     // Get the name components of the recipient to pass to the template
     $name->value = $args['params']['lookup_name'];
@@ -88,14 +88,14 @@ function reminders_user_compose_lookup_email($args)
 #
     # Get some properties for use in the template
 #
-    $emailargs['name_property'] = DataPropertyMaster::getProperty(array('name' => 'name'));
-    $emailargs['checkbox'] = DataPropertyMaster::getProperty(array('name' => 'checkbox'));
-    $emailargs['date'] = DataPropertyMaster::getProperty(array('name' => 'date'));
-    $emailargs['number'] = DataPropertyMaster::getProperty(array('name' => 'number'));
-    $emailargs['integerbox'] = DataPropertyMaster::getProperty(array('name' => 'integerbox'));
-    $emailargs['floatbox'] = DataPropertyMaster::getProperty(array('name' => 'floatbox'));
-    $emailargs['textbox'] = DataPropertyMaster::getProperty(array('name' => 'textbox'));
-    $emailargs['textarea'] = DataPropertyMaster::getProperty(array('name' => 'textarea'));
+    $emailargs['name_property'] = DataPropertyMaster::getProperty(['name' => 'name']);
+    $emailargs['checkbox'] = DataPropertyMaster::getProperty(['name' => 'checkbox']);
+    $emailargs['date'] = DataPropertyMaster::getProperty(['name' => 'date']);
+    $emailargs['number'] = DataPropertyMaster::getProperty(['name' => 'number']);
+    $emailargs['integerbox'] = DataPropertyMaster::getProperty(['name' => 'integerbox']);
+    $emailargs['floatbox'] = DataPropertyMaster::getProperty(['name' => 'floatbox']);
+    $emailargs['textbox'] = DataPropertyMaster::getProperty(['name' => 'textbox']);
+    $emailargs['textarea'] = DataPropertyMaster::getProperty(['name' => 'textarea']);
 
     if ($confirm) {
         # --------------------------------------------------------
@@ -129,7 +129,7 @@ function reminders_user_compose_lookup_email($args)
         }
         // Only send if we don't have any errors
         if (empty($data['message_warning'])) {
-            $data['result'] = array();
+            $data['result'] = [];
             try {
                 $args = ['sendername'       => $emailargs['my_name'],
                               'senderaddress'    => $emailargs['my_email'],

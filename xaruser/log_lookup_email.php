@@ -29,7 +29,7 @@ function reminders_user_log_lookup_email($args)
 #
     // FIXME: this is not robust enough to deter attacks
     if (empty($data['code'])) {
-        return array();
+        return [];
     }
 
     $args['params'] = unserialize(base64_decode($data['code']));

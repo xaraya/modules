@@ -41,7 +41,6 @@ function reminders_admin_modify_email()
     $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

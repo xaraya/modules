@@ -34,7 +34,6 @@ function reminders_admin_new_lookup()
     $data['authid'] = xarSecGenAuthKey('reminders');
 
     if ($data['confirm']) {
-
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
         if (!xarVarFetch('preview', 'str', $preview, null, XARVAR_DONT_SET)) {
             return;

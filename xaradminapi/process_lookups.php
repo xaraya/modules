@@ -32,16 +32,14 @@ function reminders_adminapi_process_lookups($args)
     */
 
     if ($args['test']) {
-
         // In the test environment, we just look which lookups were checked in the test lookup admin page. We will receive all those emails.
         if (!xarVarFetch('entry_list', 'str', $data['entry_list'], '', XARVAR_NOT_REQUIRED)) {
             return;
         }
-        $items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
+        $items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', ['itemids' => $data['entry_list']]);
 
-        $data['results'] = array();
+        $data['results'] = [];
         foreach ($items as $key => $row) {
-
             // Encode the row information so we can send that to the template
             $row['encoded'] = base64_encode(serialize($row));
 
@@ -52,7 +50,7 @@ function reminders_adminapi_process_lookups($args)
                 // We already have the information.
             } else {
                 // Get the information
-                $mailer_template->getItem(array('itemid' => $this_template_id));
+                $mailer_template->getItem(['itemid' => $this_template_id]);
                 $values = $mailer_template->getFieldValues();
                 $templates[$this_template_id]['message_id']   = $values['id'];
                 $templates[$this_template_id]['message_body'] = $values['body'];
@@ -64,18 +62,18 @@ function reminders_adminapi_process_lookups($args)
             $params['subject']      = $templates[$this_template_id]['subject'];
 
             // Send the email
-            $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));
-            $data['results'] = array_merge($data['results'], array($data['result']));
+            $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', ['info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']]);
+            $data['results'] = array_merge($data['results'], [$data['result']]);
         }
     } else {
         // Get the owners to be processed (sent an email)
-        $owners = xarMod::apiFunc('reminders', 'user', 'getall_owners', array('do_lookup' => true));
+        $owners = xarMod::apiFunc('reminders', 'user', 'getall_owners', ['do_lookup' => true]);
 
         // Run through the owners
-        $data['results'] = array();
+        $data['results'] = [];
         foreach ($owners as $owner) {
             // Get the entry which will figure in the email
-            $row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', array('user' => $owner));
+            $row = xarMod::apiFunc('reminders', 'admin', 'generate_random_entry', ['user' => $owner]);
 
             // Rename the parameters for sending to the email template
             $row['lookup_id']    = $row['id'];
@@ -101,7 +99,7 @@ function reminders_adminapi_process_lookups($args)
                 // We already have the information.
             } else {
                 // Get the information
-                $mailer_template->getItem(array('itemid' => $this_template_id));
+                $mailer_template->getItem(['itemid' => $this_template_id]);
                 $values = $mailer_template->getFieldValues();
                 $templates[$this_template_id]['message_id']   = $values['id'];
                 $templates[$this_template_id]['message_body'] = $values['body'];
@@ -114,8 +112,8 @@ function reminders_adminapi_process_lookups($args)
 
 
             // Send the email
-            $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', array('owner' => $owner, 'info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));
-            $data['results'] = array_merge($data['results'], array($data['result']));
+            $data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email_lookup', ['owner' => $owner, 'info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']]);
+            $data['results'] = array_merge($data['results'], [$data['result']]);
         }
     }
     return $data['results'];
