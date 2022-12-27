@@ -19,7 +19,7 @@
  *         failure
  */
 
- sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_userapi_get_pubtypes($args)
 {

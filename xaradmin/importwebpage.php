@@ -88,8 +88,7 @@ function publications_admin_importwebpage()
     $data['fields'] = [];
     $data['cats'] = [];
     if (!empty($data['ptid'])) {
-
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
         # Get the fields of hte chosen pubtype
 #

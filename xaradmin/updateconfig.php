@@ -161,7 +161,6 @@ function publications_admin_updateconfig()
         $picker = DataPropertyMaster::getProperty(['name' => 'categorypicker']);
         $picker->checkInput('basecid');
     } elseif ($data['tab'] == 'pubtypes') {
-
         // Get the publication type for this display and save the settings to it
         $pubtypeobject = DataObjectMaster::getObject(['name' => 'publications_types']);
         $pubtypeobject->getItem(['itemid' => $ptid]);

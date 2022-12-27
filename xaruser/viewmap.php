@@ -116,12 +116,12 @@ function publications_user_viewmap($args)
                 'publications',
                 'user',
                 'getchildcats',
-                                                         // frontpage or approved
-                                                   ['state' => [PUBLICATIONS_STATE_APPROVED,PUBLICATIONS_STATE_FRONTPAGE],
-                                                         'cid' => $cid,
-                                                         'ptid' => null,
-                                                         // keep a link to the parent cid
-                                                         'showcid' => true, ]
+                // frontpage or approved
+                ['state' => [PUBLICATIONS_STATE_APPROVED,PUBLICATIONS_STATE_FRONTPAGE],
+                      'cid' => $cid,
+                      'ptid' => null,
+                      // keep a link to the parent cid
+                      'showcid' => true, ]
             );
         }
     } elseif ($by == 'grid') {
@@ -156,12 +156,12 @@ function publications_user_viewmap($args)
                     'publications',
                     'user',
                     'getchildcats',
-                                                   // frontpage or approved
-                                               ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
-                                                     'cid' => $cid,
-                                                     'ptid' => $ptid,
-                                                     // keep a link to the parent cid
-                                                     'showcid' => true, ]
+                    // frontpage or approved
+                    ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                          'cid' => $cid,
+                          'ptid' => $ptid,
+                          // keep a link to the parent cid
+                          'showcid' => true, ]
                 );
             }
 
@@ -212,11 +212,11 @@ function publications_user_viewmap($args)
                 'publications',
                 'user',
                 'getpubcatcount',
-                                         // frontpage or approved
-                                         ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
-                                               'ptid' => $ptid,
-                                               'groupcids' => 2,
-                                               'reverse' => 1, ]
+                // frontpage or approved
+                ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                      'ptid' => $ptid,
+                      'groupcids' => 2,
+                      'reverse' => 1, ]
             );
 
             if (!empty($ptid)) {
@@ -293,12 +293,12 @@ function publications_user_viewmap($args)
                     'publications',
                     'user',
                     'getchildcats',
-                                            // frontpage or approved
-                                            ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
-                                                  'cid' => $cid,
-                                                  'ptid' => $pubid,
-                                                  // keep a link to the parent cid
-                                                  'showcid' => true, ]
+                    // frontpage or approved
+                    ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                          'cid' => $cid,
+                          'ptid' => $pubid,
+                          // keep a link to the parent cid
+                          'showcid' => true, ]
                 );
                 $publinks[$i]['cats'][] = $childcats;
             }

@@ -40,11 +40,11 @@ function publications_adminapi_delete($args)
         default:
             $q = new Query('UPDATE', $table['publications']);
             $q->addfield('state', 0);
-        break;
+            break;
 
         case 10:
             $q = new Query('DELETE', $table['publications']);
-        break;
+            break;
     }
 
     $q->in('id', $ids);

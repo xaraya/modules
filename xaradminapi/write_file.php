@@ -19,7 +19,7 @@ function publications_adminapi_write_file($args)
     try {
         $dir = dirname($args['file']);
         if (!file_exists($dir)) {
-            mkdir($dir, 0777, true);
+            mkdir($dir, 0o777, true);
         }
         $fp = fopen($args['file'], "wb");
 

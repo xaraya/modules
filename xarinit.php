@@ -384,7 +384,6 @@ function publications_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
 

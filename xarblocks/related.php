@@ -15,7 +15,7 @@
 /**
  * initialise block
  */
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Publications_RelatedBlock extends BasicBlock implements iBlock
 {

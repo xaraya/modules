@@ -24,7 +24,7 @@
  *
  */
 
- sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_view($args)
 {

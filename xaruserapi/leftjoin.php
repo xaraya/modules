@@ -121,7 +121,7 @@ function publications_userapi_leftjoin($args)
             if ($enddate > time()) {
                 $enddate = time();
             }
-            // published in a certain month
+        // published in a certain month
         } elseif (preg_match('/^(\d{4})-(\d+)$/', $pubdate, $matches)) {
             $startdate = gmmktime(0, 0, 0, $matches[2], 1, $matches[1]);
             // PHP allows month > 12 :-)
@@ -129,7 +129,7 @@ function publications_userapi_leftjoin($args)
             if ($enddate > time()) {
                 $enddate = time();
             }
-            // published in a certain day
+        // published in a certain day
         } elseif (preg_match('/^(\d{4})-(\d+)-(\d+)$/', $pubdate, $matches)) {
             $startdate = gmmktime(0, 0, 0, $matches[2], $matches[3], $matches[1]);
             // PHP allows day > 3x :-)
@@ -137,7 +137,7 @@ function publications_userapi_leftjoin($args)
             if ($enddate > time()) {
                 $enddate = time();
             }
-            // published at a certain timestamp
+        // published at a certain timestamp
         } elseif (preg_match('/^(\d+)$/', $pubdate, $matches)) {
             if ($pubdate <= time()) {
                 $whereclauses[] = $leftjoin['create_date'] . ' = ' . $pubdate;

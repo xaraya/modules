@@ -150,8 +150,7 @@ function publications_admin_importpictures()
     $data['fields'] = [];
     $data['cats'] = [];
     if (!empty($data['ptid'])) {
-
-# --------------------------------------------------------
+        # --------------------------------------------------------
 #
         # Get the fields of hte chosen pubtype
 #
@@ -221,8 +220,7 @@ function publications_admin_importpictures()
 
     if (isset($data['ptid']) && isset($data['content']) && count($data['selected']) > 0
         && (isset($test) || isset($import))) {
-
-// TODO: allow changing the order of import + editing the titles etc. before creating the publications
+        // TODO: allow changing the order of import + editing the titles etc. before creating the publications
 
         $data['logfile'] = '';
         foreach (array_keys($data['selected']) as $file) {

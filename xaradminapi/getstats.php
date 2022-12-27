@@ -38,14 +38,14 @@ function publications_adminapi_getstats($args)
                     break;
                 case 'postgres':
                     $newfields[] = "TO_CHAR(ABSTIME(start_date),'YYYY') AS myyear";
-                // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
+                    // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myyear";
                     break;
                 case 'mssql':
                     $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),4) as myyear";
                     $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),4)";
                     break;
-                // TODO:  Add SQL queries for Oracle, etc.
+                    // TODO:  Add SQL queries for Oracle, etc.
                 default:
                     continue;
             }
@@ -58,14 +58,14 @@ function publications_adminapi_getstats($args)
                     break;
                 case 'postgres':
                     $newfields[] = "TO_CHAR(ABSTIME(start_date),'YYYY-MM') AS mymonth";
-                // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
+                    // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "mymonth";
                     break;
                 case 'mssql':
                     $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),7) as mymonth";
                     $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),7)";
                     break;
-                // TODO:  Add SQL queries for Oracle, etc.
+                    // TODO:  Add SQL queries for Oracle, etc.
                 default:
                     continue;
             }
@@ -78,14 +78,14 @@ function publications_adminapi_getstats($args)
                     break;
                 case 'postgres':
                     $newfields[] = "TO_CHAR(ABSTIME(start_date),'YYYY-MM-DD') AS myday";
-                // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
+                    // CHECKME: do we need to use TO_CHAR(...) for the group field too ?
                     $newgroups[] = "myday";
                     break;
                 case 'mssql':
                     $newfields[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),10) as myday";
                     $newgroups[] = "LEFT(CONVERT(VARCHAR,DATEADD(ss,start_date,'1/1/1970'),120),10)";
                     break;
-                // TODO:  Add SQL queries for Oracle, etc.
+                    // TODO:  Add SQL queries for Oracle, etc.
                 default:
                     continue;
             }

@@ -54,11 +54,11 @@ class PublicationsShortController extends ShortActionController
         switch ($token1) {
             case 'admin':
                 return parent::decode($data);
-            break;
+                break;
 
             case 'search':
                 return parent::decode($data);
-            break;
+                break;
 
             case 'new':
                 $data['func'] = 'new';
@@ -68,11 +68,11 @@ class PublicationsShortController extends ShortActionController
                 if ($token2) {
                     $data['ptid'] = $this->decode_pubtype($token2);
                 }
-            break;
+                break;
 
             case 'create':
                 $data['func'] = 'create';
-            break;
+                break;
 
             case 'modify':
                 // Here we are dealing with publications/modify/pubtype[/publication] or publications/modify/itemid
@@ -94,11 +94,11 @@ class PublicationsShortController extends ShortActionController
                     // This is a publication modify; find which publication
                     $data['itemid'] = $this->decode_page($token3, $data['ptid']);
                 }
-            break;
+                break;
 
             case 'update':
                 $data['func'] = 'update';
-            break;
+                break;
 
             case 'delete':
                 $data['func'] = 'delete';
@@ -119,9 +119,9 @@ class PublicationsShortController extends ShortActionController
                     // This is a publication delete; find which publication
                     $data['itemid'] = $this->decode_page($token3, $data['ptid']);
                 }
-            break;
+                break;
 
-           case 'view':
+            case 'view':
                 $data['func'] = 'view';
 
                 // Get the pubtype
@@ -129,7 +129,7 @@ class PublicationsShortController extends ShortActionController
                 if ($token2) {
                     $data['ptid'] = $this->decode_pubtype($token2);
                 }
-            break;
+                break;
 
             case 'display':
                 $data['func'] = 'display';
@@ -212,7 +212,7 @@ class PublicationsShortController extends ShortActionController
                         }
                     }
                 }
-            break;
+                break;
 
             default:
                 // Here we are dealing with publications/pubtype[/publication] or publications/itemid
@@ -254,7 +254,7 @@ class PublicationsShortController extends ShortActionController
                     $data['id'] = $this->decode_page($token2, $data['ptid']);
                     $data['func'] = 'display';
                 }
-            break;
+                break;
         }
         return $data;
     }
@@ -268,11 +268,10 @@ class PublicationsShortController extends ShortActionController
         $params = $request->getFunctionArgs();
         $path = [];
         switch ($request->getFunction()) {
-
             case 'search':
                 $path[] = 'search';
                 $path = array_merge($path, $params);
-            break;
+                break;
 
             case 'new':
                 $path[] = 'new';
@@ -280,12 +279,12 @@ class PublicationsShortController extends ShortActionController
                     $path[] = $this->encode_pubtype($params['ptid']);
                     unset($params['ptid']);
                 }
-            break;
+                break;
 
             case 'create':
                 $path[] = 'create';
                 $path = array_merge($path, $params);
-            break;
+                break;
 
             case 'modify':
                 $path[] = 'modify';
@@ -296,12 +295,12 @@ class PublicationsShortController extends ShortActionController
                     }
                 }
                 $params = [];
-            break;
+                break;
 
             case 'update':
                 $path[] = 'update';
                 $path = array_merge($path, $params);
-            break;
+                break;
 
             case 'delete':
                 $path[] = 'delete';
@@ -312,7 +311,7 @@ class PublicationsShortController extends ShortActionController
                     }
                 }
                 $params = [];
-            break;
+                break;
 
             case 'view':
                 $path[] = 'view';
@@ -320,12 +319,12 @@ class PublicationsShortController extends ShortActionController
                     $path[] = $this->encode_pubtype($params['ptid']);
                     unset($params['ptid']);
                 }
-            break;
+                break;
 
             case 'viewmap':
                 $path[] = 'viewmap';
                 $params = [];
-            break;
+                break;
 
             case 'display':
                 $path[] = 'display';
@@ -336,7 +335,7 @@ class PublicationsShortController extends ShortActionController
                     }
                 }
                 $params = [];
-            break;
+                break;
 
             case 'main':
 
@@ -424,12 +423,11 @@ class PublicationsShortController extends ShortActionController
                         }
                     }
                 }
-            break;
+                break;
 
             default:
                 return;
-            break;
-
+                break;
         }
         // Encode the processed params
         $request->setFunction($this->getFunction($path));
@@ -467,7 +465,7 @@ class PublicationsShortController extends ShortActionController
         switch ((int)xarModVars::get('publications', 'usetitleforurl')) {
             case 0:
                 $q->eq('id', (int)$token2);
-            break;
+                break;
             case 1:
                 $q->eq('name', $token2);
                 $token3 = $this->shorturl_decode($this->nextToken());
@@ -476,20 +474,20 @@ class PublicationsShortController extends ShortActionController
                     $q->ge('start_date', $timestamp);
                     $q->le('start_date', $timestamp + 100);
                 }
-            break;
+                break;
             case 2:
                 $q->eq('name', $token2);
                 $token3 = (int)$this->nextToken();
                 if ($token3) {
                     $q->eq('id', $token3);
                 }
-            break;
+                break;
             case 3:
                 $q->eq('id', (int)$token2);
-            break;
+                break;
             case 4:
                 $q->eq('name', $token2);
-            break;
+                break;
             case 5:
                 $q->eq('title', $token2);
                 $token3 = $this->shorturl_decode($this->nextToken());
@@ -498,20 +496,20 @@ class PublicationsShortController extends ShortActionController
                     $q->ge('start_date', $timestamp);
                     $q->le('start_date', $timestamp + 100);
                 }
-            break;
+                break;
             case 6:
                 $q->eq('title', $token2);
                 $token3 = (int)$this->nextToken();
                 if ($token3) {
                     $q->eq('id', $token3);
                 }
-            break;
+                break;
             case 7:
                 $q->eq('id', (int)$token2);
-            break;
+                break;
             case 8:
                 $q->eq('title', $token2);
-            break;
+                break;
         }
         $q->addfield('id');
         $q->run();

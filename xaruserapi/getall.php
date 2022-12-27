@@ -487,7 +487,6 @@ function publications_userapi_getall($args)
                 continue;
             }
             foreach ($publications as $key => $article) {
-
                 // otherwise publications (of different pub types) with dd properties having the same
                 // names reset previously set values to empty string for each iteration based on the pubtype
                 if ($article['pubtype_id'] != $pubtype) {

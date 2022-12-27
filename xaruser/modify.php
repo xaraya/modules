@@ -89,13 +89,13 @@ function publications_user_modify($args)
         $admin_override = xarModVars::get('publications', 'admin_override');
         switch ($admin_override) {
             case 0:
-            break;
+                break;
             case 1:
                 $allow = xarRoles::isParent('Administrators', xarUser::getVar('uname'));
-            break;
+                break;
             case 1:
                 $allow = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
-            break;
+                break;
         }
     }
 

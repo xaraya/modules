@@ -13,7 +13,7 @@
  * initialise block
  * @author Jim McDonald
  */
-    sys::import('xaraya.structures.containers.blocks.basicblock');
+sys::import('xaraya.structures.containers.blocks.basicblock');
 
 class Publications_TopitemsBlock extends BasicBlock implements iBlock
 {

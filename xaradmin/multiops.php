@@ -40,21 +40,20 @@ function publications_admin_multiops()
 
     switch ($operation) {
         case 0:
-        foreach ($ids as $id => $val) {
-            if (empty($val)) {
-                continue;
+            foreach ($ids as $id => $val) {
+                if (empty($val)) {
+                    continue;
+                }
+
+                // Get the item
+                $item = $object->getItem(['itemid' => $val]);
+
+                // Update it
+                if (!$object->deleteItem(['state' => $operation])) {
+                    return;
+                }
             }
-
-            // Get the item
-            $item = $object->getItem(['itemid' => $val]);
-
-            // Update it
-            if (!$object->deleteItem(['state' => $operation])) {
-                return;
-            }
-        }
-        break;
-
+            break;
     }
     return true;
 }

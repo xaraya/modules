@@ -155,7 +155,7 @@ function publications_userapi_get($args)
     }
 
     [$id, $title, $summary, $body, $owner, $start_date, $pubtype_id, $leftpage_id, $rightpage_id, $notes,
-         $state, $locale] = $result->fields;
+        $state, $locale] = $result->fields;
 
     $article = ['id' => $id,
                      'title' => $title,

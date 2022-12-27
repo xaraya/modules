@@ -74,12 +74,12 @@ function publications_userapi_getchildcats($args)
             'publications',
             'user',
             'getpubcatcount',
-                                    // frontpage or approved
-                                    ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
-                                          'cids' => $childlist,
-                                          'andcids' => $andcids,
-                                          'ptid' => $ptid,
-                                          'reverse' => 1, ]
+            // frontpage or approved
+            ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                  'cids' => $childlist,
+                  'andcids' => $andcids,
+                  'ptid' => $ptid,
+                  'reverse' => 1, ]
         );
         if (!empty($ptid)) {
             $curptid = $ptid;

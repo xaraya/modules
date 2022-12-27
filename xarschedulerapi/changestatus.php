@@ -20,8 +20,7 @@
  */
 function publications_schedulerapi_changestate($args)
 {
-
-// TODO: get some configuration info about which pubtypes, categories, statees, ... are
+    // TODO: get some configuration info about which pubtypes, categories, statees, ... are
 //       concerned, if there is any minimum number of publications to leave in a certain state,
 //       etc. Then retrieve the relevant publications and change their state accordingly :-)
 

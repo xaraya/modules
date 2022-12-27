@@ -58,21 +58,21 @@ function publications_userapi_get_menu_pages($args)
     switch ($args['scope']) {
         case 'all':
             $q->gt('p.leftpage_id', 0);
-        break;
+            break;
         case 'descendants':
             $q->addtable($xartable['publications'], 'root');
             $q->eq('root.id', $args['itemid']);
             $q->le('root.leftpage_id', 'expr:p.leftpage_id');
             $q->ge('root.rightpage_id', 'expr:p.rightpage_id');
-        break;
+            break;
         case 'children':
             $q->eq('p.parentpage_id', $args['itemid']);
-        break;
+            break;
         case 'siblings':
             $q->addtable($xartable['publications'], 'p1');
             $q->join('p.parentpage_id', 'p1.parentpage_id');
             $q->eq('p1.id', $args['itemid']);
-        break;
+            break;
     }
     if (!empty($args['itemtype'])) {
         $q->eq('p.pubtype_id', $args['itemtype']);

@@ -20,8 +20,7 @@
  */
 function publications_schedulerapi_makedigest($args)
 {
-
-// TODO: get some configuration info about which pubtypes, categories, statees, ... are
+    // TODO: get some configuration info about which pubtypes, categories, statees, ... are
 //       concerned, if there are any limits to the number of publications to put in the digest,
 //       etc. Then retrieve the relevant publications, create the digest and do whatever :-)
 

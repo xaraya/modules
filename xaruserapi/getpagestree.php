@@ -48,7 +48,6 @@ function publications_userapi_getpagestree($args)
 
     // Create some additional arrays to help navigate the [flat] pages array.
     foreach ($pages as $key => $page) {
-
         // Assign where the locale info will be placed
         if ($page['base_id']) {
             $translations[$page['base_id']][] = substr($page['locale'], 0, 2);

@@ -427,7 +427,6 @@ function publications_user_search($args)
             );
             // TODO: re-use article output code from elsewhere (view / archive / admin)
             if (!empty($publications) && count($publications) > 0) {
-
                 // retrieve the categories for each article
                 $catinfo = [];
                 if ($show_categories) {
@@ -570,25 +569,25 @@ function publications_user_search($args)
                                                             'search' => $q, ]
                     ),
 
-/* trick : use *this* publications search instead of global search for pager :-)
-                                        xarController::URL('search', 'user', 'main',
-*/
-                                        xarController::URL(
-                                            'publications',
-                                            'user',
-                                            'search',
-                                            ['ptid' => $curptid,
-                                                        'catid' => $catid,
-                                                        'q' => $q ?? null,
-                                                        'author' => $author ?? null,
-                                                        'start' => $startdate,
-                                                        'end' => ($enddate != $now) ? $enddate : null,
-                                                        'state' => $stateline,
-                                                        'sort' => $sort,
-                                                        'fields' => $fields,
-                                                        'searchtype' => !empty($searchtype) ? $searchtype : null,
-                                                        'startnum' => '%%', ]
-                                        ),
+                    /* trick : use *this* publications search instead of global search for pager :-)
+                                                            xarController::URL('search', 'user', 'main',
+                    */
+                    xarController::URL(
+                        'publications',
+                        'user',
+                        'search',
+                        ['ptid' => $curptid,
+                                    'catid' => $catid,
+                                    'q' => $q ?? null,
+                                    'author' => $author ?? null,
+                                    'start' => $startdate,
+                                    'end' => ($enddate != $now) ? $enddate : null,
+                                    'state' => $stateline,
+                                    'sort' => $sort,
+                                    'fields' => $fields,
+                                    'searchtype' => !empty($searchtype) ? $searchtype : null,
+                                    'startnum' => '%%', ]
+                    ),
                     $numitems
                 );
 

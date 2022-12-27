@@ -39,7 +39,7 @@ function publications_userapi_getmonthcount($args)
         case 'mssql':
             $query = "SELECT LEFT(CONVERT(VARCHAR,DATEADD(ss,pubdate,'1/1/1970'),120),7) as mymonth, COUNT(*) FROM " . $publicationsdef['table'];
             break;
-        // TODO:  Add SQL queries for Oracle, etc.
+            // TODO:  Add SQL queries for Oracle, etc.
         default:
             return;
     }

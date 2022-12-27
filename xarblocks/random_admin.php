@@ -13,36 +13,36 @@
  * initialise block
  * @author Jim McDonald
  */
-    sys::import('modules.publications.xarblocks.random');
+sys::import('modules.publications.xarblocks.random');
 
-    class Publications_RandomBlockAdmin extends Publications_RandomBlock
+class Publications_RandomBlockAdmin extends Publications_RandomBlock
+{
+    public function modify(array $data=[])
     {
-        public function modify(array $data=[])
-        {
-            $data = $this->getContent();
-            if (!empty($data['catfilter'])) {
-                $cidsarray = [$data['catfilter']];
-            } else {
-                $cidsarray = [];
-            }
-
-            $data['locales'] = xarMLS::listSiteLocales();
-            asort($data['locales']);
-
-            return $data;
+        $data = $this->getContent();
+        if (!empty($data['catfilter'])) {
+            $cidsarray = [$data['catfilter']];
+        } else {
+            $cidsarray = [];
         }
 
-        public function update(array $data=[])
-        {
-            xarVar::fetch('locale', 'str', $data['locale'], '', xarVar::NOT_REQUIRED);
-            xarVar::fetch('alttitle', 'str', $data['alttitle'], '', xarVar::NOT_REQUIRED);
-            xarVar::fetch('altsummary', 'str', $data['altsummary'], '', xarVar::NOT_REQUIRED);
-            xarVar::fetch('showtitle', 'checkbox', $data['showtitle'], false, xarVar::NOT_REQUIRED);
-            xarVar::fetch('showsummary', 'checkbox', $data['showsummary'], false, xarVar::NOT_REQUIRED);
-            xarVar::fetch('showpubdate', 'checkbox', $data['showpubdate'], false, xarVar::NOT_REQUIRED);
-            xarVar::fetch('showauthor', 'checkbox', $data['showauthor'], false, xarVar::NOT_REQUIRED);
-            xarVar::fetch('showsubmit', 'checkbox', $data['showsubmit'], false, xarVar::NOT_REQUIRED);
-            $this->setContent($data);
-            return true;
-        }
+        $data['locales'] = xarMLS::listSiteLocales();
+        asort($data['locales']);
+
+        return $data;
     }
+
+    public function update(array $data=[])
+    {
+        xarVar::fetch('locale', 'str', $data['locale'], '', xarVar::NOT_REQUIRED);
+        xarVar::fetch('alttitle', 'str', $data['alttitle'], '', xarVar::NOT_REQUIRED);
+        xarVar::fetch('altsummary', 'str', $data['altsummary'], '', xarVar::NOT_REQUIRED);
+        xarVar::fetch('showtitle', 'checkbox', $data['showtitle'], false, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showsummary', 'checkbox', $data['showsummary'], false, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showpubdate', 'checkbox', $data['showpubdate'], false, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showauthor', 'checkbox', $data['showauthor'], false, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showsubmit', 'checkbox', $data['showsubmit'], false, xarVar::NOT_REQUIRED);
+        $this->setContent($data);
+        return true;
+    }
+}

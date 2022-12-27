@@ -322,7 +322,6 @@ function publications_admin_display($args)
 
     // If this page is of type PLACEHOLDER, then look in its descendents
     if ($data['object']->properties['state']->value == 5) {
-
         // Scan for a descendent that is ACTIVE or FRONTPAGE
         if (!empty($tree['pages'][$id]['child_keys'])) {
             foreach ($tree['pages'][$id]['child_keys'] as $scan_key) {
@@ -520,7 +519,7 @@ function publications_admin_display($args)
     $data['ptid'] = $ptid; // navigation pubtype
     $data['pubtype_id'] = $pubtype_id; // publication pubtype
 
-// TODO: improve the case where we have several icons :)
+    // TODO: improve the case where we have several icons :)
     $data['topic_icons'] = '';
     $data['topic_images'] = [];
     $data['topic_urls'] = [];
@@ -831,9 +830,9 @@ function publications_admin_display($args)
             'publications',
             'user',
             'getpubcatcount',
-                                    // frontpage or approved
-                                    ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
-                                          'ptid' => $ptid, ]
+            // frontpage or approved
+            ['state' => [PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED],
+                  'ptid' => $ptid, ]
         );
         if (!empty($pubcatcount[$ptid])) {
             xarCoreCache::setCached('Blocks.categories', 'catcount', $pubcatcount[$ptid]);

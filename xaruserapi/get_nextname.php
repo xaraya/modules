@@ -27,22 +27,35 @@ function publications_userapi_get_nextname($args)
 
     // Get the namestring for this pubtype
     switch ($args['ptid']) {
-        case 1: $namestring = 'new'; break;    // news
-        case 2: $namestring = 'doc'; break;    // document
-        case 3: $namestring = 'rev'; break;    // review
-        case 4: $namestring = 'faq'; break;    // FAQ
-        case 1: $namestring = 'pic'; break;    // picture
-        case 6: $namestring = 'web'; break;    // web page
-        case 7: $namestring = 'quo'; break;    // quote
-        case 8: $namestring = 'dow'; break;    // download
-        case 9: $namestring = 'tra'; break;    // translation
-        case 10: $namestring = 'gen'; break;    // generic
-        case 11: $namestring = 'blo'; break;    // blog
-        case 12: $namestring = 'cat'; break;    // catalogue
-        case 13: $namestring = 'eve'; break;    // event
+        case 1: $namestring = 'new';
+            break;    // news
+        case 2: $namestring = 'doc';
+            break;    // document
+        case 3: $namestring = 'rev';
+            break;    // review
+        case 4: $namestring = 'faq';
+            break;    // FAQ
+        case 1: $namestring = 'pic';
+            break;    // picture
+        case 6: $namestring = 'web';
+            break;    // web page
+        case 7: $namestring = 'quo';
+            break;    // quote
+        case 8: $namestring = 'dow';
+            break;    // download
+        case 9: $namestring = 'tra';
+            break;    // translation
+        case 10: $namestring = 'gen';
+            break;    // generic
+        case 11: $namestring = 'blo';
+            break;    // blog
+        case 12: $namestring = 'cat';
+            break;    // catalogue
+        case 13: $namestring = 'eve';
+            break;    // event
         default:
             $namestring = xarMod::apiFunc('publications', 'user', 'getsetting', ['ptid' => $args['ptid'], 'setting' => 'namestring']);
-        break;
+            break;
     }
 
     // Get the number of publications of this pubtype and increment by 1

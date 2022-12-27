@@ -169,7 +169,6 @@ function publications_adminapi_importpubtype($args)
                 }
                 $property[$key] = $value;
             } elseif (preg_match('#</properties>#', $line)) {
-
                 // 1. make sure we have a unique pubtype name
                 foreach ($pubtypes as $pubid => $pubtype) {
                     if ($object['name'] == $pubtype['name']) {

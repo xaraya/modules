@@ -72,7 +72,6 @@ function publications_admin_modify_pubtype($args)
     $data['properties'] = $data['object']->getProperties();
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

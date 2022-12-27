@@ -85,7 +85,6 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         # Set up the featured item
 #
         if ($data['featuredid'] > 0) {
-
             // Get the database entry of the featured item
             $q = new Query('SELECT', $tables['publications']);
             $q->eq('id', $data['featuredid']);

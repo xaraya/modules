@@ -314,7 +314,6 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
 
         // Generate output
         switch ($layout) {
-
             case 3: // menu category
                 $template = 'menu';
                 break;

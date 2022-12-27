@@ -64,30 +64,30 @@ function publications_userapi_getprevious($args)
 
     // Add the ordering
     switch ($sort) {
-    case 'tree':
-        $q->lt('rightpage_id', (int)$current['leftpage_id']);
-        $q->setorder('rightpage_id', 'DESC');
-        break;
-    case 'id':
-        $q->eq('pubtype_id', $ptid);
-        $q->lt('id', (int)$current['id']);
-        $q->setorder('id', 'DESC');
-        break;
-    case 'name':
-        $q->eq('pubtype_id', $ptid);
-        $q->lt('name', $current['name']);
-        $q->setorder('name', 'DESC');
-        break;
-    case 'title':
-        $q->eq('pubtype_id', $ptid);
-        $q->lt('title', $current['title']);
-        $q->setorder('title', 'DESC');
-        break;
-    case 'date':
-    default:
-        $q->eq('pubtype_id', $ptid);
-        $q->lt('start_date', (int)$current['start_date']);
-        $q->setorder('start_date', 'DESC');
+        case 'tree':
+            $q->lt('rightpage_id', (int)$current['leftpage_id']);
+            $q->setorder('rightpage_id', 'DESC');
+            break;
+        case 'id':
+            $q->eq('pubtype_id', $ptid);
+            $q->lt('id', (int)$current['id']);
+            $q->setorder('id', 'DESC');
+            break;
+        case 'name':
+            $q->eq('pubtype_id', $ptid);
+            $q->lt('name', $current['name']);
+            $q->setorder('name', 'DESC');
+            break;
+        case 'title':
+            $q->eq('pubtype_id', $ptid);
+            $q->lt('title', $current['title']);
+            $q->setorder('title', 'DESC');
+            break;
+        case 'date':
+        default:
+            $q->eq('pubtype_id', $ptid);
+            $q->lt('start_date', (int)$current['start_date']);
+            $q->setorder('start_date', 'DESC');
     }
 
     // We only want a single row
