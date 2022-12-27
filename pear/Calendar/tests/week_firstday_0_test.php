@@ -255,9 +255,9 @@ class TestOfWeek_firstday_0_Build extends TestOfWeek_firstday_0
             Calendar_Factory::create('Day', 2003, 12, 29),
             Calendar_Factory::create('Day', 2003, 12, 30),
             Calendar_Factory::create('Day', 2003, 12, 31),
-            Calendar_Factory::create('Day', 2004, 01, 01),
-            Calendar_Factory::create('Day', 2004, 01, 02),
-            Calendar_Factory::create('Day', 2004, 01, 03),
+            Calendar_Factory::create('Day', 2004, 1, 1),
+            Calendar_Factory::create('Day', 2004, 1, 2),
+            Calendar_Factory::create('Day', 2004, 1, 3),
         ];
         $this->cal = Calendar_Factory::create('Week', 2003, 12, 31, 0);
         $this->cal->build($selectedDays);

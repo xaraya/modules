@@ -2,7 +2,6 @@
 
 function calendar_admin_create_calendars()
 {
-
     // Get parameters
     // TODO HELPNEEDED here: how do I handle this (e.g. missing calname should return a
     // message

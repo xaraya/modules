@@ -32,8 +32,6 @@
 
 function calendar_adminapi_delete_calendar($args)
 {
-
-
     // Get arguments from argument array
     extract($args);
 

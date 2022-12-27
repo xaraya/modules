@@ -2,7 +2,6 @@
 
 function calendar_admin_add_event()
 {
-
     // Security check
     if (!xarSecurity::check('Admincalendar')) {
         return;

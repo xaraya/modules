@@ -88,13 +88,13 @@ class Calendar_Engine_Factory
     {
         static $engine = false;
         switch (CALENDAR_ENGINE) {
-        case 'PearDate':
-            $class = 'Calendar_Engine_PearDate';
-            break;
-        case 'UnixTS':
-        default:
-            $class = 'Calendar_Engine_UnixTS';
-            break;
+            case 'PearDate':
+                $class = 'Calendar_Engine_PearDate';
+                break;
+            case 'UnixTS':
+            default:
+                $class = 'Calendar_Engine_UnixTS';
+                break;
         }
         if (!$engine) {
             if (!class_exists($class)) {
@@ -346,19 +346,19 @@ class Calendar
     public function returnValue($returnType, $format, $stamp, $default)
     {
         switch (strtolower($format)) {
-        case 'int':
-            return $default;
-        case 'array':
-            return $this->toArray($stamp);
-            break;
-        case 'object':
-            include_once CALENDAR_ROOT.'Factory.php';
-            return Calendar_Factory::createByTimestamp($returnType, $stamp);
-            break;
-        case 'timestamp':
-        default:
-            return $stamp;
-            break;
+            case 'int':
+                return $default;
+            case 'array':
+                return $this->toArray($stamp);
+                break;
+            case 'object':
+                include_once CALENDAR_ROOT.'Factory.php';
+                return Calendar_Factory::createByTimestamp($returnType, $stamp);
+                break;
+            case 'timestamp':
+            default:
+                return $stamp;
+                break;
         }
     }
 

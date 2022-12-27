@@ -80,8 +80,8 @@ function calendar_userapi_get($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         [$cid,
-             $cname,
-             $cpath] = $result->fields;
+            $cname,
+            $cpath] = $result->fields;
         $calendars[] = [  'cid' => $cid,'cname' => $cname,'cpath' => $cpath,
                      ];
     }

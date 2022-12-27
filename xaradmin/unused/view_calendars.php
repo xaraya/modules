@@ -2,7 +2,6 @@
 
 function calendar_admin_view_calendars()
 {
-
     // Security check
     if (!xarSecurity::check('Admincalendar')) {
         return;

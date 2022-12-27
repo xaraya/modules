@@ -40,28 +40,28 @@ if (isset($_GET['mime']) && $_GET['mime']=='wml') {
 <big><strong>Personal Planner Rendered with WML</strong></big>
 <?php
 if (isset($_GET['viewday'])) {
-        ?>
+    ?>
 <p><strong>Viewing <?php echo(date('l, jS of F, Y', $Day->getTimeStamp())); ?></strong></p>
 <p>
 <anchor>
 Back to Month View
 <go href="<?php
 echo("?y=".$Day->thisYear()."&amp;m=".
-        $Day->thisMonth()."&amp;d=".$Day->thisDay()."&amp;mime=wml"); ?>"/>
+    $Day->thisMonth()."&amp;d=".$Day->thisDay()."&amp;mime=wml"); ?>"/>
 </anchor>
 </p>
 <table>
 <?php
     $Day->build();
-        while ($Hour = $Day->fetch()) {
-            echo("<tr>\n");
-            echo("<td>".date('g a', $Hour->getTimeStamp())."</td><td>Free time!</td>\n");
-            echo("</tr>\n");
-        } ?>
+    while ($Hour = $Day->fetch()) {
+        echo("<tr>\n");
+        echo("<td>".date('g a', $Hour->getTimeStamp())."</td><td>Free time!</td>\n");
+        echo("</tr>\n");
+    } ?>
 </table>
 <?php
-    } else {
-        ?>
+} else {
+    ?>
 <p><strong><?php echo(date('F Y', $Month->getTimeStamp())); ?></strong></p>
 <table>
 <tr>
@@ -69,32 +69,32 @@ echo("?y=".$Day->thisYear()."&amp;m=".
 </tr>
 <?php
 $Month->build($selection);
-        while ($Day = $Month->fetch()) {
-            if ($Day->isFirst()) {
-                echo("<tr>\n");
-            }
-            if ($Day->isEmpty()) {
-                echo("<td></td>\n");
-            } elseif ($Day->isSelected()) {
-                echo("<td><anchor><strong><u>".$Day->thisDay()."</u></strong>\n<go href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
+    while ($Day = $Month->fetch()) {
+        if ($Day->isFirst()) {
+            echo("<tr>\n");
+        }
+        if ($Day->isEmpty()) {
+            echo("<td></td>\n");
+        } elseif ($Day->isSelected()) {
+            echo("<td><anchor><strong><u>".$Day->thisDay()."</u></strong>\n<go href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
             $Day->thisYear()."&amp;m=".$Day->thisMonth()."&amp;d=".$Day->thisDay().
             "&amp;mime=wml\" />\n</anchor></td>\n");
-            } else {
-                echo("<td><anchor>".$Day->thisDay()."\n<go href=\"?viewday=true&amp;y=".
+        } else {
+            echo("<td><anchor>".$Day->thisDay()."\n<go href=\"?viewday=true&amp;y=".
             $Day->thisYear()."&amp;m=".$Day->thisMonth()."&amp;d=".$Day->thisDay().
             "&amp;mime=wml\" /></anchor></td>\n");
-            }
-            if ($Day->isLast()) {
-                echo("</tr>\n");
-            }
-        } ?>
+        }
+        if ($Day->isLast()) {
+            echo("</tr>\n");
+        }
+    } ?>
 <tr>
 <td>
 <anchor>
 &lt;&lt;
 <go href="<?php
 echo("?y=".$Month->thisYear()."&amp;m=".
-        $Month->prevMonth()."&amp;d=".$Month->thisDay()."&amp;mime=wml"); ?>"/>
+    $Month->prevMonth()."&amp;d=".$Month->thisDay()."&amp;mime=wml"); ?>"/>
 </anchor>
 </td>
 <td></td><td></td><td></td><td></td><td></td>
@@ -103,14 +103,14 @@ echo("?y=".$Month->thisYear()."&amp;m=".
 &gt;&gt;
 <go href="<?php
 echo("?y=".$Month->thisYear()."&amp;m=".
-        $Month->nextMonth()."&amp;d=".$Month->thisDay()."&amp;mime=wml"); ?>"/>
+    $Month->nextMonth()."&amp;d=".$Month->thisDay()."&amp;mime=wml"); ?>"/>
 </anchor>
 </td>
 </tr>
 </table>
 
 <?php
-    } ?>
+} ?>
 <p><a href="<?php echo($_SERVER['PHP_SELF']); ?>">Back to HTML</a></p>
 <?php echo('<p>Took: '.(getmicrotime()-$start).' seconds</p>'); ?>
 </wml>
@@ -130,26 +130,26 @@ Note that <a href="http://www.opera.com/download">Opera</a> supports WML nativel
 plugin: <a href="http://wmlbrowser.mozdev.org">wmlbrowser.mozdev.org</a></p>
 <?php
 if (isset($_GET['viewday'])) {
-        ?>
+    ?>
 <p><strong>Viewing <?php echo(date('l, jS of F, Y', $Day->getTimeStamp())); ?></strong></p>
 <p>
 <anchor>
 <a href="<?php
 echo("?y=".$Day->thisYear()."&amp;m=".
-        $Day->thisMonth()."&amp;d=".$Day->thisDay()); ?>">Back to Month View</a>
+    $Day->thisMonth()."&amp;d=".$Day->thisDay()); ?>">Back to Month View</a>
 </p>
 <table>
 <?php
     $Day->build();
-        while ($Hour = $Day->fetch()) {
-            echo("<tr>\n");
-            echo("<td>".date('g a', $Hour->getTimeStamp())."</td><td>Free time!</td>\n");
-            echo("</tr>\n");
-        } ?>
+    while ($Hour = $Day->fetch()) {
+        echo("<tr>\n");
+        echo("<td>".date('g a', $Hour->getTimeStamp())."</td><td>Free time!</td>\n");
+        echo("</tr>\n");
+    } ?>
 </table>
 <?php
-    } else {
-        ?>
+} else {
+    ?>
 <p><strong><?php echo(date('F Y', $Month->getTimeStamp())); ?></strong></p>
 <table>
 <tr>
@@ -157,43 +157,43 @@ echo("?y=".$Day->thisYear()."&amp;m=".
 </tr>
 <?php
 $Month->build($selection);
-        while ($Day = $Month->fetch()) {
-            if ($Day->isFirst()) {
-                echo("<tr>\n");
-            }
-            if ($Day->isEmpty()) {
-                echo("<td></td>\n");
-            } elseif ($Day->isSelected()) {
-                echo("<td><a href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
+    while ($Day = $Month->fetch()) {
+        if ($Day->isFirst()) {
+            echo("<tr>\n");
+        }
+        if ($Day->isEmpty()) {
+            echo("<td></td>\n");
+        } elseif ($Day->isSelected()) {
+            echo("<td><a href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
             $Day->thisYear()."&amp;m=".$Day->thisMonth()."&amp;d=".$Day->thisDay().
             "&amp;wml\"><strong><u>".$Day->thisDay()."</u></strong></a></td>\n");
-            } else {
-                echo("<td><a href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
+        } else {
+            echo("<td><a href=\"".$_SERVER['PHP_SELF']."?viewday=true&amp;y=".
             $Day->thisYear()."&amp;m=".$Day->thisMonth()."&amp;d=".$Day->thisDay().
             "\">".$Day->thisDay()."</a></td>\n");
-            }
-            if ($Day->isLast()) {
-                echo("</tr>\n");
-            }
-        } ?>
+        }
+        if ($Day->isLast()) {
+            echo("</tr>\n");
+        }
+    } ?>
 <tr>
 <td>
 <a href="<?php
 echo("?y=".$Month->thisYear()."&amp;m=".
-        $Month->prevMonth()."&amp;d=".$Month->thisDay()); ?>">
+    $Month->prevMonth()."&amp;d=".$Month->thisDay()); ?>">
 &lt;&lt;</a>
 </td>
 <td></td><td></td><td></td><td></td><td></td>
 <td>
 <a href="<?php
 echo("?y=".$Month->thisYear()."&amp;m=".
-        $Month->nextMonth()."&amp;d=".$Month->thisDay()); ?>">&gt;&gt;</a>
+    $Month->nextMonth()."&amp;d=".$Month->thisDay()); ?>">&gt;&gt;</a>
 </td>
 </tr>
 </table>
 
 <?php
-    } ?>
+} ?>
 
 
 <?php echo('<p><b>Took: '.(getmicrotime()-$start).' seconds</b></p>'); ?>

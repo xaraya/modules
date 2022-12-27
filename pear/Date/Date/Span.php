@@ -344,103 +344,103 @@ class Date_Span
                 if ($char == '%') {
                     $nextchar = $format[++$i];
                     switch ($nextchar) {
-                    case 'c':
-                        $str .= '%d, %d:%d:%d';
-                        array_push(
-                            $vars,
-                            'day',
-                            'hour',
-                            'minute',
-                            'second'
-                        );
-                        break;
-                    case 'C':
-                        $str .= '%d, %2d:%2d:%2d';
-                        array_push(
-                            $vars,
-                            'day',
-                            'hour',
-                            'minute',
-                            'second'
-                        );
-                        break;
-                    case 'd':
-                        $str .= '%f';
-                        array_push($vars, 'day');
-                        break;
-                    case 'D':
-                        $str .= '%d';
-                        array_push($vars, 'day');
-                        break;
-                    case 'e':
-                        $str .= '%f';
-                        array_push($vars, 'hour');
-                        break;
-                    case 'f':
-                        $str .= '%f';
-                        array_push($vars, 'minute');
-                        break;
-                    case 'g':
-                        $str .= '%f';
-                        array_push($vars, 'second');
-                        break;
-                    case 'h':
-                        $str .= '%d';
-                        array_push($vars, 'hour');
-                        break;
-                    case 'H':
-                        $str .= '%2d';
-                        array_push($vars, 'hour');
-                        break;
-                    case 'm':
-                        $str .= '%d';
-                        array_push($vars, 'minute');
-                        break;
-                    case 'M':
-                        $str .= '%2d';
-                        array_push($vars, 'minute');
-                        break;
-                    case 'n':
-                        $str .= "\n";
-                        break;
-                    case 'p':
-                        $str .= '%2s';
-                        array_push($vars, 'pm');
-                        break;
-                    case 'r':
-                        $str .= '%2d:%2d:%2d %2s';
-                        array_push(
-                            $vars,
-                            'hour',
-                            'minute',
-                            'second',
-                            'pm'
-                        );
-                        break;
-                    case 'R':
-                        $str .= '%2d:%2d';
-                        array_push($vars, 'hour', 'minute');
-                        break;
-                    case 's':
-                        $str .= '%d';
-                        array_push($vars, 'second');
-                        break;
-                    case 'S':
-                        $str .= '%2d';
-                        array_push($vars, 'second');
-                        break;
-                    case 't':
-                        $str .= "\t";
-                        break;
-                    case 'T':
-                        $str .= '%2d:%2d:%2d';
-                        array_push($vars, 'hour', 'minute', 'second');
-                        break;
-                    case '%':
-                        $str .= "%";
-                        break;
-                    default:
-                        $str .= $char . $nextchar;
+                        case 'c':
+                            $str .= '%d, %d:%d:%d';
+                            array_push(
+                                $vars,
+                                'day',
+                                'hour',
+                                'minute',
+                                'second'
+                            );
+                            break;
+                        case 'C':
+                            $str .= '%d, %2d:%2d:%2d';
+                            array_push(
+                                $vars,
+                                'day',
+                                'hour',
+                                'minute',
+                                'second'
+                            );
+                            break;
+                        case 'd':
+                            $str .= '%f';
+                            array_push($vars, 'day');
+                            break;
+                        case 'D':
+                            $str .= '%d';
+                            array_push($vars, 'day');
+                            break;
+                        case 'e':
+                            $str .= '%f';
+                            array_push($vars, 'hour');
+                            break;
+                        case 'f':
+                            $str .= '%f';
+                            array_push($vars, 'minute');
+                            break;
+                        case 'g':
+                            $str .= '%f';
+                            array_push($vars, 'second');
+                            break;
+                        case 'h':
+                            $str .= '%d';
+                            array_push($vars, 'hour');
+                            break;
+                        case 'H':
+                            $str .= '%2d';
+                            array_push($vars, 'hour');
+                            break;
+                        case 'm':
+                            $str .= '%d';
+                            array_push($vars, 'minute');
+                            break;
+                        case 'M':
+                            $str .= '%2d';
+                            array_push($vars, 'minute');
+                            break;
+                        case 'n':
+                            $str .= "\n";
+                            break;
+                        case 'p':
+                            $str .= '%2s';
+                            array_push($vars, 'pm');
+                            break;
+                        case 'r':
+                            $str .= '%2d:%2d:%2d %2s';
+                            array_push(
+                                $vars,
+                                'hour',
+                                'minute',
+                                'second',
+                                'pm'
+                            );
+                            break;
+                        case 'R':
+                            $str .= '%2d:%2d';
+                            array_push($vars, 'hour', 'minute');
+                            break;
+                        case 's':
+                            $str .= '%d';
+                            array_push($vars, 'second');
+                            break;
+                        case 'S':
+                            $str .= '%2d';
+                            array_push($vars, 'second');
+                            break;
+                        case 't':
+                            $str .= "\t";
+                            break;
+                        case 'T':
+                            $str .= '%2d:%2d:%2d';
+                            array_push($vars, 'hour', 'minute', 'second');
+                            break;
+                        case '%':
+                            $str .= "%";
+                            break;
+                        default:
+                            $str .= $char . $nextchar;
                     }
                 } else {
                     $str .= $char;
@@ -463,33 +463,33 @@ class Date_Span
             // If format is a integer, it uses a predefined format
             // detection method.
             switch ($format) {
-            case DATE_SPAN_INPUT_FORMAT_NNSV:
-                $time = preg_split('/\D+/', $time);
-                switch (count($time)) {
-                case 0:
-                    return $this->setFromArray([0,
-                                                     0,
-                                                     0,
-                                                     0, ]);
-                case 1:
-                    return $this->setFromArray([0,
-                                                     $time[0],
-                                                     0,
-                                                     0, ]);
-                case 2:
-                    return $this->setFromArray([0,
-                                                     $time[0],
-                                                     $time[1],
-                                                     0, ]);
-                case 3:
-                    return $this->setFromArray([0,
-                                                     $time[0],
-                                                     $time[1],
-                                                     $time[2], ]);
-                default:
-                    return $this->setFromArray($time);
-                }
-                break;
+                case DATE_SPAN_INPUT_FORMAT_NNSV:
+                    $time = preg_split('/\D+/', $time);
+                    switch (count($time)) {
+                        case 0:
+                            return $this->setFromArray([0,
+                                                             0,
+                                                             0,
+                                                             0, ]);
+                        case 1:
+                            return $this->setFromArray([0,
+                                                             $time[0],
+                                                             0,
+                                                             0, ]);
+                        case 2:
+                            return $this->setFromArray([0,
+                                                             $time[0],
+                                                             $time[1],
+                                                             0, ]);
+                        case 3:
+                            return $this->setFromArray([0,
+                                                             $time[0],
+                                                             $time[1],
+                                                             $time[2], ]);
+                        default:
+                            return $this->setFromArray($time);
+                    }
+                    break;
             }
         }
         return false;
@@ -723,109 +723,109 @@ class Date_Span
             if ($char == '%') {
                 $nextchar = $format[++$i];
                 switch ($nextchar) {
-                case 'C':
-                    $output .= sprintf(
-                        '%d, %02d:%02d:%02d',
-                        $this->day,
-                        $this->hour,
-                        $this->minute,
-                        $this->second
-                    );
-                    break;
-                case 'd':
-                    $output .= $this->toDays();
-                    break;
-                case 'D':
-                    $output .= $this->day;
-                    break;
-                case 'e':
-                    $output .= $this->toHours();
-                    break;
-                case 'E':
-                    $output .= floor($this->toHours());
-                    break;
-                case 'f':
-                    $output .= $this->toMinutes();
-                    break;
-                case 'F':
-                    $output .= floor($this->toMinutes());
-                    break;
-                case 'g':
-                    $output .= $this->toSeconds();
-                    break;
-                case 'h':
-                    $output .= $this->hour;
-                    break;
-                case 'H':
-                    $output .= sprintf('%02d', $this->hour);
-                    break;
-                case 'i':
-                case 'I':
-                    $hour    = $this->hour + 1 > 12 ?
-                               $this->hour - 12 :
-                               $this->hour;
-                    $output .= $hour == 0 ?
-                               12 :
-                               ($nextchar == "i" ?
-                                $hour :
-                                sprintf('%02d', $hour));
-                    break;
-                case 'm':
-                    $output .= $this->minute;
-                    break;
-                case 'M':
-                    $output .= sprintf('%02d', $this->minute);
-                    break;
-                case 'n':
-                    $output .= "\n";
-                    break;
-                case 'p':
-                    $output .= $this->hour >= 12 ? 'pm' : 'am';
-                    break;
-                case 'P':
-                    $output .= $this->hour >= 12 ? 'PM' : 'AM';
-                    break;
-                case 'r':
-                    $hour    = $this->hour + 1 > 12 ?
-                               $this->hour - 12 :
-                               $this->hour;
-                    $output .= sprintf(
-                        '%02d:%02d:%02d %s',
-                        $hour == 0 ? 12 : $hour,
-                        $this->minute,
-                        $this->second,
-                        $this->hour >= 12 ? 'pm' : 'am'
-                    );
-                    break;
-                case 'R':
-                    $output .= sprintf(
-                        '%02d:%02d',
-                        $this->hour,
-                        $this->minute
-                    );
-                    break;
-                case 's':
-                    $output .= $this->second;
-                    break;
-                case 'S':
-                    $output .= sprintf('%02d', $this->second);
-                    break;
-                case 't':
-                    $output .= "\t";
-                    break;
-                case 'T':
-                    $output .= sprintf(
-                        '%02d:%02d:%02d',
-                        $this->hour,
-                        $this->minute,
-                        $this->second
-                    );
-                    break;
-                case '%':
-                    $output .= "%";
-                    break;
-                default:
-                    $output .= $char . $nextchar;
+                    case 'C':
+                        $output .= sprintf(
+                            '%d, %02d:%02d:%02d',
+                            $this->day,
+                            $this->hour,
+                            $this->minute,
+                            $this->second
+                        );
+                        break;
+                    case 'd':
+                        $output .= $this->toDays();
+                        break;
+                    case 'D':
+                        $output .= $this->day;
+                        break;
+                    case 'e':
+                        $output .= $this->toHours();
+                        break;
+                    case 'E':
+                        $output .= floor($this->toHours());
+                        break;
+                    case 'f':
+                        $output .= $this->toMinutes();
+                        break;
+                    case 'F':
+                        $output .= floor($this->toMinutes());
+                        break;
+                    case 'g':
+                        $output .= $this->toSeconds();
+                        break;
+                    case 'h':
+                        $output .= $this->hour;
+                        break;
+                    case 'H':
+                        $output .= sprintf('%02d', $this->hour);
+                        break;
+                    case 'i':
+                    case 'I':
+                        $hour    = $this->hour + 1 > 12 ?
+                                   $this->hour - 12 :
+                                   $this->hour;
+                        $output .= $hour == 0 ?
+                                   12 :
+                                   ($nextchar == "i" ?
+                                    $hour :
+                                    sprintf('%02d', $hour));
+                        break;
+                    case 'm':
+                        $output .= $this->minute;
+                        break;
+                    case 'M':
+                        $output .= sprintf('%02d', $this->minute);
+                        break;
+                    case 'n':
+                        $output .= "\n";
+                        break;
+                    case 'p':
+                        $output .= $this->hour >= 12 ? 'pm' : 'am';
+                        break;
+                    case 'P':
+                        $output .= $this->hour >= 12 ? 'PM' : 'AM';
+                        break;
+                    case 'r':
+                        $hour    = $this->hour + 1 > 12 ?
+                                   $this->hour - 12 :
+                                   $this->hour;
+                        $output .= sprintf(
+                            '%02d:%02d:%02d %s',
+                            $hour == 0 ? 12 : $hour,
+                            $this->minute,
+                            $this->second,
+                            $this->hour >= 12 ? 'pm' : 'am'
+                        );
+                        break;
+                    case 'R':
+                        $output .= sprintf(
+                            '%02d:%02d',
+                            $this->hour,
+                            $this->minute
+                        );
+                        break;
+                    case 's':
+                        $output .= $this->second;
+                        break;
+                    case 'S':
+                        $output .= sprintf('%02d', $this->second);
+                        break;
+                    case 't':
+                        $output .= "\t";
+                        break;
+                    case 'T':
+                        $output .= sprintf(
+                            '%02d:%02d:%02d',
+                            $this->hour,
+                            $this->minute,
+                            $this->second
+                        );
+                        break;
+                    case '%':
+                        $output .= "%";
+                        break;
+                    default:
+                        $output .= $char . $nextchar;
                 }
             } else {
                 $output .= $char;

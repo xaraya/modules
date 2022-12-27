@@ -2,7 +2,6 @@
 
 function calendar_admin_add_calendars()
 {
-
     // Security check
 //    if (!xarSecurity::check('AddCalendar',0,'Calendar')) return;
     if (!xarVar::fetch('calid', 'int:0:', $calid, '0', xarVar::NOT_REQUIRED)) {

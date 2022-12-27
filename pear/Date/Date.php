@@ -736,8 +736,8 @@ class Date
                          '([0-5][0-9])(:?' .                  // [mm]
                          '([0-5][0-9]|60)([,.][0-9]+)?)?)?' . // [ss]
                          '(Z|[+\-][0-9]{2,2}(:?[0-5][0-9])?)?)?$/i',    // offset
-                         $date, $regs)
-            ) {
+            $date, $regs)
+        ) {
             if (substr($regs[2], 0, 1) == "W") {
                 // ISO week date (YYYY-Www-D)
                 //
@@ -904,23 +904,23 @@ class Date
     ) {
         if ($pn_precision <= DATE_PRECISION_DAY) {
             [$hn_year,
-                 $hn_month,
-                 $hn_day,
-                 $hn_hour,
-                 $hn_minute,
-                 $hn_secondraw] =
-                 Date_Calc::round(
-                     $pn_precision,
-                     $this->day,
-                     $this->month,
-                     $this->year,
-                     $this->hour,
-                     $this->minute,
-                     $this->partsecond == 0.0 ?
-                                      $this->second :
-                                      $this->second + $this->partsecond,
-                     $this->ob_countleapseconds
-                 );
+                $hn_month,
+                $hn_day,
+                $hn_hour,
+                $hn_minute,
+                $hn_secondraw] =
+                Date_Calc::round(
+                    $pn_precision,
+                    $this->day,
+                    $this->month,
+                    $this->year,
+                    $this->hour,
+                    $this->minute,
+                    $this->partsecond == 0.0 ?
+                                     $this->second :
+                                     $this->second + $this->partsecond,
+                    $this->ob_countleapseconds
+                );
             if (is_float($hn_secondraw)) {
                 $hn_second     = intval($hn_secondraw);
                 $hn_partsecond = $hn_secondraw - $hn_second;
@@ -938,9 +938,9 @@ class Date
                 $hn_second,
                 $hn_partsecond,
                 true, // This is unlikely anyway, but the
-                                      // day starts with the repeated hour
-                                      // the first time around
-                                $pb_correctinvalidtime
+                // day starts with the repeated hour
+                // the first time around
+                $pb_correctinvalidtime
             );
             return;
         }
@@ -950,26 +950,26 @@ class Date
         if ($this->tz->getDSTSavings() % 3600000 == 0 ||
             ($this->tz->getDSTSavings() % 60000 == 0 &&
              $pn_precision >= DATE_PRECISION_MINUTE)
-            ) {
+        ) {
             [$hn_year,
-                 $hn_month,
-                 $hn_day,
-                 $hn_hour,
-                 $hn_minute,
-                 $hn_secondraw] =
-                 Date_Calc::round(
-                     $pn_precision,
-                     $this->on_standardday,
-                     $this->on_standardmonth,
-                     $this->on_standardyear,
-                     $this->on_standardhour,
-                     $this->on_standardminute,
-                     $this->on_standardpartsecond == 0.0 ?
-                                      $this->on_standardsecond :
-                                      $this->on_standardsecond +
-                                          $this->on_standardpartsecond,
-                     $this->ob_countleapseconds
-                 );
+                $hn_month,
+                $hn_day,
+                $hn_hour,
+                $hn_minute,
+                $hn_secondraw] =
+                Date_Calc::round(
+                    $pn_precision,
+                    $this->on_standardday,
+                    $this->on_standardmonth,
+                    $this->on_standardyear,
+                    $this->on_standardhour,
+                    $this->on_standardminute,
+                    $this->on_standardpartsecond == 0.0 ?
+                                     $this->on_standardsecond :
+                                     $this->on_standardsecond +
+                                         $this->on_standardpartsecond,
+                    $this->ob_countleapseconds
+                );
             if (is_float($hn_secondraw)) {
                 $hn_second     = intval($hn_secondraw);
                 $hn_partsecond = $hn_secondraw - $hn_second;
@@ -996,23 +996,23 @@ class Date
         // (This algorithm could be better)
         //
         [$hn_year,
-             $hn_month,
-             $hn_day,
-             $hn_hour,
-             $hn_minute,
-             $hn_secondraw] =
-             Date_Calc::round(
-                 $pn_precision,
-                 $this->day,
-                 $this->month,
-                 $this->year,
-                 $this->hour,
-                 $this->minute,
-                 $this->partsecond == 0.0 ?
-                                  $this->second :
-                                  $this->second + $this->partsecond,
-                 $this->ob_countleapseconds
-             );
+            $hn_month,
+            $hn_day,
+            $hn_hour,
+            $hn_minute,
+            $hn_secondraw] =
+            Date_Calc::round(
+                $pn_precision,
+                $this->day,
+                $this->month,
+                $this->year,
+                $this->hour,
+                $this->minute,
+                $this->partsecond == 0.0 ?
+                                 $this->second :
+                                 $this->second + $this->partsecond,
+                $this->ob_countleapseconds
+            );
         if (is_float($hn_secondraw)) {
             $hn_second     = intval($hn_secondraw);
             $hn_partsecond = $hn_secondraw - $hn_second;
@@ -1030,11 +1030,11 @@ class Date
             $hn_second,
             $hn_partsecond,
             false, // This will be right half the time
-                            $pb_correctinvalidtime
+            $pb_correctinvalidtime
         );   // This will be right
-                                                       // some of the time
-                                                       // (depends on Summer
-                                                       // time offset)
+        // some of the time
+        // (depends on Summer
+        // time offset)
     }
 
 
@@ -1139,7 +1139,7 @@ class Date
                     $hn_year = intval($this->year / pow(10, $hn_invprecision)) *
                                pow(10, $hn_invprecision);
                 //
-                    // (Conversion to int necessary for PHP <= 4.0.6)
+                // (Conversion to int necessary for PHP <= 4.0.6)
                 } else {
                     $hn_year = $this->year;
                 }
@@ -1170,9 +1170,9 @@ class Date
                 $hn_second,
                 $hn_partsecond,
                 true, // This is unlikely anyway, but the
-                                      // day starts with the repeated
-                                      // hour the first time around
-                                $pb_correctinvalidtime
+                // day starts with the repeated
+                // hour the first time around
+                $pb_correctinvalidtime
             );
             return;
         }
@@ -1196,13 +1196,13 @@ class Date
                               -$this->second :
                               -$this->second - $this->partsecond);
         //
-            // (leap seconds irrelevant)
+        // (leap seconds irrelevant)
         } elseif ($pn_precision == DATE_PRECISION_10SECONDS) {
             $this->addSeconds($this->partsecond == 0.0 ?
                               -$this->second % 10 :
                               (-$this->second % 10) - $this->partsecond);
         //
-            // (leap seconds irrelevant)
+        // (leap seconds irrelevant)
         } else {
             // Assume Summer time offset cannot be composed of part-seconds:
             //
@@ -1283,39 +1283,39 @@ class Date
     {
         $ret;
         switch ($format) {
-        case DATE_FORMAT_ISO:
-            $ret = $this->formatLikeStrftime("%Y-%m-%d %T");
-            break;
-        case DATE_FORMAT_ISO_BASIC:
-            $format = "%Y%m%dT%H%M%S";
-            if ($this->getTZID() == 'UTC') {
-                $format .= "Z";
-            }
-            $ret = $this->formatLikeStrftime($format);
-            break;
-        case DATE_FORMAT_ISO_EXTENDED:
-            $format = "%Y-%m-%dT%H:%M:%S";
-            if ($this->getTZID() == 'UTC') {
-                $format .= "Z";
-            }
-            $ret = $this->formatLikeStrftime($format);
-            break;
-        case DATE_FORMAT_ISO_EXTENDED_MICROTIME:
-            $format = "%Y-%m-%dT%H:%M:%s";
-            if ($this->getTZID() == 'UTC') {
-                $format .= "Z";
-            }
-            $ret = $this->formatLikeStrftime($format);
-            break;
-        case DATE_FORMAT_TIMESTAMP:
-            $ret = $this->formatLikeStrftime("%Y%m%d%H%M%S");
-            break;
-        case DATE_FORMAT_UNIXTIME:
-            $ret = $this->getTime();
-            if (!PEAR::isError($ret)) {
-                $ret = (string) $ret;
-            }
-            break;
+            case DATE_FORMAT_ISO:
+                $ret = $this->formatLikeStrftime("%Y-%m-%d %T");
+                break;
+            case DATE_FORMAT_ISO_BASIC:
+                $format = "%Y%m%dT%H%M%S";
+                if ($this->getTZID() == 'UTC') {
+                    $format .= "Z";
+                }
+                $ret = $this->formatLikeStrftime($format);
+                break;
+            case DATE_FORMAT_ISO_EXTENDED:
+                $format = "%Y-%m-%dT%H:%M:%S";
+                if ($this->getTZID() == 'UTC') {
+                    $format .= "Z";
+                }
+                $ret = $this->formatLikeStrftime($format);
+                break;
+            case DATE_FORMAT_ISO_EXTENDED_MICROTIME:
+                $format = "%Y-%m-%dT%H:%M:%s";
+                if ($this->getTZID() == 'UTC') {
+                    $format .= "Z";
+                }
+                $ret = $this->formatLikeStrftime($format);
+                break;
+            case DATE_FORMAT_TIMESTAMP:
+                $ret = $this->formatLikeStrftime("%Y%m%d%H%M%S");
+                break;
+            case DATE_FORMAT_UNIXTIME:
+                $ret = $this->getTime();
+                if (!PEAR::isError($ret)) {
+                    $ret = (string) $ret;
+                }
+                break;
         }
 
         return $ret;
@@ -1463,266 +1463,266 @@ class Date
             if ($char == "%") {
                 $nextchar = substr($format, $strpos + 1, 1);
                 switch ($nextchar) {
-                case "a":
-                    $output .= Date_Calc::getWeekdayAbbrname(
-                        $this->day,
-                        $this->month,
-                        $this->year,
-                        $this->getWeekdayAbbrnameLength
-                    );
-                    break;
-                case "A":
-                    $output .= Date_Calc::getWeekdayFullname(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    break;
-                case "b":
-                    $output .= Date_Calc::getMonthAbbrname($this->month);
-                    break;
-                case "B":
-                    $output .= Date_Calc::getMonthFullname($this->month);
-                    break;
-                case "C":
-                    $output .= sprintf("%02d", intval($this->year / 100));
-                    break;
-                case "d":
-                    $output .= sprintf("%02d", $this->day);
-                    break;
-                case "D":
-                    $output .= sprintf(
-                        "%02d/%02d/%02d",
-                        $this->month,
-                        $this->day,
-                        $this->year
-                    );
-                    break;
-                case "e":
-                    $output .= $this->day;
-                    break;
-                case "E":
-                    $output .= Date_Calc::dateToDays(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    break;
-                case "g":
-                    if (is_null($hn_isoyear)) {
-                        [$hn_isoyear, $hn_isoweek, $hn_isoday] =
-                            Date_Calc::isoWeekDate(
-                                $this->day,
-                                $this->month,
-                                $this->year
-                            );
-                    }
-
-                    $output .= sprintf("%02d", $hn_isoyear % 100);
-                    break;
-                case "G":
-                    if (is_null($hn_isoyear)) {
-                        [$hn_isoyear, $hn_isoweek, $hn_isoday] =
-                            Date_Calc::isoWeekDate(
-                                $this->day,
-                                $this->month,
-                                $this->year
-                            );
-                    }
-
-                    $output .= sprintf("%04d", $hn_isoyear);
-                    break;
-                case 'h':
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= sprintf("%d", $this->hour);
-                    break;
-                case "H":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= sprintf("%02d", $this->hour);
-                    break;
-                case "i":
-                case "I":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $hour    = $this->hour + 1 > 12 ?
-                               $this->hour - 12 :
-                               $this->hour;
-                    $output .= $hour == 0 ?
-                               12 :
-                               ($nextchar == "i" ?
-                                $hour :
-                                sprintf('%02d', $hour));
-                    break;
-                case "j":
-                    $output .= sprintf(
-                        "%03d",
-                        Date_Calc::dayOfYear(
+                    case "a":
+                        $output .= Date_Calc::getWeekdayAbbrname(
+                            $this->day,
+                            $this->month,
+                            $this->year,
+                            $this->getWeekdayAbbrnameLength
+                        );
+                        break;
+                    case "A":
+                        $output .= Date_Calc::getWeekdayFullname(
                             $this->day,
                             $this->month,
                             $this->year
-                        )
-                    );
-                    break;
-                case "m":
-                    $output .= sprintf("%02d", $this->month);
-                    break;
-                case "M":
-                    $output .= sprintf("%02d", $this->minute);
-                    break;
-                case "n":
-                    $output .= "\n";
-                    break;
-                case "O":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $offms     = $this->getTZOffset();
-                    $direction = $offms >= 0 ? "+" : "-";
-                    $offmins   = abs($offms) / 1000 / 60;
-                    $hours     = $offmins / 60;
-                    $minutes   = $offmins % 60;
+                        );
+                        break;
+                    case "b":
+                        $output .= Date_Calc::getMonthAbbrname($this->month);
+                        break;
+                    case "B":
+                        $output .= Date_Calc::getMonthFullname($this->month);
+                        break;
+                    case "C":
+                        $output .= sprintf("%02d", intval($this->year / 100));
+                        break;
+                    case "d":
+                        $output .= sprintf("%02d", $this->day);
+                        break;
+                    case "D":
+                        $output .= sprintf(
+                            "%02d/%02d/%02d",
+                            $this->month,
+                            $this->day,
+                            $this->year
+                        );
+                        break;
+                    case "e":
+                        $output .= $this->day;
+                        break;
+                    case "E":
+                        $output .= Date_Calc::dateToDays(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        break;
+                    case "g":
+                        if (is_null($hn_isoyear)) {
+                            [$hn_isoyear, $hn_isoweek, $hn_isoday] =
+                                Date_Calc::isoWeekDate(
+                                    $this->day,
+                                    $this->month,
+                                    $this->year
+                                );
+                        }
 
-                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
-                    break;
-                case "o":
-                    $offms     = $this->tz->getRawOffset($this);
-                    $direction = $offms >= 0 ? "+" : "-";
-                    $offmins   = abs($offms) / 1000 / 60;
-                    $hours     = $offmins / 60;
-                    $minutes   = $offmins % 60;
+                        $output .= sprintf("%02d", $hn_isoyear % 100);
+                        break;
+                    case "G":
+                        if (is_null($hn_isoyear)) {
+                            [$hn_isoyear, $hn_isoweek, $hn_isoday] =
+                                Date_Calc::isoWeekDate(
+                                    $this->day,
+                                    $this->month,
+                                    $this->year
+                                );
+                        }
 
-                    $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
-                    break;
-                case "p":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= $this->hour >= 12 ? "pm" : "am";
-                    break;
-                case "P":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= $this->hour >= 12 ? "PM" : "AM";
-                    break;
-                case "r":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $hour    = $this->hour + 1 > 12 ?
-                               $this->hour - 12 :
-                               $this->hour;
-                    $output .= sprintf(
-                        "%02d:%02d:%02d %s",
-                        $hour == 0 ? 12 : $hour,
-                        $this->minute,
-                        $this->second,
-                        $this->hour >= 12 ? "PM" : "AM"
-                    );
-                    break;
-                case "R":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= sprintf("%02d:%02d", $this->hour, $this->minute);
-                    break;
-                case "s":
-                    $output .= str_replace(
-                        ',',
-                        '.',
-                        sprintf(
-                            "%09f",
-                            (float)((float) $this->second +
-                                                           $this->partsecond)
-                        )
-                    );
-                    break;
-                case "S":
-                    $output .= sprintf("%02d", $this->second);
-                    break;
-                case "t":
-                    $output .= "\t";
-                    break;
-                case "T":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= sprintf(
-                        "%02d:%02d:%02d",
-                        $this->hour,
-                        $this->minute,
-                        $this->second
-                    );
-                    break;
-                case "u":
-                    $hn_dayofweek = $this->getDayOfWeek();
-                    $output      .= $hn_dayofweek == 0 ? 7 : $hn_dayofweek;
-                    break;
-                case "U":
-                    $ha_week = Date_Calc::weekOfYear7th(
-                        $this->day,
-                        $this->month,
-                        $this->year,
-                        0
-                    );
-                    $output .= sprintf("%02d", $ha_week[1]);
-                    break;
-                case "V":
-                    if (is_null($hn_isoyear)) {
-                        [$hn_isoyear, $hn_isoweek, $hn_isoday] =
-                            Date_Calc::isoWeekDate(
+                        $output .= sprintf("%04d", $hn_isoyear);
+                        break;
+                    case 'h':
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= sprintf("%d", $this->hour);
+                        break;
+                    case "H":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= sprintf("%02d", $this->hour);
+                        break;
+                    case "i":
+                    case "I":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $hour    = $this->hour + 1 > 12 ?
+                                   $this->hour - 12 :
+                                   $this->hour;
+                        $output .= $hour == 0 ?
+                                   12 :
+                                   ($nextchar == "i" ?
+                                    $hour :
+                                    sprintf('%02d', $hour));
+                        break;
+                    case "j":
+                        $output .= sprintf(
+                            "%03d",
+                            Date_Calc::dayOfYear(
                                 $this->day,
                                 $this->month,
                                 $this->year
-                            );
-                    }
+                            )
+                        );
+                        break;
+                    case "m":
+                        $output .= sprintf("%02d", $this->month);
+                        break;
+                    case "M":
+                        $output .= sprintf("%02d", $this->minute);
+                        break;
+                    case "n":
+                        $output .= "\n";
+                        break;
+                    case "O":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $offms     = $this->getTZOffset();
+                        $direction = $offms >= 0 ? "+" : "-";
+                        $offmins   = abs($offms) / 1000 / 60;
+                        $hours     = $offmins / 60;
+                        $minutes   = $offmins % 60;
 
-                    $output .= $hn_isoweek;
-                    break;
-                case "w":
-                    $output .= $this->getDayOfWeek();
-                    break;
-                case "W":
-                    $ha_week = Date_Calc::weekOfYear7th(
-                        $this->day,
-                        $this->month,
-                        $this->year,
-                        1
-                    );
-                    $output .= sprintf("%02d", $ha_week[1]);
-                    break;
-                case 'y':
-                    $output .= sprintf(
-                        '%0' .
-                                       ($this->year < 0 ? '3' : '2') .
-                                       'd',
-                        $this->year % 100
-                    );
-                    break;
-                case "Y":
-                    $output .= sprintf(
-                        '%0' .
-                                       ($this->year < 0 ? '5' : '4') .
-                                       'd',
-                        $this->year
-                    );
-                    break;
-                case "Z":
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $output .= $this->getTZShortName();
-                    break;
-                case "%":
-                    $output .= "%";
-                    break;
-                default:
-                    $output .= $char.$nextchar;
+                        $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
+                        break;
+                    case "o":
+                        $offms     = $this->tz->getRawOffset($this);
+                        $direction = $offms >= 0 ? "+" : "-";
+                        $offmins   = abs($offms) / 1000 / 60;
+                        $hours     = $offmins / 60;
+                        $minutes   = $offmins % 60;
+
+                        $output .= sprintf("%s%02d:%02d", $direction, $hours, $minutes);
+                        break;
+                    case "p":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= $this->hour >= 12 ? "pm" : "am";
+                        break;
+                    case "P":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= $this->hour >= 12 ? "PM" : "AM";
+                        break;
+                    case "r":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $hour    = $this->hour + 1 > 12 ?
+                                   $this->hour - 12 :
+                                   $this->hour;
+                        $output .= sprintf(
+                            "%02d:%02d:%02d %s",
+                            $hour == 0 ? 12 : $hour,
+                            $this->minute,
+                            $this->second,
+                            $this->hour >= 12 ? "PM" : "AM"
+                        );
+                        break;
+                    case "R":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= sprintf("%02d:%02d", $this->hour, $this->minute);
+                        break;
+                    case "s":
+                        $output .= str_replace(
+                            ',',
+                            '.',
+                            sprintf(
+                                "%09f",
+                                (float)((float) $this->second +
+                                                               $this->partsecond)
+                            )
+                        );
+                        break;
+                    case "S":
+                        $output .= sprintf("%02d", $this->second);
+                        break;
+                    case "t":
+                        $output .= "\t";
+                        break;
+                    case "T":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= sprintf(
+                            "%02d:%02d:%02d",
+                            $this->hour,
+                            $this->minute,
+                            $this->second
+                        );
+                        break;
+                    case "u":
+                        $hn_dayofweek = $this->getDayOfWeek();
+                        $output      .= $hn_dayofweek == 0 ? 7 : $hn_dayofweek;
+                        break;
+                    case "U":
+                        $ha_week = Date_Calc::weekOfYear7th(
+                            $this->day,
+                            $this->month,
+                            $this->year,
+                            0
+                        );
+                        $output .= sprintf("%02d", $ha_week[1]);
+                        break;
+                    case "V":
+                        if (is_null($hn_isoyear)) {
+                            [$hn_isoyear, $hn_isoweek, $hn_isoday] =
+                                Date_Calc::isoWeekDate(
+                                    $this->day,
+                                    $this->month,
+                                    $this->year
+                                );
+                        }
+
+                        $output .= $hn_isoweek;
+                        break;
+                    case "w":
+                        $output .= $this->getDayOfWeek();
+                        break;
+                    case "W":
+                        $ha_week = Date_Calc::weekOfYear7th(
+                            $this->day,
+                            $this->month,
+                            $this->year,
+                            1
+                        );
+                        $output .= sprintf("%02d", $ha_week[1]);
+                        break;
+                    case 'y':
+                        $output .= sprintf(
+                            '%0' .
+                                           ($this->year < 0 ? '3' : '2') .
+                                           'd',
+                            $this->year % 100
+                        );
+                        break;
+                    case "Y":
+                        $output .= sprintf(
+                            '%0' .
+                                           ($this->year < 0 ? '5' : '4') .
+                                           'd',
+                            $this->year
+                        );
+                        break;
+                    case "Z":
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $output .= $this->getTZShortName();
+                        break;
+                    case "%":
+                        $output .= "%";
+                        break;
+                    default:
+                        $output .= $char.$nextchar;
                 }
                 $strpos++;
             } else {
@@ -1750,25 +1750,25 @@ class Date
     public function _getOrdinalSuffix($pn_num, $pb_uppercase = true)
     {
         switch (($pn_numabs = abs($pn_num)) % 100) {
-        case 11:
-        case 12:
-        case 13:
-            $hs_suffix = "th";
-            break;
-        default:
-            switch ($pn_numabs % 10) {
-            case 1:
-                $hs_suffix = "st";
-                break;
-            case 2:
-                $hs_suffix = "nd";
-                break;
-            case 3:
-                $hs_suffix = "rd";
+            case 11:
+            case 12:
+            case 13:
+                $hs_suffix = "th";
                 break;
             default:
-                $hs_suffix = "th";
-            }
+                switch ($pn_numabs % 10) {
+                    case 1:
+                        $hs_suffix = "st";
+                        break;
+                    case 2:
+                        $hs_suffix = "nd";
+                        break;
+                    case 3:
+                        $hs_suffix = "rd";
+                        break;
+                    default:
+                        $hs_suffix = "th";
+                }
         }
 
         return $pb_uppercase ? strtoupper($hs_suffix) : $hs_suffix;
@@ -1821,32 +1821,32 @@ class Date
                 $hs_words .= "th";
             } else {
                 switch ($pn_numabs % 10) {
-                case 1:
-                    $hs_words = substr($hs_words, 0, -3) . "first";
-                    break;
-                case 2:
-                    $hs_words = substr($hs_words, 0, -3) . "second";
-                    break;
-                case 3:
-                    $hs_words = substr($hs_words, 0, -3) . "ird";
-                    break;
-                case 5:
-                    $hs_words = substr($hs_words, 0, -2) . "fth";
-                    break;
-                default:
-                    switch (substr($hs_words, -1)) {
-                    case "e":
-                        $hs_words = substr($hs_words, 0, -1) . "th";
+                    case 1:
+                        $hs_words = substr($hs_words, 0, -3) . "first";
                         break;
-                    case "t":
-                        $hs_words .= "h";
+                    case 2:
+                        $hs_words = substr($hs_words, 0, -3) . "second";
                         break;
-                    case "y":
-                        $hs_words = substr($hs_words, 0, -1) . "ieth";
+                    case 3:
+                        $hs_words = substr($hs_words, 0, -3) . "ird";
+                        break;
+                    case 5:
+                        $hs_words = substr($hs_words, 0, -2) . "fth";
                         break;
                     default:
-                        $hs_words .= "th";
-                    }
+                        switch (substr($hs_words, -1)) {
+                            case "e":
+                                $hs_words = substr($hs_words, 0, -1) . "th";
+                                break;
+                            case "t":
+                                $hs_words .= "h";
+                                break;
+                            case "y":
+                                $hs_words = substr($hs_words, 0, -1) . "ieth";
+                                break;
+                            default:
+                                $hs_words .= "th";
+                        }
                 }
             }
         }
@@ -2300,1063 +2300,163 @@ class Date
             $hb_showsignflag = false;
 
             switch ($hs_char = substr($ps_format, $i, 1)) {
-            case "-":
-            case "/":
-            case ",":
-            case ".":
-            case ";":
-            case ":":
-            case " ":
-                $ret .= $hs_char;
-                $i   += 1;
-                break;
-            case "\"":
-                preg_match(
-                    '/(([^"\\\\]|\\\\\\\\|\\\\")*)"/',
-                    $ps_format,
-                    $ha_matches,
-                    PREG_OFFSET_CAPTURE,
-                    $i + 1
-                );
-                $ret .= str_replace(
-                    ['\\\\', '\\"'],
-                    ['\\', '"'],
-                    $ha_matches[1][0]
-                );
-                $i   += strlen($ha_matches[0][0]) + 1;
-                break;
-            case "a":
-                $hb_lower = true;
-                // no break
-            case "A":
-                if (strtoupper(substr($ps_format, $i, 4)) == "A.D.") {
-                    $ret .= $this->year >= 0 ?
-                            ($hb_lower ? "a.d." : "A.D.") :
-                            ($hb_lower ? "b.c." : "B.C.");
-                    $i   += 4;
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "AD") {
-                    $ret .= $this->year >= 0 ?
-                            ($hb_lower ? "ad" : "AD") :
-                            ($hb_lower ? "bc" : "BC");
-                    $i   += 2;
-                } else {
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    if (strtoupper(substr($ps_format, $i, 4)) == "A.M.") {
-                        $ret .= $this->hour < 12 ?
-                                ($hb_lower ? "a.m." : "A.M.") :
-                                ($hb_lower ? "p.m." : "P.M.");
+                case "-":
+                case "/":
+                case ",":
+                case ".":
+                case ";":
+                case ":":
+                case " ":
+                    $ret .= $hs_char;
+                    $i   += 1;
+                    break;
+                case "\"":
+                    preg_match(
+                        '/(([^"\\\\]|\\\\\\\\|\\\\")*)"/',
+                        $ps_format,
+                        $ha_matches,
+                        PREG_OFFSET_CAPTURE,
+                        $i + 1
+                    );
+                    $ret .= str_replace(
+                        ['\\\\', '\\"'],
+                        ['\\', '"'],
+                        $ha_matches[1][0]
+                    );
+                    $i   += strlen($ha_matches[0][0]) + 1;
+                    break;
+                case "a":
+                    $hb_lower = true;
+                    // no break
+                case "A":
+                    if (strtoupper(substr($ps_format, $i, 4)) == "A.D.") {
+                        $ret .= $this->year >= 0 ?
+                                ($hb_lower ? "a.d." : "A.D.") :
+                                ($hb_lower ? "b.c." : "B.C.");
                         $i   += 4;
-                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "AM") {
-                        $ret .= $this->hour < 12 ?
-                                ($hb_lower ? "am" : "AM") :
-                                ($hb_lower ? "pm" : "PM");
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "AD") {
+                        $ret .= $this->year >= 0 ?
+                                ($hb_lower ? "ad" : "AD") :
+                                ($hb_lower ? "bc" : "BC");
+                        $i   += 2;
+                    } else {
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        if (strtoupper(substr($ps_format, $i, 4)) == "A.M.") {
+                            $ret .= $this->hour < 12 ?
+                                    ($hb_lower ? "a.m." : "A.M.") :
+                                    ($hb_lower ? "p.m." : "P.M.");
+                            $i   += 4;
+                        } elseif (strtoupper(substr($ps_format, $i, 2)) == "AM") {
+                            $ret .= $this->hour < 12 ?
+                                    ($hb_lower ? "am" : "AM") :
+                                    ($hb_lower ? "pm" : "PM");
+                            $i   += 2;
+                        }
+                    }
+
+                    break;
+                case "b":
+                    $hb_lower = true;
+                    // no break
+                case "B":
+                    // Check for 'B.C.E.' first:
+                //
+                    if (strtoupper(substr($ps_format, $i, 6)) == "B.C.E.") {
+                        if ($this->year >= 0) {
+                            $hs_era = $hb_lower ? "c.e." : "C.E.";
+                            $ret   .= $hb_nopad ?
+                                      $hs_era :
+                                      str_pad($hs_era, 6, " ", STR_PAD_RIGHT);
+                        } else {
+                            $ret .= $hb_lower ? "b.c.e." : "B.C.E.";
+                        }
+                        $i += 6;
+                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "BCE") {
+                        if ($this->year >= 0) {
+                            $hs_era = $hb_lower ? "ce" : "CE";
+                            $ret   .= $hb_nopad ?
+                                      $hs_era :
+                                      str_pad($hs_era, 3, " ", STR_PAD_RIGHT);
+                        } else {
+                            $ret .= $hb_lower ? "bce" : "BCE";
+                        }
+                        $i += 3;
+                    } elseif (strtoupper(substr($ps_format, $i, 4)) == "B.C.") {
+                        $ret .= $this->year >= 0 ?
+                                ($hb_lower ? "a.d." : "A.D.") :
+                                ($hb_lower ? "b.c." : "B.C.");
+                        $i   += 4;
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "BC") {
+                        $ret .= $this->year >= 0 ?
+                                ($hb_lower ? "ad" : "AD") :
+                                ($hb_lower ? "bc" : "BC");
                         $i   += 2;
                     }
-                }
 
-                break;
-            case "b":
-                $hb_lower = true;
-                // no break
-            case "B":
-                // Check for 'B.C.E.' first:
-                //
-                if (strtoupper(substr($ps_format, $i, 6)) == "B.C.E.") {
-                    if ($this->year >= 0) {
-                        $hs_era = $hb_lower ? "c.e." : "C.E.";
-                        $ret   .= $hb_nopad ?
-                                  $hs_era :
-                                  str_pad($hs_era, 6, " ", STR_PAD_RIGHT);
+                    break;
+                case "c":
+                    $hb_lower = true;
+                    // no break
+                case "C":
+                    if (strtoupper(substr($ps_format, $i, 4)) == "C.E.") {
+                        if ($this->year >= 0) {
+                            $hs_era = $hb_lower ? "c.e." : "C.E.";
+                            $ret   .= $hb_nopad ?
+                                      $hs_era :
+                                      str_pad($hs_era, 6, " ", STR_PAD_RIGHT);
+                        } else {
+                            $ret .= $hb_lower ? "b.c.e." : "B.C.E.";
+                        }
+                        $i += 4;
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "CE") {
+                        if ($this->year >= 0) {
+                            $hs_era = $hb_lower ? "ce" : "CE";
+                            $ret   .= $hb_nopad ?
+                                      $hs_era :
+                                      str_pad($hs_era, 3, " ", STR_PAD_RIGHT);
+                        } else {
+                            $ret .= $hb_lower ? "bce" : "BCE";
+                        }
+                        $i += 2;
                     } else {
-                        $ret .= $hb_lower ? "b.c.e." : "B.C.E.";
-                    }
-                    $i += 6;
-                } elseif (strtoupper(substr($ps_format, $i, 3)) == "BCE") {
-                    if ($this->year >= 0) {
-                        $hs_era = $hb_lower ? "ce" : "CE";
-                        $ret   .= $hb_nopad ?
-                                  $hs_era :
-                                  str_pad($hs_era, 3, " ", STR_PAD_RIGHT);
-                    } else {
-                        $ret .= $hb_lower ? "bce" : "BCE";
-                    }
-                    $i += 3;
-                } elseif (strtoupper(substr($ps_format, $i, 4)) == "B.C.") {
-                    $ret .= $this->year >= 0 ?
-                            ($hb_lower ? "a.d." : "A.D.") :
-                            ($hb_lower ? "b.c." : "B.C.");
-                    $i   += 4;
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "BC") {
-                    $ret .= $this->year >= 0 ?
-                            ($hb_lower ? "ad" : "AD") :
-                            ($hb_lower ? "bc" : "BC");
-                    $i   += 2;
-                }
-
-                break;
-            case "c":
-                $hb_lower = true;
-                // no break
-            case "C":
-                if (strtoupper(substr($ps_format, $i, 4)) == "C.E.") {
-                    if ($this->year >= 0) {
-                        $hs_era = $hb_lower ? "c.e." : "C.E.";
-                        $ret   .= $hb_nopad ?
-                                  $hs_era :
-                                  str_pad($hs_era, 6, " ", STR_PAD_RIGHT);
-                    } else {
-                        $ret .= $hb_lower ? "b.c.e." : "B.C.E.";
-                    }
-                    $i += 4;
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "CE") {
-                    if ($this->year >= 0) {
-                        $hs_era = $hb_lower ? "ce" : "CE";
-                        $ret   .= $hb_nopad ?
-                                  $hs_era :
-                                  str_pad($hs_era, 3, " ", STR_PAD_RIGHT);
-                    } else {
-                        $ret .= $hb_lower ? "bce" : "BCE";
-                    }
-                    $i += 2;
-                } else {
-                    // Code C(CCC...):
+                        // Code C(CCC...):
                     //
-                    $hn_codelen = 1;
-                    while (strtoupper(substr(
-                        $ps_format,
-                        $i + $hn_codelen,
-                        1
-                    )) == "C") {
-                        ++$hn_codelen;
-                    }
+                        $hn_codelen = 1;
+                        while (strtoupper(substr(
+                            $ps_format,
+                            $i + $hn_codelen,
+                            1
+                        )) == "C") {
+                            ++$hn_codelen;
+                        }
 
-                    // Check next code is not 'CE' or 'C.E.'
+                        // Check next code is not 'CE' or 'C.E.'
                     //
-                    if ($hn_codelen > 1 &&
-                        (
-                            strtoupper(substr(
-                                $ps_format,
-                                $i + $hn_codelen - 1,
-                                4
-                            )) == "C.E." ||
+                        if ($hn_codelen > 1 &&
+                            (
+                                strtoupper(substr(
+                                    $ps_format,
+                                    $i + $hn_codelen - 1,
+                                    4
+                                )) == "C.E." ||
                          strtoupper(substr(
                              $ps_format,
                              $i + $hn_codelen - 1,
                              2
                          )) == "CE"
-                        )) {
-                        --$hn_codelen;
-                    }
-
-                    $hn_century      = intval($this->year / 100);
-                    $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
-                    $hs_century      = $this->_formatNumber(
-                        $hn_century,
-                        $hs_numberformat,
-                        $hn_codelen,
-                        $hb_nopad,
-                        $hb_nosign,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_century)) {
-                        return $hs_century;
-                    }
-
-                    $ret .= $hs_century;
-                    $i   += $hn_codelen + strlen($hs_numberformat);
-                }
-
-                break;
-            case "d":
-                $hb_lower = true;
-                // no break
-            case "D":
-                if (strtoupper(substr($ps_format, $i, 3)) == "DAY") {
-                    $hs_day = Date_Calc::getWeekdayFullname(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-
-                    if (!$hb_nopad) {
-                        if (is_null($hn_weekdaypad)) {
-                            // Set week-day padding variable:
-                            //
-                            $hn_weekdaypad = 0;
-                            foreach (Date_Calc::getWeekDays() as $hs_weekday) {
-                                $hn_weekdaypad = max(
-                                    $hn_weekdaypad,
-                                    strlen($hs_weekday)
-                                );
-                            }
-                        }
-                        $hs_day = str_pad(
-                            $hs_day,
-                            $hn_weekdaypad,
-                            " ",
-                            STR_PAD_RIGHT
-                        );
-                    }
-
-                    $ret .= $hb_lower ?
-                            strtolower($hs_day) :
-                            (substr($ps_format, $i + 1, 1) == "A" ?
-                             strtoupper($hs_day) :
-                             $hs_day);
-                    $i   += 3;
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "DY") {
-                    $hs_day = Date_Calc::getWeekdayAbbrname(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $ret   .= $hb_lower ?
-                              strtolower($hs_day) :
-                              (substr($ps_format, $i + 1, 1) == "Y" ?
-                               strtoupper($hs_day) :
-                               $hs_day);
-                    $i     += 2;
-                } elseif (strtoupper(substr($ps_format, $i, 3)) == "DDD" &&
-                           strtoupper(substr($ps_format, $i + 2, 3)) != "DAY" &&
-                           strtoupper(substr($ps_format, $i + 2, 2)) != "DY"
-                           ) {
-                    $hn_day = Date_Calc::dayOfYear(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hs_numberformat = substr($ps_format, $i + 3, 4);
-                    $hs_day = $this->_formatNumber(
-                        $hn_day,
-                        $hs_numberformat,
-                        3,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_day)) {
-                        return $hs_day;
-                    }
-
-                    $ret .= $hs_day;
-                    $i   += 3 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "DD" &&
-                           strtoupper(substr($ps_format, $i + 1, 3)) != "DAY" &&
-                           strtoupper(substr($ps_format, $i + 1, 2)) != "DY"
-                           ) {
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_day = $this->_formatNumber(
-                        $this->day,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_day)) {
-                        return $hs_day;
-                    }
-
-                    $ret .= $hs_day;
-                    $i   += 2 + strlen($hs_numberformat);
-                } else {
-                    // Code 'D':
-                    //
-                    $hn_day = Date_Calc::dayOfWeek(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hs_numberformat = substr($ps_format, $i + 1, 4);
-                    $hs_day = $this->_formatNumber(
-                        $hn_day,
-                        $hs_numberformat,
-                        1,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_day)) {
-                        return $hs_day;
-                    }
-
-                    $ret .= $hs_day;
-                    $i   += 1 + strlen($hs_numberformat);
-                }
-
-                break;
-            case "f":
-            case "F":
-                if ($this->ob_invalidtime) {
-                    return $this->_getErrorInvalidTime();
-                }
-                $hn_codelen = 1;
-                if (is_numeric(substr($ps_format, $i + $hn_codelen, 1))) {
-                    ++$hn_codelen;
-                    while (is_numeric(substr($ps_format, $i + $hn_codelen, 1))) {
-                        ++$hn_codelen;
-                    }
-
-                    $hn_partsecdigits = substr($ps_format, $i + 1, $hn_codelen - 1);
-                } else {
-                    while (strtoupper(substr(
-                        $ps_format,
-                        $i + $hn_codelen,
-                        1
-                    )) == "F") {
-                        ++$hn_codelen;
-                    }
-
-                    // Check next code is not F[numeric]:
-                    //
-                    if ($hn_codelen > 1 &&
-                        is_numeric(substr($ps_format, $i + $hn_codelen, 1))) {
-                        --$hn_codelen;
-                    }
-
-                    $hn_partsecdigits = $hn_codelen;
-                }
-
-                $hs_partsec = (string) $this->partsecond;
-                if (preg_match(
-                    '/^([0-9]+)(\.([0-9]+))?E-([0-9]+)$/i',
-                    $hs_partsec,
-                    $ha_matches
-                )) {
-                    $hs_partsec =
-                        str_repeat("0", $ha_matches[4] - strlen($ha_matches[1])) .
-                        $ha_matches[1] .
-                        $ha_matches[3];
-                } else {
-                    $hs_partsec = substr($hs_partsec, 2);
-                }
-                $hs_partsec = substr($hs_partsec, 0, $hn_partsecdigits);
-
-                // '_formatNumber() will not work for this because the
-                // part-second is an int, and we want it to behave like a float:
-                //
-                if ($hb_nopad) {
-                    $hs_partsec = rtrim($hs_partsec, "0");
-                    if ($hs_partsec == "") {
-                        $hs_partsec = "0";
-                    }
-                } else {
-                    $hs_partsec = str_pad(
-                        $hs_partsec,
-                        $hn_partsecdigits,
-                        "0",
-                        STR_PAD_RIGHT
-                    );
-                }
-
-                $ret .= $hs_partsec;
-                $i   += $hn_codelen;
-                break;
-            case "h":
-            case "H":
-                if ($this->ob_invalidtime) {
-                    return $this->_getErrorInvalidTime();
-                }
-                if (strtoupper(substr($ps_format, $i, 4)) == "HH12") {
-                    $hn_hour = $this->hour % 12;
-                    if ($hn_hour == 0) {
-                        $hn_hour = 12;
-                    }
-
-                    $hn_codelen = 4;
-                } else {
-                    // Code 'HH' or 'HH24':
-                    //
-                    $hn_hour    = $this->hour;
-                    $hn_codelen = strtoupper(substr(
-                        $ps_format,
-                        $i,
-                        4
-                    )) == "HH24" ? 4 : 2;
-                }
-
-                $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
-                $hs_hour = $this->_formatNumber(
-                    $hn_hour,
-                    $hs_numberformat,
-                    2,
-                    $hb_nopad,
-                    true,
-                    $ps_locale
-                );
-                if (Pear::isError($hs_hour)) {
-                    return $hs_hour;
-                }
-
-                $ret .= $hs_hour;
-                $i   += $hn_codelen + strlen($hs_numberformat);
-                break;
-            case "i":
-            case "I":
-                if (is_null($hn_isoyear)) {
-                    [$hn_isoyear, $hn_isoweek, $hn_isoday] =
-                        Date_Calc::isoWeekDate(
-                            $this->day,
-                            $this->month,
-                            $this->year
-                        );
-                }
-
-                if (strtoupper(substr($ps_format, $i, 2)) == "ID" &&
-                    strtoupper(substr($ps_format, $i + 1, 3)) != "DAY"
-                    ) {
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_isoday = $this->_formatNumber(
-                        $hn_isoday,
-                        $hs_numberformat,
-                        1,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_isoday)) {
-                        return $hs_isoday;
-                    }
-
-                    $ret .= $hs_isoday;
-                    $i   += 2 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "IW") {
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_isoweek = $this->_formatNumber(
-                        $hn_isoweek,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_isoweek)) {
-                        return $hs_isoweek;
-                    }
-
-                    $ret .= $hs_isoweek;
-                    $i   += 2 + strlen($hs_numberformat);
-                } else {
-                    // Code I(YYY...):
-                    //
-                    $hn_codelen = 1;
-                    while (strtoupper(substr(
-                        $ps_format,
-                        $i + $hn_codelen,
-                        1
-                    )) == "Y") {
-                        ++$hn_codelen;
-                    }
-
-                    $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
-                    $hs_isoyear = $this->_formatNumber(
-                        $hn_isoyear,
-                        $hs_numberformat,
-                        $hn_codelen,
-                        $hb_nopad,
-                        $hb_nosign,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_isoyear)) {
-                        return $hs_isoyear;
-                    }
-
-                    $ret .= $hs_isoyear;
-                    $i   += $hn_codelen + strlen($hs_numberformat);
-                }
-
-                break;
-            case "j":
-            case "J":
-                $hn_jd = Date_Calc::dateToDays(
-                    $this->day,
-                    $this->month,
-                    $this->year
-                );
-                $hs_numberformat = substr($ps_format, $i + 1, 4);
-
-                // Allow sign if negative; allow all digits (specify nought);
-                // suppress padding:
-                //
-                $hs_jd = $this->_formatNumber(
-                    $hn_jd,
-                    $hs_numberformat,
-                    0,
-                    true,
-                    false,
-                    $ps_locale
-                );
-                if (Pear::isError($hs_jd)) {
-                    return $hs_jd;
-                }
-
-                $ret .= $hs_jd;
-                $i   += 1 + strlen($hs_numberformat);
-                break;
-            case "m":
-                $hb_lower = true;
-                // no break
-            case "M":
-                if (strtoupper(substr($ps_format, $i, 2)) == "MI") {
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_minute = $this->_formatNumber(
-                        $this->minute,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_minute)) {
-                        return $hs_minute;
-                    }
-
-                    $ret .= $hs_minute;
-                    $i   += 2 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "MM") {
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_month = $this->_formatNumber(
-                        $this->month,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_month)) {
-                        return $hs_month;
-                    }
-
-                    $ret .= $hs_month;
-                    $i   += 2 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 5)) == "MONTH") {
-                    $hs_month = Date_Calc::getMonthFullname($this->month);
-
-                    if (!$hb_nopad) {
-                        if (is_null($hn_monthpad)) {
-                            // Set month padding variable:
-                            //
-                            $hn_monthpad = 0;
-                            foreach (Date_Calc::getMonthNames() as $hs_monthofyear) {
-                                $hn_monthpad = max(
-                                    $hn_monthpad,
-                                    strlen($hs_monthofyear)
-                                );
-                            }
-                        }
-                        $hs_month = str_pad(
-                            $hs_month,
-                            $hn_monthpad,
-                            " ",
-                            STR_PAD_RIGHT
-                        );
-                    }
-
-                    $ret .= $hb_lower ?
-                            strtolower($hs_month) :
-                            (substr($ps_format, $i + 1, 1) == "O" ?
-                             strtoupper($hs_month) :
-                             $hs_month);
-                    $i   += 5;
-                } elseif (strtoupper(substr($ps_format, $i, 3)) == "MON") {
-                    $hs_month = Date_Calc::getMonthAbbrname($this->month);
-                    $ret     .= $hb_lower ?
-                                strtolower($hs_month) :
-                                (substr($ps_format, $i + 1, 1) == "O" ?
-                                 strtoupper($hs_month) :
-                                 $hs_month);
-                    $i       += 3;
-                }
-
-                break;
-            case "n":
-            case "N":
-                // No-Padding rule 'NP' applies to the next code (either trailing
-                // spaces or leading/trailing noughts):
-                //
-                $hb_nopadflag = true;
-                $i           += 2;
-                break;
-            case "p":
-                $hb_lower = true;
-                // no break
-            case "P":
-                if ($this->ob_invalidtime) {
-                    return $this->_getErrorInvalidTime();
-                }
-                if (strtoupper(substr($ps_format, $i, 4)) == "P.M.") {
-                    $ret .= $this->hour < 12 ?
-                            ($hb_lower ? "a.m." : "A.M.") :
-                            ($hb_lower ? "p.m." : "P.M.");
-                    $i   += 4;
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "PM") {
-                    $ret .= $this->hour < 12 ?
-                            ($hb_lower ? "am" : "AM") :
-                            ($hb_lower ? "pm" : "PM");
-                    $i   += 2;
-                }
-
-                break;
-            case "q":
-            case "Q":
-                // N.B. Current implementation ignores the day and year, but
-                // it is possible that a different implementation might be
-                // desired, so pass these parameters anyway:
-                //
-                $hn_quarter = Date_Calc::quarterOfYear(
-                    $this->day,
-                    $this->month,
-                    $this->year
-                );
-                $hs_numberformat = substr($ps_format, $i + 1, 4);
-                $hs_quarter = $this->_formatNumber(
-                    $hn_quarter,
-                    $hs_numberformat,
-                    1,
-                    $hb_nopad,
-                    true,
-                    $ps_locale
-                );
-                if (Pear::isError($hs_quarter)) {
-                    return $hs_quarter;
-                }
-
-                $ret .= $hs_quarter;
-                $i   += 1 + strlen($hs_numberformat);
-                break;
-            case "r":
-                $hb_lower = true;
-                // no break
-            case "R":
-                // Code 'RM':
-                //
-                switch ($this->month) {
-                case 1:
-                    $hs_monthroman = "i";
-                    break;
-                case 2:
-                    $hs_monthroman = "ii";
-                    break;
-                case 3:
-                    $hs_monthroman = "iii";
-                    break;
-                case 4:
-                    $hs_monthroman = "iv";
-                    break;
-                case 5:
-                    $hs_monthroman = "v";
-                    break;
-                case 6:
-                    $hs_monthroman = "vi";
-                    break;
-                case 7:
-                    $hs_monthroman = "vii";
-                    break;
-                case 8:
-                    $hs_monthroman = "viii";
-                    break;
-                case 9:
-                    $hs_monthroman = "ix";
-                    break;
-                case 10:
-                    $hs_monthroman = "x";
-                    break;
-                case 11:
-                    $hs_monthroman = "xi";
-                    break;
-                case 12:
-                    $hs_monthroman = "xii";
-                    break;
-                }
-
-                $hs_monthroman = $hb_lower ?
-                                 $hs_monthroman :
-                                 strtoupper($hs_monthroman);
-                $ret .= $hb_nopad ?
-                        $hs_monthroman :
-                        str_pad($hs_monthroman, 4, " ", STR_PAD_LEFT);
-                $i   += 2;
-                break;
-            case "s":
-            case "S":
-                // Check for 'SSSSS' before 'SS':
-                //
-                if (strtoupper(substr($ps_format, $i, 5)) == "SSSSS") {
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $hs_numberformat = substr($ps_format, $i + 5, 4);
-                    $hn_second = Date_Calc::secondsPastMidnight(
-                        $this->hour,
-                        $this->minute,
-                        $this->second
-                    );
-                    $hs_second = $this->_formatNumber(
-                        $hn_second,
-                        $hs_numberformat,
-                        5,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_second)) {
-                        return $hs_second;
-                    }
-
-                    $ret .= $hs_second;
-                    $i   += 5 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "SS") {
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_second = $this->_formatNumber(
-                        $this->second,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_second)) {
-                        return $hs_second;
-                    }
-
-                    $ret .= $hs_second;
-                    $i   += 2 + strlen($hs_numberformat);
-                } else {
-                    // One of the following codes:
-                    //  'SC(CCC...)'
-                    //  'SY(YYY...)'
-                    //  'SIY(YYY...)'
-                    //  'STZH'
-                    //  'STZS'
-                    //  'SYEAR'
-                    //
-                    $hb_showsignflag = true;
-                    if ($hb_nopad) {
-                        $hb_nopadflag = true;
-                    }
-                    ++$i;
-                }
-
-                break;
-            case "t":
-            case "T":
-                // Code TZ[...]:
-                //
-
-                if (strtoupper(substr($ps_format, $i, 3)) == "TZR") {
-                    // This time-zone-related code can be called when the time is
-                    // invalid, but the others should return an error:
-                    //
-                    $ret .= $this->getTZID();
-                    $i   += 3;
-                } else {
-                    if ($this->ob_invalidtime) {
-                        return $this->_getErrorInvalidTime();
-                    }
-
-                    if (strtoupper(substr($ps_format, $i, 3)) == "TZC") {
-                        $ret .= $this->getTZShortName();
-                        $i   += 3;
-                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZH") {
-                        if (is_null($hn_tzoffset)) {
-                            $hn_tzoffset = $this->getTZOffset();
+                            )) {
+                            --$hn_codelen;
                         }
 
-                        $hs_numberformat = substr($ps_format, $i + 3, 4);
-                        $hn_tzh = intval($hn_tzoffset / 3600000);
-
-                        // Suppress sign here (it is added later):
-                        //
-                        $hs_tzh = $this->_formatNumber(
-                            $hn_tzh,
-                            $hs_numberformat,
-                            2,
-                            $hb_nopad,
-                            true,
-                            $ps_locale
-                        );
-                        if (Pear::isError($hs_tzh)) {
-                            return $hs_tzh;
-                        }
-
-                        // Display sign, even if positive:
-                        //
-                        $ret .= ($hb_nosign ? "" : ($hn_tzh >= 0 ? '+' : '-')) .
-                                $hs_tzh;
-                        $i   += 3 + strlen($hs_numberformat);
-                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZI") {
-                        $ret .= ($this->inDaylightTime() ? '1' : '0');
-                        $i   += 3;
-                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZM") {
-                        if (is_null($hn_tzoffset)) {
-                            $hn_tzoffset = $this->getTZOffset();
-                        }
-
-                        $hs_numberformat = substr($ps_format, $i + 3, 4);
-                        $hn_tzm = intval(($hn_tzoffset % 3600000) / 60000);
-
-                        // Suppress sign:
-                        //
-                        $hs_tzm = $this->_formatNumber(
-                            $hn_tzm,
-                            $hs_numberformat,
-                            2,
-                            $hb_nopad,
-                            true,
-                            $ps_locale
-                        );
-                        if (Pear::isError($hs_tzm)) {
-                            return $hs_tzm;
-                        }
-
-                        $ret .= $hs_tzm;
-                        $i   += 3 + strlen($hs_numberformat);
-                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZN") {
-                        $ret .= $this->getTZLongName();
-                        $i   += 3;
-                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZO") {
-                        if (is_null($hn_tzoffset)) {
-                            $hn_tzoffset = $this->getTZOffset();
-                        }
-
-                        $hn_tzh = intval(abs($hn_tzoffset) / 3600000);
-                        $hn_tzm = intval((abs($hn_tzoffset) % 3600000) / 60000);
-
-                        if ($hn_tzoffset == 0) {
-                            $ret .= $hb_nopad ? "Z" : "Z     ";
-                        } else {
-                            // Display sign, even if positive:
-                            //
-                            $ret .= ($hn_tzoffset >= 0 ? '+' : '-') .
-                                    sprintf("%02d", $hn_tzh) .
-                                    ":" .
-                                    sprintf("%02d", $hn_tzm);
-                        }
-                        $i += 3;
-                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZS") {
-                        if (is_null($hn_tzoffset)) {
-                            $hn_tzoffset = $this->getTZOffset();
-                        }
-
-                        $hs_numberformat = substr($ps_format, $i + 3, 4);
-                        $hn_tzs = intval($hn_tzoffset / 1000);
-                        $hs_tzs = $this->_formatNumber(
-                            $hn_tzs,
-                            $hs_numberformat,
-                            5,
-                            $hb_nopad,
-                            $hb_nosign,
-                            $ps_locale
-                        );
-                        if (Pear::isError($hs_tzs)) {
-                            return $hs_tzs;
-                        }
-
-                        $ret .= $hs_tzs;
-                        $i   += 3 + strlen($hs_numberformat);
-                    }
-                }
-
-                break;
-            case "u":
-            case "U":
-                if ($this->ob_invalidtime) {
-                    return $this->_getErrorInvalidTime();
-                }
-                $hn_unixtime     = $this->getTime();
-                $hs_numberformat = substr($ps_format, $i + 1, 4);
-
-                // Allow sign if negative; allow all digits (specify nought);
-                // suppress padding:
-                //
-                $hs_unixtime = $this->_formatNumber(
-                    $hn_unixtime,
-                    $hs_numberformat,
-                    0,
-                    true,
-                    false,
-                    $ps_locale
-                );
-                if (Pear::isError($hs_unixtime)) {
-                    return $hs_unixtime;
-                }
-
-                $ret .= $hs_unixtime;
-                $i   += 1 + strlen($hs_numberformat);
-                break;
-            case "w":
-            case "W":
-                // Check for 'WW' before 'W':
-                //
-                if (strtoupper(substr($ps_format, $i, 2)) == "WW") {
-                    $hn_week = Date_Calc::weekOfYearAbsolute(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_week = $this->_formatNumber(
-                        $hn_week,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_week)) {
-                        return $hs_week;
-                    }
-
-                    $ret .= $hs_week;
-                    $i   += 2 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "W1") {
-                    $hn_week = Date_Calc::weekOfYear1st(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_week = $this->_formatNumber(
-                        $hn_week,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_week)) {
-                        return $hs_week;
-                    }
-
-                    $ret .= $hs_week;
-                    $i   += 2 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "W4") {
-                    $ha_week = Date_Calc::weekOfYear4th(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hn_week = $ha_week[1];
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_week = $this->_formatNumber(
-                        $hn_week,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_week)) {
-                        return $hs_week;
-                    }
-
-                    $ret .= $hs_week;
-                    $i   += 2 + strlen($hs_numberformat);
-                } elseif (strtoupper(substr($ps_format, $i, 2)) == "W7") {
-                    $ha_week = Date_Calc::weekOfYear7th(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hn_week = $ha_week[1];
-                    $hs_numberformat = substr($ps_format, $i + 2, 4);
-                    $hs_week = $this->_formatNumber(
-                        $hn_week,
-                        $hs_numberformat,
-                        2,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_week)) {
-                        return $hs_week;
-                    }
-
-                    $ret .= $hs_week;
-                    $i   += 2 + strlen($hs_numberformat);
-                } else {
-                    // Code 'W':
-                    //
-                    $hn_week = Date_Calc::weekOfMonthAbsolute(
-                        $this->day,
-                        $this->month,
-                        $this->year
-                    );
-                    $hs_numberformat = substr($ps_format, $i + 1, 4);
-                    $hs_week = $this->_formatNumber(
-                        $hn_week,
-                        $hs_numberformat,
-                        1,
-                        $hb_nopad,
-                        true,
-                        $ps_locale
-                    );
-                    if (Pear::isError($hs_week)) {
-                        return $hs_week;
-                    }
-
-                    $ret .= $hs_week;
-                    $i   += 1 + strlen($hs_numberformat);
-                }
-
-                break;
-            case "y":
-            case "Y":
-                // Check for 'YEAR' first:
-                //
-                if (strtoupper(substr($ps_format, $i, 4)) == "YEAR") {
-                    switch (substr($ps_format, $i, 2)) {
-                    case "YE":
-                        $hs_spformat = "SP";
-                        break;
-                    case "Ye":
-                        $hs_spformat = "Sp";
-                        break;
-                    default:
-                        $hs_spformat = "sp";
-                    }
-
-                    if (($hn_yearabs = abs($this->year)) < 100 ||
-                        $hn_yearabs % 100 < 10) {
-                        $hs_numberformat = $hs_spformat;
-
-                        // Allow all digits (specify nought); padding irrelevant:
-                        //
-                        $hs_year = $this->_formatNumber(
-                            $this->year,
-                            $hs_numberformat,
-                            0,
-                            true,
-                            $hb_nosign,
-                            $ps_locale
-                        );
-                        if (Pear::isError($hs_year)) {
-                            return $hs_year;
-                        }
-
-                        $ret .= $hs_year;
-                    } else {
-                        // Year is spelled 'Nineteen Twelve' rather than
-                        // 'One thousand Nine Hundred Twelve':
-                        //
                         $hn_century      = intval($this->year / 100);
-                        $hs_numberformat = $hs_spformat;
-
-                        // Allow all digits (specify nought); padding irrelevant:
-                        //
-                        $hs_century = $this->_formatNumber(
+                        $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
+                        $hs_century      = $this->_formatNumber(
                             $hn_century,
                             $hs_numberformat,
-                            0,
-                            true,
+                            $hn_codelen,
+                            $hb_nopad,
                             $hb_nosign,
                             $ps_locale
                         );
@@ -3364,93 +2464,993 @@ class Date
                             return $hs_century;
                         }
 
-                        $ret .= $hs_century . " ";
+                        $ret .= $hs_century;
+                        $i   += $hn_codelen + strlen($hs_numberformat);
+                    }
 
-                        $hs_numberformat = $hs_spformat;
+                    break;
+                case "d":
+                    $hb_lower = true;
+                    // no break
+                case "D":
+                    if (strtoupper(substr($ps_format, $i, 3)) == "DAY") {
+                        $hs_day = Date_Calc::getWeekdayFullname(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
 
-                        // Discard sign; padding irrelevant:
+                        if (!$hb_nopad) {
+                            if (is_null($hn_weekdaypad)) {
+                                // Set week-day padding variable:
+                            //
+                                $hn_weekdaypad = 0;
+                                foreach (Date_Calc::getWeekDays() as $hs_weekday) {
+                                    $hn_weekdaypad = max(
+                                        $hn_weekdaypad,
+                                        strlen($hs_weekday)
+                                    );
+                                }
+                            }
+                            $hs_day = str_pad(
+                                $hs_day,
+                                $hn_weekdaypad,
+                                " ",
+                                STR_PAD_RIGHT
+                            );
+                        }
+
+                        $ret .= $hb_lower ?
+                                strtolower($hs_day) :
+                                (substr($ps_format, $i + 1, 1) == "A" ?
+                                 strtoupper($hs_day) :
+                                 $hs_day);
+                        $i   += 3;
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "DY") {
+                        $hs_day = Date_Calc::getWeekdayAbbrname(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $ret   .= $hb_lower ?
+                                  strtolower($hs_day) :
+                                  (substr($ps_format, $i + 1, 1) == "Y" ?
+                                   strtoupper($hs_day) :
+                                   $hs_day);
+                        $i     += 2;
+                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "DDD" &&
+                               strtoupper(substr($ps_format, $i + 2, 3)) != "DAY" &&
+                               strtoupper(substr($ps_format, $i + 2, 2)) != "DY"
+                    ) {
+                        $hn_day = Date_Calc::dayOfYear(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hs_numberformat = substr($ps_format, $i + 3, 4);
+                        $hs_day = $this->_formatNumber(
+                            $hn_day,
+                            $hs_numberformat,
+                            3,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_day)) {
+                            return $hs_day;
+                        }
+
+                        $ret .= $hs_day;
+                        $i   += 3 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "DD" &&
+                               strtoupper(substr($ps_format, $i + 1, 3)) != "DAY" &&
+                               strtoupper(substr($ps_format, $i + 1, 2)) != "DY"
+                    ) {
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_day = $this->_formatNumber(
+                            $this->day,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_day)) {
+                            return $hs_day;
+                        }
+
+                        $ret .= $hs_day;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } else {
+                        // Code 'D':
+                    //
+                        $hn_day = Date_Calc::dayOfWeek(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hs_numberformat = substr($ps_format, $i + 1, 4);
+                        $hs_day = $this->_formatNumber(
+                            $hn_day,
+                            $hs_numberformat,
+                            1,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_day)) {
+                            return $hs_day;
+                        }
+
+                        $ret .= $hs_day;
+                        $i   += 1 + strlen($hs_numberformat);
+                    }
+
+                    break;
+                case "f":
+                case "F":
+                    if ($this->ob_invalidtime) {
+                        return $this->_getErrorInvalidTime();
+                    }
+                    $hn_codelen = 1;
+                    if (is_numeric(substr($ps_format, $i + $hn_codelen, 1))) {
+                        ++$hn_codelen;
+                        while (is_numeric(substr($ps_format, $i + $hn_codelen, 1))) {
+                            ++$hn_codelen;
+                        }
+
+                        $hn_partsecdigits = substr($ps_format, $i + 1, $hn_codelen - 1);
+                    } else {
+                        while (strtoupper(substr(
+                            $ps_format,
+                            $i + $hn_codelen,
+                            1
+                        )) == "F") {
+                            ++$hn_codelen;
+                        }
+
+                        // Check next code is not F[numeric]:
+                    //
+                        if ($hn_codelen > 1 &&
+                            is_numeric(substr($ps_format, $i + $hn_codelen, 1))) {
+                            --$hn_codelen;
+                        }
+
+                        $hn_partsecdigits = $hn_codelen;
+                    }
+
+                    $hs_partsec = (string) $this->partsecond;
+                    if (preg_match(
+                        '/^([0-9]+)(\.([0-9]+))?E-([0-9]+)$/i',
+                        $hs_partsec,
+                        $ha_matches
+                    )) {
+                        $hs_partsec =
+                            str_repeat("0", $ha_matches[4] - strlen($ha_matches[1])) .
+                            $ha_matches[1] .
+                            $ha_matches[3];
+                    } else {
+                        $hs_partsec = substr($hs_partsec, 2);
+                    }
+                    $hs_partsec = substr($hs_partsec, 0, $hn_partsecdigits);
+
+                    // '_formatNumber() will not work for this because the
+                    // part-second is an int, and we want it to behave like a float:
+                //
+                    if ($hb_nopad) {
+                        $hs_partsec = rtrim($hs_partsec, "0");
+                        if ($hs_partsec == "") {
+                            $hs_partsec = "0";
+                        }
+                    } else {
+                        $hs_partsec = str_pad(
+                            $hs_partsec,
+                            $hn_partsecdigits,
+                            "0",
+                            STR_PAD_RIGHT
+                        );
+                    }
+
+                    $ret .= $hs_partsec;
+                    $i   += $hn_codelen;
+                    break;
+                case "h":
+                case "H":
+                    if ($this->ob_invalidtime) {
+                        return $this->_getErrorInvalidTime();
+                    }
+                    if (strtoupper(substr($ps_format, $i, 4)) == "HH12") {
+                        $hn_hour = $this->hour % 12;
+                        if ($hn_hour == 0) {
+                            $hn_hour = 12;
+                        }
+
+                        $hn_codelen = 4;
+                    } else {
+                        // Code 'HH' or 'HH24':
+                    //
+                        $hn_hour    = $this->hour;
+                        $hn_codelen = strtoupper(substr(
+                            $ps_format,
+                            $i,
+                            4
+                        )) == "HH24" ? 4 : 2;
+                    }
+
+                    $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
+                    $hs_hour = $this->_formatNumber(
+                        $hn_hour,
+                        $hs_numberformat,
+                        2,
+                        $hb_nopad,
+                        true,
+                        $ps_locale
+                    );
+                    if (Pear::isError($hs_hour)) {
+                        return $hs_hour;
+                    }
+
+                    $ret .= $hs_hour;
+                    $i   += $hn_codelen + strlen($hs_numberformat);
+                    break;
+                case "i":
+                case "I":
+                    if (is_null($hn_isoyear)) {
+                        [$hn_isoyear, $hn_isoweek, $hn_isoday] =
+                            Date_Calc::isoWeekDate(
+                                $this->day,
+                                $this->month,
+                                $this->year
+                            );
+                    }
+
+                    if (strtoupper(substr($ps_format, $i, 2)) == "ID" &&
+                        strtoupper(substr($ps_format, $i + 1, 3)) != "DAY"
+                    ) {
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_isoday = $this->_formatNumber(
+                            $hn_isoday,
+                            $hs_numberformat,
+                            1,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_isoday)) {
+                            return $hs_isoday;
+                        }
+
+                        $ret .= $hs_isoday;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "IW") {
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_isoweek = $this->_formatNumber(
+                            $hn_isoweek,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_isoweek)) {
+                            return $hs_isoweek;
+                        }
+
+                        $ret .= $hs_isoweek;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } else {
+                        // Code I(YYY...):
+                    //
+                        $hn_codelen = 1;
+                        while (strtoupper(substr(
+                            $ps_format,
+                            $i + $hn_codelen,
+                            1
+                        )) == "Y") {
+                            ++$hn_codelen;
+                        }
+
+                        $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
+                        $hs_isoyear = $this->_formatNumber(
+                            $hn_isoyear,
+                            $hs_numberformat,
+                            $hn_codelen,
+                            $hb_nopad,
+                            $hb_nosign,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_isoyear)) {
+                            return $hs_isoyear;
+                        }
+
+                        $ret .= $hs_isoyear;
+                        $i   += $hn_codelen + strlen($hs_numberformat);
+                    }
+
+                    break;
+                case "j":
+                case "J":
+                    $hn_jd = Date_Calc::dateToDays(
+                        $this->day,
+                        $this->month,
+                        $this->year
+                    );
+                    $hs_numberformat = substr($ps_format, $i + 1, 4);
+
+                    // Allow sign if negative; allow all digits (specify nought);
+                    // suppress padding:
+                //
+                    $hs_jd = $this->_formatNumber(
+                        $hn_jd,
+                        $hs_numberformat,
+                        0,
+                        true,
+                        false,
+                        $ps_locale
+                    );
+                    if (Pear::isError($hs_jd)) {
+                        return $hs_jd;
+                    }
+
+                    $ret .= $hs_jd;
+                    $i   += 1 + strlen($hs_numberformat);
+                    break;
+                case "m":
+                    $hb_lower = true;
+                    // no break
+                case "M":
+                    if (strtoupper(substr($ps_format, $i, 2)) == "MI") {
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_minute = $this->_formatNumber(
+                            $this->minute,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_minute)) {
+                            return $hs_minute;
+                        }
+
+                        $ret .= $hs_minute;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "MM") {
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_month = $this->_formatNumber(
+                            $this->month,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_month)) {
+                            return $hs_month;
+                        }
+
+                        $ret .= $hs_month;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 5)) == "MONTH") {
+                        $hs_month = Date_Calc::getMonthFullname($this->month);
+
+                        if (!$hb_nopad) {
+                            if (is_null($hn_monthpad)) {
+                                // Set month padding variable:
+                            //
+                                $hn_monthpad = 0;
+                                foreach (Date_Calc::getMonthNames() as $hs_monthofyear) {
+                                    $hn_monthpad = max(
+                                        $hn_monthpad,
+                                        strlen($hs_monthofyear)
+                                    );
+                                }
+                            }
+                            $hs_month = str_pad(
+                                $hs_month,
+                                $hn_monthpad,
+                                " ",
+                                STR_PAD_RIGHT
+                            );
+                        }
+
+                        $ret .= $hb_lower ?
+                                strtolower($hs_month) :
+                                (substr($ps_format, $i + 1, 1) == "O" ?
+                                 strtoupper($hs_month) :
+                                 $hs_month);
+                        $i   += 5;
+                    } elseif (strtoupper(substr($ps_format, $i, 3)) == "MON") {
+                        $hs_month = Date_Calc::getMonthAbbrname($this->month);
+                        $ret     .= $hb_lower ?
+                                    strtolower($hs_month) :
+                                    (substr($ps_format, $i + 1, 1) == "O" ?
+                                     strtoupper($hs_month) :
+                                     $hs_month);
+                        $i       += 3;
+                    }
+
+                    break;
+                case "n":
+                case "N":
+                    // No-Padding rule 'NP' applies to the next code (either trailing
+                    // spaces or leading/trailing noughts):
+                //
+                    $hb_nopadflag = true;
+                    $i           += 2;
+                    break;
+                case "p":
+                    $hb_lower = true;
+                    // no break
+                case "P":
+                    if ($this->ob_invalidtime) {
+                        return $this->_getErrorInvalidTime();
+                    }
+                    if (strtoupper(substr($ps_format, $i, 4)) == "P.M.") {
+                        $ret .= $this->hour < 12 ?
+                                ($hb_lower ? "a.m." : "A.M.") :
+                                ($hb_lower ? "p.m." : "P.M.");
+                        $i   += 4;
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "PM") {
+                        $ret .= $this->hour < 12 ?
+                                ($hb_lower ? "am" : "AM") :
+                                ($hb_lower ? "pm" : "PM");
+                        $i   += 2;
+                    }
+
+                    break;
+                case "q":
+                case "Q":
+                    // N.B. Current implementation ignores the day and year, but
+                    // it is possible that a different implementation might be
+                    // desired, so pass these parameters anyway:
+                //
+                    $hn_quarter = Date_Calc::quarterOfYear(
+                        $this->day,
+                        $this->month,
+                        $this->year
+                    );
+                    $hs_numberformat = substr($ps_format, $i + 1, 4);
+                    $hs_quarter = $this->_formatNumber(
+                        $hn_quarter,
+                        $hs_numberformat,
+                        1,
+                        $hb_nopad,
+                        true,
+                        $ps_locale
+                    );
+                    if (Pear::isError($hs_quarter)) {
+                        return $hs_quarter;
+                    }
+
+                    $ret .= $hs_quarter;
+                    $i   += 1 + strlen($hs_numberformat);
+                    break;
+                case "r":
+                    $hb_lower = true;
+                    // no break
+                case "R":
+                    // Code 'RM':
+                //
+                    switch ($this->month) {
+                        case 1:
+                            $hs_monthroman = "i";
+                            break;
+                        case 2:
+                            $hs_monthroman = "ii";
+                            break;
+                        case 3:
+                            $hs_monthroman = "iii";
+                            break;
+                        case 4:
+                            $hs_monthroman = "iv";
+                            break;
+                        case 5:
+                            $hs_monthroman = "v";
+                            break;
+                        case 6:
+                            $hs_monthroman = "vi";
+                            break;
+                        case 7:
+                            $hs_monthroman = "vii";
+                            break;
+                        case 8:
+                            $hs_monthroman = "viii";
+                            break;
+                        case 9:
+                            $hs_monthroman = "ix";
+                            break;
+                        case 10:
+                            $hs_monthroman = "x";
+                            break;
+                        case 11:
+                            $hs_monthroman = "xi";
+                            break;
+                        case 12:
+                            $hs_monthroman = "xii";
+                            break;
+                    }
+
+                    $hs_monthroman = $hb_lower ?
+                                     $hs_monthroman :
+                                     strtoupper($hs_monthroman);
+                    $ret .= $hb_nopad ?
+                            $hs_monthroman :
+                            str_pad($hs_monthroman, 4, " ", STR_PAD_LEFT);
+                    $i   += 2;
+                    break;
+                case "s":
+                case "S":
+                    // Check for 'SSSSS' before 'SS':
+                //
+                    if (strtoupper(substr($ps_format, $i, 5)) == "SSSSS") {
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $hs_numberformat = substr($ps_format, $i + 5, 4);
+                        $hn_second = Date_Calc::secondsPastMidnight(
+                            $this->hour,
+                            $this->minute,
+                            $this->second
+                        );
+                        $hs_second = $this->_formatNumber(
+                            $hn_second,
+                            $hs_numberformat,
+                            5,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_second)) {
+                            return $hs_second;
+                        }
+
+                        $ret .= $hs_second;
+                        $i   += 5 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "SS") {
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_second = $this->_formatNumber(
+                            $this->second,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_second)) {
+                            return $hs_second;
+                        }
+
+                        $ret .= $hs_second;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } else {
+                        // One of the following codes:
+                        //  'SC(CCC...)'
+                        //  'SY(YYY...)'
+                        //  'SIY(YYY...)'
+                        //  'STZH'
+                        //  'STZS'
+                        //  'SYEAR'
+                    //
+                        $hb_showsignflag = true;
+                        if ($hb_nopad) {
+                            $hb_nopadflag = true;
+                        }
+                        ++$i;
+                    }
+
+                    break;
+                case "t":
+                case "T":
+                    // Code TZ[...]:
+                //
+
+                    if (strtoupper(substr($ps_format, $i, 3)) == "TZR") {
+                        // This time-zone-related code can be called when the time is
+                        // invalid, but the others should return an error:
+                    //
+                        $ret .= $this->getTZID();
+                        $i   += 3;
+                    } else {
+                        if ($this->ob_invalidtime) {
+                            return $this->_getErrorInvalidTime();
+                        }
+
+                        if (strtoupper(substr($ps_format, $i, 3)) == "TZC") {
+                            $ret .= $this->getTZShortName();
+                            $i   += 3;
+                        } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZH") {
+                            if (is_null($hn_tzoffset)) {
+                                $hn_tzoffset = $this->getTZOffset();
+                            }
+
+                            $hs_numberformat = substr($ps_format, $i + 3, 4);
+                            $hn_tzh = intval($hn_tzoffset / 3600000);
+
+                            // Suppress sign here (it is added later):
                         //
+                            $hs_tzh = $this->_formatNumber(
+                                $hn_tzh,
+                                $hs_numberformat,
+                                2,
+                                $hb_nopad,
+                                true,
+                                $ps_locale
+                            );
+                            if (Pear::isError($hs_tzh)) {
+                                return $hs_tzh;
+                            }
+
+                            // Display sign, even if positive:
+                        //
+                            $ret .= ($hb_nosign ? "" : ($hn_tzh >= 0 ? '+' : '-')) .
+                                    $hs_tzh;
+                            $i   += 3 + strlen($hs_numberformat);
+                        } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZI") {
+                            $ret .= ($this->inDaylightTime() ? '1' : '0');
+                            $i   += 3;
+                        } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZM") {
+                            if (is_null($hn_tzoffset)) {
+                                $hn_tzoffset = $this->getTZOffset();
+                            }
+
+                            $hs_numberformat = substr($ps_format, $i + 3, 4);
+                            $hn_tzm = intval(($hn_tzoffset % 3600000) / 60000);
+
+                            // Suppress sign:
+                        //
+                            $hs_tzm = $this->_formatNumber(
+                                $hn_tzm,
+                                $hs_numberformat,
+                                2,
+                                $hb_nopad,
+                                true,
+                                $ps_locale
+                            );
+                            if (Pear::isError($hs_tzm)) {
+                                return $hs_tzm;
+                            }
+
+                            $ret .= $hs_tzm;
+                            $i   += 3 + strlen($hs_numberformat);
+                        } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZN") {
+                            $ret .= $this->getTZLongName();
+                            $i   += 3;
+                        } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZO") {
+                            if (is_null($hn_tzoffset)) {
+                                $hn_tzoffset = $this->getTZOffset();
+                            }
+
+                            $hn_tzh = intval(abs($hn_tzoffset) / 3600000);
+                            $hn_tzm = intval((abs($hn_tzoffset) % 3600000) / 60000);
+
+                            if ($hn_tzoffset == 0) {
+                                $ret .= $hb_nopad ? "Z" : "Z     ";
+                            } else {
+                                // Display sign, even if positive:
+                            //
+                                $ret .= ($hn_tzoffset >= 0 ? '+' : '-') .
+                                        sprintf("%02d", $hn_tzh) .
+                                        ":" .
+                                        sprintf("%02d", $hn_tzm);
+                            }
+                            $i += 3;
+                        } elseif (strtoupper(substr($ps_format, $i, 3)) == "TZS") {
+                            if (is_null($hn_tzoffset)) {
+                                $hn_tzoffset = $this->getTZOffset();
+                            }
+
+                            $hs_numberformat = substr($ps_format, $i + 3, 4);
+                            $hn_tzs = intval($hn_tzoffset / 1000);
+                            $hs_tzs = $this->_formatNumber(
+                                $hn_tzs,
+                                $hs_numberformat,
+                                5,
+                                $hb_nopad,
+                                $hb_nosign,
+                                $ps_locale
+                            );
+                            if (Pear::isError($hs_tzs)) {
+                                return $hs_tzs;
+                            }
+
+                            $ret .= $hs_tzs;
+                            $i   += 3 + strlen($hs_numberformat);
+                        }
+                    }
+
+                    break;
+                case "u":
+                case "U":
+                    if ($this->ob_invalidtime) {
+                        return $this->_getErrorInvalidTime();
+                    }
+                    $hn_unixtime     = $this->getTime();
+                    $hs_numberformat = substr($ps_format, $i + 1, 4);
+
+                    // Allow sign if negative; allow all digits (specify nought);
+                    // suppress padding:
+                //
+                    $hs_unixtime = $this->_formatNumber(
+                        $hn_unixtime,
+                        $hs_numberformat,
+                        0,
+                        true,
+                        false,
+                        $ps_locale
+                    );
+                    if (Pear::isError($hs_unixtime)) {
+                        return $hs_unixtime;
+                    }
+
+                    $ret .= $hs_unixtime;
+                    $i   += 1 + strlen($hs_numberformat);
+                    break;
+                case "w":
+                case "W":
+                    // Check for 'WW' before 'W':
+                //
+                    if (strtoupper(substr($ps_format, $i, 2)) == "WW") {
+                        $hn_week = Date_Calc::weekOfYearAbsolute(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_week = $this->_formatNumber(
+                            $hn_week,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_week)) {
+                            return $hs_week;
+                        }
+
+                        $ret .= $hs_week;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "W1") {
+                        $hn_week = Date_Calc::weekOfYear1st(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_week = $this->_formatNumber(
+                            $hn_week,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_week)) {
+                            return $hs_week;
+                        }
+
+                        $ret .= $hs_week;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "W4") {
+                        $ha_week = Date_Calc::weekOfYear4th(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hn_week = $ha_week[1];
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_week = $this->_formatNumber(
+                            $hn_week,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_week)) {
+                            return $hs_week;
+                        }
+
+                        $ret .= $hs_week;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } elseif (strtoupper(substr($ps_format, $i, 2)) == "W7") {
+                        $ha_week = Date_Calc::weekOfYear7th(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hn_week = $ha_week[1];
+                        $hs_numberformat = substr($ps_format, $i + 2, 4);
+                        $hs_week = $this->_formatNumber(
+                            $hn_week,
+                            $hs_numberformat,
+                            2,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_week)) {
+                            return $hs_week;
+                        }
+
+                        $ret .= $hs_week;
+                        $i   += 2 + strlen($hs_numberformat);
+                    } else {
+                        // Code 'W':
+                    //
+                        $hn_week = Date_Calc::weekOfMonthAbsolute(
+                            $this->day,
+                            $this->month,
+                            $this->year
+                        );
+                        $hs_numberformat = substr($ps_format, $i + 1, 4);
+                        $hs_week = $this->_formatNumber(
+                            $hn_week,
+                            $hs_numberformat,
+                            1,
+                            $hb_nopad,
+                            true,
+                            $ps_locale
+                        );
+                        if (Pear::isError($hs_week)) {
+                            return $hs_week;
+                        }
+
+                        $ret .= $hs_week;
+                        $i   += 1 + strlen($hs_numberformat);
+                    }
+
+                    break;
+                case "y":
+                case "Y":
+                    // Check for 'YEAR' first:
+                //
+                    if (strtoupper(substr($ps_format, $i, 4)) == "YEAR") {
+                        switch (substr($ps_format, $i, 2)) {
+                            case "YE":
+                                $hs_spformat = "SP";
+                                break;
+                            case "Ye":
+                                $hs_spformat = "Sp";
+                                break;
+                            default:
+                                $hs_spformat = "sp";
+                        }
+
+                        if (($hn_yearabs = abs($this->year)) < 100 ||
+                            $hn_yearabs % 100 < 10) {
+                            $hs_numberformat = $hs_spformat;
+
+                            // Allow all digits (specify nought); padding irrelevant:
+                        //
+                            $hs_year = $this->_formatNumber(
+                                $this->year,
+                                $hs_numberformat,
+                                0,
+                                true,
+                                $hb_nosign,
+                                $ps_locale
+                            );
+                            if (Pear::isError($hs_year)) {
+                                return $hs_year;
+                            }
+
+                            $ret .= $hs_year;
+                        } else {
+                            // Year is spelled 'Nineteen Twelve' rather than
+                            // 'One thousand Nine Hundred Twelve':
+                        //
+                            $hn_century      = intval($this->year / 100);
+                            $hs_numberformat = $hs_spformat;
+
+                            // Allow all digits (specify nought); padding irrelevant:
+                        //
+                            $hs_century = $this->_formatNumber(
+                                $hn_century,
+                                $hs_numberformat,
+                                0,
+                                true,
+                                $hb_nosign,
+                                $ps_locale
+                            );
+                            if (Pear::isError($hs_century)) {
+                                return $hs_century;
+                            }
+
+                            $ret .= $hs_century . " ";
+
+                            $hs_numberformat = $hs_spformat;
+
+                            // Discard sign; padding irrelevant:
+                        //
+                            $hs_year = $this->_formatNumber(
+                                $this->year,
+                                $hs_numberformat,
+                                2,
+                                false,
+                                true,
+                                $ps_locale
+                            );
+                            if (Pear::isError($hs_year)) {
+                                return $hs_year;
+                            }
+
+                            $ret .= $hs_year;
+                        }
+
+                        $i += 4;
+                    } else {
+                        // Code Y(YYY...):
+                    //
+                        $hn_codelen = 1;
+                        while (strtoupper(substr(
+                            $ps_format,
+                            $i + $hn_codelen,
+                            1
+                        )) == "Y") {
+                            ++$hn_codelen;
+                        }
+
+                        $hs_thousandsep  = null;
+                        $hn_thousandseps = 0;
+                        if ($hn_codelen <= 3) {
+                            while (preg_match(
+                                '/([,.·\' ])YYY/i',
+                                substr(
+                                    $ps_format,
+                                    $i + $hn_codelen,
+                                    4
+                                ),
+                                $ha_matches
+                            )) {
+                                $hn_codelen    += 4;
+                                $hs_thousandsep = $ha_matches[1];
+                                ++$hn_thousandseps;
+                            }
+                        }
+
+                        // Check next code is not 'YEAR'
+                    //
+                        if ($hn_codelen > 1 &&
+                            strtoupper(substr(
+                                $ps_format,
+                                $i + $hn_codelen - 1,
+                                4
+                            )) == "YEAR") {
+                            --$hn_codelen;
+                        }
+
+                        $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
                         $hs_year = $this->_formatNumber(
                             $this->year,
                             $hs_numberformat,
-                            2,
-                            false,
-                            true,
-                            $ps_locale
+                            $hn_codelen -
+                                                            $hn_thousandseps,
+                            $hb_nopad,
+                            $hb_nosign,
+                            $ps_locale,
+                            $hs_thousandsep
                         );
                         if (Pear::isError($hs_year)) {
                             return $hs_year;
                         }
 
                         $ret .= $hs_year;
+                        $i   += $hn_codelen + strlen($hs_numberformat);
                     }
 
-                    $i += 4;
-                } else {
-                    // Code Y(YYY...):
-                    //
-                    $hn_codelen = 1;
-                    while (strtoupper(substr(
-                        $ps_format,
-                        $i + $hn_codelen,
-                        1
-                    )) == "Y") {
-                        ++$hn_codelen;
-                    }
-
-                    $hs_thousandsep  = null;
-                    $hn_thousandseps = 0;
-                    if ($hn_codelen <= 3) {
-                        while (preg_match(
-                            '/([,.·\' ])YYY/i',
-                            substr(
-                                $ps_format,
-                                $i + $hn_codelen,
-                                4
-                            ),
-                            $ha_matches
-                        )) {
-                            $hn_codelen    += 4;
-                            $hs_thousandsep = $ha_matches[1];
-                            ++$hn_thousandseps;
-                        }
-                    }
-
-                    // Check next code is not 'YEAR'
-                    //
-                    if ($hn_codelen > 1 &&
-                        strtoupper(substr(
-                            $ps_format,
-                            $i + $hn_codelen - 1,
-                            4
-                        )) == "YEAR") {
-                        --$hn_codelen;
-                    }
-
-                    $hs_numberformat = substr($ps_format, $i + $hn_codelen, 4);
-                    $hs_year = $this->_formatNumber(
-                        $this->year,
-                        $hs_numberformat,
-                        $hn_codelen -
-                                                        $hn_thousandseps,
-                        $hb_nopad,
-                        $hb_nosign,
-                        $ps_locale,
-                        $hs_thousandsep
-                    );
-                    if (Pear::isError($hs_year)) {
-                        return $hs_year;
-                    }
-
-                    $ret .= $hs_year;
-                    $i   += $hn_codelen + strlen($hs_numberformat);
-                }
-
-                break;
-            default:
-                $ret .= $hs_char;
-                ++$i;
-                break;
+                    break;
+                default:
+                    $ret .= $hs_char;
+                    ++$i;
+                    break;
             }
         }
         return $ret;
@@ -3566,125 +3566,125 @@ class Date
 
         for ($i = 0; $i < strlen($ps_format); ++$i) {
             switch ($hs_char = substr($ps_format, $i, 1)) {
-            case 'd':
-                $hs_formatlikesqlstr .= 'DD';
-                break;
-            case 'D':
-                $hs_formatlikesqlstr .= 'NPDy';
-                break;
-            case 'j':
-                $hs_formatlikesqlstr .= 'NPDD';
-                break;
-            case 'l':
-                $hs_formatlikesqlstr .= 'NPDay';
-                break;
-            case 'N':
-                $hs_formatlikesqlstr .= 'ID';
-                break;
-            case 'S':
-                $hs_formatlikesqlstr .= 'th';
-                break;
-            case 'w':
-                $hs_formatlikesqlstr .= 'D';
-                break;
-            case 'z':
-                $hs_formatlikesqlstr .= '"' . ($this->getDayOfYear() - 1) . '"';
-                break;
-            case 'W':
-                $hs_formatlikesqlstr .= 'IW';
-                break;
-            case 'F':
-                $hs_formatlikesqlstr .= 'NPMonth';
-                break;
-            case 'm':
-                $hs_formatlikesqlstr .= 'MM';
-                break;
-            case 'M':
-                $hs_formatlikesqlstr .= 'NPMon';
-                break;
-            case 'n':
-                $hs_formatlikesqlstr .= 'NPMM';
-                break;
-            case 't':
-                $hs_formatlikesqlstr .= '"' . $this->getDaysInMonth() . '"';
-                break;
-            case 'L':
-                $hs_formatlikesqlstr .= '"' . ($this->isLeapYear() ? 1 : 0) . '"';
-                break;
-            case 'o':
-                $hs_formatlikesqlstr .= 'IYYY';
-                break;
-            case 'Y':
-                $hs_formatlikesqlstr .= 'YYYY';
-                break;
-            case 'y':
-                $hs_formatlikesqlstr .= 'YY';
-                break;
-            case 'a':
-                $hs_formatlikesqlstr .= 'am';
-                break;
-            case 'A':
-                $hs_formatlikesqlstr .= 'AM';
-                break;
-            case 'g':
-                $hs_formatlikesqlstr .= 'NPHH12';
-                break;
-            case 'G':
-                $hs_formatlikesqlstr .= 'NPHH24';
-                break;
-            case 'h':
-                $hs_formatlikesqlstr .= 'HH12';
-                break;
-            case 'H':
-                $hs_formatlikesqlstr .= 'HH24';
-                break;
-            case 'i':
-                $hs_formatlikesqlstr .= 'MI';
-                break;
-            case 's':
-                $hs_formatlikesqlstr .= 'SS';
-                break;
-            case 'u':
-                $hs_formatlikesqlstr .= 'SSFFF';
-                break;
-            case 'e':
-                $hs_formatlikesqlstr .= 'TZR';
-                break;
-            case 'I':
-                $hs_formatlikesqlstr .= 'TZI';
-                break;
-            case 'O':
-                $hs_formatlikesqlstr .= 'STZHTZM';
-                break;
-            case 'P':
-                $hs_formatlikesqlstr .= 'STZH:TZM';
-                break;
-            case 'T':
-                $hs_formatlikesqlstr .= 'TZC';
-                break;
-            case 'Z':
-                $hs_formatlikesqlstr .= 'TZS';
-                break;
-            case 'c':
-                $hs_formatlikesqlstr .= 'YYYY-MM-DD"T"HH24:MI:SSSTZH:TZM';
-                break;
-            case 'r':
-                $hs_formatlikesqlstr .= 'Dy, DD Mon YYYY HH24:MI:SS STZHTZM';
-                break;
-            case 'U':
-                $hs_formatlikesqlstr .= 'U';
-                break;
-            case '\\':
-                $hs_char = substr($ps_format, ++$i, 1);
-                $hs_formatlikesqlstr .= '"' .
-                                        ($hs_char == '\\' ? '\\\\' : $hs_char) .
-                                        '"';
-                break;
-            case '"':
-                $hs_formatlikesqlstr .= '"\\""';
-                break;
-            default:
-                $hs_formatlikesqlstr .= '"' . $hs_char . '"';
+                case 'd':
+                    $hs_formatlikesqlstr .= 'DD';
+                    break;
+                case 'D':
+                    $hs_formatlikesqlstr .= 'NPDy';
+                    break;
+                case 'j':
+                    $hs_formatlikesqlstr .= 'NPDD';
+                    break;
+                case 'l':
+                    $hs_formatlikesqlstr .= 'NPDay';
+                    break;
+                case 'N':
+                    $hs_formatlikesqlstr .= 'ID';
+                    break;
+                case 'S':
+                    $hs_formatlikesqlstr .= 'th';
+                    break;
+                case 'w':
+                    $hs_formatlikesqlstr .= 'D';
+                    break;
+                case 'z':
+                    $hs_formatlikesqlstr .= '"' . ($this->getDayOfYear() - 1) . '"';
+                    break;
+                case 'W':
+                    $hs_formatlikesqlstr .= 'IW';
+                    break;
+                case 'F':
+                    $hs_formatlikesqlstr .= 'NPMonth';
+                    break;
+                case 'm':
+                    $hs_formatlikesqlstr .= 'MM';
+                    break;
+                case 'M':
+                    $hs_formatlikesqlstr .= 'NPMon';
+                    break;
+                case 'n':
+                    $hs_formatlikesqlstr .= 'NPMM';
+                    break;
+                case 't':
+                    $hs_formatlikesqlstr .= '"' . $this->getDaysInMonth() . '"';
+                    break;
+                case 'L':
+                    $hs_formatlikesqlstr .= '"' . ($this->isLeapYear() ? 1 : 0) . '"';
+                    break;
+                case 'o':
+                    $hs_formatlikesqlstr .= 'IYYY';
+                    break;
+                case 'Y':
+                    $hs_formatlikesqlstr .= 'YYYY';
+                    break;
+                case 'y':
+                    $hs_formatlikesqlstr .= 'YY';
+                    break;
+                case 'a':
+                    $hs_formatlikesqlstr .= 'am';
+                    break;
+                case 'A':
+                    $hs_formatlikesqlstr .= 'AM';
+                    break;
+                case 'g':
+                    $hs_formatlikesqlstr .= 'NPHH12';
+                    break;
+                case 'G':
+                    $hs_formatlikesqlstr .= 'NPHH24';
+                    break;
+                case 'h':
+                    $hs_formatlikesqlstr .= 'HH12';
+                    break;
+                case 'H':
+                    $hs_formatlikesqlstr .= 'HH24';
+                    break;
+                case 'i':
+                    $hs_formatlikesqlstr .= 'MI';
+                    break;
+                case 's':
+                    $hs_formatlikesqlstr .= 'SS';
+                    break;
+                case 'u':
+                    $hs_formatlikesqlstr .= 'SSFFF';
+                    break;
+                case 'e':
+                    $hs_formatlikesqlstr .= 'TZR';
+                    break;
+                case 'I':
+                    $hs_formatlikesqlstr .= 'TZI';
+                    break;
+                case 'O':
+                    $hs_formatlikesqlstr .= 'STZHTZM';
+                    break;
+                case 'P':
+                    $hs_formatlikesqlstr .= 'STZH:TZM';
+                    break;
+                case 'T':
+                    $hs_formatlikesqlstr .= 'TZC';
+                    break;
+                case 'Z':
+                    $hs_formatlikesqlstr .= 'TZS';
+                    break;
+                case 'c':
+                    $hs_formatlikesqlstr .= 'YYYY-MM-DD"T"HH24:MI:SSSTZH:TZM';
+                    break;
+                case 'r':
+                    $hs_formatlikesqlstr .= 'Dy, DD Mon YYYY HH24:MI:SS STZHTZM';
+                    break;
+                case 'U':
+                    $hs_formatlikesqlstr .= 'U';
+                    break;
+                case '\\':
+                    $hs_char = substr($ps_format, ++$i, 1);
+                    $hs_formatlikesqlstr .= '"' .
+                                            ($hs_char == '\\' ? '\\\\' : $hs_char) .
+                                            '"';
+                    break;
+                case '"':
+                    $hs_formatlikesqlstr .= '"\\""';
+                    break;
+                default:
+                    $hs_formatlikesqlstr .= '"' . $hs_char . '"';
             }
         }
 
@@ -3768,8 +3768,8 @@ class Date
                 $this->on_standardyear
             ) -
                    $this->tz->getRawOffset() / 1000; // N.B. Unix-time excludes
-                                                     // leap seconds by
-                                                     // definition
+            // leap seconds by
+            // definition
         }
     }
 
@@ -3821,7 +3821,7 @@ class Date
                 Date_TimeZone::isValidID($hs_id = date_default_timezone_get()) ||
              Date_TimeZone::isValidID($hs_id = date("e"))
             )
-            ) {
+        ) {
             $this->tz = new Date_TimeZone($hs_id);
         } else {
             $this->tz = Date_TimeZone::getDefault();
@@ -4122,12 +4122,12 @@ class Date
         $this->tz     = new Date_TimeZone($tz->getID());
 
         [$hn_standardyear,
-             $hn_standardmonth,
-             $hn_standardday,
-             $hn_standardhour,
-             $hn_standardminute,
-             $hn_standardsecond,
-             $hn_standardpartsecond] =
+            $hn_standardmonth,
+            $hn_standardday,
+            $hn_standardhour,
+            $hn_standardminute,
+            $hn_standardsecond,
+            $hn_standardpartsecond] =
             $this->_addOffset(
                 $hn_rawoffset,
                 $this->on_standardday,
@@ -4387,16 +4387,16 @@ class Date
         }
 
         [$hn_standardyear,
-             $hn_standardmonth,
-             $hn_standardday,
-             $hn_standardhour] =
-             Date_Calc::addHours(
-                 $pn_hours,
-                 $this->on_standardday,
-                 $this->on_standardmonth,
-                 $this->on_standardyear,
-                 $this->on_standardhour
-             );
+            $hn_standardmonth,
+            $hn_standardday,
+            $hn_standardhour] =
+            Date_Calc::addHours(
+                $pn_hours,
+                $this->on_standardday,
+                $this->on_standardmonth,
+                $this->on_standardyear,
+                $this->on_standardhour
+            );
 
         $this->setStandardTime(
             $hn_standardday,
@@ -4431,18 +4431,18 @@ class Date
         }
 
         [$hn_standardyear,
-             $hn_standardmonth,
-             $hn_standardday,
-             $hn_standardhour,
-             $hn_standardminute] =
-             Date_Calc::addMinutes(
-                 $pn_minutes,
-                 $this->on_standardday,
-                 $this->on_standardmonth,
-                 $this->on_standardyear,
-                 $this->on_standardhour,
-                 $this->on_standardminute
-             );
+            $hn_standardmonth,
+            $hn_standardday,
+            $hn_standardhour,
+            $hn_standardminute] =
+            Date_Calc::addMinutes(
+                $pn_minutes,
+                $this->on_standardday,
+                $this->on_standardmonth,
+                $this->on_standardyear,
+                $this->on_standardhour,
+                $this->on_standardminute
+            );
 
         $this->setStandardTime(
             $hn_standardday,
@@ -4485,12 +4485,12 @@ class Date
             // Convert to UTC:
             //
             [$hn_standardyear,
-                 $hn_standardmonth,
-                 $hn_standardday,
-                 $hn_standardhour,
-                 $hn_standardminute,
-                 $hn_standardsecond,
-                 $hn_standardpartsecond] =
+                $hn_standardmonth,
+                $hn_standardday,
+                $hn_standardhour,
+                $hn_standardminute,
+                $hn_standardsecond,
+                $hn_standardpartsecond] =
                 $this->_addOffset(
                     $this->tz->getRawOffset() * -1,
                     $this->on_standardday,
@@ -4502,11 +4502,11 @@ class Date
                     $this->on_standardpartsecond
                 );
             [$hn_standardyear,
-                 $hn_standardmonth,
-                 $hn_standardday,
-                 $hn_standardhour,
-                 $hn_standardminute,
-                 $hn_secondraw] =
+                $hn_standardmonth,
+                $hn_standardday,
+                $hn_standardhour,
+                $hn_standardminute,
+                $hn_secondraw] =
                 Date_Calc::addSeconds(
                     $sec,
                     $hn_standardday,
@@ -4530,12 +4530,12 @@ class Date
             }
 
             [$hn_standardyear,
-                 $hn_standardmonth,
-                 $hn_standardday,
-                 $hn_standardhour,
-                 $hn_standardminute,
-                 $hn_standardsecond,
-                 $hn_standardpartsecond] =
+                $hn_standardmonth,
+                $hn_standardday,
+                $hn_standardhour,
+                $hn_standardminute,
+                $hn_standardsecond,
+                $hn_standardpartsecond] =
                 $this->_addOffset(
                     $this->tz->getRawOffset(),
                     $hn_standardday,
@@ -4550,11 +4550,11 @@ class Date
             // Use local standard time:
             //
             [$hn_standardyear,
-                 $hn_standardmonth,
-                 $hn_standardday,
-                 $hn_standardhour,
-                 $hn_standardminute,
-                 $hn_secondraw] =
+                $hn_standardmonth,
+                $hn_standardday,
+                $hn_standardhour,
+                $hn_standardminute,
+                $hn_secondraw] =
                 Date_Calc::addSeconds(
                     $sec,
                     $this->on_standardday,
@@ -5493,12 +5493,12 @@ class Date
             // Convert to UTC:
             //
             [$hn_year,
-                 $hn_month,
-                 $hn_day,
-                 $hn_hour,
-                 $hn_minute,
-                 $hn_second,
-                 $hn_partsecond] =
+                $hn_month,
+                $hn_day,
+                $hn_hour,
+                $hn_minute,
+                $hn_second,
+                $hn_partsecond] =
                 $this->_addOffset(
                     $this->tz->getRawOffset() * -1,
                     $this->on_standardday,
@@ -5878,55 +5878,55 @@ class Date
 
         if ($pn_offset % 3600000 == 0) {
             [$hn_year,
-                 $hn_month,
-                 $hn_day,
-                 $hn_hour] =
-                 Date_Calc::addHours(
-                     $pn_offset / 3600000,
-                     $pn_day,
-                     $pn_month,
-                     $pn_year,
-                     $pn_hour
-                 );
+                $hn_month,
+                $hn_day,
+                $hn_hour] =
+                Date_Calc::addHours(
+                    $pn_offset / 3600000,
+                    $pn_day,
+                    $pn_month,
+                    $pn_year,
+                    $pn_hour
+                );
 
             $hn_minute     = (int) $pn_minute;
             $hn_second     = (int) $pn_second;
             $hn_partsecond = (float) $pn_partsecond;
         } elseif ($pn_offset % 60000 == 0) {
             [$hn_year,
-                 $hn_month,
-                 $hn_day,
-                 $hn_hour,
-                 $hn_minute] =
-                 Date_Calc::addMinutes(
-                     $pn_offset / 60000,
-                     $pn_day,
-                     $pn_month,
-                     $pn_year,
-                     $pn_hour,
-                     $pn_minute
-                 );
+                $hn_month,
+                $hn_day,
+                $hn_hour,
+                $hn_minute] =
+                Date_Calc::addMinutes(
+                    $pn_offset / 60000,
+                    $pn_day,
+                    $pn_month,
+                    $pn_year,
+                    $pn_hour,
+                    $pn_minute
+                );
 
             $hn_second     = (int) $pn_second;
             $hn_partsecond = (float) $pn_partsecond;
         } else {
             [$hn_year,
-                 $hn_month,
-                 $hn_day,
-                 $hn_hour,
-                 $hn_minute,
-                 $hn_secondraw] =
-                 Date_Calc::addSeconds(
-                     $pn_offset / 1000,
-                     $pn_day,
-                     $pn_month,
-                     $pn_year,
-                     $pn_hour,
-                     $pn_partsecond == 0.0 ?
-                                           $pn_second :
-                                           $pn_second + $pn_partsecond,
-                     false
-                 );  // N.B. do not count
+                $hn_month,
+                $hn_day,
+                $hn_hour,
+                $hn_minute,
+                $hn_secondraw] =
+                Date_Calc::addSeconds(
+                    $pn_offset / 1000,
+                    $pn_day,
+                    $pn_month,
+                    $pn_year,
+                    $pn_hour,
+                    $pn_partsecond == 0.0 ?
+                                          $pn_second :
+                                          $pn_second + $pn_partsecond,
+                    false
+                );  // N.B. do not count
             // leap seconds
 
             if (is_float($hn_secondraw)) {
@@ -6022,22 +6022,22 @@ class Date
                 // Add Summer time offset to passed time:
                 //
                 [$this->year,
-                     $this->month,
-                     $this->day,
-                     $this->hour,
-                     $this->minute,
-                     $this->second,
-                     $this->partsecond] =
-                     $this->_addOffset(
-                         $this->tz->getDSTSavings(),
-                         $pn_day,
-                         $pn_month,
-                         $pn_year,
-                         $pn_hour,
-                         $pn_minute,
-                         $pn_second,
-                         $pn_partsecond
-                     );
+                    $this->month,
+                    $this->day,
+                    $this->hour,
+                    $this->minute,
+                    $this->second,
+                    $this->partsecond] =
+                    $this->_addOffset(
+                        $this->tz->getDSTSavings(),
+                        $pn_day,
+                        $pn_month,
+                        $pn_year,
+                        $pn_hour,
+                        $pn_minute,
+                        $pn_second,
+                        $pn_partsecond
+                    );
 
                 $this->ob_invalidtime = !$this->_secondsInDayIsValid();
             } else {
@@ -6076,22 +6076,22 @@ class Date
             // Calculate local standard time:
             //
             [$this->on_standardyear,
-                 $this->on_standardmonth,
-                 $this->on_standardday,
-                 $this->on_standardhour,
-                 $this->on_standardminute,
-                 $this->on_standardsecond,
-                 $this->on_standardpartsecond] =
-                 $this->_addOffset(
-                     $this->tz->getDSTSavings() * -1,
-                     $pn_day,
-                     $pn_month,
-                     $pn_year,
-                     $pn_hour,
-                     $pn_minute,
-                     $pn_second,
-                     $pn_partsecond
-                 );
+                $this->on_standardmonth,
+                $this->on_standardday,
+                $this->on_standardhour,
+                $this->on_standardminute,
+                $this->on_standardsecond,
+                $this->on_standardpartsecond] =
+                $this->_addOffset(
+                    $this->tz->getDSTSavings() * -1,
+                    $pn_day,
+                    $pn_month,
+                    $pn_year,
+                    $pn_hour,
+                    $pn_minute,
+                    $pn_second,
+                    $pn_partsecond
+                );
         } else {
             // Time is already local standard time:
             //
@@ -6159,26 +6159,25 @@ class Date
                 $pn_minute,
                 $pn_second
             ) + $pn_partsecond, ])) {
-
             // Calculate local time:
             //
             [$this->year,
-                 $this->month,
-                 $this->day,
-                 $this->hour,
-                 $this->minute,
-                 $this->second,
-                 $this->partsecond] =
-                 $this->_addOffset(
-                     $this->tz->getDSTSavings(),
-                     $pn_day,
-                     $pn_month,
-                     $pn_year,
-                     $pn_hour,
-                     $pn_minute,
-                     $pn_second,
-                     $pn_partsecond
-                 );
+                $this->month,
+                $this->day,
+                $this->hour,
+                $this->minute,
+                $this->second,
+                $this->partsecond] =
+                $this->_addOffset(
+                    $this->tz->getDSTSavings(),
+                    $pn_day,
+                    $pn_month,
+                    $pn_year,
+                    $pn_hour,
+                    $pn_minute,
+                    $pn_second,
+                    $pn_partsecond
+                );
         } else {
             // Time is already local time:
             //

@@ -32,7 +32,6 @@ function &calendar_userapi_factory($class)
     }
 
     switch (strtolower($class)) {
-
         case 'calendar':
             if (!isset($calobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.calendar");
@@ -57,16 +56,16 @@ function &calendar_userapi_factory($class)
             return $eventobject;
             break;
 
-        /*
-        case 'import':
-            break;
+            /*
+            case 'import':
+                break;
 
-        case 'export':
-            break;
+            case 'export':
+                break;
 
-        case 'alarm':
-            break;
-        */
+            case 'alarm':
+                break;
+            */
         default:
             return;
             break;

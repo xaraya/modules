@@ -33,7 +33,6 @@ function calendar_userapi_prev($args=[])
     $d = substr($cal_date, 6, 2);
 
     switch (strtolower($cal_type)) {
-
         case 'day':
             $d -= $cal_interval;
             break;

@@ -112,7 +112,6 @@ while ($Week = $Month->fetch()) {
     // Build the days in the week, passing the selected days
     $Week->build($selectedDays);
     while ($Day = $Week->fetch()) {
-
         // Build a link string for each day
         $link = $_SERVER['PHP_SELF'].
                     '?y='.$Day->thisYear().

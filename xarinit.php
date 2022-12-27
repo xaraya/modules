@@ -292,7 +292,6 @@ function calendar_upgrade($oldversion)
  */
 function calendar_delete()
 {
-
     # --------------------------------------------------------
     #
     # Remove block types

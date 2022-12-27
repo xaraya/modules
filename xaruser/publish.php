@@ -26,23 +26,22 @@ function calendar_user_publish($args)
     // TODO: security et al.
 
     if (!empty($calid) || !empty($calname)) {
+        /* TEST: protect remote calendar access with basic authentication
+            // cfr. notes at http://www.php.net/features.http-auth for IIS or CGI support
+                if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) ||
+                    // is this a valid user/password ?
+                    !xarUser::logIn($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) ||
+                    // does this user have access to this calendar ?
+                    !xarSecurity::check('ViewCalendar',0,'All',$calname)) {
 
-/* TEST: protect remote calendar access with basic authentication
-    // cfr. notes at http://www.php.net/features.http-auth for IIS or CGI support
-        if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) ||
-            // is this a valid user/password ?
-            !xarUser::logIn($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) ||
-            // does this user have access to this calendar ?
-            !xarSecurity::check('ViewCalendar',0,'All',$calname)) {
-
-            $realm = xarModVars::get('themes','SiteName');
-            header('WWW-Authenticate: Basic realm="'.$realm.'"');
-            //header('HTTP/1.0 401 Unauthorized');
-            header("Status: 401 Access Denied");
-            echo xarML('You must enter a valid username and password to access this calendar');
-            exit;
-         }
-*/
+                    $realm = xarModVars::get('themes','SiteName');
+                    header('WWW-Authenticate: Basic realm="'.$realm.'"');
+                    //header('HTTP/1.0 401 Unauthorized');
+                    header("Status: 401 Access Denied");
+                    echo xarML('You must enter a valid username and password to access this calendar');
+                    exit;
+                 }
+        */
         $calendars = xarMod::apiFunc(
             'calendar',
             'user',
@@ -68,8 +67,8 @@ function calendar_user_publish($args)
                         @readfile($curfile);
 
                     // TODO: use webdavserver instead ?
-                 // Cfr. phpicalendar/calendars/publish.php (doesn't seem to work for PHP < 4.3)
-                     // publishing
+                    // Cfr. phpicalendar/calendars/publish.php (doesn't seem to work for PHP < 4.3)
+                    // publishing
                     } else {
                         // get calendar data
                         $data = '';

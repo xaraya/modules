@@ -174,66 +174,66 @@ class Date_Calc
             if ($char == '%') {
                 $nextchar = substr($format, $strpos + 1, 1);
                 switch ($nextchar) {
-                case 'a':
-                    $output .= Date_Calc::getWeekdayAbbrname($day, $month, $year);
-                    break;
-                case 'A':
-                    $output .= Date_Calc::getWeekdayFullname($day, $month, $year);
-                    break;
-                case 'b':
-                    $output .= Date_Calc::getMonthAbbrname($month);
-                    break;
-                case 'B':
-                    $output .= Date_Calc::getMonthFullname($month);
-                    break;
-                case 'd':
-                    $output .= sprintf('%02d', $day);
-                    break;
-                case 'e':
-                    $output .= $day;
-                    break;
-                case 'E':
-                    $output .= Date_Calc::dateToDays($day, $month, $year);
-                    break;
-                case 'j':
-                    $output .= Date_Calc::dayOfYear($day, $month, $year);
-                    break;
-                case 'm':
-                    $output .= sprintf('%02d', $month);
-                    break;
-                case 'n':
-                    $output .= "\n";
-                    break;
-                case 't':
-                    $output .= "\t";
-                    break;
-                case 'w':
-                    $output .= Date_Calc::dayOfWeek($day, $month, $year);
-                    break;
-                case 'U':
-                    $output .= Date_Calc::weekOfYear($day, $month, $year);
-                    break;
-                case 'y':
-                    $output .= sprintf(
-                        '%0' .
-                                       ($year < 0 ? '3' : '2') .
-                                       'd',
-                        $year % 100
-                    );
-                    break;
-                case "Y":
-                    $output .= sprintf(
-                        '%0' .
-                                       ($year < 0 ? '5' : '4') .
-                                       'd',
-                        $year
-                    );
-                    break;
-                case '%':
-                    $output .= '%';
-                    break;
-                default:
-                    $output .= $char.$nextchar;
+                    case 'a':
+                        $output .= Date_Calc::getWeekdayAbbrname($day, $month, $year);
+                        break;
+                    case 'A':
+                        $output .= Date_Calc::getWeekdayFullname($day, $month, $year);
+                        break;
+                    case 'b':
+                        $output .= Date_Calc::getMonthAbbrname($month);
+                        break;
+                    case 'B':
+                        $output .= Date_Calc::getMonthFullname($month);
+                        break;
+                    case 'd':
+                        $output .= sprintf('%02d', $day);
+                        break;
+                    case 'e':
+                        $output .= $day;
+                        break;
+                    case 'E':
+                        $output .= Date_Calc::dateToDays($day, $month, $year);
+                        break;
+                    case 'j':
+                        $output .= Date_Calc::dayOfYear($day, $month, $year);
+                        break;
+                    case 'm':
+                        $output .= sprintf('%02d', $month);
+                        break;
+                    case 'n':
+                        $output .= "\n";
+                        break;
+                    case 't':
+                        $output .= "\t";
+                        break;
+                    case 'w':
+                        $output .= Date_Calc::dayOfWeek($day, $month, $year);
+                        break;
+                    case 'U':
+                        $output .= Date_Calc::weekOfYear($day, $month, $year);
+                        break;
+                    case 'y':
+                        $output .= sprintf(
+                            '%0' .
+                                           ($year < 0 ? '3' : '2') .
+                                           'd',
+                            $year % 100
+                        );
+                        break;
+                    case "Y":
+                        $output .= sprintf(
+                            '%0' .
+                                           ($year < 0 ? '5' : '4') .
+                                           'd',
+                            $year
+                        );
+                        break;
+                    case '%':
+                        $output .= '%';
+                        break;
+                    default:
+                        $output .= $char.$nextchar;
                 }
                 $strpos++;
             } else {
@@ -1987,42 +1987,42 @@ class Date_Calc
             $hn_isoweek = 1;
         } else {
             switch ($hn_wd1 = Date_Calc::daysToDayOfWeek($hn_jd1)) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                // Monday - Thursday:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    // Monday - Thursday:
                 //
-                $hn_year    = $pn_year;
-                $hn_isoweek = floor(($hn_day + $hn_wd1 - 2) / 7) + 1;
-                break;
-            case 0:
-                $hn_wd1 = 7;
-                // no break
-            case 5:
-            case 6:
-                // Friday - Sunday:
-                //
-                if ($hn_day <= 8 - $hn_wd1) {
-                    // ISO week is the last week of the previous ISO year:
-                    //
-                    [$hn_year, $hn_lastmonth, $hn_lastday] =
-                        explode(
-                            " ",
-                            Date_Calc::daysToDate($hn_jd1 - 1, "%Y %m %d")
-                        );
-                    [$hn_year, $hn_isoweek, $hn_pisoday] =
-                        Date_Calc::isoWeekDate(
-                            $hn_lastday,
-                            $hn_lastmonth,
-                            $hn_year
-                        );
-                } else {
                     $hn_year    = $pn_year;
-                    $hn_isoweek = floor(($hn_day + $hn_wd1 - 9) / 7) + 1;
-                }
+                    $hn_isoweek = floor(($hn_day + $hn_wd1 - 2) / 7) + 1;
+                    break;
+                case 0:
+                    $hn_wd1 = 7;
+                    // no break
+                case 5:
+                case 6:
+                    // Friday - Sunday:
+                //
+                    if ($hn_day <= 8 - $hn_wd1) {
+                        // ISO week is the last week of the previous ISO year:
+                    //
+                        [$hn_year, $hn_lastmonth, $hn_lastday] =
+                            explode(
+                                " ",
+                                Date_Calc::daysToDate($hn_jd1 - 1, "%Y %m %d")
+                            );
+                        [$hn_year, $hn_isoweek, $hn_pisoday] =
+                            Date_Calc::isoWeekDate(
+                                $hn_lastday,
+                                $hn_lastmonth,
+                                $hn_year
+                            );
+                    } else {
+                        $hn_year    = $pn_year;
+                        $hn_isoweek = floor(($hn_day + $hn_wd1 - 9) / 7) + 1;
+                    }
 
-                break;
+                    break;
             }
         }
 
@@ -2238,34 +2238,34 @@ class Date_Calc
         if (($year >= -1000) && ($year <= 1000)) {
             $y = $year / 1000.0;
             switch ($season) {
-            case 'VERNALEQUINOX':
-                $juliandate = (((((((-0.00071 * $y) - 0.00111) * $y) + 0.06134) * $y) + 365242.1374) * $y) + 1721139.29189;
-                break;
-            case 'SUMMERSOLSTICE':
-                $juliandate = (((((((0.00025 * $y) + 0.00907) * $y) - 0.05323) * $y) + 365241.72562) * $y) + 1721233.25401;
-                break;
-            case 'AUTUMNALEQUINOX':
-                $juliandate = (((((((0.00074 * $y) - 0.00297) * $y) - 0.11677) * $y) + 365242.49558) * $y) + 1721325.70455;
-                break;
-            case 'WINTERSOLSTICE':
-            default:
-                $juliandate = (((((((-0.00006 * $y) - 0.00933) * $y) - 0.00769) * $y) + 365242.88257) * $y) + 1721414.39987;
+                case 'VERNALEQUINOX':
+                    $juliandate = (((((((-0.00071 * $y) - 0.00111) * $y) + 0.06134) * $y) + 365242.1374) * $y) + 1721139.29189;
+                    break;
+                case 'SUMMERSOLSTICE':
+                    $juliandate = (((((((0.00025 * $y) + 0.00907) * $y) - 0.05323) * $y) + 365241.72562) * $y) + 1721233.25401;
+                    break;
+                case 'AUTUMNALEQUINOX':
+                    $juliandate = (((((((0.00074 * $y) - 0.00297) * $y) - 0.11677) * $y) + 365242.49558) * $y) + 1721325.70455;
+                    break;
+                case 'WINTERSOLSTICE':
+                default:
+                    $juliandate = (((((((-0.00006 * $y) - 0.00933) * $y) - 0.00769) * $y) + 365242.88257) * $y) + 1721414.39987;
             }
         } elseif (($year > 1000) && ($year <= 3000)) {
             $y = ($year - 2000) / 1000;
             switch ($season) {
-            case 'VERNALEQUINOX':
-                $juliandate = (((((((-0.00057 * $y) - 0.00411) * $y) + 0.05169) * $y) + 365242.37404) * $y) + 2451623.80984;
-                break;
-            case 'SUMMERSOLSTICE':
-                $juliandate = (((((((-0.0003 * $y) + 0.00888) * $y) + 0.00325) * $y) + 365241.62603) * $y) + 2451716.56767;
-                break;
-            case 'AUTUMNALEQUINOX':
-                $juliandate = (((((((0.00078 * $y) + 0.00337) * $y) - 0.11575) * $y) + 365242.01767) * $y) + 2451810.21715;
-                break;
-            case 'WINTERSOLSTICE':
-            default:
-                $juliandate = (((((((0.00032 * $y) - 0.00823) * $y) - 0.06223) * $y) + 365242.74049) * $y) + 2451900.05952;
+                case 'VERNALEQUINOX':
+                    $juliandate = (((((((-0.00057 * $y) - 0.00411) * $y) + 0.05169) * $y) + 365242.37404) * $y) + 2451623.80984;
+                    break;
+                case 'SUMMERSOLSTICE':
+                    $juliandate = (((((((-0.0003 * $y) + 0.00888) * $y) + 0.00325) * $y) + 365241.62603) * $y) + 2451716.56767;
+                    break;
+                case 'AUTUMNALEQUINOX':
+                    $juliandate = (((((((0.00078 * $y) + 0.00337) * $y) - 0.11575) * $y) + 365242.01767) * $y) + 2451810.21715;
+                    break;
+                case 'WINTERSOLSTICE':
+                default:
+                    $juliandate = (((((((0.00032 * $y) - 0.00823) * $y) - 0.06223) * $y) + 365242.74049) * $y) + 2451900.05952;
             }
         }
         return $juliandate;
@@ -3989,7 +3989,7 @@ class Date_Calc
     ) {
         if ((is_numeric($week) && ($week < 1 || $week > 5)) ||
             (!is_numeric($week) && $week != "last")
-            ) {
+        ) {
             return PEAR::raiseError("Invalid week value '$week', only 1-5 or 'last' accepted");
         }
 
@@ -4516,10 +4516,10 @@ class Date_Calc
                     // Round up:
                     //
                     [$hn_year,
-                         $hn_month,
-                         $hn_day,
-                         $hn_hour,
-                         $hn_minute] =
+                        $hn_month,
+                        $hn_day,
+                        $hn_hour,
+                        $hn_minute] =
                         Date_Calc::addMinutes(
                             1,
                             $pn_day,
@@ -4551,11 +4551,11 @@ class Date_Calc
 
                 if ($hn_second != intval($pn_second)) {
                     [$hn_year,
-                         $hn_month,
-                         $hn_day,
-                         $hn_hour,
-                         $hn_minute,
-                         $hn_second] =
+                        $hn_month,
+                        $hn_day,
+                        $hn_hour,
+                        $hn_minute,
+                        $hn_second] =
                         Date_Calc::addSeconds(
                             $hn_second - intval($pn_second),
                             $pn_day,
@@ -4569,8 +4569,8 @@ class Date_Calc
                                               $pb_countleap
                         );
                     //
-                        // (N.B. if rounded to nearest 10 seconds,
-                        // user does not expect seconds to be '60')
+                    // (N.B. if rounded to nearest 10 seconds,
+                    // user does not expect seconds to be '60')
                 }
             }
         }

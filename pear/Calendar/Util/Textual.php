@@ -96,12 +96,12 @@ class Calendar_Util_Textual
             $stamp = mktime(0, 0, 0, $i, 1, 2003);
             $month = strftime($formats[$format], $stamp);
             switch ($format) {
-            case 'one':
-                $month = substr($month, 0, 1);
-                break;
-            case 'two':
-                $month = substr($month, 0, 2);
-                break;
+                case 'one':
+                    $month = substr($month, 0, 1);
+                    break;
+                case 'two':
+                    $month = substr($month, 0, 2);
+                    break;
             }
             $months[$i] = $month;
         }
@@ -133,12 +133,12 @@ class Calendar_Util_Textual
             $stamp = mktime(0, 0, 0, 11, $i+2, 2003);
             $day = strftime($formats[$format], $stamp);
             switch ($format) {
-            case 'one':
-                $day = substr($day, 0, 1);
-                break;
-            case 'two':
-                $day = substr($day, 0, 2);
-                break;
+                case 'one':
+                    $day = substr($day, 0, 1);
+                    break;
+                case 'two':
+                    $day = substr($day, 0, 2);
+                    break;
             }
             $days[$i] = $day;
         }

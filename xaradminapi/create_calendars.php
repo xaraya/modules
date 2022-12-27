@@ -21,9 +21,9 @@
  * @author andrea.m
  */
 
- /**
- * @returns int (calendar id on success, false on failure)
- */
+/**
+* @returns int (calendar id on success, false on failure)
+*/
 function calendar_adminapi_create_calendars($args)
 {
     extract($args);

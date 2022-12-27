@@ -207,7 +207,6 @@ class Calendar_Decorator_Xaraya extends Calendar_Decorator
      */
     public function buildUriString($method, $stamp)
     {
-
         //var_dump(get_class_methods($this->calendar));
         //var_dump($this);
         //die();

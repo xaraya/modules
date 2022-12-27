@@ -44,27 +44,27 @@ switch (@$_GET['view']) {
     case 'calendar_year':
         require_once CALENDAR_ROOT.'Year.php';
         $c = new Calendar_Year($_GET['y']);
-    break;
+        break;
     case 'calendar_month':
         require_once CALENDAR_ROOT.'Month.php';
         $c = new Calendar_Month($_GET['y'], $_GET['m']);
-    break;
+        break;
     case 'calendar_day':
         require_once CALENDAR_ROOT.'Day.php';
         $c = new Calendar_Day($_GET['y'], $_GET['m'], $_GET['d']);
-    break;
+        break;
     case 'calendar_hour':
         require_once CALENDAR_ROOT.'Hour.php';
         $c = new Calendar_Hour($_GET['y'], $_GET['m'], $_GET['d'], $_GET['h']);
-    break;
+        break;
     case 'calendar_minute':
         require_once CALENDAR_ROOT.'Minute.php';
         $c = new Calendar_Minute($_GET['y'], $_GET['m'], $_GET['d'], $_GET['h'], $_GET['i']);
-    break;
+        break;
     case 'calendar_second':
         require_once CALENDAR_ROOT.'Second.php';
         $c = new Calendar_Second($_GET['y'], $_GET['m'], $_GET['d'], $_GET['h'], $_GET['i'], $_GET['s']);
-    break;
+        break;
 }
 
 // Convert timestamp to human readable date

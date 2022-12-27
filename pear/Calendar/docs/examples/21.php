@@ -106,7 +106,7 @@ while ($Month = $Year->fetch()) {
         case 6:
         case 9:
             echo "</tr>\n<tr>\n";
-           break;
+            break;
         case 12:
             echo "</tr>\n";
             break;

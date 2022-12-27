@@ -596,7 +596,7 @@ class Date_TimeZone
             $this->getSummerTimeEndMonth() == $pm_tz->getSummerTimeEndMonth() &&
             $this->getSummerTimeEndDay() == $pm_tz->getSummerTimeEndDay() &&
             $this->getSummerTimeEndTime() == $pm_tz->getSummerTimeEndTime()
-            ) {
+        ) {
             return true;
         } else {
             return false;
@@ -796,7 +796,7 @@ class Date_TimeZone
             ($this->on_summertimestartmonth > $this->on_summertimeendmonth &&
              $hn_month >= $this->on_summertimestartmonth &&
              $hn_month <= $this->on_summertimeendmonth)
-            ) {
+        ) {
             if ($hn_month == $this->on_summertimestartmonth) {
                 $hn_startday =
                     $this->getSummerTimeLimitDay(
@@ -914,7 +914,7 @@ class Date_TimeZone
             ($this->on_summertimestartmonth > $this->on_summertimeendmonth &&
              $hn_month >= $this->on_summertimestartmonth &&
              $hn_month <= $this->on_summertimeendmonth)
-            ) {
+        ) {
             if ($hn_month == $this->on_summertimestartmonth) {
                 $hn_startday =
                     $this->getSummerTimeLimitDay(
@@ -7379,7 +7379,7 @@ if (isset($GLOBALS['_DATE_TIMEZONE_DEFAULT'])
                Date_TimeZone::isValidID($ps_id = date_default_timezone_get()) ||
             Date_TimeZone::isValidID($ps_id = date("e"))
            )
-           ) {
+) {
     Date_TimeZone::setDefault($ps_id);
 } elseif (getenv('PHP_TZ') && Date_TimeZone::isValidID(getenv('PHP_TZ'))) {
     Date_TimeZone::setDefault(getenv('PHP_TZ'));

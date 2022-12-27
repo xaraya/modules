@@ -96,55 +96,55 @@ class Calendar_Factory
     {
         $firstDay = defined('CALENDAR_FIRST_DAY_OF_WEEK') ? CALENDAR_FIRST_DAY_OF_WEEK : 1;
         switch ($type) {
-        case 'Day':
-            include_once CALENDAR_ROOT.'Day.php';
-            return new Calendar_Day($y, $m, $d);
-        case 'Month':
-            // Set default state for which month type to build
-            if (!defined('CALENDAR_MONTH_STATE')) {
-                define('CALENDAR_MONTH_STATE', CALENDAR_USE_MONTH);
-            }
-            switch (CALENDAR_MONTH_STATE) {
-            case CALENDAR_USE_MONTH_WEEKDAYS:
-                include_once CALENDAR_ROOT.'Month/Weekdays.php';
-                $class = 'Calendar_Month_Weekdays';
-                break;
-            case CALENDAR_USE_MONTH_WEEKS:
-                include_once CALENDAR_ROOT.'Month/Weeks.php';
-                $class = 'Calendar_Month_Weeks';
-                break;
-            case CALENDAR_USE_MONTH:
+            case 'Day':
+                include_once CALENDAR_ROOT.'Day.php';
+                return new Calendar_Day($y, $m, $d);
+            case 'Month':
+                // Set default state for which month type to build
+                if (!defined('CALENDAR_MONTH_STATE')) {
+                    define('CALENDAR_MONTH_STATE', CALENDAR_USE_MONTH);
+                }
+                switch (CALENDAR_MONTH_STATE) {
+                    case CALENDAR_USE_MONTH_WEEKDAYS:
+                        include_once CALENDAR_ROOT.'Month/Weekdays.php';
+                        $class = 'Calendar_Month_Weekdays';
+                        break;
+                    case CALENDAR_USE_MONTH_WEEKS:
+                        include_once CALENDAR_ROOT.'Month/Weeks.php';
+                        $class = 'Calendar_Month_Weeks';
+                        break;
+                    case CALENDAR_USE_MONTH:
+                    default:
+                        include_once CALENDAR_ROOT.'Month.php';
+                        $class = 'Calendar_Month';
+                        break;
+                }
+                return new $class($y, $m, $firstDay);
+            case 'Week':
+                include_once CALENDAR_ROOT.'Week.php';
+                return new Calendar_Week($y, $m, $d, $firstDay);
+            case 'Hour':
+                include_once CALENDAR_ROOT.'Hour.php';
+                return new Calendar_Hour($y, $m, $d, $h);
+            case 'Minute':
+                include_once CALENDAR_ROOT.'Minute.php';
+                return new Calendar_Minute($y, $m, $d, $h, $i);
+            case 'Second':
+                include_once CALENDAR_ROOT.'Second.php';
+                return new Calendar_Second($y, $m, $d, $h, $i, $s);
+            case 'Year':
+                include_once CALENDAR_ROOT.'Year.php';
+                return new Calendar_Year($y);
             default:
-                include_once CALENDAR_ROOT.'Month.php';
-                $class = 'Calendar_Month';
-                break;
-            }
-            return new $class($y, $m, $firstDay);
-        case 'Week':
-            include_once CALENDAR_ROOT.'Week.php';
-            return new Calendar_Week($y, $m, $d, $firstDay);
-        case 'Hour':
-            include_once CALENDAR_ROOT.'Hour.php';
-            return new Calendar_Hour($y, $m, $d, $h);
-        case 'Minute':
-            include_once CALENDAR_ROOT.'Minute.php';
-            return new Calendar_Minute($y, $m, $d, $h, $i);
-        case 'Second':
-            include_once CALENDAR_ROOT.'Second.php';
-            return new Calendar_Second($y, $m, $d, $h, $i, $s);
-        case 'Year':
-            include_once CALENDAR_ROOT.'Year.php';
-            return new Calendar_Year($y);
-        default:
-            include_once 'PEAR.php';
-            PEAR::raiseError(
-                'Calendar_Factory::create() unrecognised type: '.$type,
-                null,
-                PEAR_ERROR_TRIGGER,
-                E_USER_NOTICE,
-                'Calendar_Factory::create()'
-            );
-            return false;
+                include_once 'PEAR.php';
+                PEAR::raiseError(
+                    'Calendar_Factory::create() unrecognised type: '.$type,
+                    null,
+                    PEAR_ERROR_TRIGGER,
+                    E_USER_NOTICE,
+                    'Calendar_Factory::create()'
+                );
+                return false;
         }
     }
 
