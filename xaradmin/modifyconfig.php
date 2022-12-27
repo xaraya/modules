@@ -33,7 +33,7 @@ function scheduler_admin_modifyconfig()
             $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'scheduler']);
             $data['module_settings']->setFieldList('items_per_page, use_module_alias, use_module_icons');
             $data['module_settings']->getItem();
-        break;
+            break;
     }
 
     switch (strtolower($phase)) {
@@ -72,9 +72,9 @@ function scheduler_admin_modifyconfig()
                             xarModVars::set('scheduler', $var, $$var);
                         }
                     }
-                break;
+                    break;
             }
-        break;
+            break;
     }
     return $data;
 }

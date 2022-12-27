@@ -247,15 +247,15 @@ function scheduler_upgrade($oldversion)
             }
 
             // delete modvars
-/*            xarModVars::delete('scheduler', 'checktype');
-            xarModVars::delete('scheduler', 'checkvalue');
-            xarModVars::delete('scheduler', 'jobs');
-            xarModVars::delete('scheduler', 'lastrun');
-            xarModVars::delete('scheduler', 'maxjobid');
-            xarModVars::delete('scheduler', 'running');
-            xarModVars::delete('scheduler', 'trigger');
-*/
-// no break
+            /*            xarModVars::delete('scheduler', 'checktype');
+                        xarModVars::delete('scheduler', 'checkvalue');
+                        xarModVars::delete('scheduler', 'jobs');
+                        xarModVars::delete('scheduler', 'lastrun');
+                        xarModVars::delete('scheduler', 'maxjobid');
+                        xarModVars::delete('scheduler', 'running');
+                        xarModVars::delete('scheduler', 'trigger');
+            */
+            // no break
         case '2.0.0':
             // Code to upgrade from version 2.0 goes here
             break;

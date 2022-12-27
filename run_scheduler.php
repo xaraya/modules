@@ -31,7 +31,7 @@ $GLOBALS['systemConfiguration'] = $systemConfiguration;
  * Load the Xaraya configuration files so we can get started
  * This needs to be hard coded. Everything else works off the system configuration paths above
  */
- include '../../../bootstrap.php';
+include '../../../bootstrap.php';
 
 /**
  * Load the Xaraya core
