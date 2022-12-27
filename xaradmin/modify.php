@@ -75,7 +75,6 @@ function comments_admin_modify()
     }
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);

@@ -57,8 +57,8 @@ function comments_user_rss($args)
                 $module,
                 'user',
                 'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                // don't throw an exception if this function doesn't exist
+                [],
                 0
             );
             if (!empty($mytypes) && count($mytypes) > 0) {

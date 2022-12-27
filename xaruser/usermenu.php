@@ -29,50 +29,50 @@ function comments_user_usermenu($args)
                            .' :: '.xarVar::prepForDisplay(xarML('Your Account Preferences')));
 
         switch (strtolower($phase)) {
-        case 'menu':
+            case 'menu':
 
-            $icon = xarTpl::getImage('comments.gif', 'comments');
-            $data = xarTpl::module(
-                'comments',
-                'user',
-                'usermenu_icon',
-                ['icon' => $icon,
-                      'usermenu_form_url' => xarController::URL('comments', 'user', 'usermenu', ['phase' => 'form']),
-                     ]
-            );
-            break;
+                $icon = xarTpl::getImage('comments.gif', 'comments');
+                $data = xarTpl::module(
+                    'comments',
+                    'user',
+                    'usermenu_icon',
+                    ['icon' => $icon,
+                          'usermenu_form_url' => xarController::URL('comments', 'user', 'usermenu', ['phase' => 'form']),
+                         ]
+                );
+                break;
 
-        case 'form':
+            case 'form':
 
-            $settings = xarMod::apiFunc('comments', 'user', 'getoptions');
-            $settings['max_depth'] = _COM_MAX_DEPTH - 1;
-            $authid = xarSec::genAuthKey('comments');
-            $data = xarTpl::module('comments', 'user', 'usermenu_form', ['authid'   => $authid,
-                                                                           'settings' => $settings, ]);
-            break;
+                $settings = xarMod::apiFunc('comments', 'user', 'getoptions');
+                $settings['max_depth'] = _COM_MAX_DEPTH - 1;
+                $authid = xarSec::genAuthKey('comments');
+                $data = xarTpl::module('comments', 'user', 'usermenu_form', ['authid'   => $authid,
+                                                                               'settings' => $settings, ]);
+                break;
 
-        case 'update':
+            case 'update':
 
-            if (!xarVar::fetch('settings', 'array', $settings, [], xarVar::NOT_REQUIRED)) {
-                return;
-            }
+                if (!xarVar::fetch('settings', 'array', $settings, [], xarVar::NOT_REQUIRED)) {
+                    return;
+                }
 
-            if (count($settings) <= 0) {
-                $msg = xarML('Settings passed from form are empty!');
-                throw new BadParameterException($msg);
-            }
+                if (count($settings) <= 0) {
+                    $msg = xarML('Settings passed from form are empty!');
+                    throw new BadParameterException($msg);
+                }
 
-            // Confirm authorisation code.
-            if (!xarSec::confirmAuthKey()) {
-                return;
-            }
+                // Confirm authorisation code.
+                if (!xarSec::confirmAuthKey()) {
+                    return;
+                }
 
-            xarMod::apiFunc('comments', 'user', 'setoptions', $settings);
+                xarMod::apiFunc('comments', 'user', 'setoptions', $settings);
 
-            // Redirect
-            xarController::redirect(xarController::URL('roles', 'user', 'account'));
+                // Redirect
+                xarController::redirect(xarController::URL('roles', 'user', 'account'));
 
-            break;
+                break;
         }
     } else {
         $data=''; //make sure hooks in usermenu don't fail because this function returns unset

@@ -72,7 +72,7 @@ function comments_admin_modifyconfig()
 
         case 'update':
             // Confirm authorisation code
-           // if (!xarSec::confirmAuthKey()) return;
+            // if (!xarSec::confirmAuthKey()) return;
             //if (!xarVar::fetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('comments', 'itemsperpage'), xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
             //if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, xarVar::NOT_REQUIRED)) return;
             //if (!xarVar::fetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('comments', 'useModuleAlias'), xarVar::NOT_REQUIRED)) return;
@@ -98,12 +98,12 @@ function comments_admin_modifyconfig()
                 return;
             }
 
-        if (!xarVar::fetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), xarVar::NOT_REQUIRED)) {
-            return;
-        }
+            if (!xarVar::fetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), xarVar::NOT_REQUIRED)) {
+                return;
+            }
 
             if (!xarVar::fetch('postanon', 'checkbox', $postanon, xarModVars::get('comments', 'postanon'), xarVar::NOT_REQUIRED)) {
                 return;
@@ -126,7 +126,7 @@ function comments_admin_modifyconfig()
             if (!xarVar::fetch('order', 'str:1:', $order, _COM_SORT_ASC, xarVar::NOT_REQUIRED)) {
                 return;
             }
-           // if (!xarVar::fetch('authorize', 'checkbox', $authorize, xarModVars::get('comments', 'authorize'), xarVar::NOT_REQUIRED)) return;
+            // if (!xarVar::fetch('authorize', 'checkbox', $authorize, xarModVars::get('comments', 'authorize'), xarVar::NOT_REQUIRED)) return;
             if (!xarVar::fetch('authorize', 'checkbox', $authorize, 1, xarVar::NOT_REQUIRED)) {
                 return;
             }
@@ -175,35 +175,34 @@ function comments_admin_modifyconfig()
                 if (!xarMod::apiFunc('comments', 'admin', 'import_blacklist')) return;
             }
             */
-             if ($usersetrendering == true) {
-                 //check and hook Comments to roles if not already hooked
-                 if (!xarModHooks::isHooked('comments', 'roles')) {
-                     xarMod::apiFunc(
-                         'modules',
-                         'admin',
-                         'enablehooks',
-                         ['callerModName' => 'roles',
-                                               'hookModName' => 'comments', ]
-                     );
-                 }
-             } else {
-                 if (xarModHooks::isHooked('comments', 'roles')) {
-                     //unhook Comments from roles
-                     xarMod::apiFunc(
-                         'modules',
-                         'admin',
-                         'disablehooks',
-                         ['callerModName' => 'roles',
-                                               'hookModName' => 'comments', ]
-                     );
-                 }
-             }
+            if ($usersetrendering == true) {
+                //check and hook Comments to roles if not already hooked
+                if (!xarModHooks::isHooked('comments', 'roles')) {
+                    xarMod::apiFunc(
+                        'modules',
+                        'admin',
+                        'enablehooks',
+                        ['callerModName' => 'roles',
+                                              'hookModName' => 'comments', ]
+                    );
+                }
+            } else {
+                if (xarModHooks::isHooked('comments', 'roles')) {
+                    //unhook Comments from roles
+                    xarMod::apiFunc(
+                        'modules',
+                        'admin',
+                        'disablehooks',
+                        ['callerModName' => 'roles',
+                                              'hookModName' => 'comments', ]
+                    );
+                }
+            }
 
             xarController::redirect(xarController::URL('comments', 'admin', 'modifyconfig', ['tabmodule' => $tabmodule, 'tab' => $data['tab']]));
             // Return
             return true;
             break;
-
     }
     $data['hooks'] = $hooks;
     $data['tabmodule'] = $tabmodule;

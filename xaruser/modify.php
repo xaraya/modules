@@ -98,8 +98,8 @@ function comments_user_modify()
     }
     switch ($data['comment_action']) {
         case 'submit':
-# --------------------------------------------------------
-# Get the values from the form
+            # --------------------------------------------------------
+            # Get the values from the form
 #
             $valid = $data['object']->checkInput();
 
@@ -141,14 +141,14 @@ function comments_user_modify()
             $title =& $data['object']->properties['title']->value;
             $text  =& $data['object']->properties['text']->value;
             [$transformed_text,
-                 $transformed_title] =
-                        xarModHooks::call(
-                            'item',
-                            'transform',
-                            $data['comment_id'],
-                            [$text,
-                                               $title, ]
-                        );
+                $transformed_title] =
+                       xarModHooks::call(
+                           'item',
+                           'transform',
+                           $data['comment_id'],
+                           [$text,
+                                              $title, ]
+                       );
 
             $data['transformed_text']    = xarVar::prepHTMLDisplay($transformed_text);
             $data['transformed_title']   = xarVar::prepForDisplay($transformed_title);
@@ -160,13 +160,13 @@ function comments_user_modify()
         case 'preview':
         default:
             [$package['transformed-text'],
-                 $package['transformed-title']] = xarModHooks::call(
-                     'item',
-                     'transform',
-                     $header['parent_id'],
-                     [$package['text'],
-                                                                        $package['title'], ]
-                 );
+                $package['transformed-title']] = xarModHooks::call(
+                    'item',
+                    'transform',
+                    $header['parent_id'],
+                    [$package['text'],
+                                                                       $package['title'], ]
+                );
 
             $package['transformed-text']  = xarVar::prepHTMLDisplay($package['transformed-text']);
             $package['transformed-title'] = xarVar::prepHTMLDisplay($package['transformed-title']);
@@ -198,7 +198,6 @@ function comments_user_modify()
             $data['comment_action']      = 'modify';
 
             break;
-
     }
 
     $hooks = xarMod::apiFunc('comments', 'user', 'formhooks');

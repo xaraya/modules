@@ -21,13 +21,13 @@
  * @returns  array      returns whatever needs to be parsed by the BlockLayout engine
  */
 
- /*
-    generally speaking...
-    $package = the comment data
-    $header = info describing the item that we're commenting on
-    $receipt = particulars of the form submission
-    $parent_url = the url of the parent of these comments
- */
+/*
+   generally speaking...
+   $package = the comment data
+   $header = info describing the item that we're commenting on
+   $receipt = particulars of the form submission
+   $parent_url = the url of the parent of these comments
+*/
 
 function comments_user_reply()
 {
@@ -49,8 +49,8 @@ function comments_user_reply()
     }
     switch (strtolower($data['comment_action'])) {
         case 'submit':
-# --------------------------------------------------------
-# Get the values from the form
+            # --------------------------------------------------------
+            # Get the values from the form
 #
             $data['reply'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
             $valid = $data['reply']->checkInput();
@@ -74,15 +74,15 @@ function comments_user_reply()
                 $status = _COM_STATUS_OFF;
             }
 
-# --------------------------------------------------------
-# If something is wrong, represent the form
+            # --------------------------------------------------------
+            # If something is wrong, represent the form
 #
             if (!$valid) {
                 return xarTpl::module('comments', 'user', 'reply', $data);
             }
 
-# --------------------------------------------------------
-# Everything is go: if there is a comment, create and go to the next page
+            # --------------------------------------------------------
+            # Everything is go: if there is a comment, create and go to the next page
 #
             if (!empty($data['reply']->properties['text']->value)) {
                 $data['comment_id'] = $data['reply']->createItem();
@@ -93,8 +93,8 @@ function comments_user_reply()
             return true;
 
         case 'reply':
-# --------------------------------------------------------
-# Bail if the proper args were not passed
+            # --------------------------------------------------------
+            # Bail if the proper args were not passed
 #
             if (!xarVar::fetch('comment_id', 'int:1:', $data['comment_id'], 0, xarVar::NOT_REQUIRED)) {
                 return;
@@ -103,8 +103,8 @@ function comments_user_reply()
                 return xarResponse::NotFound();
             }
 
-# --------------------------------------------------------
-# Create the comment object
+            # --------------------------------------------------------
+            # Create the comment object
 #
             sys::import('modules.dynamicdata.class.objects.master');
             $data['object'] = DataObjectMaster::getObject(['name' => 'comments_comments']);
@@ -163,13 +163,13 @@ function comments_user_reply()
         case 'preview':
         default:
             [$package['transformed-text'],
-                 $package['transformed-title']] = xarModHooks::call(
-                     'item',
-                     'transform',
-                     $header['parent_id'],
-                     [$package['text'],
-                                                            $package['title'], ]
-                 );
+                $package['transformed-title']] = xarModHooks::call(
+                    'item',
+                    'transform',
+                    $header['parent_id'],
+                    [$package['text'],
+                                                           $package['title'], ]
+                );
 
             $package['transformed-text']  = xarVar::prepHTMLDisplay($package['transformed-text']);
             $package['transformed-title'] = xarVar::prepForDisplay($package['transformed-title']);
@@ -195,7 +195,6 @@ function comments_user_reply()
             $receipt['action']            = 'reply';
 
             break;
-
     }
 
     $hooks = xarMod::apiFunc('comments', 'user', 'formhooks');

@@ -16,7 +16,6 @@ sys::import('modules.base.class.pager');
  */
 function comments_admin_module_stats()
 {
-
     // Security Check
     if (!xarSecurity::check('AdminComments')) {
         return;
@@ -43,8 +42,8 @@ function comments_admin_module_stats()
             $modinfo['name'],
             'user',
             'getitemtypes',
-                                 // don't throw an exception if this function doesn't exist
-                                 [],
+            // don't throw an exception if this function doesn't exist
+            [],
             0
         );
         if (isset($mytypes) && !empty($mytypes[$itemtype])) {

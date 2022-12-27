@@ -28,12 +28,12 @@
  * @return   array      returns whatever needs to be parsed by the BlockLayout engine
  */
 
- /*
-    generally speaking...
-    $package = the comment data
-    $header = info describing the item that we're commenting on
-    $receipt = particulars of the form submission
- */
+/*
+   generally speaking...
+   $package = the comment data
+   $header = info describing the item that we're commenting on
+   $receipt = particulars of the form submission
+*/
 
 function comments_user_display($args)
 {

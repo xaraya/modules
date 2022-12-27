@@ -17,7 +17,6 @@
  */
 function comments_admin_stats()
 {
-
     // Security Check
     if (!xarSecurity::check('AdminComments')) {
         return;

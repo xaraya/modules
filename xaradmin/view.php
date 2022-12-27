@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/14.html
  * @author Carl P. Corliss <rabbitt@xaraya.com>
  */
- sys::import('modules.comments.xarincludes.defines');
+sys::import('modules.comments.xarincludes.defines');
 /**
  * This is a standard function to modify the configuration parameters of the
  * module

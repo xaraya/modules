@@ -367,7 +367,6 @@ function comments_renderer_array_depthbuoy($action, $depth, $value=true)
 
 function comments_renderer_array_maptree(&$CommentList, $modName = null)
 {
-
     // if $CommentList isn't an array or it is empty,
     // return an empty array
     if (!is_array($CommentList) || count($CommentList) == 0) {
@@ -635,12 +634,12 @@ function comments_renderer_array_sortvalue($value=null)
 
     if ($value != null) {
         switch (strtolower($value)) {
-        case _COM_SORT_DESC:
-            $sort = _COM_SORT_DESC;
-            break;
-        case _COM_SORT_ASC:
-        default:
-            $sort = _COM_SORT_ASC;
+            case _COM_SORT_DESC:
+                $sort = _COM_SORT_DESC;
+                break;
+            case _COM_SORT_ASC:
+            default:
+                $sort = _COM_SORT_ASC;
         }
     }
     return $sort;

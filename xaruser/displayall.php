@@ -94,8 +94,8 @@ function comments_user_displayall($args)
                 $module,
                 'user',
                 'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                // don't throw an exception if this function doesn't exist
+                [],
                 0
             );
             if (!empty($mytypes) && count($mytypes) > 0) {
@@ -247,14 +247,14 @@ function comments_user_displayall($args)
             $comments[$i]['text'] = xarVar::prepHTMLDisplay($comments[$i]['text']);
         }
         [$comments[$i]['text'],
-             $comments[$i]['subject']] = xarModHooks::call(
-                 'item',
-                 'transform',
-                 $comments[$i]['id'],
-                 [$comments[$i]['text'],
-                                                                   $comments[$i]['subject'], ],
-                 'comments'
-             );
+            $comments[$i]['subject']] = xarModHooks::call(
+                'item',
+                'transform',
+                $comments[$i]['id'],
+                [$comments[$i]['text'],
+                                                                  $comments[$i]['subject'], ],
+                'comments'
+            );
         $commentsarray[$daylabel][] = $comments[$i];
     }
 

@@ -110,7 +110,6 @@ function comments_admin_delete()
     }
 
     if ($data['dtype'] != 'item') { // multiple items
-
         $list = DataObjectMaster::getObjectList([
                             'name' => 'comments',
             ]);

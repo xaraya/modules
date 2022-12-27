@@ -47,10 +47,10 @@ function comments_admin_delete()
                 $output['objectid'] = $objectid;
                 $delete_args['objectid'] = $objectid;
 
-            // if dtype == object, then fall through to
-            // the module section below cuz we need both
-            // the module id and the object id
-            // no break
+                // if dtype == object, then fall through to
+                // the module section below cuz we need both
+                // the module id and the object id
+                // no break
             case 'module':
                 if (!xarVar::fetch('modid', 'int:1', $modid)) {
                     return;
@@ -88,7 +88,6 @@ function comments_admin_delete()
     // then delete in the manner specified (or not) and
     // then redirect to the Comment's Statistics page
     if (isset($submitted) && !empty($submitted)) {
-
         // Confirm authorisation code
         if (!xarSec::confirmAuthKey()) {
             return;

@@ -27,7 +27,6 @@
  */
 function comments_userapi_getitems($args)
 {
-
     // Get arguments from argument array
     extract($args);
 

@@ -74,8 +74,8 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
                     $modname,
                     'user',
                     'getitemtypes',
-                                     // don't throw an exception if this function doesn't exist
-                                     [],
+                    // don't throw an exception if this function doesn't exist
+                    [],
                     0
                 );
                 // we have hooks for individual item types here

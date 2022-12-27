@@ -16,7 +16,6 @@ sys::import('modules.base.class.pager');
  */
 function comments_admin_module_stats()
 {
-
     // Security Check
     if (!xarSecurity::check('AdminComments')) {
         return;
