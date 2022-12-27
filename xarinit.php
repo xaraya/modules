@@ -5,21 +5,21 @@
  *
  */
 
-    function xarayatesting_init()
-    {
-        # --------------------------------------------------------
+function xarayatesting_init()
+{
+    # --------------------------------------------------------
         #
-        # Set up tables
+    # Set up tables
         #
-        sys::import('xaraya.structures.query');
-        $q = new Query();
-        $prefix = xarDB::getPrefix();
+    sys::import('xaraya.structures.query');
+    $q = new Query();
+    $prefix = xarDB::getPrefix();
 
-        $query = "DROP TABLE IF EXISTS " . $prefix . "_xarayatesting_test";
-        if (!$q->run($query)) {
-            return;
-        }
-        $query = "CREATE TABLE " . $prefix . "_xarayatesting_test (
+    $query = "DROP TABLE IF EXISTS " . $prefix . "_xarayatesting_test";
+    if (!$q->run($query)) {
+        return;
+    }
+    $query = "CREATE TABLE " . $prefix . "_xarayatesting_test (
           id                   integer unsigned NOT NULL auto_increment,
           code                 varchar(64) NULL,
           name                 varchar(64) NULL,
@@ -41,125 +41,125 @@
           timestamp            integer default 0 NOT NULL,
         PRIMARY KEY  (id)
         )";
-        if (!$q->run($query)) {
-            return;
-        }
+    if (!$q->run($query)) {
+        return;
+    }
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Set up masks
+    # Set up masks
         #
-        xarMasks::register('ViewXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_OVERVIEW');
-        xarMasks::register('ReadXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_READ');
-        xarMasks::register('EditXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_EDIT');
-        xarMasks::register('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
-        xarMasks::register('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
+    xarMasks::register('ViewXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_OVERVIEW');
+    xarMasks::register('ReadXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_READ');
+    xarMasks::register('EditXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_EDIT');
+    xarMasks::register('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
+    xarMasks::register('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Set up privileges
+    # Set up privileges
         #
-        xarPrivileges::register('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
-        xarPrivileges::register('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
+    xarPrivileges::register('ManageXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_DELETE');
+    xarPrivileges::register('AdminXarayatesting', 'All', 'xarayatesting', 'All', 'All', 'ACCESS_ADMIN');
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Set up configuration modvars (general)
+    # Set up configuration modvars (general)
         #
-        $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'xarayatesting']);
-        $module_settings->initialize();
+    $module_settings = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'xarayatesting']);
+    $module_settings->initialize();
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Set up modvars
+    # Set up modvars
         #
-        xarModVars::set('xarayatesting', 'defaultmastertable', 'xarayatesting_tests');
+    xarModVars::set('xarayatesting', 'defaultmastertable', 'xarayatesting_tests');
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Set up hooks
+    # Set up hooks
         #
-        /*
-            sys::import('xaraya.structures.hooks.observer');
-            $observer = new BasicObserver('xarayatesting');
-            $subject = new HookSubject('comments');
-            $subject->attach($observer);
-            */
+    /*
+        sys::import('xaraya.structures.hooks.observer');
+        $observer = new BasicObserver('xarayatesting');
+        $subject = new HookSubject('comments');
+        $subject->attach($observer);
+        */
 
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Create DD objects
+    # Create DD objects
         #
-        $module = 'xarayatesting';
-        $objects = [
+    $module = 'xarayatesting';
+    $objects = [
 //                       'xarayatesting_tests',
-                         ];
+                     ];
 
-        if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
-            return;
-        }
-
-        return true;
+    if (!xarMod::apiFunc('modules', 'admin', 'standardinstall', ['module' => $module, 'objects' => $objects])) {
+        return;
     }
 
-    function xarayatesting_upgrade()
-    {
-        return true;
+    return true;
+}
+
+function xarayatesting_upgrade()
+{
+    return true;
+}
+
+function xarayatesting_delete()
+{
+    // Only change the next line. No need for anything else
+    $this_module = 'xarayatesting';
+
+    # --------------------------------------------------------
+        #
+    # Remove database tables
+        #
+    // Load table maintenance API
+    sys::import('xaraya.tableddl');
+
+    // Generate the SQL to drop the table using the API
+    $prefix = xarDB::getPrefix();
+    $table = $prefix . "_" . $this_module;
+    $query = xarTableDDL::dropTable($table);
+    if (empty($query)) {
+        return;
+    } // throw back
+
+    # --------------------------------------------------------
+        #
+    # Delete all DD objects created by this module
+        #
+    try {
+        $dd_objects = unserialize(xarModVars::get($this_module, $this_module . '_objects'));
+        foreach ($dd_objects as $key => $value) {
+            $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', ['objectid' => $value]);
+        }
+    } catch (Exception $e) {
     }
 
-    function xarayatesting_delete()
-    {
-        // Only change the next line. No need for anything else
-        $this_module = 'xarayatesting';
-
-        # --------------------------------------------------------
+    # --------------------------------------------------------
         #
-        # Remove database tables
+    # Remove the categories
         #
-        // Load table maintenance API
-        sys::import('xaraya.tableddl');
-
-        // Generate the SQL to drop the table using the API
-        $prefix = xarDB::getPrefix();
-        $table = $prefix . "_" . $this_module;
-        $query = xarTableDDL::dropTable($table);
-        if (empty($query)) {
-            return;
-        } // throw back
-
-        # --------------------------------------------------------
-        #
-        # Delete all DD objects created by this module
-        #
-        try {
-            $dd_objects = unserialize(xarModVars::get($this_module, $this_module . '_objects'));
-            foreach ($dd_objects as $key => $value) {
-                $result = xarMod::apiFunc('dynamicdata', 'admin', 'deleteobject', ['objectid' => $value]);
-            }
-        } catch (Exception $e) {
-        }
-
-        # --------------------------------------------------------
-        #
-        # Remove the categories
-        #
-        try {
-            xarMod::apiFunc(
-                'categories',
-                'admin',
-                'deletecat',
-                ['cid' => xarModVars::get($this_module, 'basecategory')]
-            );
-        } catch (Exception $e) {
-        }
-
-        # --------------------------------------------------------
-        #
-        # Remove modvars, masks and privilege instances
-        #
-        xarMasks::removemasks($this_module);
-        xarPrivileges::removeInstances($this_module);
-        xarModVars::delete_all($this_module);
-
-        return true;
+    try {
+        xarMod::apiFunc(
+            'categories',
+            'admin',
+            'deletecat',
+            ['cid' => xarModVars::get($this_module, 'basecategory')]
+        );
+    } catch (Exception $e) {
     }
+
+    # --------------------------------------------------------
+        #
+    # Remove modvars, masks and privilege instances
+        #
+    xarMasks::removemasks($this_module);
+    xarPrivileges::removeInstances($this_module);
+    xarModVars::delete_all($this_module);
+
+    return true;
+}

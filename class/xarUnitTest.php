@@ -120,12 +120,12 @@ class xarTestReport
         // what type to instantiate
         if (!isset($instance)) {
             switch ($type) {
-            case 'html':
-                $instance = new xarHTMLTestReport();
-                break;
-            default:
-                $instance = new xarTextTestReport();
-                break;
+                case 'html':
+                    $instance = new xarHTMLTestReport();
+                    break;
+                default:
+                    $instance = new xarTextTestReport();
+                    break;
             }
         }
         $this->instance = $instance;

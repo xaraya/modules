@@ -18,13 +18,13 @@
  * @author Jan Schrage <jan@xaraya.com>
  * @author Frank Besler <besfred@xaraya.com>
 */
-    sys::import('modules.dynamicdata.class.properties.master');
+sys::import('modules.dynamicdata.class.properties.master');
 
-    function xarayatesting_admin_othertests()
-    {
-        $picker = DataPropertyMaster::getProperty(['name' => 'filepicker']);
-        $picker->initialization_basedirectory = sys::code() . 'modules/xarayatesting/xarscans';
-        $picker->validation_file_extensions = 'php';
-        $data['tests'] = $picker->getOptions();
-        return $data;
-    }
+function xarayatesting_admin_othertests()
+{
+    $picker = DataPropertyMaster::getProperty(['name' => 'filepicker']);
+    $picker->initialization_basedirectory = sys::code() . 'modules/xarayatesting/xarscans';
+    $picker->validation_file_extensions = 'php';
+    $data['tests'] = $picker->getOptions();
+    return $data;
+}
