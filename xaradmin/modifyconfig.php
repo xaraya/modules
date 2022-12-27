@@ -13,7 +13,6 @@
 
 function ckeditor_admin_modifyconfig()
 {
-
     // Security Check
     if (!xarSecurity::check('AdminCKEditor')) {
         return;
@@ -76,7 +75,6 @@ function ckeditor_admin_modifyconfig()
             // Return
             return true;
             break;
-
     }
     $data['authid'] = xarSec::genAuthKey();
     return $data;

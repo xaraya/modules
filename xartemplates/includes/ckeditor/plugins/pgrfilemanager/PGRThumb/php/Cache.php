@@ -30,7 +30,7 @@ class PGRThumb_Cache
      *
      * @var string
      */
-    public static $dirMode = 0755;
+    public static $dirMode = 0o755;
     /**
      * Dir depth structure
      *
@@ -42,7 +42,7 @@ class PGRThumb_Cache
      *
      * @var string
      */
-    public static $fileMode = 0600;
+    public static $fileMode = 0o600;
 
     /**
      * Generate cached filename

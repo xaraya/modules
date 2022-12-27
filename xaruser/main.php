@@ -13,7 +13,6 @@
 
 function ckeditor_user_main()
 {
-
     // Security Check
     if (!xarSecurity::check('ReadCKEditor')) {
         return;

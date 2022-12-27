@@ -24,19 +24,19 @@ THE SOFTWARE.
 */
 
 
-    include_once dirname(__FILE__) . '/php/init.php';
+include_once dirname(__FILE__) . '/php/init.php';
 
-    $PGRUploaderExtension = "";
-    if (PGRFileManagerConfig::$allowedExtensions == "") {
-        $PGRUploaderExtension = "*.*";
-    } else {
-        foreach (explode("|", PGRFileManagerConfig::$allowedExtensions) as $key => $extension) {
-            if ($key > 0) {
-                $PGRUploaderExtension .= ";";
-            }
-            $PGRUploaderExtension .= "*." . $extension;
+$PGRUploaderExtension = "";
+if (PGRFileManagerConfig::$allowedExtensions == "") {
+    $PGRUploaderExtension = "*.*";
+} else {
+    foreach (explode("|", PGRFileManagerConfig::$allowedExtensions) as $key => $extension) {
+        if ($key > 0) {
+            $PGRUploaderExtension .= ";";
         }
+        $PGRUploaderExtension .= "*." . $extension;
     }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl">
