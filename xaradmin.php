@@ -41,132 +41,132 @@ function &translations_create_druidbar($currentStep, $dnType, $dnName, $extid)
     $stepCount = 0;
 
     switch ($dnType) {
-    case xarMLS::DNTYPE_CORE:
-        $stepLabels[CHOOSE] = xarML('Core');
-        $stepLabels[INFO] = xarML('Overview');
-        $stepLabels[GENSKELS] = xarML('Skel. Generation');
-        $stepLabels[TRAN] = xarML('Translate');
-        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
-        $stepLabels[GENTRANS] = xarML('Trans. Generation');
-        $stepLabels[REL] = xarML('Release');
-        $stepLabels[DOWNLOAD] = xarML('Download');
+        case xarMLS::DNTYPE_CORE:
+            $stepLabels[CHOOSE] = xarML('Core');
+            $stepLabels[INFO] = xarML('Overview');
+            $stepLabels[GENSKELS] = xarML('Skel. Generation');
+            $stepLabels[TRAN] = xarML('Translate');
+            $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+            $stepLabels[GENTRANS] = xarML('Trans. Generation');
+            $stepLabels[REL] = xarML('Release');
+            $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
-        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
+            $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
+            $stepURLs[INFO] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
+            $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+            $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+            $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+            $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+            $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
-        $stepCount = $currentStep + 1;
+            $stepCount = $currentStep + 1;
 
-        break;
-    case xarMLS::DNTYPE_MODULE:
-        $stepLabels[CHOOSE] = xarML('Choose a module');
-        $stepLabels[INFO] = xarML('Overview');
-        $stepLabels[GENSKELS] = xarML('Skel. Generation');
-        $stepLabels[TRAN] = xarML('Translate');
-        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
-        $stepLabels[GENTRANS] = xarML('Trans. Generation');
-        $stepLabels[REL] = xarML('Release');
-        $stepLabels[DOWNLOAD] = xarML('Download');
+            break;
+        case xarMLS::DNTYPE_MODULE:
+            $stepLabels[CHOOSE] = xarML('Choose a module');
+            $stepLabels[INFO] = xarML('Overview');
+            $stepLabels[GENSKELS] = xarML('Skel. Generation');
+            $stepLabels[TRAN] = xarML('Translate');
+            $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+            $stepLabels[GENTRANS] = xarML('Trans. Generation');
+            $stepLabels[REL] = xarML('Release');
+            $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_module');
-        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'module_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
+            $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_module');
+            $stepURLs[INFO] = xarController::URL('translations', 'admin', 'module_overview', $urlarray);
+            $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+            $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+            $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+            $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+            $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
-        $stepCount = $currentStep + 1;
+            $stepCount = $currentStep + 1;
 
-        break;
-    case xarMLS::DNTYPE_PROPERTY:
-        $stepLabels[CHOOSE] = xarML('Choose a property');
-        $stepLabels[INFO] = xarML('Overview');
-        $stepLabels[GENSKELS] = xarML('Skel. Generation');
-        $stepLabels[TRAN] = xarML('Translate');
-        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
-        $stepLabels[GENTRANS] = xarML('Trans. Generation');
-        $stepLabels[REL] = xarML('Release');
-        $stepLabels[DOWNLOAD] = xarML('Download');
+            break;
+        case xarMLS::DNTYPE_PROPERTY:
+            $stepLabels[CHOOSE] = xarML('Choose a property');
+            $stepLabels[INFO] = xarML('Overview');
+            $stepLabels[GENSKELS] = xarML('Skel. Generation');
+            $stepLabels[TRAN] = xarML('Translate');
+            $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+            $stepLabels[GENTRANS] = xarML('Trans. Generation');
+            $stepLabels[REL] = xarML('Release');
+            $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_property');
-        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
+            $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_property');
+            $stepURLs[INFO] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
+            $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+            $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+            $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+            $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+            $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
-        $stepCount = $currentStep + 1;
+            $stepCount = $currentStep + 1;
 
-        break;
-    case xarMLS::DNTYPE_BLOCK:
-        $stepLabels[CHOOSE] = xarML('Choose a block');
-        $stepLabels[INFO] = xarML('Overview');
-        $stepLabels[GENSKELS] = xarML('Skel. Generation');
-        $stepLabels[TRAN] = xarML('Translate');
-        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
-        $stepLabels[GENTRANS] = xarML('Trans. Generation');
-        $stepLabels[REL] = xarML('Release');
-        $stepLabels[DOWNLOAD] = xarML('Download');
+            break;
+        case xarMLS::DNTYPE_BLOCK:
+            $stepLabels[CHOOSE] = xarML('Choose a block');
+            $stepLabels[INFO] = xarML('Overview');
+            $stepLabels[GENSKELS] = xarML('Skel. Generation');
+            $stepLabels[TRAN] = xarML('Translate');
+            $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+            $stepLabels[GENTRANS] = xarML('Trans. Generation');
+            $stepLabels[REL] = xarML('Release');
+            $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_block');
-        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'bock_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
+            $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_block');
+            $stepURLs[INFO] = xarController::URL('translations', 'admin', 'bock_overview', $urlarray);
+            $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+            $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+            $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+            $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+            $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
-        $stepCount = $currentStep + 1;
+            $stepCount = $currentStep + 1;
 
-        break;
-    case xarMLS::DNTYPE_THEME:
-        $stepLabels[CHOOSE] = xarML('Choose a theme');
-        $stepLabels[INFO] = xarML('Overview');
-        $stepLabels[GENSKELS] = xarML('Skel. Generation');
-        $stepLabels[TRAN] = xarML('Translate');
-        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
-        $stepLabels[GENTRANS] = xarML('Trans. Generation');
-        $stepLabels[REL] = xarML('Release');
-        $stepLabels[DOWNLOAD] = xarML('Download');
+            break;
+        case xarMLS::DNTYPE_THEME:
+            $stepLabels[CHOOSE] = xarML('Choose a theme');
+            $stepLabels[INFO] = xarML('Overview');
+            $stepLabels[GENSKELS] = xarML('Skel. Generation');
+            $stepLabels[TRAN] = xarML('Translate');
+            $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+            $stepLabels[GENTRANS] = xarML('Trans. Generation');
+            $stepLabels[REL] = xarML('Release');
+            $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_theme');
-        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
+            $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_theme');
+            $stepURLs[INFO] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
+            $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+            $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+            $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+            $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+            $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
-        $stepCount = $currentStep + 1;
+            $stepCount = $currentStep + 1;
 
-        break;
-    case xarMLS::DNTYPE_OBJECT:
-        $stepLabels[CHOOSE] = xarML('Choose a dataobject');
-        $stepLabels[INFO] = xarML('Overview');
-        $stepLabels[GENSKELS] = xarML('Skel. Generation');
-        $stepLabels[TRAN] = xarML('Translate');
-        $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
-        $stepLabels[GENTRANS] = xarML('Trans. Generation');
-        $stepLabels[REL] = xarML('Release');
-        $stepLabels[DOWNLOAD] = xarML('Download');
+            break;
+        case xarMLS::DNTYPE_OBJECT:
+            $stepLabels[CHOOSE] = xarML('Choose a dataobject');
+            $stepLabels[INFO] = xarML('Overview');
+            $stepLabels[GENSKELS] = xarML('Skel. Generation');
+            $stepLabels[TRAN] = xarML('Translate');
+            $stepLabels[DELFUZZY] = xarML('Delete fuzzy');
+            $stepLabels[GENTRANS] = xarML('Trans. Generation');
+            $stepLabels[REL] = xarML('Release');
+            $stepLabels[DOWNLOAD] = xarML('Download');
 
-        $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_object');
-        $stepURLs[INFO] = xarController::URL('translations', 'admin', 'object_overview', $urlarray);
-        $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
-        $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
-        $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
-        $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
-        $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
+            $stepURLs[CHOOSE] = xarController::URL('translations', 'admin', 'choose_a_object');
+            $stepURLs[INFO] = xarController::URL('translations', 'admin', 'object_overview', $urlarray);
+            $stepURLs[GENSKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
+            $stepURLs[TRAN] = xarController::URL('translations', 'admin', 'translate', $urlarray);
+            $stepURLs[DELFUZZY] = xarController::URL('translations', 'admin', 'delete_fuzzy', $urlarray);
+            $stepURLs[GENTRANS] = xarController::URL('translations', 'admin', 'generate_trans_info', $urlarray);
+            $stepURLs[REL] = xarController::URL('translations', 'admin', 'release_info', $urlarray);
 
-        $stepCount = $currentStep + 1;
+            $stepCount = $currentStep + 1;
 
-        break;
+            break;
     }
     $steps=[];
 
@@ -193,23 +193,23 @@ function &translations_create_opbar($currentOp, $dnType, $dnName, $extid)
     $opLabels[OVERVIEW] = xarML('Overview');
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
-        break;
+            $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'core_overview', $urlarray);
+            break;
         case xarMLS::DNTYPE_MODULE:
-        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'module_overview', $urlarray);
-        break;
+            $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'module_overview', $urlarray);
+            break;
         case xarMLS::DNTYPE_PROPERTY:
-        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'property_overview', $urlarray);
-        break;
+            $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'property_overview', $urlarray);
+            break;
         case xarMLS::DNTYPE_BLOCK:
-        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'block_overview', $urlarray);
-        break;
+            $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'block_overview', $urlarray);
+            break;
         case xarMLS::DNTYPE_THEME:
-        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
-        break;
+            $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'theme_overview', $urlarray);
+            break;
         case xarMLS::DNTYPE_OBJECT:
-        $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'object_overview', $urlarray);
-        break;
+            $opURLs[OVERVIEW] = xarController::URL('translations', 'admin', 'object_overview', $urlarray);
+            break;
     }
     $opLabels[GEN_SKELS] = xarML('Generate skels');
     $opURLs[GEN_SKELS] = xarController::URL('translations', 'admin', 'generate_skels_info', $urlarray);
@@ -267,294 +267,294 @@ function translations_create_trabar($dnType, $dnName, $extid, $subtype, $subname
     $currentTra = -1;
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $subtypes = [];
-        $subnames = [];
-        $entrydata = [];
+            $subtypes = [];
+            $subnames = [];
+            $entrydata = [];
 
-        $args = [];
-        $args['dntype'] = xarMLS::DNTYPE_CORE;
-        $args['dnname'] = 'xaraya';
-        $args['subtype'] = 'core:';
-        $args['subname'] = 'core';
-        $selectedsubtype = 'core:';
-        $selectedsubname = 'core';
-        $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
-        if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-            $entrydata[] = $entry;
-            $subtypes[] = 'core:';
-            $subnames[] = 'core';
-        }
-        break;
+            $args = [];
+            $args['dntype'] = xarMLS::DNTYPE_CORE;
+            $args['dnname'] = 'xaraya';
+            $args['subtype'] = 'core:';
+            $args['subname'] = 'core';
+            $selectedsubtype = 'core:';
+            $selectedsubname = 'core';
+            $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
+            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                $entrydata[] = $entry;
+                $subtypes[] = 'core:';
+                $subnames[] = 'core';
+            }
+            break;
 
         case xarMLS::DNTYPE_MODULE:
 
-        $modid = $extid;
+            $modid = $extid;
 
-        if (!$modinfo = xarMod::getInfo($modid)) {
-            return;
-        }
-        $modname = $modinfo['name'];
-        $moddir = $modinfo['osdirectory'];
-
-        $selectedsubtype = $subtype;
-        $selectedsubname = $subname;
-
-        $module_contexts_list[] = 'modules:'.$modname.'::common';
-
-        $subnames = xarMod::apiFunc('translations', 'admin', 'get_module_phpfiles', ['moddir'=>$moddir]);
-        foreach ($subnames as $subname) {
-            $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
-        }
-
-        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$moddir]);
-
-        foreach ($dirnames as $dirname) {
-            if (!preg_match('%templates%i', $dirname, $matches)) {
-                $pattern = '/^([a-z0-9\-_]+)\.php$/i';
-            } else {
-                $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+            if (!$modinfo = xarMod::getInfo($modid)) {
+                return;
             }
-            $subnames = xarMod::apiFunc(
-                'translations',
-                'admin',
-                'get_module_files',
-                ['moddir' => sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern]
-            );
+            $modname = $modinfo['name'];
+            $moddir = $modinfo['osdirectory'];
 
+            $selectedsubtype = $subtype;
+            $selectedsubname = $subname;
+
+            $module_contexts_list[] = 'modules:'.$modname.'::common';
+
+            $subnames = xarMod::apiFunc('translations', 'admin', 'get_module_phpfiles', ['moddir'=>$moddir]);
             foreach ($subnames as $subname) {
-                $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
+                $module_contexts_list[] = 'modules:'.$modname.'::'.$subname;
             }
-        }
-        $subtypes = [];
-        $subnames = [];
-        $entrydata = [];
-        foreach ($module_contexts_list as $module_context) {
-            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $module_context);
-            $args = [];
-            $ctxtype2 = 'modules:'.$ctxtype1;
-            $args['dntype'] = xarMLS::DNTYPE_MODULE;
-            $args['dnname'] = $dnname1;
-            $args['subtype'] = $ctxtype2;
-            $args['subname'] = $ctxname1;
-            $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
-            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-                $entrydata[] = $entry;
-                $subtypes[] = $ctxtype2;
-                $subnames[] = $ctxname1;
+
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$moddir]);
+
+            foreach ($dirnames as $dirname) {
+                if (!preg_match('%templates%i', $dirname, $matches)) {
+                    $pattern = '/^([a-z0-9\-_]+)\.php$/i';
+                } else {
+                    $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+                }
+                $subnames = xarMod::apiFunc(
+                    'translations',
+                    'admin',
+                    'get_module_files',
+                    ['moddir' => sys::code() . "modules/$moddir/xar$dirname",'pattern'=>$pattern]
+                );
+
+                foreach ($subnames as $subname) {
+                    $module_contexts_list[] = 'modules:'.$modname.':'.$dirname.':'.$subname;
+                }
             }
-        }
-        break;
+            $subtypes = [];
+            $subnames = [];
+            $entrydata = [];
+            foreach ($module_contexts_list as $module_context) {
+                [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $module_context);
+                $args = [];
+                $ctxtype2 = 'modules:'.$ctxtype1;
+                $args['dntype'] = xarMLS::DNTYPE_MODULE;
+                $args['dnname'] = $dnname1;
+                $args['subtype'] = $ctxtype2;
+                $args['subname'] = $ctxname1;
+                $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
+                if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                    $entrydata[] = $entry;
+                    $subtypes[] = $ctxtype2;
+                    $subnames[] = $ctxname1;
+                }
+            }
+            break;
 
         case xarMLS::DNTYPE_PROPERTY:
 
-        xarMod::apiLoad('dynamicdata');
-        $tables =& xarDB::getTables();
-        sys::import('xaraya.structures.query');
-        $q = new Query('SELECT', $tables['dynamic_properties_def']);
-        $q->eq('id', $extid);
-        $q->run();
-        $propertyinfo = $q->row();
+            xarMod::apiLoad('dynamicdata');
+            $tables =& xarDB::getTables();
+            sys::import('xaraya.structures.query');
+            $q = new Query('SELECT', $tables['dynamic_properties_def']);
+            $q->eq('id', $extid);
+            $q->run();
+            $propertyinfo = $q->row();
 
-        $propertyname = $propertyinfo['name'];
-        $propertydir = $propertyinfo['name'];
+            $propertyname = $propertyinfo['name'];
+            $propertydir = $propertyinfo['name'];
 
-        $selectedsubtype = $subtype;
-        $selectedsubname = $subname;
+            $selectedsubtype = $subtype;
+            $selectedsubname = $subname;
 
-        $property_contexts_list[] = 'properties:'.$propertyname.'::common';
+            $property_contexts_list[] = 'properties:'.$propertyname.'::common';
 
-        $subnames = xarMod::apiFunc('translations', 'admin', 'get_property_phpfiles', ['propertydir'=>$propertydir]);
-        foreach ($subnames as $subname) {
-            $property_contexts_list[] = 'properties:'.$propertyname.'::'.$subname;
-        }
-
-        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$propertydir]);
-        foreach ($dirnames as $dirname) {
-            if (!preg_match('!^templates!i', $dirname, $matches)) {
-                $pattern = '/^([a-z0-9\-_]+)\.php$/i';
-            } else {
-                $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-            }
-            $subnames = xarMod::apiFunc(
-                'translations',
-                'admin',
-                'get_property_files',
-                ['propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern]
-            );
+            $subnames = xarMod::apiFunc('translations', 'admin', 'get_property_phpfiles', ['propertydir'=>$propertydir]);
             foreach ($subnames as $subname) {
-                $property_contexts_list[] = 'properties:'.$propertyname.':'.$dirname.':'.$subname;
+                $property_contexts_list[] = 'properties:'.$propertyname.'::'.$subname;
             }
-        }
 
-        $subtypes = [];
-        $subnames = [];
-        $entrydata = [];
-        foreach ($property_contexts_list as $property_context) {
-            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $property_context);
-            $args = [];
-            $ctxtype2 = 'properties:'.$ctxtype1;
-            $args['dntype'] = xarMLS::DNTYPE_PROPERTY;
-            $args['dnname'] = $dnname1;
-            $args['subtype'] = $ctxtype2;
-            $args['subname'] = $ctxname1;
-            $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
-            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-                $entrydata[] = $entry;
-                $subtypes[] = $ctxtype2;
-                $subnames[] = $ctxname1;
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$propertydir]);
+            foreach ($dirnames as $dirname) {
+                if (!preg_match('!^templates!i', $dirname, $matches)) {
+                    $pattern = '/^([a-z0-9\-_]+)\.php$/i';
+                } else {
+                    $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+                }
+                $subnames = xarMod::apiFunc(
+                    'translations',
+                    'admin',
+                    'get_property_files',
+                    ['propertydir'=>sys::code() . "properties/$propertydir/xar$dirname",'pattern'=>$pattern]
+                );
+                foreach ($subnames as $subname) {
+                    $property_contexts_list[] = 'properties:'.$propertyname.':'.$dirname.':'.$subname;
+                }
             }
-        }
-        break;
+
+            $subtypes = [];
+            $subnames = [];
+            $entrydata = [];
+            foreach ($property_contexts_list as $property_context) {
+                [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $property_context);
+                $args = [];
+                $ctxtype2 = 'properties:'.$ctxtype1;
+                $args['dntype'] = xarMLS::DNTYPE_PROPERTY;
+                $args['dnname'] = $dnname1;
+                $args['subtype'] = $ctxtype2;
+                $args['subname'] = $ctxname1;
+                $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
+                if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                    $entrydata[] = $entry;
+                    $subtypes[] = $ctxtype2;
+                    $subnames[] = $ctxname1;
+                }
+            }
+            break;
 
         case xarMLS::DNTYPE_BLOCK:
 
-        $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', ['type_id' => $extid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE]);
+            $blockinfo = xarMod::apiFunc('blocks', 'types', 'getitem', ['type_id' => $extid, 'type_state' => xarBlock::TYPE_STATE_ACTIVE]);
 
-        $blockname = $blockinfo['type'];
-        $blockdir = $blockinfo['type'];
+            $blockname = $blockinfo['type'];
+            $blockdir = $blockinfo['type'];
 
-        $selectedsubtype = $subtype;
-        $selectedsubname = $subname;
+            $selectedsubtype = $subtype;
+            $selectedsubname = $subname;
 
-        $block_contexts_list[] = 'blocks:'.$blockname.'::common';
+            $block_contexts_list[] = 'blocks:'.$blockname.'::common';
 
-        $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', ['blockdir'=>$blockdir]);
-        foreach ($subnames as $subname) {
-            $block_contexts_list[] = 'blocks:'.$blockname.'::'.$subname;
-        }
-
-        $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$blockdir]);
-        foreach ($dirnames as $dirname) {
-            if (!preg_match('!^templates!i', $dirname, $matches)) {
-                $pattern = '/^([a-z0-9\-_]+)\.php$/i';
-            } else {
-                $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
-            }
-            $subnames = xarMod::apiFunc(
-                'translations',
-                'admin',
-                'get_block_files',
-                ['blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern]
-            );
+            $subnames = xarMod::apiFunc('translations', 'admin', 'get_block_phpfiles', ['blockdir'=>$blockdir]);
             foreach ($subnames as $subname) {
-                $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
+                $block_contexts_list[] = 'blocks:'.$blockname.'::'.$subname;
             }
-        }
 
-        $subtypes = [];
-        $subnames = [];
-        $entrydata = [];
-        foreach ($block_contexts_list as $block_context) {
-            [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $block_context);
-            $args = [];
-            $ctxtype2 = 'blocks:'.$ctxtype1;
-            $args['dntype'] = xarMLS::DNTYPE_BLOCK;
-            $args['dnname'] = $dnname1;
-            $args['subtype'] = $ctxtype2;
-            $args['subname'] = $ctxname1;
-            $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
-            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-                $entrydata[] = $entry;
-                $subtypes[] = $ctxtype2;
-                $subnames[] = $ctxname1;
+            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$blockdir]);
+            foreach ($dirnames as $dirname) {
+                if (!preg_match('!^templates!i', $dirname, $matches)) {
+                    $pattern = '/^([a-z0-9\-_]+)\.php$/i';
+                } else {
+                    $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
+                }
+                $subnames = xarMod::apiFunc(
+                    'translations',
+                    'admin',
+                    'get_block_files',
+                    ['blockdir'=>sys::code() . "blocks/$blockdir/xar$dirname",'pattern'=>$pattern]
+                );
+                foreach ($subnames as $subname) {
+                    $block_contexts_list[] = 'blocks:'.$blockname.':'.$dirname.':'.$subname;
+                }
             }
-        }
-        break;
+
+            $subtypes = [];
+            $subnames = [];
+            $entrydata = [];
+            foreach ($block_contexts_list as $block_context) {
+                [$dntype1, $dnname1, $ctxtype1, $ctxname1] = explode(':', $block_context);
+                $args = [];
+                $ctxtype2 = 'blocks:'.$ctxtype1;
+                $args['dntype'] = xarMLS::DNTYPE_BLOCK;
+                $args['dnname'] = $dnname1;
+                $args['subtype'] = $ctxtype2;
+                $args['subname'] = $ctxname1;
+                $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $args);
+                if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                    $entrydata[] = $entry;
+                    $subtypes[] = $ctxtype2;
+                    $subnames[] = $ctxname1;
+                }
+            }
+            break;
 
         case xarMLS::DNTYPE_THEME:
-        $themeid = $extid;
-        if (!$themeinfo = xarMod::getInfo($themeid, 'theme')) {
-            return;
-        }
-
-        $themename = $themeinfo['osdirectory'];
-        $themedir = $themeinfo['osdirectory'];
-
-        $selectedsubtype = $subtype;
-        $selectedsubname = $subname;
-
-        $theme_contexts_list[] = [
-                                    'dntype' => xarMLS::DNTYPE_THEME,
-                                    'dnname' => $themename,
-                                    'subtype' => 'themes:',
-                                    'subname' => 'common', ];
-
-        $files = xarMod::apiFunc('translations', 'admin', 'get_files', ['themedir'=>$themedir]);
-
-        $prefix = 'themes/'.$themename;
-        foreach ($files as $file) {
-            $dirname = dirname($file);
-            if (strpos($prefix, $dirname) == 0) {
-                $dirname = substr($dirname, strlen($prefix) + 1);
-            } else {
-                throw new Exception('mismatch: ' . $prefix . " " . $dirname);
+            $themeid = $extid;
+            if (!$themeinfo = xarMod::getInfo($themeid, 'theme')) {
+                return;
             }
-            $subname = basename($file, '.xt');
+
+            $themename = $themeinfo['osdirectory'];
+            $themedir = $themeinfo['osdirectory'];
+
+            $selectedsubtype = $subtype;
+            $selectedsubname = $subname;
+
             $theme_contexts_list[] = [
                                         'dntype' => xarMLS::DNTYPE_THEME,
                                         'dnname' => $themename,
-                                        'subtype' => 'themes:' . $dirname,
-                                        'subname' => $subname, ];
-        }
+                                        'subtype' => 'themes:',
+                                        'subname' => 'common', ];
 
-        $subtypes = [];
-        $subnames = [];
-        $entrydata = [];
-        foreach ($theme_contexts_list as $theme_context) {
-            $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $theme_context);
-            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-                $entrydata[] = $entry;
-                $subtypes[] = $theme_context['subtype'];
-                $subnames[] = $theme_context['subname'];
+            $files = xarMod::apiFunc('translations', 'admin', 'get_files', ['themedir'=>$themedir]);
+
+            $prefix = 'themes/'.$themename;
+            foreach ($files as $file) {
+                $dirname = dirname($file);
+                if (strpos($prefix, $dirname) == 0) {
+                    $dirname = substr($dirname, strlen($prefix) + 1);
+                } else {
+                    throw new Exception('mismatch: ' . $prefix . " " . $dirname);
+                }
+                $subname = basename($file, '.xt');
+                $theme_contexts_list[] = [
+                                            'dntype' => xarMLS::DNTYPE_THEME,
+                                            'dnname' => $themename,
+                                            'subtype' => 'themes:' . $dirname,
+                                            'subname' => $subname, ];
             }
-        }
-        break;
+
+            $subtypes = [];
+            $subnames = [];
+            $entrydata = [];
+            foreach ($theme_contexts_list as $theme_context) {
+                $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $theme_context);
+                if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                    $entrydata[] = $entry;
+                    $subtypes[] = $theme_context['subtype'];
+                    $subnames[] = $theme_context['subname'];
+                }
+            }
+            break;
 
         case xarMLS::DNTYPE_OBJECT:
-        $objectid = $extid;
-        sys::import('modules.dynamicdata.class.objects.master');
-        $object = DataObjectMaster::getObject(['objectid' => $objectid]);
+            $objectid = $extid;
+            sys::import('modules.dynamicdata.class.objects.master');
+            $object = DataObjectMaster::getObject(['objectid' => $objectid]);
 
-        if (!$objectinfo = DataObjectMaster::getObjectInfo(['objectid' => $objectid])) {
-            return;
-        }
+            if (!$objectinfo = DataObjectMaster::getObjectInfo(['objectid' => $objectid])) {
+                return;
+            }
 
-        $objectname = $object->name;
-        $objectdir = $object->name;
+            $objectname = $object->name;
+            $objectdir = $object->name;
 
-        $selectedsubtype = $subtype;
-        $selectedsubname = $subname;
+            $selectedsubtype = $subtype;
+            $selectedsubname = $subname;
 
-        $object_contexts_list[] = [
-                                    'dntype'  => xarMLS::DNTYPE_OBJECT,
-                                    'dnname'  => 'object',
-                                    'subtype' => 'objects:',
-                                    'subname' => 'common', ];
-
-        $propertynames = xarMod::apiFunc('translations', 'admin', 'get_object_properties', ['object' => $object]);
-
-        $prefix = 'objects/'.$objectname;
-        foreach ($propertynames as $name) {
-            $subname = $name;
             $object_contexts_list[] = [
                                         'dntype'  => xarMLS::DNTYPE_OBJECT,
-                                        'dnname'  => $objectname,
-                                        'subtype' => 'objects:'.$objectname,
-                                        'subname' => $subname, ];
-        }
+                                        'dnname'  => 'object',
+                                        'subtype' => 'objects:',
+                                        'subname' => 'common', ];
 
-        $subtypes = [];
-        $subnames = [];
-        $entrydata = [];
-        foreach ($object_contexts_list as $object_context) {
-            $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $object_context);
-            if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
-                $entrydata[] = $entry;
-                $subtypes[] = $object_context['subtype'];
-                $subnames[] = $object_context['subname'];
+            $propertynames = xarMod::apiFunc('translations', 'admin', 'get_object_properties', ['object' => $object]);
+
+            $prefix = 'objects/'.$objectname;
+            foreach ($propertynames as $name) {
+                $subname = $name;
+                $object_contexts_list[] = [
+                                            'dntype'  => xarMLS::DNTYPE_OBJECT,
+                                            'dnname'  => $objectname,
+                                            'subtype' => 'objects:'.$objectname,
+                                            'subname' => $subname, ];
             }
-        }
-        break;
+
+            $subtypes = [];
+            $subnames = [];
+            $entrydata = [];
+            foreach ($object_contexts_list as $object_context) {
+                $entry = xarMod::apiFunc('translations', 'admin', 'getcontextentries', $object_context);
+                if ($entry['numEntries']+$entry['numKeyEntries'] > 0) {
+                    $entrydata[] = $entry;
+                    $subtypes[] = $object_context['subtype'];
+                    $subnames[] = $object_context['subname'];
+                }
+            }
+            break;
     }
     $subData = ['subtypes'=>$subtypes,
                  'subnames'=>$subnames,

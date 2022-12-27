@@ -30,18 +30,18 @@ function translations_adminapi_create_backend_instance($args)
         return;
     }
     switch ($bt) {
-    case 'php':
-        xarLog::message("MLS: Creating PHP backend", xarLog::LEVEL_INFO);
-        sys::import('xaraya.mlsbackends.php');
-        return new xarMLS__PHPTranslationsBackend([$locale]);
-    case 'xml':
-        xarLog::message("MLS: Creating XML backend", xarLog::LEVEL_INFO);
-        sys::import('xaraya.mlsbackends.xml');
-        return new xarMLS__XMLTranslationsBackend([$locale]);
-    case 'xml2php':
-        xarLog::message("MLS: Creating XML2PHP backend", xarLog::LEVEL_INFO);
-        sys::import('xaraya.mlsbackends.xml2php');
-        return new xarMLS__XML2PHPTranslationsBackend([$locale]);
+        case 'php':
+            xarLog::message("MLS: Creating PHP backend", xarLog::LEVEL_INFO);
+            sys::import('xaraya.mlsbackends.php');
+            return new xarMLS__PHPTranslationsBackend([$locale]);
+        case 'xml':
+            xarLog::message("MLS: Creating XML backend", xarLog::LEVEL_INFO);
+            sys::import('xaraya.mlsbackends.xml');
+            return new xarMLS__XMLTranslationsBackend([$locale]);
+        case 'xml2php':
+            xarLog::message("MLS: Creating XML2PHP backend", xarLog::LEVEL_INFO);
+            sys::import('xaraya.mlsbackends.xml2php');
+            return new xarMLS__XML2PHPTranslationsBackend([$locale]);
     }
     throw new Exception('Unknown');
 }

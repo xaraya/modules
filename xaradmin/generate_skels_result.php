@@ -42,12 +42,11 @@ function translations_admin_generate_skels_result()
     $args = ['locale'=>$locale];
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $res = xarMod::apiFunc('translations', 'admin', 'generate_core_skels', $args);
-        break;
+            $res = xarMod::apiFunc('translations', 'admin', 'generate_core_skels', $args);
+            break;
         case xarMLS::DNTYPE_MODULE:
 
             if ($dnTypeAll) {
-
                 // Get all modules
                 $installed = xarMod::apiFunc('modules', 'admin', 'getlist', ['filter' => ['State' => xarMod::STATE_INSTALLED]]);
                 if (!isset($installed)) {
@@ -74,23 +73,23 @@ function translations_admin_generate_skels_result()
                 $args['modid'] = $extid;
                 $res = xarMod::apiFunc('translations', 'admin', 'generate_module_skels', $args);
             }
-        break;
+            break;
         case xarMLS::DNTYPE_PROPERTY:
-        $args['propertyid'] = $extid;
-        $res = xarMod::apiFunc('translations', 'admin', 'generate_property_skels', $args);
-        break;
+            $args['propertyid'] = $extid;
+            $res = xarMod::apiFunc('translations', 'admin', 'generate_property_skels', $args);
+            break;
         case xarMLS::DNTYPE_BLOCK:
-        $args['blockid'] = $extid;
-        $res = xarMod::apiFunc('translations', 'admin', 'generate_block_skels', $args);
-        break;
+            $args['blockid'] = $extid;
+            $res = xarMod::apiFunc('translations', 'admin', 'generate_block_skels', $args);
+            break;
         case xarMLS::DNTYPE_THEME:
-        $args['themeid'] = $extid;
-        $res = xarMod::apiFunc('translations', 'admin', 'generate_theme_skels', $args);
-        break;
+            $args['themeid'] = $extid;
+            $res = xarMod::apiFunc('translations', 'admin', 'generate_theme_skels', $args);
+            break;
         case xarMLS::DNTYPE_OBJECT:
-        $args['objectid'] = $extid;
-        $res = xarMod::apiFunc('translations', 'admin', 'generate_object_skels', $args);
-        break;
+            $args['objectid'] = $extid;
+            $res = xarMod::apiFunc('translations', 'admin', 'generate_object_skels', $args);
+            break;
     }
     if (!isset($res)) {
         return;

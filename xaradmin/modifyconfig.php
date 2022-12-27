@@ -61,31 +61,30 @@ function translations_admin_modifyconfig()
     $data['maxcodelines'] = xarModVars::get('translations', 'maxcodelines');
 
     switch (strtolower($phase)) {
-            case 'modify':
-            default:
-                switch ($data['tab']) {
-                    case 'general':
-                        break;
-                }
+        case 'modify':
+        default:
+            switch ($data['tab']) {
+                case 'general':
+                    break;
+            }
 
-                break;
+            break;
 
-            case 'update':
-                // Confirm authorisation code
-                if (!xarSec::confirmAuthKey()) {
-                    return;
-                }
-                $isvalid = $data['module_settings']->checkInput();
-                if (!$isvalid) {
-                    return xarTpl::module('mailer', 'admin', 'modifyconfig', $data);
-                } else {
-                    $itemid = $data['module_settings']->updateItem();
-                }
-                xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
-                // Return
-                return true;
-                break;
-
-        }
+        case 'update':
+            // Confirm authorisation code
+            if (!xarSec::confirmAuthKey()) {
+                return;
+            }
+            $isvalid = $data['module_settings']->checkInput();
+            if (!$isvalid) {
+                return xarTpl::module('mailer', 'admin', 'modifyconfig', $data);
+            } else {
+                $itemid = $data['module_settings']->updateItem();
+            }
+            xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
+            // Return
+            return true;
+            break;
+    }
     return $data;
 }

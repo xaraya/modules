@@ -25,23 +25,23 @@ function translations_admin_update_info()
 
     switch ($type) {
         case 'core':
-        $url = xarController::URL('translations', 'admin', 'core_overview');
-        break;
+            $url = xarController::URL('translations', 'admin', 'core_overview');
+            break;
         case 'module':
-        $url = xarController::URL('translations', 'admin', 'choose_a_module');
-        break;
+            $url = xarController::URL('translations', 'admin', 'choose_a_module');
+            break;
         case 'property':
-        $url = xarController::URL('translations', 'admin', 'choose_a_property');
-        break;
+            $url = xarController::URL('translations', 'admin', 'choose_a_property');
+            break;
         case 'block':
-        $url = xarController::URL('translations', 'admin', 'choose_a_block');
-        break;
+            $url = xarController::URL('translations', 'admin', 'choose_a_block');
+            break;
         case 'theme':
-        $url = xarController::URL('translations', 'admin', 'choose_a_theme');
-        break;
+            $url = xarController::URL('translations', 'admin', 'choose_a_theme');
+            break;
         case 'object':
-        $url = xarController::URL('translations', 'admin', 'choose_a_object');
-        break;
+            $url = xarController::URL('translations', 'admin', 'choose_a_object');
+            break;
     }
     xarController::redirect($url);
 }

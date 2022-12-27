@@ -102,55 +102,55 @@ class PHPParser
                     // if (defined('PHPPARSERDEBUG'))
                     // printf("Result: %s<br />\n", $this->_string);
                     switch ($this->tokenarraytype[$token]) {
-                    case 'function':
-                        // Delete extra whitespaces and spaces around newline
-                        $this->_string = trim($this->_string);
-                        $this->_string = preg_replace('/[\t ]+/', ' ', $this->_string);
-                        $this->_string = preg_replace('/\s*\n\s*/', "\n", $this->_string);
-                        if ($this->strslasharray[$token]) {
-                            $this->_string = str_replace('\\\'', '\'', $this->_string);
-                        }
-                        if ($this->iskeytokenarray[$token]) {
-                            if (!isset($this->transKeyEntries[$this->_string])) {
-                                $this->transKeyEntries[$this->_string] = [];
+                        case 'function':
+                            // Delete extra whitespaces and spaces around newline
+                            $this->_string = trim($this->_string);
+                            $this->_string = preg_replace('/[\t ]+/', ' ', $this->_string);
+                            $this->_string = preg_replace('/\s*\n\s*/', "\n", $this->_string);
+                            if ($this->strslasharray[$token]) {
+                                $this->_string = str_replace('\\\'', '\'', $this->_string);
                             }
-                            $this->transKeyEntries[$this->_string][] = ['line' => $this->_line, 'file' => $this->filename];
-                        } else {
+                            if ($this->iskeytokenarray[$token]) {
+                                if (!isset($this->transKeyEntries[$this->_string])) {
+                                    $this->transKeyEntries[$this->_string] = [];
+                                }
+                                $this->transKeyEntries[$this->_string][] = ['line' => $this->_line, 'file' => $this->filename];
+                            } else {
+                                if (!isset($this->transEntries[$this->_string])) {
+                                    $this->transEntries[$this->_string] = [];
+                                }
+                                $this->transEntries[$this->_string][] = ['line' => $this->_line, 'file' => $this->filename];
+                            }
+                            break;
+                        case 'ML_dont_parse':
+                            $this->_string = trim($this->_string, " \t'");
+                            $this->notToParseFiles[$this->_string] = true;
+                            break;
+                        case 'ML_include':
+                            $this->_string = trim($this->_string, " \t'");
+                            $this->includedFiles[$this->_string] = true;
+                            break;
+                        case 'ML_add_string':
+                            $this->_string = trim($this->_string, " \t'");
                             if (!isset($this->transEntries[$this->_string])) {
                                 $this->transEntries[$this->_string] = [];
                             }
-                            $this->transEntries[$this->_string][] = ['line' => $this->_line, 'file' => $this->filename];
-                        }
-                        break;
-                    case 'ML_dont_parse':
-                        $this->_string = trim($this->_string, " \t'");
-                        $this->notToParseFiles[$this->_string] = true;
-                        break;
-                    case 'ML_include':
-                        $this->_string = trim($this->_string, " \t'");
-                        $this->includedFiles[$this->_string] = true;
-                        break;
-                    case 'ML_add_string':
-                        $this->_string = trim($this->_string, " \t'");
-                        if (!isset($this->transEntries[$this->_string])) {
-                            $this->transEntries[$this->_string] = [];
-                        }
-                        $this->transEntries[$this->_string][] = ['line' => $line, 'file' => $filename];
-                        break;
-                    case 'ML_add_key':
-                        $this->_string = trim($this->_string, " \t'");
-                        if (!isset($this->transKeyEntries[$this->_string])) {
-                            $this->transKeyEntries[$this->_string] = [];
-                        }
-                        $this->transKeyEntries[$this->_string][] = ['line' => $line, 'file' => $filename];
-                        break;
-                    case 'include':
-                        $this->_string = trim($this->_string, " \t\"'");
-                        //disregrd loggers
-                        if (!preg_match('/loggers/', $this->_string, $match)) {
-                            $this->includedFiles[$this->_string] = true;
-                        }
-                        break;
+                            $this->transEntries[$this->_string][] = ['line' => $line, 'file' => $filename];
+                            break;
+                        case 'ML_add_key':
+                            $this->_string = trim($this->_string, " \t'");
+                            if (!isset($this->transKeyEntries[$this->_string])) {
+                                $this->transKeyEntries[$this->_string] = [];
+                            }
+                            $this->transKeyEntries[$this->_string][] = ['line' => $line, 'file' => $filename];
+                            break;
+                        case 'include':
+                            $this->_string = trim($this->_string, " \t\"'");
+                            //disregrd loggers
+                            if (!preg_match('/loggers/', $this->_string, $match)) {
+                                $this->includedFiles[$this->_string] = true;
+                            }
+                            break;
                     }
                     $this->lasttokenarray = $this->tokenarray;
                     $this->_right = false;

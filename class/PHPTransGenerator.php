@@ -76,42 +76,42 @@ class PHPTranslationsGenerator
                                     $canWrite = 0;
                                 }
                             } else {
-                                mkdir($modules_dir, 0777);
+                                mkdir($modules_dir, 0o777);
                             }
                             if (file_exists($properties_dir)) {
                                 if (!is_writeable($properties_dir)) {
                                     $canWrite = 0;
                                 }
                             } else {
-                                mkdir($properties_dir, 0777);
+                                mkdir($properties_dir, 0o777);
                             }
                             if (file_exists($blocks_dir)) {
                                 if (!is_writeable($blocks_dir)) {
                                     $canWrite = 0;
                                 }
                             } else {
-                                mkdir($blocks_dir, 0777);
+                                mkdir($blocks_dir, 0o777);
                             }
                             if (file_exists($themes_dir)) {
                                 if (!is_writeable($themes_dir)) {
                                     $canWrite = 0;
                                 }
                             } else {
-                                mkdir($themes_dir, 0777);
+                                mkdir($themes_dir, 0o777);
                             }
                             if (file_exists($objects_dir)) {
                                 if (!is_writeable($objects_dir)) {
                                     $canWrite = 0;
                                 }
                             } else {
-                                mkdir($objects_dir, 0777);
+                                mkdir($objects_dir, 0o777);
                             }
                             if (file_exists($core_dir)) {
                                 if (!is_writeable($core_dir)) {
                                     $canWrite = 0;
                                 }
                             } else {
-                                mkdir($core_dir, 0777);
+                                mkdir($core_dir, 0o777);
                             }
                         } else {
                             $canWrite = 0; // var/locales/LOCALE/php is unwriteable
@@ -119,27 +119,27 @@ class PHPTranslationsGenerator
                     }
                 } else {
                     if (is_writeable($locale_dir)) {
-                        mkdir($php_dir, 0777);
-                        mkdir($modules_dir, 0777);
-                        mkdir($properties_dir, 0777);
-                        mkdir($blocks_dir, 0777);
-                        mkdir($themes_dir, 0777);
-                        mkdir($objects_dir, 0777);
-                        mkdir($core_dir, 0777);
+                        mkdir($php_dir, 0o777);
+                        mkdir($modules_dir, 0o777);
+                        mkdir($properties_dir, 0o777);
+                        mkdir($blocks_dir, 0o777);
+                        mkdir($themes_dir, 0o777);
+                        mkdir($objects_dir, 0o777);
+                        mkdir($core_dir, 0o777);
                     } else {
                         $canWrite = 0; // var/locales/LOCALE is unwriteable
                     }
                 }
             } else {
                 if (is_writeable($locales_dir)) {
-                    mkdir($locale_dir, 0777);
-                    mkdir($php_dir, 0777);
-                    mkdir($modules_dir, 0777);
-                    mkdir($properties_dir, 0777);
-                    mkdir($blocks_dir, 0777);
-                    mkdir($themes_dir, 0777);
-                    mkdir($objects_dir, 0777);
-                    mkdir($core_dir, 0777);
+                    mkdir($locale_dir, 0o777);
+                    mkdir($php_dir, 0o777);
+                    mkdir($modules_dir, 0o777);
+                    mkdir($properties_dir, 0o777);
+                    mkdir($blocks_dir, 0o777);
+                    mkdir($themes_dir, 0o777);
+                    mkdir($objects_dir, 0o777);
+                    mkdir($core_dir, 0o777);
                 } else {
                     $canWrite = 0; // var/locales is unwriteable
                 }
@@ -155,79 +155,79 @@ class PHPTranslationsGenerator
 
         switch ($dnType) {
             case xarMLS::DNTYPE_MODULE:
-            $this->baseDir = sys::code() . "$modules_dir/$dnName/";
-            if (!file_exists($this->baseDir)) {
-                mkdir($this->baseDir, 0777);
-            }
+                $this->baseDir = sys::code() . "$modules_dir/$dnName/";
+                if (!file_exists($this->baseDir)) {
+                    mkdir($this->baseDir, 0o777);
+                }
 
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$dnName]);
-            foreach ($dirnames as $dirname) {
-                if (file_exists($this->baseDir.$dirname)) {
-                    continue;
+                $dirnames = xarMod::apiFunc('translations', 'admin', 'get_module_dirs', ['moddir'=>$dnName]);
+                foreach ($dirnames as $dirname) {
+                    if (file_exists($this->baseDir.$dirname)) {
+                        continue;
+                    }
+                    if (!file_exists(sys::code() . "modules/$dnName/xar$dirname")) {
+                        continue;
+                    }
+                    mkdir($this->baseDir.$dirname, 0o777);
                 }
-                if (!file_exists(sys::code() . "modules/$dnName/xar$dirname")) {
-                    continue;
-                }
-                mkdir($this->baseDir.$dirname, 0777);
-            }
-            break;
+                break;
             case xarMLS::DNTYPE_PROPERTY:
-            $this->baseDir = "$properties_dir/$dnName/";
-            if (!file_exists($this->baseDir)) {
-                mkdir($this->baseDir, 0777);
-            }
-            //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$dnName]);
-            foreach ($dirnames as $dirname) {
-                if (file_exists($this->baseDir.$dirname)) {
-                    continue;
+                $this->baseDir = "$properties_dir/$dnName/";
+                if (!file_exists($this->baseDir)) {
+                    mkdir($this->baseDir, 0o777);
                 }
-                if (!file_exists("properties/$dnName/$dirname")) {
-                    continue;
+                //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+                $dirnames = xarMod::apiFunc('translations', 'admin', 'get_property_dirs', ['propertydir'=>$dnName]);
+                foreach ($dirnames as $dirname) {
+                    if (file_exists($this->baseDir.$dirname)) {
+                        continue;
+                    }
+                    if (!file_exists("properties/$dnName/$dirname")) {
+                        continue;
+                    }
+                    mkdir($this->baseDir.$dirname, 0o777);
                 }
-                mkdir($this->baseDir.$dirname, 0777);
-            }
-            break;
+                break;
             case xarMLS::DNTYPE_BLOCK:
-            $this->baseDir = "$blocks_dir/$dnName/";
-            if (!file_exists($this->baseDir)) {
-                mkdir($this->baseDir, 0777);
-            }
-            //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$dnName]);
-            foreach ($dirnames as $dirname) {
-                if (file_exists($this->baseDir.$dirname)) {
-                    continue;
+                $this->baseDir = "$blocks_dir/$dnName/";
+                if (!file_exists($this->baseDir)) {
+                    mkdir($this->baseDir, 0o777);
                 }
-                if (!file_exists("blocks/$dnName/$dirname")) {
-                    continue;
+                //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+                $dirnames = xarMod::apiFunc('translations', 'admin', 'get_block_dirs', ['blockdir'=>$dnName]);
+                foreach ($dirnames as $dirname) {
+                    if (file_exists($this->baseDir.$dirname)) {
+                        continue;
+                    }
+                    if (!file_exists("blocks/$dnName/$dirname")) {
+                        continue;
+                    }
+                    mkdir($this->baseDir.$dirname, 0o777);
                 }
-                mkdir($this->baseDir.$dirname, 0777);
-            }
-            break;
+                break;
             case xarMLS::DNTYPE_THEME:
-            $this->baseDir = "$themes_dir/$dnName/";
-            if (!file_exists($this->baseDir)) {
-                mkdir($this->baseDir, 0777);
-            }
-            //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
-            $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', ['themedir'=>$dnName]);
-            foreach ($dirnames as $dirname) {
-                if (file_exists($this->baseDir.$dirname)) {
-                    continue;
+                $this->baseDir = "$themes_dir/$dnName/";
+                if (!file_exists($this->baseDir)) {
+                    mkdir($this->baseDir, 0o777);
                 }
-                if (!file_exists("themes/$dnName/$dirname")) {
-                    continue;
+                //if (!file_exists($this->baseDir.'templates')) mkdir($this->baseDir.'templates', 0777);
+                $dirnames = xarMod::apiFunc('translations', 'admin', 'get_theme_dirs', ['themedir'=>$dnName]);
+                foreach ($dirnames as $dirname) {
+                    if (file_exists($this->baseDir.$dirname)) {
+                        continue;
+                    }
+                    if (!file_exists("themes/$dnName/$dirname")) {
+                        continue;
+                    }
+                    mkdir($this->baseDir.$dirname, 0o777);
                 }
-                mkdir($this->baseDir.$dirname, 0777);
-            }
-            break;
+                break;
             case xarMLS::DNTYPE_OBJECT:
-            $this->baseDir = $objects_dir.'/';
-            break;
+                $this->baseDir = $objects_dir.'/';
+                break;
             case xarMLS::DNTYPE_CORE:
-            $this->baseDir = $core_dir.'/';
-            break;
+                $this->baseDir = $core_dir.'/';
+                break;
         }
 
         return true;

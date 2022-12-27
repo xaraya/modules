@@ -194,7 +194,6 @@ function translations_adminapi_generate_property_skels($args)
         // Avoid creating entries for the same locale
         if ($locale != 'en_US.utf-8') {
             foreach ($transEntriesCollection[$subname] as $string => $references) {
-
                 // Check if string appears in core translations
                 $entry = $core_backend->getEntry($string);
                 if (isset($entry)) {
@@ -218,7 +217,6 @@ function translations_adminapi_generate_property_skels($args)
         }
 
         foreach ($transKeyEntriesCollection[$subname] as $key => $references) {
-
             // Check if key appears in core translations
             $keyEntry = $core_backend->getEntryByKey($key);
             if (isset($keyEntry)) {

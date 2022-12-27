@@ -23,7 +23,6 @@ function translations_adminapi_get_files($args)
     $files = [];
     $pattern = '/^([a-z0-9\-_]+)\.xt$/i';
     foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($prefix)) as $file) {
-
         // Ignore directories, files that are not templates, and templates in *ignore directories
         if (pathinfo($file, PATHINFO_EXTENSION) != 'xt' || preg_match('!/(ignore)/!', $file->getPathName())) {
             continue;

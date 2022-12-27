@@ -33,16 +33,16 @@ function translations_admin_release_result()
     $args = ['locale'=>$locale];
     switch ($dnType) {
         case xarMLS::DNTYPE_CORE:
-        $res = xarMod::apiFunc('translations', 'admin', 'release_core_trans', $args);
-        break;
+            $res = xarMod::apiFunc('translations', 'admin', 'release_core_trans', $args);
+            break;
         case xarMLS::DNTYPE_MODULE:
-        $args['modid'] = $extid;
-        $res = xarMod::apiFunc('translations', 'admin', 'release_module_trans', $args);
-        break;
+            $args['modid'] = $extid;
+            $res = xarMod::apiFunc('translations', 'admin', 'release_module_trans', $args);
+            break;
         case xarMLS::DNTYPE_THEME:
-        $args['themeid'] = $extid;
-        $res = xarMod::apiFunc('translations', 'admin', 'release_theme_trans', $args);
-        break;
+            $args['themeid'] = $extid;
+            $res = xarMod::apiFunc('translations', 'admin', 'release_theme_trans', $args);
+            break;
     }
     if (!isset($res)) {
         return;
