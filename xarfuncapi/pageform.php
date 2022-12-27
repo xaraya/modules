@@ -42,7 +42,7 @@ function xarpages_funcapi_pageform($args)
         if (isset($dd['unique_key']) && $dd['unique_key']) {
             $pf = _pageform_newkey();
         // (guaranteed a new cache)
-            // TODO: somewhere have to clean out any old pf objects
+        // TODO: somewhere have to clean out any old pf objects
         } else {
             $pf = xarUser::getVar('uid');
             // clear cached object

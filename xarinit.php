@@ -539,7 +539,7 @@ function xarpages_upgrade($oldversion)
         case '0.2.8':
             // Upgrade to 0.3.0 - no database changes
 
-        break;
+            break;
     }
 
     // Update successful.
