@@ -72,7 +72,7 @@ function release_userapi_getmoduleids($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         [$eid,$rid, $uid, $regname, $displname, $desc, $class, $certified, $approved,
-             $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype] = $result->fields;
+            $rstate, $regtime, $modified, $members, $scmlink, $openproj, $exttype] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
             $releaseinfo[] = ['eid'        => $eid,
                                    'rid'        => $rid,

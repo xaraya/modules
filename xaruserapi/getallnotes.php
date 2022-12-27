@@ -109,7 +109,7 @@ function release_userapi_getallnotes($args)
     // Put users into result array
     for (; !$result->EOF; $result->MoveNext()) {
         [$rnid, $rid,$eid,$regname, $uid,$version, $price, $priceterms, $demo, $demolink, $dllink,
-             $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype] = $result->fields;
+            $supported, $supportlink, $changelog, $notes, $time, $enotes, $certified, $approved, $rstate, $usefeed, $exttype] = $result->fields;
         if (xarSecurity::check('OverviewRelease', 0)) {
             $releaseinfo[] = ['rnid'       => $rnid,
                                    'rid'        => $rid,

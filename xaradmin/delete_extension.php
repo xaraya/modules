@@ -42,7 +42,6 @@ function release_admin_delete_extension($args)
     $data['authid'] = xarSec::genAuthKey('release');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

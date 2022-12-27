@@ -27,7 +27,6 @@ function release_user_rssviewids()
     $data = [];
 
     switch (strtolower($phase)) {
-
         case 'all':
         default:
 

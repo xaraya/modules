@@ -41,7 +41,6 @@ function release_admin_modify_release($args)
     $data['tplmodule'] = 'release';
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

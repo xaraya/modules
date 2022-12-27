@@ -317,167 +317,166 @@ function release_user_display($args)
             $data['tab'] = 'versions';
             break;
 
-      /*
-        case 'docsmodule':
-            $data['mtype'] = 'mgeneral';
-            // The user API function is called.
+            /*
+              case 'docsmodule':
+                  $data['mtype'] = 'mgeneral';
+                  // The user API function is called.
 
-            $items = xarMod::apiFunc('release', 'user','getdocs',
-                                    array('eid' => $eid,
-                                          'type'=> $data['mtype']));
+                  $items = xarMod::apiFunc('release', 'user','getdocs',
+                                          array('eid' => $eid,
+                                                'type'=> $data['mtype']));
 
-            if (empty($items)){
-                $data['message'] = xarML('There is no general module documentation defined');
-            }
+                  if (empty($items)){
+                      $data['message'] = xarML('There is no general module documentation defined');
+                  }
 
-            // Check individual permissions for Edit / Delete
-            for ($i = 0; $i < count($items); $i++) {
-                $item = $items[$i];
+                  // Check individual permissions for Edit / Delete
+                  for ($i = 0; $i < count($items); $i++) {
+                      $item = $items[$i];
 
-                $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
-                                                 array('rdid' => $item['rdid']));
-            }
-
-
-            $data['items'] = $items;
-
-            $data['version'] = 0;
-            $data['docs'] = 2;
-            $data['general'] = 0;
-
-            break;
-
-        case 'docstheme':
-
-            $data['mtype'] = 'tgeneral';
-            // The user API function is called.
-
-            $items = xarMod::apiFunc('release', 'user','getdocs',
-                                    array('eid' => $eid,
-                                          'type'=> $data['mtype']));
-
-            if (empty($items)){
-                $data['message'] = xarML('There is no general theme documentation defined');
-            }
-             $numitems=count($items);
-            // Check individual permissions for Edit / Delete
-            for ($i = 0; $i < $numitems; $i++) {
-                $item = $items[$i];
-
-                $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
-                                                 array('rdid' => $item['rdid']));
-            }
+                      $uid = xarUser::getVar('id');
+                      $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                      $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
+                                                       array('rdid' => $item['rdid']));
+                  }
 
 
-            $data['items'] = $items;
+                  $data['items'] = $items;
 
-            $data['version'] = 0;
-            $data['docs'] = 2;
-            $data['general'] = 0;
-            break;
+                  $data['version'] = 0;
+                  $data['docs'] = 2;
+                  $data['general'] = 0;
 
-        case 'docsblockgroups':
+                  break;
 
-            $data['mtype'] = 'bgroups';
-            // The user API function is called.
+              case 'docstheme':
 
-            $items = xarMod::apiFunc('release', 'user','getdocs',
-                                    array('eid' => $eid,
-                                          'type'=> $data['mtype']));
+                  $data['mtype'] = 'tgeneral';
+                  // The user API function is called.
 
-            if (empty($items)){
-                $data['message'] = xarML('There is no block groups documentation defined');
-            }
+                  $items = xarMod::apiFunc('release', 'user','getdocs',
+                                          array('eid' => $eid,
+                                                'type'=> $data['mtype']));
 
+                  if (empty($items)){
+                      $data['message'] = xarML('There is no general theme documentation defined');
+                  }
+                   $numitems=count($items);
+                  // Check individual permissions for Edit / Delete
+                  for ($i = 0; $i < $numitems; $i++) {
+                      $item = $items[$i];
 
-            // Check individual permissions for Edit / Delete
-            for ($i = 0; $i < count($items); $i++) {
-                $item = $items[$i];
-
-                $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
-                                                 array('rdid' => $item['rdid']));
-            }
-
-
-            $data['items'] = $items;
-
-            $data['version'] = 0;
-            $data['docs'] = 2;
-            $data['general'] = 0;
-
-            break;
-
-        case 'docsblocks':
-
-            $data['mtype'] = 'mblocks';
-            // The user API function is called.
-
-            $items = xarMod::apiFunc('release', 'user', 'getdocs',
-                                    array('eid' => $eid,
-                                          'type'=> $data['mtype']));
-
-            if (empty($items)){
-                $data['message'] = xarML('There is no blocks documentation defined');
-            }
-
-            // Check individual permissions for Edit / Delete
-            for ($i = 0; $i < count($items); $i++) {
-                $item = $items[$i];
-
-                $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarController::URL('release', 'user', 'getdoc',
-                                                 array('rdid' => $item['rdid']));
-            }
+                      $uid = xarUser::getVar('id');
+                      $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                      $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
+                                                       array('rdid' => $item['rdid']));
+                  }
 
 
-            $data['items'] = $items;
+                  $data['items'] = $items;
 
-            $data['version'] = 0;
-            $data['docs'] = 2;
-            $data['general'] = 0;
-            return $data;
-            break;
+                  $data['version'] = 0;
+                  $data['docs'] = 2;
+                  $data['general'] = 0;
+                  break;
 
-        case 'docshooks':
+              case 'docsblockgroups':
 
-            $data['mtype'] = 'mhooks';
-            // The user API function is called.
+                  $data['mtype'] = 'bgroups';
+                  // The user API function is called.
 
-            $items = xarMod::apiFunc('release', 'user', 'getdocs',
-                                    array('eid' => $eid,
-                                          'type'=> $data['mtype']));
+                  $items = xarMod::apiFunc('release', 'user','getdocs',
+                                          array('eid' => $eid,
+                                                'type'=> $data['mtype']));
 
-            if (empty($items)){
-                $data['message'] = xarML('There is no hooks documentation defined');
-            }
-
-            // Check individual permissions for Edit / Delete
-            for ($i = 0; $i < count($items); $i++) {
-                $item = $items[$i];
-
-                $uid = xarUser::getVar('id');
-                $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
-                $items[$i]['docurl'] = xarController::URL('release', 'user', 'getdoc',
-                                                 array('rdid' => $item['rdid']));
-            }
+                  if (empty($items)){
+                      $data['message'] = xarML('There is no block groups documentation defined');
+                  }
 
 
-            $data['items'] = $items;
+                  // Check individual permissions for Edit / Delete
+                  for ($i = 0; $i < count($items); $i++) {
+                      $item = $items[$i];
 
-            $data['version'] = 0;
-            $data['docs'] = 2;
-            $data['general'] = 0;
+                      $uid = xarUser::getVar('id');
+                      $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                      $items[$i]['docurl'] = xarController::URL('release', 'user','getdoc',
+                                                       array('rdid' => $item['rdid']));
+                  }
 
-            break;
-            */
 
+                  $data['items'] = $items;
+
+                  $data['version'] = 0;
+                  $data['docs'] = 2;
+                  $data['general'] = 0;
+
+                  break;
+
+              case 'docsblocks':
+
+                  $data['mtype'] = 'mblocks';
+                  // The user API function is called.
+
+                  $items = xarMod::apiFunc('release', 'user', 'getdocs',
+                                          array('eid' => $eid,
+                                                'type'=> $data['mtype']));
+
+                  if (empty($items)){
+                      $data['message'] = xarML('There is no blocks documentation defined');
+                  }
+
+                  // Check individual permissions for Edit / Delete
+                  for ($i = 0; $i < count($items); $i++) {
+                      $item = $items[$i];
+
+                      $uid = xarUser::getVar('id');
+                      $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                      $items[$i]['docurl'] = xarController::URL('release', 'user', 'getdoc',
+                                                       array('rdid' => $item['rdid']));
+                  }
+
+
+                  $data['items'] = $items;
+
+                  $data['version'] = 0;
+                  $data['docs'] = 2;
+                  $data['general'] = 0;
+                  return $data;
+                  break;
+
+              case 'docshooks':
+
+                  $data['mtype'] = 'mhooks';
+                  // The user API function is called.
+
+                  $items = xarMod::apiFunc('release', 'user', 'getdocs',
+                                          array('eid' => $eid,
+                                                'type'=> $data['mtype']));
+
+                  if (empty($items)){
+                      $data['message'] = xarML('There is no hooks documentation defined');
+                  }
+
+                  // Check individual permissions for Edit / Delete
+                  for ($i = 0; $i < count($items); $i++) {
+                      $item = $items[$i];
+
+                      $uid = xarUser::getVar('id');
+                      $items[$i]['docsf'] = nl2br(xarVar::prepHTMLDisplay($item['docs']));
+                      $items[$i]['docurl'] = xarController::URL('release', 'user', 'getdoc',
+                                                       array('rdid' => $item['rdid']));
+                  }
+
+
+                  $data['items'] = $items;
+
+                  $data['version'] = 0;
+                  $data['docs'] = 2;
+                  $data['general'] = 0;
+
+                  break;
+                  */
     }
     foreach ($stateoptions as $key => $value) {
         if ($key==$id['rstate']) {

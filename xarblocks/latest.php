@@ -99,7 +99,7 @@ function release_latestblock_display($blockinfo)
                 );
 
             // Security check 2 - else only display the item name (or whatever is
-                // appropriate for your module)
+            // appropriate for your module)
             } else {
                 $item['link'] = '';
             }

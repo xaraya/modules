@@ -150,7 +150,7 @@ function release_userapi_decode_shorturl($params)
             if (!empty($foundcid)) {
                 $args['catid'] = $foundcid;
                 // TODO: now analyse $params[2] for index, list, \d+ etc.
-         // and return array('whatever', $args);
+                // and return array('whatever', $args);
             }
         }
         // we have no idea what this virtual path could be, so we'll just

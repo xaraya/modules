@@ -47,7 +47,6 @@ function release_user_viewnotes()
     $data['exttypes'] = $exttypes;
 
     switch (strtolower($phase)) {
-
         case 'viewall':
         default:
 

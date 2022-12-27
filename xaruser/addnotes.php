@@ -148,210 +148,210 @@ function release_user_addnotes($args)
 
         case 'getbasics':
 
-           //if (!xarSec::confirmAuthKey()) return;
-           $democheck=1;
-           $supportcheck=1;
-           $pricecheck=1;
+            //if (!xarSec::confirmAuthKey()) return;
+            $democheck=1;
+            $supportcheck=1;
+            $pricecheck=1;
             xarTpl::setPageTitle(xarVar::prepForDisplay($regname));
 
-           $authid = xarSec::genAuthKey();
-           $data = xarTpl::module('release', 'user', 'addnote_getbasics', ['eid'       => $eid,
-                                                                             'rid'      => $rid,
-                                                                             'regname'  => $regname,
-                                                                             'authid'   => $authid,
-                                                                             'democheck' => $democheck,
-                                                                             'supportcheck' => $supportcheck,
-                                                                             'exttype'  => $exttype,
-                                                                             'pricecheck' => $pricecheck, ]);
+            $authid = xarSec::genAuthKey();
+            $data = xarTpl::module('release', 'user', 'addnote_getbasics', ['eid'       => $eid,
+                                                                              'rid'      => $rid,
+                                                                              'regname'  => $regname,
+                                                                              'authid'   => $authid,
+                                                                              'democheck' => $democheck,
+                                                                              'supportcheck' => $supportcheck,
+                                                                              'exttype'  => $exttype,
+                                                                              'pricecheck' => $pricecheck, ]);
             break;
 
         case 'getdetails':
 
-           if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
-               return;
-           };
-           if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           //if (!xarSec::confirmAuthKey()) return;
-           $usefeed = $usefeedchecked ? 1 : 0;
+            if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
+                return;
+            };
+            if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            //if (!xarSec::confirmAuthKey()) return;
+            $usefeed = $usefeedchecked ? 1 : 0;
             xarTpl::setPageTitle(xarVar::prepForDisplay($regname));
 
-           $authid = xarSec::genAuthKey();
-           $data = xarTpl::module('release', 'user', 'addnote_getdetails', ['eid'          => $eid,
-                                                                              'rid'          => $rid,
-                                                                              'regname'      => $regname,
-                                                                              'authid'       => $authid,
-                                                                              'version'      => $version,
-                                                                              'pricecheck'   => $pricecheck,
-                                                                              'supportcheck' => $supportcheck,
-                                                                              'democheck'    => $democheck,
-                                                                              'exttype'      => $exttype,
-                                                                              'stateoptions' => $stateoptions,
-                                                                              'usefeed'      => $usefeed, ]);
+            $authid = xarSec::genAuthKey();
+            $data = xarTpl::module('release', 'user', 'addnote_getdetails', ['eid'          => $eid,
+                                                                               'rid'          => $rid,
+                                                                               'regname'      => $regname,
+                                                                               'authid'       => $authid,
+                                                                               'version'      => $version,
+                                                                               'pricecheck'   => $pricecheck,
+                                                                               'supportcheck' => $supportcheck,
+                                                                               'democheck'    => $democheck,
+                                                                               'exttype'      => $exttype,
+                                                                               'stateoptions' => $stateoptions,
+                                                                               'usefeed'      => $usefeed, ]);
 
             break;
 
         case 'preview':
-           if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
-               return;
-           };
-           if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('dllink', 'str:1:', $dllink, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('price', 'str', $price, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('demolink', 'str:1:254', $demolink, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('supportlink', 'str:1:254', $supportlink, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('changelog', 'str', $changelog, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('notes', 'str', $notes, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('rstate', 'int:0:6', $rstate, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           $usefeed = $usefeedchecked ? 1 : 0;
-           //if (!xarSec::confirmAuthKey()) return;
-           //Get some info for the extensions state
-           foreach ($stateoptions as $key => $value) {
-               if ($key==$rstate) {
-                   $extstate=$stateoptions[$key];
-               }
-           }
-           $notesf = nl2br($notes);
-           $changelogf = nl2br($changelog);
+            if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
+                return;
+            };
+            if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('dllink', 'str:1:', $dllink, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('price', 'str', $price, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('demolink', 'str:1:254', $demolink, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('supportlink', 'str:1:254', $supportlink, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('changelog', 'str', $changelog, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('notes', 'str', $notes, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('rstate', 'int:0:6', $rstate, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            $usefeed = $usefeedchecked ? 1 : 0;
+            //if (!xarSec::confirmAuthKey()) return;
+            //Get some info for the extensions state
+            foreach ($stateoptions as $key => $value) {
+                if ($key==$rstate) {
+                    $extstate=$stateoptions[$key];
+                }
+            }
+            $notesf = nl2br($notes);
+            $changelogf = nl2br($changelog);
 
             xarTpl::setPageTitle(xarVar::prepForDisplay($regname));
 
-           $authid = xarSec::genAuthKey();
-           $data = xarTpl::module('release', 'user', 'addnote_preview', ['rid'         => $rid,
-                                                                              'eid'         => $eid,
-                                                                              'regname'     => $regname,
-                                                                              'authid'      => $authid,
-                                                                              'version'     => $version,
-                                                                              'pricecheck'  => $pricecheck,
-                                                                              'supportcheck'=> $supportcheck,
-                                                                              'democheck'   => $democheck,
-                                                                              'dllink'      => $dllink,
-                                                                              'price'       => $price,
-                                                                              'demolink'    => $demolink,
-                                                                              'supportlink' => $supportlink,
-                                                                              'changelog'   => $changelog,
-                                                                              'changelogf'  => $changelogf,
-                                                                              'notesf'      => $notesf,
-                                                                              'notes'       => $notes,
-                                                                              'rstate'      => $rstate,
-                                                                              'exttype'     => $exttype,
-                                                                              'stateoptions'=> $stateoptions,
-                                                                              'extstate'     => $extstate,
-                                                                              'usefeed'      => $usefeed, ]);
+            $authid = xarSec::genAuthKey();
+            $data = xarTpl::module('release', 'user', 'addnote_preview', ['rid'         => $rid,
+                                                                               'eid'         => $eid,
+                                                                               'regname'     => $regname,
+                                                                               'authid'      => $authid,
+                                                                               'version'     => $version,
+                                                                               'pricecheck'  => $pricecheck,
+                                                                               'supportcheck'=> $supportcheck,
+                                                                               'democheck'   => $democheck,
+                                                                               'dllink'      => $dllink,
+                                                                               'price'       => $price,
+                                                                               'demolink'    => $demolink,
+                                                                               'supportlink' => $supportlink,
+                                                                               'changelog'   => $changelog,
+                                                                               'changelogf'  => $changelogf,
+                                                                               'notesf'      => $notesf,
+                                                                               'notes'       => $notes,
+                                                                               'rstate'      => $rstate,
+                                                                               'exttype'     => $exttype,
+                                                                               'stateoptions'=> $stateoptions,
+                                                                               'extstate'     => $extstate,
+                                                                               'usefeed'      => $usefeed, ]);
 
 
 
             break;
 
         case 'update':
-           if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
-               return;
-           };
-           if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('dllink', 'str:1:', $dllink, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('price', 'float', $price, 0, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('demolink', 'str:1:254', $demolink, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('supportlink', 'str:1:254', $supportlink, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('changelog', 'str:1:', $changelog, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('notes', 'str:1:', $notes, '', xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('rstate', 'int:0:6', $rstate, 0, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
-               return;
-           }
-           //if (!xarSec::confirmAuthKey()) return;
+            if (!xarVar::fetch('rid', 'int:1:', $rid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('eid', 'int:1:', $eid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('exttype', 'int:1:', $exttype, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('regname', 'str:1:', $regname, null, xarVar::NOT_REQUIRED)) {
+                return;
+            };
+            if (!xarVar::fetch('version', 'str:1:', $version, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('pricecheck', 'int:1:2', $pricecheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('supportcheck', 'int:1:2', $supportcheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('democheck', 'int:1:2', $democheck, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('dllink', 'str:1:', $dllink, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('price', 'float', $price, 0, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('demolink', 'str:1:254', $demolink, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('supportlink', 'str:1:254', $supportlink, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('changelog', 'str:1:', $changelog, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('notes', 'str:1:', $notes, '', xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('rstate', 'int:0:6', $rstate, 0, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            if (!xarVar::fetch('usefeedchecked', 'checkbox', $usefeedchecked, false, xarVar::NOT_REQUIRED)) {
+                return;
+            }
+            //if (!xarSec::confirmAuthKey()) return;
             // The user API function is called.
             $usefeed = $usefeedchecked ? 1 : 0;
             $data = xarMod::apiFunc(
@@ -388,7 +388,7 @@ function release_user_addnotes($args)
 
             xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Thank You')));
 
-           $data = xarTpl::module('release', 'user', 'addnote_thanks');
+            $data = xarTpl::module('release', 'user', 'addnote_thanks');
 
             break;
     }

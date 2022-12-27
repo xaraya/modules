@@ -217,9 +217,9 @@ function release_upgrade($oldversion)
 {
     // Upgrade dependent on old version number
     switch ($oldversion) {
-       case '1.0.0': // current version
+        case '1.0.0': // current version
 
-        break;
+            break;
     }
 
     /* Update successful */

@@ -47,7 +47,6 @@ function release_user_addid($args)
     $data['exttypes']=$exttypes;
     if (xarUser::isLoggedIn()) {
         switch (strtolower($phase)) {
-
             case 'add':
             default:
                 $data['uid'] = xarUser::getVar('id');

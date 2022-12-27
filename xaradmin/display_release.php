@@ -14,25 +14,25 @@
  * Display an item of the release notes object
  *
  */
-    sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
-    function release_admin_display_release()
-    {
-        if (!xarSecurity::check('ReadRelease')) {
-            return;
-        }
-
-        if (!xarVar::fetch('name', 'str', $name, 'release_notes', xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
-            return;
-        }
-
-        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
-        $data['object']->getItem(['itemid' => $data['itemid']]);
-
-        $data['tplmodule'] = 'release';
-
-        return $data;
+function release_admin_display_release()
+{
+    if (!xarSecurity::check('ReadRelease')) {
+        return;
     }
+
+    if (!xarVar::fetch('name', 'str', $name, 'release_notes', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['object']->getItem(['itemid' => $data['itemid']]);
+
+    $data['tplmodule'] = 'release';
+
+    return $data;
+}

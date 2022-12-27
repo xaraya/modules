@@ -45,7 +45,6 @@ function release_user_modifyid($args)
     $data['exttypes']=$exttypes;
     $rid = $data['rid'];
     switch (strtolower($phase)) {
-
         case 'modify':
         default:
 
@@ -207,8 +206,8 @@ function release_user_modifyid($args)
                 return;
             }
 
-                xarController::redirect(xarController::URL('release', 'user', 'display', ['eid'=>$eid]));
-          return true;
+            xarController::redirect(xarController::URL('release', 'user', 'display', ['eid'=>$eid]));
+            return true;
 
             break;
     }

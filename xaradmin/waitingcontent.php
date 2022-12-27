@@ -23,7 +23,6 @@
  */
 function release_admin_waitingcontent()
 {
-
     // Get releasenotes
     unset($released);
     $released = xarMod::apiFunc(

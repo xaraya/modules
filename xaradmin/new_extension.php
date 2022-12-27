@@ -36,7 +36,6 @@ function release_admin_new_extension($args)
     $data['tplmodule'] = 'release';
 
     if ($data['confirm']) {
-
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
         if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;

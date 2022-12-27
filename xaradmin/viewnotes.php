@@ -47,7 +47,6 @@ function release_admin_viewnotes()
         $phase = 'unapproved';
     }
     switch (strtolower($phase)) {
-
         case 'unapproved':
         default:
 
@@ -158,11 +157,11 @@ function release_admin_viewnotes()
             if ($items == false) {
                 $data['message'] = xarML('There are no releases based on your filters');
             }
-             if ($filter == 1) {
-                 $phasedesc =xarML('Not Supported');
-             } else {
-                 $phasedesc =xarML('Supported');
-             }
+            if ($filter == 1) {
+                $phasedesc =xarML('Not Supported');
+            } else {
+                $phasedesc =xarML('Supported');
+            }
 
             break;
     }

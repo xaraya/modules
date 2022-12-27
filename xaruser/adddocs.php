@@ -61,9 +61,9 @@ function release_user_adddocs()
             // First we need to get the module that we are adding the release note to.
             // This will be done in several stages so that the information is accurate.
 
-           if (!xarVar::fetch('rid', 'isset', $rid, null, xarVar::NOT_REQUIRED)) {
-               return;
-           }
+            if (!xarVar::fetch('rid', 'isset', $rid, null, xarVar::NOT_REQUIRED)) {
+                return;
+            }
 
             // The user API function is called.
             $data = xarMod::apiFunc(
@@ -307,15 +307,15 @@ function release_user_adddocs()
                 return;
             }
 
-           if (!xarSec::confirmAuthKey()) {
-               return;
-           }
+            if (!xarSec::confirmAuthKey()) {
+                return;
+            }
 
-           if (!xarSecurity::check('EditRelease', 0)) {
-               $approved = 1;
-           } else {
-               $approved = 2;
-           }
+            if (!xarSecurity::check('EditRelease', 0)) {
+                $approved = 1;
+            } else {
+                $approved = 2;
+            }
 
             // The user API function is called.
             if (!xarMod::apiFunc(
@@ -335,7 +335,7 @@ function release_user_adddocs()
             xarController::redirect(xarController::URL('release', 'user', 'adddocs', ['phase' => $return,
                                                                               'eid' => $eid, ]));
 
-           $data = '';
+            $data = '';
             break;
     }
 
