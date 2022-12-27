@@ -536,8 +536,6 @@ class ActivityManager extends BaseManager
     */
     private function _label_nodes($pId)
     {
-
-
         ///an empty list of nodes starts the process
         $nodes = [];
         // the end activity id

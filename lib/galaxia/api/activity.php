@@ -49,36 +49,36 @@ class WorkflowActivity extends Base
         }
         $res = $result->fetchRow();
         switch ($res['type']) {
-          case 'start':
-            include_once(GALAXIA_LIBRARY.'/api/activities/start.php');
-            $act = new \Galaxia\Api\Activities\StartActivity();
-            break;
-          case 'end':
-            include_once(GALAXIA_LIBRARY.'/api/activities/end.php');
-            $act = new \Galaxia\Api\Activities\EndActivity();
-            break;
-          case 'join':
-            include_once(GALAXIA_LIBRARY.'/api/activities/join.php');
-            $act = new \Galaxia\Api\Activities\JoinActivity();
-            break;
-          case 'split':
-            include_once(GALAXIA_LIBRARY.'/api/activities/split.php');
-            $act = new \Galaxia\Api\Activities\SplitActivity();
-            break;
-          case 'standalone':
-            include_once(GALAXIA_LIBRARY.'/api/activities/standalone.php');
-            $act = new \Galaxia\Api\Activities\StandaloneActivity();
-            break;
-          case 'switch':
-            include_once(GALAXIA_LIBRARY.'/api/activities/switch.php');
-            $act = new \Galaxia\Api\Activities\SwitchActivity();
-            break;
-          case 'activity':
-            include_once(GALAXIA_LIBRARY.'/api/activities/standard.php');
-            $act = new \Galaxia\Api\Activities\StandardActivity();
-            break;
-          default:
-            trigger_error('Unknown activity type:'.$res['type'], E_USER_WARNING);
+            case 'start':
+                include_once(GALAXIA_LIBRARY.'/api/activities/start.php');
+                $act = new \Galaxia\Api\Activities\StartActivity();
+                break;
+            case 'end':
+                include_once(GALAXIA_LIBRARY.'/api/activities/end.php');
+                $act = new \Galaxia\Api\Activities\EndActivity();
+                break;
+            case 'join':
+                include_once(GALAXIA_LIBRARY.'/api/activities/join.php');
+                $act = new \Galaxia\Api\Activities\JoinActivity();
+                break;
+            case 'split':
+                include_once(GALAXIA_LIBRARY.'/api/activities/split.php');
+                $act = new \Galaxia\Api\Activities\SplitActivity();
+                break;
+            case 'standalone':
+                include_once(GALAXIA_LIBRARY.'/api/activities/standalone.php');
+                $act = new \Galaxia\Api\Activities\StandaloneActivity();
+                break;
+            case 'switch':
+                include_once(GALAXIA_LIBRARY.'/api/activities/switch.php');
+                $act = new \Galaxia\Api\Activities\SwitchActivity();
+                break;
+            case 'activity':
+                include_once(GALAXIA_LIBRARY.'/api/activities/standard.php');
+                $act = new \Galaxia\Api\Activities\StandardActivity();
+                break;
+            default:
+                trigger_error('Unknown activity type:'.$res['type'], E_USER_WARNING);
         }
 
         $act->isInteractive = $res['isInteractive'];

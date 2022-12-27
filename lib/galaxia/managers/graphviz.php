@@ -136,12 +136,12 @@ class Process_GraphViz
                 case 'wbmp': {
                     header('Content-Type: image/' . $format);
                 }
-                break;
+                    break;
 
                 case 'pdf': {
                     header('Content-Type: application/pdf');
                 }
-                break;
+                    break;
             }
 
             header('Content-Length: ' . filesize($outputfile));

@@ -302,7 +302,7 @@ class GUI extends Base
                       where gia.instanceId=? and gia.activityId=? and gia.user=? and gur.user=?",
           [$instanceId,$activityId,'*',$user]
       ))
-      ) {
+        ) {
             return false;
         }
         include_once(GALAXIA_LIBRARY.'/api/instance.php');

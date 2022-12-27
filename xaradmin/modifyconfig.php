@@ -57,8 +57,8 @@ function workflow_admin_modifyconfig()
                     $modname,
                     'user',
                     'getitemtypes',
-                                         // don't throw an exception if this function doesn't exist
-                                         [],
+                    // don't throw an exception if this function doesn't exist
+                    [],
                     0
                 );
                 foreach ($value as $itemtype => $val) {

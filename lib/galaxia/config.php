@@ -60,8 +60,7 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 if (!isset($GLOBALS['dbGalaxia'])) {
     if (defined('xarCore::GENERATION') && \xarCore::GENERATION == 2) {
-
-    // CHECKME: we need a connection *without* COMPAT_ASSOC_LOWER flags here, but xaraya sets this
+        // CHECKME: we need a connection *without* COMPAT_ASSOC_LOWER flags here, but xaraya sets this
         //          by default now. So we get another connection with the same DSN and without the flags
         $conn = \xarDB::getConn();
         $dsn = $conn->getDSN();

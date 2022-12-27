@@ -591,14 +591,14 @@ class ProcessManager extends BaseManager
     public function _create_directory_structure($name)
     {
         // Create in processes a directory with this name
-        mkdir(GALAXIA_PROCESSES."/$name", 0770);
-        mkdir(GALAXIA_PROCESSES."/$name/graph", 0770);
-        mkdir(GALAXIA_PROCESSES."/$name/code", 0770);
-        mkdir(GALAXIA_PROCESSES."/$name/compiled", 0770);
-        mkdir(GALAXIA_PROCESSES."/$name/code/activities", 0770);
-        mkdir(GALAXIA_PROCESSES."/$name/code/templates", 0770);
+        mkdir(GALAXIA_PROCESSES."/$name", 0o770);
+        mkdir(GALAXIA_PROCESSES."/$name/graph", 0o770);
+        mkdir(GALAXIA_PROCESSES."/$name/code", 0o770);
+        mkdir(GALAXIA_PROCESSES."/$name/compiled", 0o770);
+        mkdir(GALAXIA_PROCESSES."/$name/code/activities", 0o770);
+        mkdir(GALAXIA_PROCESSES."/$name/code/templates", 0o770);
         if (GALAXIA_TEMPLATES) {
-            mkdir(GALAXIA_TEMPLATES."/$name", 0770);
+            mkdir(GALAXIA_TEMPLATES."/$name", 0o770);
         }
         // Create shared file
         $fp = fopen(GALAXIA_PROCESSES."/$name/code/shared.php", "w");
@@ -633,7 +633,7 @@ class ProcessManager extends BaseManager
 
     public function _rec_copy($dir1, $dir2)
     {
-        @mkdir($dir2, 0777);
+        @mkdir($dir2, 0o777);
         $h = opendir($dir1);
         while (($file = readdir($h)) !== false) {
             if (is_file($dir1.'/'.$file)) {

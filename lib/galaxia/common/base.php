@@ -81,20 +81,20 @@ class Base extends Observable
         global $ADODB_LASTDB;
 
         switch ($ADODB_LASTDB) {
-        case "oci8":
-            $query = preg_replace("/`/", "\"", $query);
-            // convert bind variables - adodb does not do that
-            $qe = explode("?", $query);
-            $query = '';
-            for ($i = 0; $i < sizeof($qe) - 1; $i++) {
-                $query .= $qe[$i] . ":" . $i;
-            }
-            $query .= $qe[$i];
-            break;
-        case "postgres7":
-        case "sybase":
-            $query = preg_replace("/`/", "\"", $query);
-            break;
+            case "oci8":
+                $query = preg_replace("/`/", "\"", $query);
+                // convert bind variables - adodb does not do that
+                $qe = explode("?", $query);
+                $query = '';
+                for ($i = 0; $i < sizeof($qe) - 1; $i++) {
+                    $query .= $qe[$i] . ":" . $i;
+                }
+                $query .= $qe[$i];
+                break;
+            case "postgres7":
+            case "sybase":
+                $query = preg_replace("/`/", "\"", $query);
+                break;
         }
     }
 
@@ -103,21 +103,21 @@ class Base extends Observable
         global $ADODB_LASTDB;
 
         switch ($ADODB_LASTDB) {
-        case "pgsql72":
-        case "postgres7":
-        case "oci8":
-        case "sybase":
-            // Postgres needs " " around column names
-            //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-            $sort_mode = str_replace("_", "\" ", $sort_mode);
-            $sort_mode = "\"" . $sort_mode;
-            break;
-        case "mysql3":
-        case "mysql":
-        default:
-            $sort_mode = str_replace("_", "` ", $sort_mode);
-            $sort_mode = "`" . $sort_mode;
-            break;
+            case "pgsql72":
+            case "postgres7":
+            case "oci8":
+            case "sybase":
+                // Postgres needs " " around column names
+                //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
+                $sort_mode = str_replace("_", "\" ", $sort_mode);
+                $sort_mode = "\"" . $sort_mode;
+                break;
+            case "mysql3":
+            case "mysql":
+            default:
+                $sort_mode = str_replace("_", "` ", $sort_mode);
+                $sort_mode = "`" . $sort_mode;
+                break;
         }
         return $sort_mode;
     }
@@ -127,15 +127,15 @@ class Base extends Observable
         global $ADODB_LASTDB;
 
         switch ($ADODB_LASTDB) {
-        case "pgsql72":
-        case "oci8":
-        case "postgres7":
-            return;
-            break;
-        case "mysql3":
-        case "mysql":
-            return "binary";
-            break;
+            case "pgsql72":
+            case "oci8":
+            case "postgres7":
+                return;
+                break;
+            case "mysql3":
+            case "mysql":
+                return "binary";
+                break;
         }
     }
 

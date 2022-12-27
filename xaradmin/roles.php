@@ -15,12 +15,12 @@ sys::import('modules.base.class.pager');
  * @author Workflow Module Development Team
  */
 sys::import('modules.workflow.lib.galaxia.api');
-  /**
-   * the roles administration function
-   *
-   * @author mikespub
-   * @access public
-   */
+/**
+ * the roles administration function
+ *
+ * @author mikespub
+ * @access public
+ */
 function workflow_admin_roles()
 {
     // Security Check

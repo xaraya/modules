@@ -33,11 +33,11 @@ function workflow_init()
     $dbtype  = xarSystemVars::get(null, 'DB.Type');
     switch ($dbtype) {
         case 'postgres':
-                $qte = '"';
+            $qte = '"';
             break;
         case 'mysql':
         default:
-                $qte = '';
+            $qte = '';
             break;
     }
 

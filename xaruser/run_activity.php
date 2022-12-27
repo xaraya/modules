@@ -165,29 +165,24 @@ function workflow_user_run_activity()
     //--------------------------------------------- Redirect the process to the next activity (or not)
 
     if (!isset($_REQUEST['auto']) && $activity->isInteractive() && $__activity_completed) {
-
-//--------------------------------------------- This activity is completed
+        //--------------------------------------------- This activity is completed
         if (!empty($_REQUEST['return_url'])) {
-
-//--------------------------------------------- We have a return_url; send us there
+            //--------------------------------------------- We have a return_url; send us there
 
             xarController::redirect($_REQUEST['return_url']);
         } elseif (empty($instance->instanceId)) {
-
-//--------------------------------------------- No return_url or instance given. go to the activities page
+            //--------------------------------------------- No return_url or instance given. go to the activities page
 
             xarController::redirect(xarController::URL('workflow', 'user', 'activities'));
         } else {
-
-//--------------------------------------------- No return_url, but an instance given. go to the instances page
+            //--------------------------------------------- No return_url, but an instance given. go to the instances page
 
             xarController::redirect(xarController::URL('workflow', 'user', 'display'));
         }
         return true;
 //    } elseif (!isset($_REQUEST['auto']) && $activity->isInteractive() && $activity->getType() == 'standalone' && !empty($_REQUEST['return_url'])) {
     } elseif (!isset($_REQUEST['auto']) && $activity->getType() == 'standalone' && !empty($_REQUEST['return_url'])) {
-
-//---------------------------------------------  Case of a completed standalone activity <-- REVIEW THIS
+        //---------------------------------------------  Case of a completed standalone activity <-- REVIEW THIS
 
         xarController::redirect($_REQUEST['return_url']);
         return true;
@@ -197,8 +192,7 @@ function workflow_user_run_activity()
         //--------------------------------------------- This activity is not completed
 
         if ((!isset($_REQUEST['auto']) || !$_REQUEST['auto'])&& $activity->isInteractive()) {
-
-//--------------------------------------------- This activity is interactive and not autorouted
+            //--------------------------------------------- This activity is interactive and not autorouted
 
             // This activity is interactive and not autorouted. Run it and then halt
             //$section = 'workflow';
@@ -243,14 +237,12 @@ function workflow_user_run_activity()
                 return $output;
             }
         } elseif (isset($_REQUEST['auto']) && $activity->isInteractive()) {
-
-//--------------------------------------------- This activity is interactive and autorouted
+            //--------------------------------------------- This activity is interactive and autorouted
 
             // This activity is interactive and autorouted. Run it and then set up for the next activity
             $template = 'completed';
         } else {
-
-//--------------------------------------------- This activity is not interactive and not autorouted
+            //--------------------------------------------- This activity is not interactive and not autorouted
 
             // This activity is not interactive and autorouted. Send it on
             $instance->complete();
