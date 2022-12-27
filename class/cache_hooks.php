@@ -172,7 +172,7 @@ class xarCache_Hooks extends xarObject
                 sys::import('modules.dynamicdata.class.objects.master');
                 $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
                                                                     'itemtype' => $itemtype, ]);
-            // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
+                // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarOutputCache::$pageCacheIsEnabled) {
                     xarPageCache::flushCached('dynamicdata-');
@@ -180,7 +180,7 @@ class xarCache_Hooks extends xarObject
                         xarPageCache::flushCached('objecturl-' . $objectinfo['name'] . '-');
                     }
                 }
-            // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
+                // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
                 // flush dynamicdata module
                 if (xarOutputCache::$moduleCacheIsEnabled) {
                     xarModuleCache::flushCached('dynamicdata-');
@@ -498,7 +498,7 @@ class xarCache_Hooks extends xarObject
                     xarPageCache::flushCached('');
                 }
                 // and flush the block
-            // FIXME: we can't filter on the middle of the key, only on the start of it
+                // FIXME: we can't filter on the middle of the key, only on the start of it
                 $cacheKey = "-blockid" . $objectid;
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
                     xarBlockCache::flushCached('');
@@ -530,7 +530,7 @@ class xarCache_Hooks extends xarObject
                 sys::import('modules.dynamicdata.class.objects.master');
                 $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
                                                                     'itemtype' => $itemtype, ]);
-            // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
+                // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                     xarPageCache::flushCached('dynamicdata-');
@@ -538,7 +538,7 @@ class xarCache_Hooks extends xarObject
                         xarPageCache::flushCached('objecturl-' . $objectinfo['name'] . '-');
                     }
                 }
-            // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
+                // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
                 // flush dynamicdata module
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$moduleCacheIsEnabled) {
                     xarModuleCache::flushCached('dynamicdata-');
@@ -666,7 +666,7 @@ class xarCache_Hooks extends xarObject
                     xarPageCache::flushCached('');
                 }
                 // and flush the block
-            // FIXME: we can't filter on the middle of the key, only on the start of it
+                // FIXME: we can't filter on the middle of the key, only on the start of it
                 $cacheKey = "-blockid" . $objectid;
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$blockCacheIsEnabled) {
                     xarBlockCache::flushCached('');
@@ -698,7 +698,7 @@ class xarCache_Hooks extends xarObject
                 sys::import('modules.dynamicdata.class.objects.master');
                 $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
                                                                     'itemtype' => $itemtype, ]);
-            // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
+                // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
                     xarPageCache::flushCached('dynamicdata-');
@@ -706,7 +706,7 @@ class xarCache_Hooks extends xarObject
                         xarPageCache::flushCached('objecturl-' . $objectinfo['name'] . '-');
                     }
                 }
-            // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
+                // CHECKME: how do we know if we need to e.g. flush dyn_example module here ?
                 // flush dynamicdata module
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$moduleCacheIsEnabled) {
                     xarModuleCache::flushCached('dynamicdata-');
@@ -733,8 +733,8 @@ class xarCache_Hooks extends xarObject
                     }
                 }
                 // incase it's got a user view, like categories.
-            // fall-through
-            // no break
+                // fall-through
+                // no break
             default:
                 // identify pages that include the updated item and delete the cached files
                 // nothing fancy yet, just flush it out
@@ -813,7 +813,6 @@ class xarCache_Hooks extends xarObject
         // TODO: make all the module cache flushing behavior admin configurable
 
         switch ($modname) {
-
             case 'base': // who knows what global impact a config change to base might make
                 // flush everything.
                 if (xarOutputCache::$pageCacheIsEnabled) {

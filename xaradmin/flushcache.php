@@ -55,7 +55,6 @@ function xarcachemanager_admin_flushcache($args)
         // Generate a one-time authorisation code for this operation
         $data['authid'] = xarSec::genAuthKey();
     } else {
-
         // Confirm authorisation code.
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -65,7 +64,6 @@ function xarcachemanager_admin_flushcache($args)
         if (empty($flushkey) || !is_array($flushkey)) {
             $data['notice'] = xarMLS::translate("You must select a cache key to flush.  If there is no cache key to select the output cache is empty.");
         } else {
-
             // Get the output cache directory so you can flush items even if output caching is disabled
             $outputCacheDir = xarCache::getOutputCacheDir();
 

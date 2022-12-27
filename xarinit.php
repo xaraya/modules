@@ -205,7 +205,7 @@ function xarcachemanager_upgrade($oldversion)
                 ['configSettings' => $cachingConfiguration,
                       'cachingConfigFile' => $cachingConfigFile, ]
             );
-                      // no break
+            // no break
         case 0.2:
         case '0.2.0':
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
@@ -353,7 +353,7 @@ function xarcachemanager_upgrade($oldversion)
                 ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
             );
-                          // no break
+            // no break
         case '0.3.5':
 
         case '2.0.0': //current version
@@ -533,7 +533,7 @@ function xarcachemanager_fs_setup($args)
             }
         } else {
             $old_umask = umask(0);
-            mkdir($setupDir, 0777);
+            mkdir($setupDir, 0o777);
             umask($old_umask);
             if (!file_exists($setupDir.'/index.html')) {
                 @touch($setupDir.'/index.html');

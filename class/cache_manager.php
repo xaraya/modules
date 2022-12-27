@@ -55,7 +55,6 @@ class xarCache_Manager extends xarObject
         $cachingConfiguration = [];
 
         switch ($from) {
-
             case 'db':
 
                 //get the modvars from the db

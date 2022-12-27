@@ -10,12 +10,12 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
- /**
- * utility function pass individual menu items to the main menu
- *
- * @author jsb| mikespub
- * @return array containing the menulinks for the main menu items.
- */
+/**
+* utility function pass individual menu items to the main menu
+*
+* @author jsb| mikespub
+* @return array containing the menulinks for the main menu items.
+*/
 function xarcachemanager_adminapi_getmenulinks()
 {
     $menulinks = [];

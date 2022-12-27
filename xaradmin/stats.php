@@ -223,7 +223,7 @@ function xarcachemanager_admin_stats($args)
             break;
 
         case 'query':
-// TODO: Get some query cache statistics when available
+            // TODO: Get some query cache statistics when available
             break;
 
         case 'autocache':
@@ -266,7 +266,6 @@ function xarcachemanager_admin_stats($args)
                                     'last' => 0, ];
             if (file_exists($outputCacheDir . '/autocache.stats') &&
                 filesize($outputCacheDir . '/autocache.stats') > 0) {
-
                 // analyze statsfile
                 xarcachemanager_stats_autostats($data['items'], $data['totals'], $outputCacheDir . '/autocache.stats');
             }
@@ -377,7 +376,7 @@ function xarcachemanager_admin_stats($args)
                 }
             }
 
-        // Note: the query cache is actually handled by ADODB
+            // Note: the query cache is actually handled by ADODB
             // get query cache stats
             $data['settings']['QueryCacheStorage'] = 'filesystem';
             $data['querycache'] = ['size'  => 0,
