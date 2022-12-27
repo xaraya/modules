@@ -89,9 +89,9 @@ function pubsub_userapi_getq($args)
     while (!$result->EOF) {
         $info = [];
         [$info['id'],$info['pubsubid'],$info['objectid'],$info['template_id'],$info['status'],
-             $info['eventid'],$info['userid'],$info['actionid'],$info['subdate'],$info['email'],
-             $info['modid'],$info['itemtype'],$info['cid'],$info['extra'],
-             $info['templatename'], $info['modname'], $info['username'], $info['catname']] = $result->fields;
+            $info['eventid'],$info['userid'],$info['actionid'],$info['subdate'],$info['email'],
+            $info['modid'],$info['itemtype'],$info['cid'],$info['extra'],
+            $info['templatename'], $info['modname'], $info['username'], $info['catname']] = $result->fields;
         $queue[] = $info;
         $result->MoveNext();
     }

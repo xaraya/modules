@@ -35,7 +35,6 @@ function pubsub_admin_new_template()
     $data['tplmodule'] = 'pubsub';
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

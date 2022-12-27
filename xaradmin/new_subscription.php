@@ -17,45 +17,44 @@
  * Create a new item of the pubsub_subscriptions object
  *
  */
-    sys::import('modules.dynamicdata.class.objects.master');
+sys::import('modules.dynamicdata.class.objects.master');
 
-    function pubsub_admin_new_subscription()
-    {
-        if (!xarSecurity::check('AddPubSub')) {
-            return;
-        }
-
-        if (!xarVar::fetch('name', 'str', $name, 'pubsub_subscriptions', xarVar::NOT_REQUIRED)) {
-            return;
-        }
-        if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
-            return;
-        }
-
-        $data['object'] = DataObjectMaster::getObject(['name' => $name]);
-        $data['tplmodule'] = 'pubsub';
-
-        if ($data['confirm']) {
-
-            // Check for a valid confirmation key
-            if (!xarSec::confirmAuthKey()) {
-                return;
-            }
-
-            // Get the data from the form
-            $isvalid = $data['object']->checkInput();
-
-            if (!$isvalid) {
-                // Bad data: redisplay the form with error messages
-                return xarTpl::module('pubsub', 'admin', 'new_subscription', $data);
-            } else {
-                // Good data: create the item
-                $item = $data['object']->createItem();
-
-                // Jump to the next page
-                xarController::redirect(xarController::URL('pubsub', 'admin', 'view_subscriptions'));
-                return true;
-            }
-        }
-        return $data;
+function pubsub_admin_new_subscription()
+{
+    if (!xarSecurity::check('AddPubSub')) {
+        return;
     }
+
+    if (!xarVar::fetch('name', 'str', $name, 'pubsub_subscriptions', xarVar::NOT_REQUIRED)) {
+        return;
+    }
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
+        return;
+    }
+
+    $data['object'] = DataObjectMaster::getObject(['name' => $name]);
+    $data['tplmodule'] = 'pubsub';
+
+    if ($data['confirm']) {
+        // Check for a valid confirmation key
+        if (!xarSec::confirmAuthKey()) {
+            return;
+        }
+
+        // Get the data from the form
+        $isvalid = $data['object']->checkInput();
+
+        if (!$isvalid) {
+            // Bad data: redisplay the form with error messages
+            return xarTpl::module('pubsub', 'admin', 'new_subscription', $data);
+        } else {
+            // Good data: create the item
+            $item = $data['object']->createItem();
+
+            // Jump to the next page
+            xarController::redirect(xarController::URL('pubsub', 'admin', 'view_subscriptions'));
+            return true;
+        }
+    }
+    return $data;
+}

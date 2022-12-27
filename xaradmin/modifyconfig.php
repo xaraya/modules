@@ -165,9 +165,9 @@ function pubsub_admin_modifyconfig()
                         }
                         break;
                     }
+                    break;
+            }
             break;
-        }
-        break;
         case 'update':
             // Confirm authorisation code
             if (!xarSec::confirmAuthKey()) {
@@ -280,7 +280,7 @@ function pubsub_admin_modifyconfig()
 
                     return true;
                     break;
-                }
+            }
             break;
     }
 

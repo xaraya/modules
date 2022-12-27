@@ -57,8 +57,8 @@ function pubsub_user_usermenu($args)
                         $modname,
                         'user',
                         'getitemtypes',
-                                             // don't throw an exception if this function doesn't exist
-                                             [],
+                        // don't throw an exception if this function doesn't exist
+                        [],
                         0
                     );
                     if (!empty($mytypes)) {
@@ -118,13 +118,13 @@ function pubsub_user_usermenu($args)
                 );
                 throw new Exception($msg);
             }
-             xarController::redirect(xarController::URL(
-                 'pubsub',
-                 'user',
-                 'usermenu',
-                 ['action' => 'list']
-             ));
-             return true;
+            xarController::redirect(xarController::URL(
+                'pubsub',
+                'user',
+                'usermenu',
+                ['action' => 'list']
+            ));
+            return true;
 
             break;
 

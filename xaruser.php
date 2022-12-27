@@ -18,8 +18,7 @@
  */
 function pubsub_user_main()
 {
-
-// TODO: show subscribed events for the user here ?
+    // TODO: show subscribed events for the user here ?
 
     // Return output
     return xarML('This module has no user interface *except* via display hooks');

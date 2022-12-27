@@ -44,7 +44,6 @@ function pubsub_admin_modify_job()
     $data['authid'] = xarSec::genAuthKey('pubsub');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

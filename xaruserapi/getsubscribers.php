@@ -68,7 +68,7 @@ function pubsub_userapi_getsubscribers($args)
 
     for (; !$result->EOF; $result->MoveNext()) {
         [$username, $modname, $modid, $itemtype, $cid, $subdate, $pubsubid, $email, $userid
-           ] = $result->fields;
+        ] = $result->fields;
         if (xarSecurity::check('AdminPubSub', 0)) {
             if ($userid == -1) {
                 $emailinfo = explode(' ', $email, 2);

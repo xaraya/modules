@@ -85,7 +85,7 @@ function pubsub_admin_view_templates()
     }
     switch ($action) {
         case 'display':
-        // TODO: adapt if/when we support more template variables in runjob()
+            // TODO: adapt if/when we support more template variables in runjob()
             $tplData = ['userid' => xarUser::getVar('id'),
                              'name' => xarUser::getVar('uname'),
                              'module' => 'example',
@@ -105,7 +105,7 @@ function pubsub_admin_view_templates()
 
         case 'new':
             $data['name'] = '';
-        // TODO: adapt if/when we support more template variables in runjob()
+            // TODO: adapt if/when we support more template variables in runjob()
             $templatevariables = ['#$userid#','#$name#','#$module#','#$itemtype#','#$itemid#','#$title#','#$link#'];
             $data['template'] = join("<br/>\n", $templatevariables);
             $data['id'] = 0;

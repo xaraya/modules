@@ -81,14 +81,14 @@ function pubsub_userapi_getsubscriptions($args)
     while (!$result->EOF) {
         $item = [];
         [$item['eventid'],
-             $item['modname'],
-             $item['modid'],
-             $item['itemtype'],
-             $item['catname'],
-             $item['cid'],
-             $item['extra'],
-             $item['pubsubid'],
-             $item['actionid']] = $result->fields;
+            $item['modname'],
+            $item['modid'],
+            $item['itemtype'],
+            $item['catname'],
+            $item['cid'],
+            $item['extra'],
+            $item['pubsubid'],
+            $item['actionid']] = $result->fields;
         $items[$item['pubsubid']] = $item;
         $result->MoveNext();
     }

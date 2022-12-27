@@ -22,7 +22,6 @@
  */
 function pubsub_userapi_deluser($args)
 {
-
     // Get arguments from argument array
     extract($args);
 

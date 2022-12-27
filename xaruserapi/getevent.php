@@ -72,12 +72,12 @@ function pubsub_userapi_getevent($args)
     }
 
     [$info['modid'],
-         $info['modname'],
-         $info['itemtype'],
-         $info['cid'],
-         $info['extra'],
-         $info['groupdescr'],
-         $info['catname']] = $result->fields;
+        $info['modname'],
+        $info['itemtype'],
+        $info['cid'],
+        $info['extra'],
+        $info['groupdescr'],
+        $info['catname']] = $result->fields;
 
     return $info;
 }
