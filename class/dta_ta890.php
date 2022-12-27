@@ -32,7 +32,7 @@ class DTA_TA890 extends DTA
         $segment01 = '01'
                 . $this->getHeader()
                 . $this->getTotalAmount()
-                ;
+        ;
         $segment01 = str_pad($segment01, 128, $this->fillChar);
         array_push($record, $segment01);
         $string = $this->concatenateRecord($record);

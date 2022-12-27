@@ -11,6 +11,6 @@
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
 
- define('PAYMENT_GATEWAY_SAFERPAY', 2);
- define('PAYMENT_GATEWAY_PAYPAL', 6);
- define('PAYMENT_GATEWAY_GESTPAY', 9);
+define('PAYMENT_GATEWAY_SAFERPAY', 2);
+define('PAYMENT_GATEWAY_PAYPAL', 6);
+define('PAYMENT_GATEWAY_GESTPAY', 9);

@@ -74,7 +74,6 @@ function payments_user_new_debit_account()
     # The create button was clicked
 #
     if ($data['confirm']) {
-
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
         if (!xarVar::fetch('preview', 'str', $preview, null, xarVar::DONT_SET)) {
             return;

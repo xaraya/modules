@@ -143,7 +143,7 @@ function payments_user_create_20022_file()
             case 'CHF':
             default:
                 $decimals = 2;
-            break;
+                break;
         }
         $data['items'][$key]['amount'] = number_format($item['amount'], $decimals, '.', '');
 

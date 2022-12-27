@@ -14,15 +14,15 @@
  * View items of the payments object
  *
  */
-    function payments_user_view($args)
-    {
-        // Data Managers have access
-        if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) {
-            return;
-        }
-
-        // Set a return url
-        xarSession::setVar('ddcontext.' . 'payments', ['return_url' => xarServer::getCurrentURL()]);
-
-        return [];
+function payments_user_view($args)
+{
+    // Data Managers have access
+    if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) {
+        return;
     }
+
+    // Set a return url
+    xarSession::setVar('ddcontext.' . 'payments', ['return_url' => xarServer::getCurrentURL()]);
+
+    return [];
+}

@@ -172,18 +172,18 @@ function payments_user_phase3()
         $process = xarModVars::get('payments', 'process', $module_id);
         //Psspl:Modified the code for allowEdit_payment.
         switch ($process) {
-                case 0:
-                default:
-                    return xarTpl::module('payments', 'user', 'errors', ['layout' => 'no_process']);
-                case 1:
-                    xarController::redirect(xarController::URL('payments', 'user', 'phase1', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
-                    // no break
-                case 2:
-                    xarController::redirect(xarController::URL('payments', 'user', 'phase1', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
-                    // no break
-                case 3:
-                    xarController::redirect(xarController::URL('payments', 'user', 'onestep', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
-            }
+            case 0:
+            default:
+                return xarTpl::module('payments', 'user', 'errors', ['layout' => 'no_process']);
+            case 1:
+                xarController::redirect(xarController::URL('payments', 'user', 'phase1', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
+                // no break
+            case 2:
+                xarController::redirect(xarController::URL('payments', 'user', 'phase1', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
+                // no break
+            case 3:
+                xarController::redirect(xarController::URL('payments', 'user', 'onestep', ['paymentmethod'=>$paymentmethod,'MakeChanges'=>1, 'allowEdit_Payment' => $data['allowEdit_Payment']]));
+        }
         return true;
     }
 

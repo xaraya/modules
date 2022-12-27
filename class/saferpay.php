@@ -360,89 +360,88 @@ class SaferPay extends BasicPayment
 
         foreach ($status_arr as $key => $value) {
             switch ($key) {
-
                 case 'func':
-                            break;
+                    break;
                 case 'module':
-                            break;
+                    break;
                 case 'DATA':
-                            break;
+                    break;
                 case 'MSGTYPE':
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                        break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'KEYID':
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'ID':
-                        $status  .=  "<tr><td class=\"v\">unique transaction identifier assigned by safer-pay.</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">unique transaction identifier assigned by safer-pay.</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'IPCOUNTRY':
-                        $status  .=  "<tr><td class=\"v\">IP COUNTRY</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">IP COUNTRY</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'IP':
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'AMOUNT':
-                        //convert the ammount back to the original format
-                        //The amount to be reserved specified in minor currency unit.
-                        //13500 EUR to 135.00 EUR
-                        $value = substr($value, 0, (strlen($value)-2));
-                        $value .= ".00";
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    //convert the ammount back to the original format
+                    //The amount to be reserved specified in minor currency unit.
+                    //13500 EUR to 135.00 EUR
+                    $value = substr($value, 0, (strlen($value)-2));
+                    $value .= ".00";
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'CURRENCY':
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'PROVIDERID':
-                        $status  .=  "<td class=\"v\">processor ID</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<td class=\"v\">processor ID</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'PROVIDERNAME':
-                        $status  .=  "<td class=\"v\">processor Name</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<td class=\"v\">processor Name</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'Test':
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'Card':
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'ORDERID':
-                        $status  .=  "<tr><td class=\"v\">ORDER ID</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">ORDER ID</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'ACCOUNTID':
-                        $status  .=  "<tr><td class=\"v\">Merchant account ID</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">Merchant account ID</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'ECI':
-                        $status  .=  "<tr><td class=\"v\">Electronic Commerce Indicator</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">Electronic Commerce Indicator</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'CAVV':
-                        $status  .=  "<tr><td class=\"v\">Cardholder Authentication Verification Value</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">Cardholder Authentication Verification Value</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'CCCOUNTRY':
-                        $status  .=  "<tr><td class=\"v\">country code(2-letter ISO 3166 format)</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">country code(2-letter ISO 3166 format)</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
                 case 'SIGNATURE':
 
-                            break;
+                    break;
                 default:
-                        $status  .=  "<tr><td class=\"v\">$key</td>";
-                        $status  .=  "<td class=\"v\">$value</td></tr>";
-                            break;
+                    $status  .=  "<tr><td class=\"v\">$key</td>";
+                    $status  .=  "<td class=\"v\">$value</td></tr>";
+                    break;
             }
         }
         $status  .=  "</table>";

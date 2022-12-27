@@ -39,7 +39,6 @@ function payments_user_modify_debit_account()
     $data['authid'] = xarSec::genAuthKey('payments');
 
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;

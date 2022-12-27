@@ -10,9 +10,9 @@
  * @license GPL {@link http://www.gnu.org/licenses/gpl.html}
  * @author Marc Lutolf <marc@luetolf-carroll.com>
  */
- /**
- * PSSPL : Added the file to redirect the GestPay Payment Failure Response to the amount page.
- */
+/**
+* PSSPL : Added the file to redirect the GestPay Payment Failure Response to the amount page.
+*/
 
 //We are in <root>/html/modules/payments and we want <root>/lib
 include '../../../lib/bootstrap.php';

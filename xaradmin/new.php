@@ -14,13 +14,13 @@
  * Create a new item of the payments object
  *
  */
-    function payments_admin_new()
-    {
-        if (!xarSecurity::check('AddPayments')) {
-            return;
-        }
-
-        $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'payments']);
-        $data['tplmodule'] = 'payments';
-        return $data;
+function payments_admin_new()
+{
+    if (!xarSecurity::check('AddPayments')) {
+        return;
     }
+
+    $data['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', ['name' => 'payments']);
+    $data['tplmodule'] = 'payments';
+    return $data;
+}

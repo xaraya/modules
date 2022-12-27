@@ -15,17 +15,17 @@
  *
  */
 
-    function payments_admin_main()
-    {
-        if (!xarSecurity::check('AdminPayments')) {
-            return;
-        }
-
-        if (xarModVars::get('modules', 'disableoverview') == 0) {
-            return [];
-        } else {
-            xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig'));
-        }
-        // success
-        return true;
+function payments_admin_main()
+{
+    if (!xarSecurity::check('AdminPayments')) {
+        return;
     }
+
+    if (xarModVars::get('modules', 'disableoverview') == 0) {
+        return [];
+    } else {
+        xarController::redirect(xarController::URL('payments', 'admin', 'modifyconfig'));
+    }
+    // success
+    return true;
+}

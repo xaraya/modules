@@ -16,14 +16,14 @@
  * If we have a LedgerBA module installed, we'll assume the ledger daemon should be used
  */
 
-    function payments_adminapi_get_daemon()
-    {
-        if (xarMod::isAvailable('ledgerba')) {
-            sys::import('modules.ledgerba.class.daemon');
-            $daemon = LedgerDaemon::getInstance();
-        } else {
-            sys::import('modules.payments.class.daemon');
-            $daemon = PaymentsDaemon::getInstance();
-        }
-        return $daemon;
+function payments_adminapi_get_daemon()
+{
+    if (xarMod::isAvailable('ledgerba')) {
+        sys::import('modules.ledgerba.class.daemon');
+        $daemon = LedgerDaemon::getInstance();
+    } else {
+        sys::import('modules.payments.class.daemon');
+        $daemon = PaymentsDaemon::getInstance();
     }
+    return $daemon;
+}

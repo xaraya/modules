@@ -71,7 +71,7 @@ class DTA_TA826 extends DTA
         $segment03 = ''
                 . $this->getRecipient()
                 . $this->getPaymentReason()
-                ;
+        ;
         $segment03 = str_pad($segment03, 128, $this->fillChar);
         return $segment03;
     }

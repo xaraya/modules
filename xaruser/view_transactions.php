@@ -51,15 +51,15 @@ function payments_user_view_transactions($args)
     if (xarMod::isAvailable('ledgerba')) {
         $q->like('sender_object', 'ledgerba_mandant');
         $q->eq('sender_itemid', $daemon->getCurrentMandant());
-    /*
-    // Add the debit_accounts table to the query
-    $tables = xarDB::getTables();
-    $q->addtable($tables['payments_debit_account'], 'da');
-    $q->join('payments.sender_itemid', 'da.id');
-    // Only accounts of this mandant
-    $q->eq('da.sender_object', 'ledgerba_mandant');
-    $q->eq('da.sender_itemid', $daemon->getCurrentMandant());
-    */
+        /*
+        // Add the debit_accounts table to the query
+        $tables = xarDB::getTables();
+        $q->addtable($tables['payments_debit_account'], 'da');
+        $q->join('payments.sender_itemid', 'da.id');
+        // Only accounts of this mandant
+        $q->eq('da.sender_object', 'ledgerba_mandant');
+        $q->eq('da.sender_itemid', $daemon->getCurrentMandant());
+        */
     } else {
         // Object is a reserved word for now ...
         if (!empty($args['obj'])) {

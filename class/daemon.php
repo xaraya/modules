@@ -251,28 +251,28 @@ class PaymentsDaemon extends xarObject
         switch ($type) {
             case 'ap':
                 $settings = @unserialize($this->mandant_settings['ap_settings']);
-            break;
+                break;
             case 'ar':
                 $settings = @unserialize($this->mandant_settings['ar_settings']);
-            break;
+                break;
             case 'gl':
                 $settings = @unserialize($this->mandant_settings['gl_settings']);
-            break;
+                break;
             case 'py':
                 $settings = @unserialize($this->mandant_settings['py_settings']);
-            break;
+                break;
             case 'se':
                 $settings = @unserialize($this->mandant_settings['se_settings']);
-            break;
+                break;
             case 'so':
                 $settings = @unserialize($this->mandant_settings['so_settings']);
-            break;
+                break;
             default:
                 if (!isset($this->mandant_settings[$type])) {
                     throw new Exception(xarML('The setting #(1) does not exist', $type));
                 }
                 $settings = $this->mandant_settings[$type];
-            break;
+                break;
         }
         return $settings;
     }

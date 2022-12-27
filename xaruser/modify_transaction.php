@@ -125,7 +125,6 @@ function payments_user_modify_transaction()
     # The update button was clicked
 #
     if ($data['confirm']) {
-
         // Check for a valid confirmation key
         if (!xarSec::confirmAuthKey()) {
             return;
@@ -137,21 +136,21 @@ function payments_user_modify_transaction()
             case 1:
                 $data['object']->properties['iban']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
-            break;
-            // Red slip
+                break;
+                // Red slip
             case '2.2':
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
                 $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
-            break;
-            // Bank transfer
+                break;
+                // Bank transfer
             case '3':
                 $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
-            break;
-            // Salary payment
+                break;
+                // Salary payment
             case 6:
                 $data['object']->properties['bic']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
                 $data['object']->properties['reference_number']->setDisplayStatus(DataPropertyMaster::DD_DISPLAYSTATE_DISABLED);
-            break;
+                break;
         }
 
         // Get the data from the form

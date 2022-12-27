@@ -69,7 +69,7 @@ class DTA
                 . $this->getTransactionType()
                 . $this->getPaymentType()
                 . $this->getProcessingFlag()
-                ;
+        ;
         return $header;
     }
 
@@ -330,7 +330,7 @@ class DTA
                 . $this->getReferenceNr()
                 . $this->getDebitAccount()
                 . $this->getPaymentAmount()
-                ;
+        ;
         $segment01 = str_pad($segment01, 128, $this->fillChar);
         return $segment01;
     }
@@ -340,7 +340,7 @@ class DTA
         $segment02 = '02'
                 . $this->getConversionRate()
                 . $this->getClient()
-                ;
+        ;
         $segment02 = str_pad($segment02, 128, $this->fillChar);
         return $segment02;
     }
@@ -349,7 +349,7 @@ class DTA
     {
         $segment03 = '03'
                 . $this->getRecipient()
-                ;
+        ;
         $segment03 = str_pad($segment03, 128, $this->fillChar);
         return $segment03;
     }
@@ -359,7 +359,7 @@ class DTA
         $segment04 = '04'
                 . $this->getPaymentReason()
                 . $this->getBankAddressID()
-                ;
+        ;
         $segment04 = str_pad($segment04, 128, $this->fillChar);
         return $segment04;
     }
@@ -368,7 +368,7 @@ class DTA
     {
         $segment05 = '05'
                 . $this->getEndRecipient()
-                ;
+        ;
         $segment05 = str_pad($segment05, 128, $this->fillChar);
         return $segment05;
     }

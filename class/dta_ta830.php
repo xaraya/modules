@@ -27,7 +27,7 @@ class DTA_TA830 extends DTA
                 . $this->getConversionRate()
                 . $this->getClient()
                 . $this->getPadding(18)
-                ;
+        ;
         return $segment02;
     }
 }

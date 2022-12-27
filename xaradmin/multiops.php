@@ -61,46 +61,46 @@ function payments_admin_multiops()
         include_once($listing->filepath);
     }
     switch ($operation) {
-    case 0: /* virtually delete item */
-        foreach ($ids as $id => $val) {
-            if (empty($val)) {
-                continue;
+        case 0: /* virtually delete item */
+            foreach ($ids as $id => $val) {
+                if (empty($val)) {
+                    continue;
+                }
+                //get the listing
+                $item = $listing->getItem(['itemid' => $val]);
+                $thenumber = $listing->properties['number']->value;
+                $listing->properties['number']->initialization_transform = true;
+                if (!$listing->updateItem(['state' => $operation, 'number' => $thenumber])) {
+                    return;
+                }
             }
-            //get the listing
-            $item = $listing->getItem(['itemid' => $val]);
-            $thenumber = $listing->properties['number']->value;
-            $listing->properties['number']->initialization_transform = true;
-            if (!$listing->updateItem(['state' => $operation, 'number' => $thenumber])) {
-                return;
+            break;
+        case 1: /* reject item */
+        case 2: /* processed */
+        case 3: /* item is active, ready */
+            foreach ($ids as $id => $val) {
+                if (empty($val)) {
+                    continue;
+                }
+                //get the listing
+                $item = $listing->getItem(['itemid' => $val]);
+                if (!$listing->updateItem(['state' => $operation])) {
+                    return;
+                }
             }
-        }
-        break;
-    case 1: /* reject item */
-    case 2: /* processed */
-    case 3: /* item is active, ready */
-        foreach ($ids as $id => $val) {
-            if (empty($val)) {
-                continue;
+            break;
+        case 10: /* physically delete each item */
+            foreach ($ids as $id => $val) {
+                if (empty($val)) {
+                    continue;
+                }
+                //get the listing
+                $item = $listing->getItem(['itemid' => $val]);
+                if (!$listing->deleteItem()) {
+                    return;
+                }
             }
-            //get the listing
-            $item = $listing->getItem(['itemid' => $val]);
-            if (!$listing->updateItem(['state' => $operation])) {
-                return;
-            }
-        }
-        break;
-    case 10: /* physically delete each item */
-        foreach ($ids as $id => $val) {
-            if (empty($val)) {
-                continue;
-            }
-            //get the listing
-            $item = $listing->getItem(['itemid' => $val]);
-            if (!$listing->deleteItem()) {
-                return;
-            }
-        }
-        break;
+            break;
     } // end switch
 
     xarController::redirect($returnurl);

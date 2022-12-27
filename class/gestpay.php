@@ -68,11 +68,11 @@ class GestPay extends BasicPayment
         foreach ($items as $key => $val) {
             switch ($val['configuration_key']) {
                 case 'GESTPAY_SHOP_LOGIN':   $aryParams['SHOPLOGIN'] = isset($args['shoplogin']) ? urlencode($args['shoplogin']) : urlencode($val['configuration_value']);
-                                              break;
+                    break;
                 case 'GESTPAY_RIC_FILEPATH': $aryParams['RIC_FILEPATH'] = $args['ric_filepath'] ?? $val['configuration_value'];
-                                              break;
+                    break;
                 case 'GESTPAY_OTP_REORDER': $this->OTP_reorder = $val['configuration_value'];
-                                              break;
+                    break;
                 default:                      break;
             }
         }
@@ -280,86 +280,85 @@ class GestPay extends BasicPayment
 
         foreach ($trans_param_arr as $value) {
             switch ($value[0]) {
-
                 case 'PAY1_TRANSACTIONRESULT': $status  .=  "<tr><td class=\"v\">Transaction Result</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_SHOPTRANSACTIONID': $status  .=  "<tr><td class=\"v\">Shop Transaction ID</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_BANKTRANSACTIONID': $status  .=  "<tr><td class=\"v\">Bank Transaction ID</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_UICCODE': $status  .=  "<tr><td class=\"v\">Currency Code</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_AMOUNT': $status  .=  "<tr><td class=\"v\">Amount</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_AUTHORIZATIONCODE': $status  .=  "<tr><td class=\"v\">Transaction Authorization Code</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_ERRORCODE': $status  .=  "<tr><td class=\"v\">Transaction Error Code</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_ERRORDESCRIPTION': $status  .=  "<tr><td class=\"v\">Transaction Error Description</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_CHNAME': $status  .=  "<tr><td class=\"v\">Buyer's Name</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_CHEMAIL': $status  .=  "<tr><td class=\"v\">buyer's Email</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_ALERTCODE': $status  .=  "<tr><td class=\"v\">Transaction Alert Code</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_ALERTDESCRIPTION': $status  .=  "<tr><td class=\"v\">Transaction Alert Description</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_CARDNUMBER': $status  .=  "<tr><td class=\"v\">Buyer's Card Number</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_EXPMONTH': $status  .=  "<tr><td class=\"v\">Buyer's Card Expiry Month</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_EXPYEAR': $status  .=  "<tr><td class=\"v\">Buyer's Card Expiry Year</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_COUNTRY': $status  .=  "<tr><td class=\"v\">Buyer's Card Issuing Bank Nationality</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_VBVRISP': $status  .=  "<tr><td class=\"v\">VBVRISP</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_VBV': $status  .=  "<tr><td class=\"v\">VBV</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_IDLANGUAGE': $status  .=  "<tr><td class=\"v\">Language ID</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
 
                 case 'PAY1_OTP': $status  .=  "<tr><td class=\"v\">One Time Password (OTP)</td>";
-                                                $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
-                                                break;
+                    $status  .=  "<td class=\"v\">".$value[1]."</td></tr>";
+                    break;
             }
         }
         $status  .=  "</table>";
@@ -378,9 +377,9 @@ class GestPay extends BasicPayment
         foreach ($trans_param_arr as $value) {
             switch ($value[0]) {
                 case 'PAY1_ERRORCODE': $ErrorCode = $value[1];
-                                                break;
+                    break;
                 case 'PAY1_ERRORDESCRIPTION': $ErrorDescription = $value[1];
-                                                break;
+                    break;
             }
         }
         $this->error_msg = self::MODULE_PAYMENT_GESTPAYGW_ERROR_TITLE;

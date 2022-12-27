@@ -15,19 +15,19 @@
  *
  */
 
-    function payments_adminapi_getconfighook($args)
-    {
-        extract($args);
-        if (!isset($extrainfo['tabs'])) {
-            $extrainfo['tabs'] = [];
-        }
-        $module = 'payments';
-        $tabinfo = [
-                'module'  => $module,
-                'configarea'  => 'general',
-                'configtitle'  => xarML('Payments'),
-                'configcontent' => '',
-        ];
-        $extrainfo['tabs'][] = $tabinfo;
-        return $extrainfo;
+function payments_adminapi_getconfighook($args)
+{
+    extract($args);
+    if (!isset($extrainfo['tabs'])) {
+        $extrainfo['tabs'] = [];
     }
+    $module = 'payments';
+    $tabinfo = [
+            'module'  => $module,
+            'configarea'  => 'general',
+            'configtitle'  => xarML('Payments'),
+            'configcontent' => '',
+    ];
+    $extrainfo['tabs'][] = $tabinfo;
+    return $extrainfo;
+}
