@@ -17,17 +17,17 @@
 
 function reminders_admin_modify_lookup()
 {
-    if (!xarSecurityCheck('EditReminders')) {
+    if (!xarSecurity::check('EditReminders')) {
         return;
     }
 
-    if (!xarVarFetch('name', 'str', $name, 'reminders_lookups', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('name', 'str', $name, 'reminders_lookups', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('itemid', 'int', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('itemid', 'int', $data['itemid'], 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'], false, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'], false, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -36,11 +36,11 @@ function reminders_admin_modify_lookup()
     $data['object']->getItem(['itemid' => $data['itemid']]);
 
     $data['tplmodule'] = 'reminders';
-    $data['authid'] = xarSecGenAuthKey('reminders');
+    $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
         // Check for a valid confirmation key
-        if (!xarSecConfirmAuthKey()) {
+        if (!xarSec::confirmAuthKey()) {
             return;
         }
 
@@ -49,7 +49,7 @@ function reminders_admin_modify_lookup()
 
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('reminders', 'admin', 'modify_lookup', $data);
+            return xarTpl::module('reminders', 'admin', 'modify_lookup', $data);
         } else {
             // Good data: create the item
             // Update the time_modified field
@@ -58,7 +58,7 @@ function reminders_admin_modify_lookup()
             $itemid = $data['object']->updateItem(['itemid' => $data['itemid']]);
 
             // Jump to the next page
-            xarController::redirect(xarModURL('reminders', 'admin', 'view_lookups'));
+            xarController::redirect(xarController::URL('reminders', 'admin', 'view_lookups'));
             return true;
         }
     }

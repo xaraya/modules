@@ -14,24 +14,24 @@
 function reminders_user_compose_lookup_email($args)
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManageReminders')) {
+    if (!xarSecurity::check('ManageReminders')) {
         return;
     }
     xarTpl::setPageTitle('Send Lookup Email');
 
-    if (!xarVarFetch('confirm', 'int', $confirm, 0, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('confirm', 'int', $confirm, 0, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('code', 'str', $code, '', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('code', 'str', $code, '', xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('subject', 'isset', $subject, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('subject', 'isset', $subject, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('message', 'isset', $message, null, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('message', 'isset', $message, null, xarVar::NOT_REQUIRED)) {
         return;
     }
-    if (!xarVarFetch('copy_emails', 'bool', $data['copy_emails'], true, XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('copy_emails', 'bool', $data['copy_emails'], true, xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -113,7 +113,7 @@ function reminders_user_compose_lookup_email($args)
         }
 
         // Are we testing?
-        if (!xarVarFetch('test', 'int', $data['test'], 0, XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('test', 'int', $data['test'], 0, xarVar::NOT_REQUIRED)) {
             return;
         }
 

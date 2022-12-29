@@ -29,7 +29,7 @@ function reminders_adminapi_process_reminders($args)
 
     // Get the reminder entries to process
     if ($args['test']) {
-        if (!xarVarFetch('entry_list', 'str', $data['entry_list'], '', XARVAR_NOT_REQUIRED)) {
+        if (!xarVar::fetch('entry_list', 'str', $data['entry_list'], '', xarVar::NOT_REQUIRED)) {
             return;
         }
         $state = 0;

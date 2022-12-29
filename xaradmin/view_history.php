@@ -17,7 +17,7 @@
 
 function reminders_admin_view_history()
 {
-    if (!xarSecurityCheck('ManageReminders')) {
+    if (!xarSecurity::check('ManageReminders')) {
         return;
     }
 
