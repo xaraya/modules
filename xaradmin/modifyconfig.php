@@ -55,10 +55,10 @@ function scheduler_admin_modifyconfig()
                         $itemid = $data['module_settings']->updateItem();
                     }
 
-                    if (!xarVarFetch('interval', 'int', $interval, xarModVars::get('scheduler', 'interval'), XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('interval', 'int', $interval, xarModVars::get('scheduler', 'interval'), xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('debugmode', 'checkbox', $debugmode, xarModVars::get('scheduler', 'debugmode'), XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('debugmode', 'checkbox', $debugmode, xarModVars::get('scheduler', 'debugmode'), xarVar::NOT_REQUIRED)) {
                         return;
                     }
 
