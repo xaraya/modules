@@ -20,13 +20,13 @@
 function reminders_admin_modifyconfig()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminReminders')) {
+    if (!xarSecurity::check('AdminReminders')) {
         return;
     }
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) {
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) {
         return;
     }
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) {
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) {
         return;
     }
 
@@ -57,7 +57,7 @@ function reminders_admin_modifyconfig()
 
         case 'update':
             // Confirm authorisation code. AJAX calls ignore this
-            if (!xarSecConfirmAuthKey()) {
+            if (!xarSec::confirmAuthKey()) {
                 return xarTpl::module('privileges', 'user', 'errors', ['layout' => 'bad_author']);
             }
             switch ($data['tab']) {
@@ -67,15 +67,15 @@ function reminders_admin_modifyconfig()
                         // If this is an AJAX call, send back a message (and end)
                         xarController::$request->msgAjax($data['module_settings']->getInvalids());
                         // No AJAX, just send the data to the template for display
-                        return xarTplModule('reminders', 'admin', 'modifyconfig', $data);
+                        return xarTpl::module('reminders', 'admin', 'modifyconfig', $data);
                     } else {
                         $itemid = $data['module_settings']->updateItem();
                     }
 
-                    if (!xarVarFetch('save_history', 'checkbox', $save_history, xarModVars::get('reminders', 'save_history'), XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('save_history', 'checkbox', $save_history, xarModVars::get('reminders', 'save_history'), xarVar::NOT_REQUIRED)) {
                         return;
                     }
-                    if (!xarVarFetch('debugmode', 'checkbox', $debugmode, xarModVars::get('reminders', 'debugmode'), XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('debugmode', 'checkbox', $debugmode, xarModVars::get('reminders', 'debugmode'), xarVar::NOT_REQUIRED)) {
                         return;
                     }
 
@@ -91,7 +91,7 @@ function reminders_admin_modifyconfig()
                     }
                     break;
                 case 'lookups':
-                    if (!xarVarFetch('subject', 'str', $subject, xarModVars::get('reminders', 'subject'), XARVAR_NOT_REQUIRED)) {
+                    if (!xarVar::fetch('subject', 'str', $subject, xarModVars::get('reminders', 'subject'), xarVar::NOT_REQUIRED)) {
                         return;
                     }
                     $textarea = DataPropertyMaster::getProperty(['name' => 'textarea']);
@@ -105,10 +105,10 @@ function reminders_admin_modifyconfig()
 
             // If this is an AJAX call, end here
             xarController::$request->exitAjax();
-            xarController::redirect(xarModURL('reminders', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
+            xarController::redirect(xarController::URL('reminders', 'admin', 'modifyconfig', ['tab' => $data['tab']]));
             return true;
             break;
     }
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }

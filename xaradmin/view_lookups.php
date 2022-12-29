@@ -16,14 +16,14 @@
  */
 function reminders_admin_view_lookups($args)
 {
-    if (!xarSecurityCheck('ManageReminders')) {
+    if (!xarSecurity::check('ManageReminders')) {
         return;
     }
 
     $modulename = 'reminders';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_lookups', XARVAR_DONT_SET)) {
+    if (!xarVar::fetch('objectname', 'str', $data['objectname'], 'reminders_lookups', xarVar::DONT_SET)) {
         return;
     }
 
