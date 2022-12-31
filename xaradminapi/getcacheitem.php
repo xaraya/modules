@@ -1,6 +1,6 @@
 <?php
 /**
- * Construct an array of current cache keys
+ * Construct an array of current cache info
  *
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
@@ -13,27 +13,27 @@
 sys::import('modules.xarcachemanager.class.cache_manager');
 
 /**
- * Construct an array of the current cache keys
+ * Construct an array of the current cache info
  *
  * @author jsb
  *
- * @param $type cachetype to start the search for cachekeys
- * @return array sorted array of cachekeys
+ * @param $type cachetype to start the search for cacheinfo
+ * @return array array of cacheinfo
 */
 
-function xarcachemanager_adminapi_getcachekeys($type = '')
+function xarcachemanager_adminapi_getcacheitem($type = '')
 {
     if (is_array($type)) {
         extract($type);
     }
-    $cachekeys = [];
+    $item = [];
 
     // get cache type settings
     $cachetypes = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachetypes');
 
     // check if we have some settings for this cache type
     if (empty($type) || empty($cachetypes[$type])) {
-        return $cachekeys;
+        return $item;
     }
 
     // Get the output cache directory so you can get cache keys even if output caching is disabled
@@ -51,13 +51,31 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
                                           'type'     => $type,
                                           'cachedir' => $outputCacheDir, ]);
     if (empty($cachestorage)) {
-        return $cachekeys;
+        return $item;
     }
 
-    // get cache keys
-    $cachekeys = $cachestorage->getCachedKeys();
+    // specify suffix if necessary
+    if (!empty($code)) {
+        $cachestorage->setCode($code);
+    }
+    if ($cachestorage->isCached($key, 0, 0)) {
+        $value = $cachestorage->getCached($key);
+        if ($type == 'module' || $type == 'object') {
+            $item = unserialize($value);
+        } elseif ($type == 'variable') {
+            // check if we serialized it for storage
+            if (!empty($value) && is_string($value) && strpos($value, ':serial:') === 0) {
+                try {
+                    $item = unserialize(substr($value, 8));
+                } catch (Exception $e) {
+                    $item = $value;
+                }
+            }
+        } else {
+            // do nothing
+            $item = $value;
+        }
+    }
 
-    sort($cachekeys);
-
-    return $cachekeys;
+    return $item;
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Construct an array of current cache keys
+ * Construct an array of current cache info
  *
  * @package modules
  * @copyright (C) 2002-2009 The Digital Development Foundation
@@ -13,27 +13,27 @@
 sys::import('modules.xarcachemanager.class.cache_manager');
 
 /**
- * Construct an array of the current cache keys
+ * Construct an array of the current cache info
  *
  * @author jsb
  *
- * @param $type cachetype to start the search for cachekeys
- * @return array sorted array of cachekeys
+ * @param $type cachetype to start the search for cacheinfo
+ * @return array array of cacheinfo
 */
 
-function xarcachemanager_adminapi_getcachekeys($type = '')
+function xarcachemanager_adminapi_getcacheinfo($type = '')
 {
     if (is_array($type)) {
         extract($type);
     }
-    $cachekeys = [];
+    $cacheinfo = [];
 
     // get cache type settings
     $cachetypes = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachetypes');
 
     // check if we have some settings for this cache type
     if (empty($type) || empty($cachetypes[$type])) {
-        return $cachekeys;
+        return $cacheinfo;
     }
 
     // Get the output cache directory so you can get cache keys even if output caching is disabled
@@ -51,13 +51,21 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
                                           'type'     => $type,
                                           'cachedir' => $outputCacheDir, ]);
     if (empty($cachestorage)) {
-        return $cachekeys;
+        return $cacheinfo;
     }
 
-    // get cache keys
-    $cachekeys = $cachestorage->getCachedKeys();
+    // get cache info
+    $cacheinfo = $cachestorage->getCacheInfo();
+    $cacheinfo['total'] = $cacheinfo['hits'] + $cacheinfo['misses'];
+    if (!empty($cacheinfo['total'])) {
+        $cacheinfo['ratio'] = sprintf("%.1f", 100.0 * $cacheinfo['hits'] / $cacheinfo['total']);
+    } else {
+        $cacheinfo['ratio'] = 0.0;
+    }
+    if (!empty($cacheinfo['size'])) {
+        $cacheinfo['size'] = round($cacheinfo['size'] / 1048576, 2);
+    }
+    $cacheinfo['storage'] = $storage;
 
-    sort($cachekeys);
-
-    return $cachekeys;
+    return $cacheinfo;
 }
