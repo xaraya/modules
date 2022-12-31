@@ -57,7 +57,8 @@ function xarcachemanager_adminapi_getcachekeys($type = '')
     // get cache keys
     $cachekeys = $cachestorage->getCachedKeys();
 
-    sort($cachekeys);
+    // sort keys
+    ksort($cachekeys);
 
     return $cachekeys;
 }

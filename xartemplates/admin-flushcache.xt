@@ -22,8 +22,8 @@
                     <label class="xar-form-label" for="flushkey_#$type#">#$type#</label>
                     <select name="flushkey[#$type#]" id="flushkey_#$type#">
                         <option value="-" selected="selected"> - - - </option>
-                        <xar:foreach in="$keylist" value="$key">
-                            <option value="#$key#">#$key#</option>
+                        <xar:foreach in="$keylist" key="$key" value="$count">
+                            <option value="#$key#">#$key# (#$count#)</option>
                         </xar:foreach>
                         <xar:if condition="count($keylist) gt 0">
                             <option value="*">
