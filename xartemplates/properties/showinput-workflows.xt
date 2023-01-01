@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="empty($class)">
+        <xar:set name="class">''</xar:set>
+    </xar:if>
+
+    <xar:if condition="!empty($style)">
+        <xar:set name="textareasource">
+            'textarea#' . $id . ' {' . $style . '}'
+        </xar:set>
+    <xar:elseif condition="!empty($class)"/>
+        <!-- do nothing -->
+        <xar:set name="textareasource">
+            'textarea#' . $id . ' {}'
+        </xar:set>
+    <xar:elseif condition="!empty($rows) AND !empty($cols)"/>
+        <xar:set name="textareasource">
+            'textarea#' . $id . ' {
+                width: '. $cols.'em;
+                height: '. ($rows * 1.6) .'em;
+            }'
+        </xar:set>
+    <xar:elseif condition="!empty($rows)"/>
+        <xar:set name="textareasource">
+            'textarea#' . $id . ' {
+                height: '. ($rows * 1.6) .'em;
+            }'
+        </xar:set>
+    <xar:elseif condition="!empty($cols)"/>
+        <xar:set name="textareasource">
+            'textarea#' . $id . ' {
+                width: '. $cols.'em;
+            }'
+        </xar:set>
+    <xar:else/>
+        <!-- do nothing -->
+        <xar:set name="textareasource">
+            'textarea#' . $id . ' {}'
+        </xar:set>
+    </xar:if>
+    
+    <xar:style method="embed" source="$textareasource" media="all"/>
+    <textarea name="#$name#" id="#$id#" tabindex="#$tabindex#" class="#$class#">#$value#</textarea>
+    <xar:template file="dataproperty_additions" module="base"/>
+</xar:template>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+    <xar:if condition="!empty($layout) and $layout eq 'preformat'">
+        <pre>
+        <xar:var name="value"/>
+        </pre>
+    <xar:elseif condition="!empty($layout) and $layout eq 'linebreak'"/>
+        #nl2br($value)#
+    <xar:elseif condition="!empty($value) and is_array($value)"/>
+        <pre>#json_encode($value, JSON_PRETTY_PRINT)#</pre>
+    <xar:else/>
+        <xar:var name="value"/>
+    </xar:if>
+</xar:template>

@@ -1,0 +1,127 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method URL\\(\\) on an unknown class xarController\\.$#"
+			count: 1
+			path: lib/galaxia/api/instance.php
+
+		-
+			message: "#^Call to static method redirect\\(\\) on an unknown class xarController\\.$#"
+			count: 1
+			path: lib/galaxia/api/instance.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 5
+			path: lib/galaxia/api/instance.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/api/process.php
+
+		-
+			message: "#^Call to static method module\\(\\) on an unknown class xarTpl\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/activity_pre.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/activity_pre.php
+
+		-
+			message: "#^Call to static method module\\(\\) on an unknown class xarTpl\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/end_pre.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/end_pre.php
+
+		-
+			message: "#^Call to static method module\\(\\) on an unknown class xarTpl\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/join_pre.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/join_pre.php
+
+		-
+			message: "#^Call to static method module\\(\\) on an unknown class xarTpl\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/split_pre.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/split_pre.php
+
+		-
+			message: "#^Call to static method module\\(\\) on an unknown class xarTpl\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/switch_pre.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/compiler/switch_pre.php
+
+		-
+			message: "#^Access to constant FETCHMODE_ASSOC on an unknown class ResultSet\\.$#"
+			count: 1
+			path: lib/galaxia/config.php
+
+		-
+			message: "#^Access to constant GENERATION on an unknown class xarCore\\.$#"
+			count: 1
+			path: lib/galaxia/config.php
+
+		-
+			message: "#^Call to static method apiFunc\\(\\) on an unknown class xarMod\\.$#"
+			count: 1
+			path: lib/galaxia/config.php
+
+		-
+			message: "#^Call to static method getConn\\(\\) on an unknown class xarDB\\.$#"
+			count: 1
+			path: lib/galaxia/config.php
+
+		-
+			message: "#^Call to static method getConnection\\(\\) on an unknown class xarDB\\.$#"
+			count: 1
+			path: lib/galaxia/config.php
+
+		-
+			message: "#^Call to static method getPrefix\\(\\) on an unknown class xarDB\\.$#"
+			count: 1
+			path: lib/galaxia/config.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 1
+			path: lib/galaxia/config.tikiwiki.php
+
+		-
+			message: "#^Call to static method URL\\(\\) on an unknown class xarController\\.$#"
+			count: 6
+			path: lib/galaxia/managers/activities.php
+
+		-
+			message: "#^Call to static method getImage\\(\\) on an unknown class xarTpl\\.$#"
+			count: 6
+			path: lib/galaxia/managers/activities.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 17
+			path: lib/galaxia/managers/activities.php
+
+		-
+			message: "#^Function xarML not found\\.$#"
+			count: 4
+			path: lib/galaxia/managers/processes.php
+

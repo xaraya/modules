@@ -142,7 +142,7 @@ class Base extends Observable
     public function qstr($string, $quoted = null)
     {
         if (!isset($quoted)) {
-            $quoted = get_magic_quotes_gpc();
+            $quoted = false;
         }
         return $this->db->qstr($string, $quoted);
     }

@@ -97,10 +97,6 @@ function workflow_admin_shared_source()
         $sourcepath = realpath($_REQUEST['source_name']);
         if (substr($sourcepath, 0, strlen($basepath)) == $basepath) {
             $fp = fopen($_REQUEST['source_name'], "w");
-
-            //if (get_magic_quotes_gpc()) {
-            //    $source_data = stripslashes($source_data);
-            //}
             fwrite($fp, $source_data);
             fclose($fp);
             if ($_REQUEST['activityId']) {
