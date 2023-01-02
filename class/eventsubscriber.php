@@ -12,13 +12,17 @@
  * @author Workflow Module Development Team
  */
 
+// sys::import('modules.workflow.class.tracker');
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
 
 class xarWorkflowEventSubscriber implements EventSubscriberInterface
 {
+    private static $eventNamePrefix = 'workflow.';
     private static $subscribedEvents = [];
+    private static $callbackFunctions = [];
     private static $eventTypeMethods = [
         'guard' => 'onGuardEvent',
         'leave' => 'onLeaveEvent',
@@ -29,9 +33,14 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
         'announce' => 'onAnnounceEvent',
     ];
 
-    public function addSubscribedEvent(string $eventType, string $workflowName = '', string $specificName = '')
+    public function callBack(Event|GuardEvent $event, string $eventName)
     {
-        static::$subscribedEvents[] = [$eventType, $workflowName, $specificName];
+        if (empty(static::$callbackFunctions[$eventName])) {
+            return;
+        }
+        foreach (static::$callbackFunctions[$eventName] as $callbackFunc) {
+            $callbackFunc($event, $eventName);
+        }
     }
 
     public function logEvent(Event|GuardEvent $event, string $eventName)
@@ -56,49 +65,84 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
     {
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
-        $transitionName = $event->getTransition()->getName();
-        $places = $event->getMarking()->getPlaces();
-        if ($transitionName == 'request' && !in_array('available', array_keys($places))) {
-            $message = 'Sorry, this subject is not available...';
-            $event->setBlocked(true, $message);
-            echo "Blocked: $message\n";
-        }
+        $this->callBack($event, $eventName);
+        // @todo this would be where we check the actual status of the subject, rather than the places
     }
 
     public function onLeaveEvent(Event $event, string $eventName)
     {
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
+        $this->callBack($event, $eventName);
     }
 
     public function onTransitionEvent(Event $event, string $eventName)
     {
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
+        $this->callBack($event, $eventName);
     }
 
     public function onEnterEvent(Event $event, string $eventName)
     {
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
+        $this->callBack($event, $eventName);
     }
 
     public function onEnteredEvent(Event $event, string $eventName)
     {
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
+        $this->callBack($event, $eventName);
     }
 
     public function onCompletedEvent(Event $event, string $eventName)
     {
-        //$subject = $event->getSubject();
+        $subject = $event->getSubject();
         $this->logEvent($event, $eventName);
+        $this->callBack($event, $eventName);
+        // @checkme this is where we add the successful transition to a new marking to the tracker
     }
 
     public function onAnnounceEvent(Event $event, string $eventName)
     {
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
+        $this->callBack($event, $eventName);
+    }
+
+    public static function getEventName(string $eventType, string $workflowName = '', string $specificName = '')
+    {
+        //workflow.guard
+        if (empty($workflowName)) {
+            $eventName = static::$eventNamePrefix . $eventType;
+        //workflow.[workflow name].guard
+        } else {
+            $eventName = static::$eventNamePrefix . $workflowName . '.' . $eventType;
+            //workflow.[workflow name].guard.[transition name]
+            if (!empty($specificName)) {
+                $eventName .= '.' . $specificName;
+            }
+        }
+        return $eventName;
+    }
+
+    public static function addSubscribedEvent(string $eventType, string $workflowName = '', string $specificName = '', ?callable $callbackFunc = null)
+    {
+        $eventName = static::getEventName($eventType, $workflowName, $specificName);
+        static::$subscribedEvents[$eventName] = [static::$eventTypeMethods[$eventType]];
+        if (!empty($callbackFunc)) {
+            static::addCallbackFunction($eventName, $callbackFunc);
+        }
+        return $eventName;
+    }
+
+    public static function addCallbackFunction(string $eventName, callable $callbackFunc)
+    {
+        static::$callbackFunctions[$eventName] ??= [];
+        // @checkme call only once per event even if specified several times?
+        static::$callbackFunctions[$eventName][] = $callbackFunc;
     }
 
     public static function getSubscribedEvents()
@@ -106,21 +150,6 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
         //return [
         //    'workflow.guard' => ['onGuardEvent'],
         //];
-        $mapping = [];
-        foreach (static::$subscribedEvents as list($eventType, $workflowName, $specificName)) {
-            //workflow.guard
-            if (empty($workflowName)) {
-                $eventName = 'workflow.' . $eventType;
-            //workflow.[workflow name].guard
-            } else {
-                $eventName = 'workflow.' . $workflowName . '.' . $eventType;
-                //workflow.[workflow name].guard.[transition name]
-                if (!empty($specificName)) {
-                    $eventName .= '.' . $specificName;
-                }
-            }
-            $mapping[$eventName] = [static::$eventTypeMethods[$eventType]];
-        }
-        return $mapping;
+        return static::$subscribedEvents;
     }
 }
