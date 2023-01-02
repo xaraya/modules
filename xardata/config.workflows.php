@@ -2,7 +2,8 @@
 
 return [
     'cd_loans' => [
-        'type' => 'workflow',
+        //'type' => 'workflow',
+        'type' => 'state_machine',
         //'marking_store' => [
         //    'type' => 'method',
         //    'property' => 'marking'
@@ -10,7 +11,7 @@ return [
         //'metadata' => [],
         'supports' => ['cdcollection'],  // DynamicData Object this workflow should apply to
         //'events_to_dispatch' => [],
-        'initial_marking' => 'available',
+        'initial_marking' => ['available'],
         'places' => [
             'available',
             'requested',
@@ -20,13 +21,15 @@ return [
             'acknowledged',
             'retrieved',
             'returned',
+            'deleted',
             'not available'
         ],
         'transitions' => [
             'request' => [
                 // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L917
                 // we mean from ANY here, not from ALL like default for workflow
-                'from' => ['available', 'requested', 'rejected', 'escalated', 'acknowledged', 'returned'],
+                //'from' => ['available', 'requested', 'rejected', 'escalated', 'acknowledged', 'returned'],
+                'from' => ['available'],
                 'to' => ['requested']
             ],
             'approve' => [
@@ -35,7 +38,7 @@ return [
             ],
             'retrieve' => [
                 'from' => 'approved',
-                'to' => ['retrieved', 'not available']
+                'to' => ['retrieved', 'not available']  // not supported for state_machine, pick the first
             ],
             'reject' => [
                 'from' => 'requested',
@@ -55,7 +58,11 @@ return [
             ],
             'return' => [
                 'from' => 'retrieved',
-                'to' => ['returned', 'available']
+                'to' => ['returned', 'available']  // not supported for state_machine, pick the first
+            ],
+            'close' => [
+                'from' => ['returned', 'acknowledged'],
+                'to' => 'deleted'
             ],
         ],
     ]

@@ -14,8 +14,8 @@
 
 class xarWorkflowSubject
 {
-    private $marking   = [];
-    private $context   = [];
+    private $marking;  // array for workflow or string for state_machine
+    private $context;
 
     public function getId()
     {

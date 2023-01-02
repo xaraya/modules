@@ -18,29 +18,109 @@ use Symfony\Component\Workflow\Event\GuardEvent;
 
 class xarWorkflowEventSubscriber implements EventSubscriberInterface
 {
-    public function logEvent(string $eventName, Event|GuardEvent $event)
+    private static $subscribedEvents = [];
+    private static $eventTypeMethods = [
+        'guard' => 'onGuardEvent',
+        'leave' => 'onLeaveEvent',
+        'transition' => 'onTransitionEvent',
+        'enter' => 'onEnterEvent',
+        'entered' => 'onEnteredEvent',
+        'completed' => 'onCompletedEvent',
+        'announce' => 'onAnnounceEvent',
+    ];
+
+    public function addSubscribedEvent(string $eventType, string $workflowName = '', string $specificName = '')
+    {
+        static::$subscribedEvents[] = [$eventType, $workflowName, $specificName];
+    }
+
+    public function logEvent(Event|GuardEvent $event, string $eventName)
     {
         // @todo tie in with Xaraya event/hook system for some events
+        $marking = $event->getMarking();
+        $subject = $event->getSubject();
+        $transition = $event->getTransition();
+        //$workflowName = $event->getWorkflowName();
+        //$metadata = $event->getMetadata();
         echo sprintf(
             'Subject (id: "%s") had event "%s" for transition "%s" from "%s" to "%s"' . "\n",
-            $event->getSubject()->getId(),
+            isset($subject) ? $subject->getId() : '',
             $eventName,
-            $event->getTransition()->getName(),
-            implode(', ', array_keys($event->getMarking()->getPlaces())),
-            implode(', ', $event->getTransition()->getTos())
+            isset($transition) ? $transition->getName() : '',
+            isset($marking) ? implode(', ', array_keys($marking->getPlaces())) : '',
+            isset($transition) ? implode(', ', $transition->getTos()) : ''
         );
     }
 
-    public function onGuardEvent(GuardEvent $event)
+    public function onGuardEvent(GuardEvent $event, string $eventName)
     {
-        $subject = $event->getSubject();
-        $this->logEvent('onGuardEvent', $event);
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
+        $transitionName = $event->getTransition()->getName();
+        $places = $event->getMarking()->getPlaces();
+        if ($transitionName == 'request' && !in_array('available', array_keys($places))) {
+            $message = 'Sorry, this subject is not available...';
+            $event->setBlocked(true, $message);
+            echo "Blocked: $message\n";
+        }
+    }
+
+    public function onLeaveEvent(Event $event, string $eventName)
+    {
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
+    }
+
+    public function onTransitionEvent(Event $event, string $eventName)
+    {
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
+    }
+
+    public function onEnterEvent(Event $event, string $eventName)
+    {
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
+    }
+
+    public function onEnteredEvent(Event $event, string $eventName)
+    {
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
+    }
+
+    public function onCompletedEvent(Event $event, string $eventName)
+    {
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
+    }
+
+    public function onAnnounceEvent(Event $event, string $eventName)
+    {
+        //$subject = $event->getSubject();
+        $this->logEvent($event, $eventName);
     }
 
     public static function getSubscribedEvents()
     {
-        return [
-            'workflow.guard' => ['onGuardEvent'],
-            ];
+        //return [
+        //    'workflow.guard' => ['onGuardEvent'],
+        //];
+        $mapping = [];
+        foreach (static::$subscribedEvents as list($eventType, $workflowName, $specificName)) {
+            //workflow.guard
+            if (empty($workflowName)) {
+                $eventName = 'workflow.' . $eventType;
+            //workflow.[workflow name].guard
+            } else {
+                $eventName = 'workflow.' . $workflowName . '.' . $eventType;
+                //workflow.[workflow name].guard.[transition name]
+                if (!empty($specificName)) {
+                    $eventName .= '.' . $specificName;
+                }
+            }
+            $mapping[$eventName] = [static::$eventTypeMethods[$eventType]];
+        }
+        return $mapping;
     }
 }
