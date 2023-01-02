@@ -51,5 +51,15 @@
       <seq>4</seq>
       <configuration></configuration>
     </property>
+    <property name="workflows">
+      <id>190</id>
+      <label>Workflows</label>
+      <type>workflows</type>
+      <defaultvalue>{"cd_loans":[]}</defaultvalue>
+      <source>dynamic_data</source>
+      <status>34</status>
+      <seq>5</seq>
+      <configuration></configuration>
+    </property>
   </properties>
 </object>

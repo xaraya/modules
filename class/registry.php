@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow Module
+ * Workflow Module Fake Registry
  *
  * @package modules
  * @copyright (C) copyright-placeholder

@@ -4,11 +4,16 @@
     "description": "Workflow Module based on the Galaxia Workflow Engine",
     "homepage": "https://github.com/xaraya-modules/workflow",
     "license": "GPL-2.0-or-later",
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
     "autoload": {
-        "classmap": ["./"],
-        "exclude-from-classmap": ["/vendor/"]
+        "classmap": ["./"]
     },
     "require-dev": {
+        "symfony/event-dispatcher": "6.3.x-dev",
         "symfony/workflow": "^6.2"
     }
 }

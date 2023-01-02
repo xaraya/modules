@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow Module
+ * Workflow Module Future Instance if relevant
  *
  * @package modules
  * @copyright (C) copyright-placeholder
