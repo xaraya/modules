@@ -12,32 +12,14 @@
  * @author Workflow Module Development Team
  */
 
+sys::import('modules.workflow.class.traits.markingtrait');
+
 class xarWorkflowSubject
 {
-    private $marking;  // array for workflow or string for state_machine
-    private $context;
+    use xarWorkflowMarkingTrait;
 
     public function getId()
     {
         return spl_object_id($this);
-    }
-
-    // See https://write.vanoix.com/alexandre/creer-un-workflow-metier-avec-le-composant-symfony-workflow
-    //
-    // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Tests/Subject.php
-    public function getMarking()
-    {
-        return $this->marking;
-    }
-
-    public function setMarking($marking, array $context = [])
-    {
-        $this->marking = $marking;
-        $this->context = $context;
-    }
-
-    public function getContext()
-    {
-        return $this->context;
     }
 }

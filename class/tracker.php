@@ -77,7 +77,7 @@ class xarWorkflowTracker extends xarObject
         return $items;
     }
 
-    public static function getObjectValues(string $objectName, array $itemIds, array $fieldList = [])
+    public static function getSubjectValues(string $objectName, array $itemIds, array $fieldList = [])
     {
         // with an empty fieldlist, let DataObjectMaster setup the fieldlist
         $loader = new DataObjectLoader($objectName, $fieldList);

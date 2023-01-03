@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title">
+      Workflow Module
+    </span>
+  </div>
+  <div class="xar-mod-body">
+    <xar:template file="user_bar" type="module"/>
+    <div style="margin: auto;">
+        <h3>Workflow Test</h3>
+          <xar:template file="symfofooter"/>
+    </div>
+  </div>
+</xar:template>

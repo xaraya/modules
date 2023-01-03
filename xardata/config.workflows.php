@@ -1,15 +1,21 @@
 <?php
 
+// See config/packages/workflow.yaml at https://symfony.com/doc/current/workflow.html
+// and corresponding config/workflow.php at https://github.com/zerodahero/laravel-workflow
 return [
     'cd_loans' => [
+        'label' => 'Music CD Loans',
+        'description' => "Borrow CD's, browse CDs, etc...",
+        //'class' => null,  // something other than Workflow or StateMachine - not supported here
         //'type' => 'workflow',
         'type' => 'state_machine',
         //'marking_store' => [
         //    'type' => 'method',
-        //    'property' => 'marking'
+        //    'property' => 'marking'  // this assumes the subject has methods getMarking() and setMarking()
         //],
         //'metadata' => [],
         'supports' => ['cdcollection'],  // DynamicData Object this workflow should apply to
+        // you can pass one or more event names, or pass an empty array to not dispatch any event
         //'events_to_dispatch' => [],
         'initial_marking' => ['available'],
         'places' => [

@@ -51,19 +51,23 @@ class xarWorkflowProcess extends xarObject
             //static::$config = json_decode($contents, true);
             static::$config = include($configFile);
         }
-        // @deprecated for existing _config files before rebuild
-        //if (!empty(static::$config['workflows'])) {
-        //    static::loadWorkflows(static::$config);
-        //}
     }
 
-    public static function hasWorkflow(string $workflowName)
+    public static function hasWorkflowConfig(string $workflowName)
     {
         static::loadConfig();
         if (!empty(static::$config) && !empty(static::$config[$workflowName])) {
             return true;
         }
         return false;
+    }
+
+    public static function getWorkflowConfig(string $workflowName)
+    {
+        if (!static::hasWorkflowConfig($workflowName)) {
+            throw new Exception('Unknown workflow ' . $workflowName);
+        }
+        return static::$config[$workflowName];
     }
 
     public static function getEventDispatcher()
@@ -78,11 +82,13 @@ class xarWorkflowProcess extends xarObject
     }
 
     // @checkme add subscribed events for each object supported by this workflow?
-    public static function getEventSubscriber(string $workflowName, string $objectName)
+    public static function getEventSubscriber(string $workflowName, string $objectName, array|null $eventTypes = null)
     {
         $subscriber = new xarWorkflowEventSubscriber();
-        //$eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
-        $eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
+        // @checkme this is the list of all possible events we might be interested in
+        if (!isset($eventTypes)) {
+            $eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
+        }
         $userId = 6;
         $checkSubjectStatus = [
             'request' => 'available',
@@ -106,6 +112,8 @@ class xarWorkflowProcess extends xarObject
                 $trackerId = xarWorkflowTracker::setItem($workflowName, $objectName, $subject->getId(), $subject->getMarking(), $userId);
             },
         ];
+        // @checkme actually we're only interested in events where we have a callback function here :-)
+        $eventTypes = array_keys($callbackFuncs);
         foreach ($eventTypes as $eventType) {
             $eventName = $subscriber->addSubscribedEvent($eventType, $workflowName);
             if (!empty($callbackFuncs[$eventType])) {
@@ -136,23 +144,31 @@ class xarWorkflowProcess extends xarObject
         return $transitions;
     }
 
-    public static function getWorkflow(string $workflowName, array $info = [])
+    public static function getProcess(string $workflowName)
+    {
+        if (empty(static::$workflows[$workflowName])) {
+            static::$workflows[$workflowName] = static::buildWorkflow($workflowName);
+        }
+        return static::$workflows[$workflowName];
+    }
+
+    public static function buildWorkflow(string $workflowName, array $info = [])
     {
         if (empty($info)) {
-            static::loadConfig();
-            if (empty(static::$config[$workflowName])) {
-                throw new Exception('Unknown workflow ' . $workflowName);
-            }
-            $info = static::$config[$workflowName];
+            $info = static::getWorkflowConfig($workflowName);
+        }
+        if ($info['type'] == 'state_machine') {
+            return static::buildStateMachine($workflowName, $info);
         }
         // @checkme add subscribed events for each object supported by this workflow?
         if (is_array($info['supports'])) {
-            $objectName = $info['supports'][0];
+            $objectName = $info['supports'][0];  // pick the first one for now...
         } else {
             $objectName = $info['supports'];
         }
         $dispatcher = static::getEventDispatcher();
-        $subscriber = static::getEventSubscriber($workflowName, $objectName);
+        $eventTypes = $info['events_to_dispatch'] ?? null;
+        $subscriber = static::getEventSubscriber($workflowName, $objectName, $eventTypes);
         // @checkme do this *after* adding the subscribed events and callback functions
         $dispatcher->addSubscriber($subscriber);
 
@@ -163,7 +179,7 @@ class xarWorkflowProcess extends xarObject
         // See $info['marking_store'] for customisation per workflow - multiple_state here
         $markingStore = new MethodMarkingStore();
 
-        $workflow = new Workflow($definition, $markingStore, $dispatcher, $workflowName, $info['events_to_dispatch'] ?? null);
+        $workflow = new Workflow($definition, $markingStore, $dispatcher, $workflowName, $eventTypes);
 
         // Throws InvalidDefinitionException in case of an invalid definition
         $validator = new WorkflowValidator();
@@ -176,14 +192,10 @@ class xarWorkflowProcess extends xarObject
         return $workflow;
     }
 
-    public static function getStateMachine(string $workflowName, array $info = [])
+    public static function buildStateMachine(string $workflowName, array $info = [])
     {
         if (empty($info)) {
-            static::loadConfig();
-            if (empty(static::$config[$workflowName])) {
-                throw new Exception('Unknown workflow ' . $workflowName);
-            }
-            $info = static::$config[$workflowName];
+            $info = static::getWorkflowConfig($workflowName);
         }
         // @checkme add subscribed events for each object supported by this workflow?
         if (is_array($info['supports'])) {
@@ -192,7 +204,8 @@ class xarWorkflowProcess extends xarObject
             $objectName = $info['supports'];
         }
         $dispatcher = static::getEventDispatcher();
-        $subscriber = static::getEventSubscriber($workflowName, $objectName);
+        $eventTypes = $info['events_to_dispatch'] ?? null;
+        $subscriber = static::getEventSubscriber($workflowName, $objectName, $eventTypes);
         // @checkme do this *after* adding the subscribed events and callback functions
         $dispatcher->addSubscriber($subscriber);
 
@@ -203,7 +216,7 @@ class xarWorkflowProcess extends xarObject
         // See $info['marking_store'] for customisation per workflow - single_state here
         $markingStore = new MethodMarkingStore(true);
 
-        $workflow = new StateMachine($definition, $markingStore, $dispatcher, $workflowName, $info['events_to_dispatch'] ?? null);
+        $workflow = new StateMachine($definition, $markingStore, $dispatcher, $workflowName, $eventTypes);
 
         // Throws InvalidDefinitionException in case of an invalid definition
         $validator = new StateMachineValidator();
@@ -215,5 +228,62 @@ class xarWorkflowProcess extends xarObject
         //echo $dumper->dump($definition);
         //continue;
         return $workflow;
+    }
+
+    // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Workflow.php
+    public static function canTransition(string $workflowName, object $subject, string $transitionName)
+    {
+        // @checkme the subject has its own method to check a transition
+        if (method_exists($subject, 'canTransition')) {
+            return $subject->canTransition($workflowName, $transitionName);
+        }
+        $workflow = static::getProcess($workflowName);
+        return $workflow->can($subject, $transitionName);
+    }
+
+    public static function applyTransition(string $workflowName, object $subject, string $transitionName, array $context = [])
+    {
+        // @checkme the subject has its own method to apply the transition
+        if (method_exists($subject, 'applyTransition')) {
+            return $subject->applyTransition($workflowName, $transitionName, $context);
+        }
+        $workflow = static::getProcess($workflowName);
+        return $workflow->apply($subject, $transitionName, $context);
+    }
+
+    public static function getEnabledTransitions(string $workflowName, object $subject)
+    {
+        // @checkme the subject has its own method to get enabled transitions
+        if (method_exists($subject, 'getEnabledTransitions')) {
+            return $subject->getEnabledTransitions($workflowName);
+        }
+        $workflow = static::getProcess($workflowName);
+        return $workflow->getEnabledTransitions($subject);
+    }
+
+    // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Registry.php
+    public function hasWorkflow(object $subject, string $workflowName)
+    {
+        return $subject->hasWorkflow($workflowName);
+    }
+
+    public function getWorkflow(object $subject, string $workflowName)
+    {
+        return $subject->getWorkflow($workflowName);
+    }
+
+    public function addWorkflow(object $subject, string $workflowName, $workflow = [])
+    {
+        return $subject->addWorkflow($workflowName, $workflow);
+    }
+
+    public function allWorkflows(object $subject)
+    {
+        return $subject->allWorkflows();
+    }
+
+    public function supportsWorkflow(object $subject, string $workflowName)
+    {
+        return $subject->supportsWorkflow($workflowName);
     }
 }

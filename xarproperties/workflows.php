@@ -13,17 +13,18 @@
  */
 
 sys::import('modules.base.xarproperties.textarea');
+sys::import('modules.workflow.class.traits.markingtrait');
+sys::import('modules.workflow.class.traits.transitiontrait');
 
 class WorkflowsProperty extends TextAreaProperty
 {
+    use xarWorkflowMarkingTrait;
+    use xarWorkflowTransitionTrait;
+
     public $id         = 18888;
     public $name       = 'workflows';
     public $desc       = 'Workflows';
     public $reqmodules = ['workflow'];
-
-    private $marking;  // array for workflow or string for state_machine
-    private $context   = [];
-    private $workflows = [];
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -75,69 +76,5 @@ class WorkflowsProperty extends TextAreaProperty
         }
 
         return true;
-    }
-
-    //public function getId()
-    //{
-    //    return spl_object_id($this);
-    //}
-
-    // See https://write.vanoix.com/alexandre/creer-un-workflow-metier-avec-le-composant-symfony-workflow
-    //
-    // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Tests/Subject.php
-    public function getMarking()
-    {
-        return $this->marking;
-    }
-
-    public function setMarking($marking, array $context = [])
-    {
-        $this->marking = $marking;
-        $this->context = $context;
-    }
-
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Registry.php
-    public function hasWorkflow(string $workflowName)
-    {
-        return array_key_exists($workflowName, $this->workflows);
-    }
-
-    public function getWorkflow(string $workflowName)
-    {
-        return $this->workflows[$workflowName];
-    }
-
-    public function addWorkflow(string $workflowName, $workflow = [])
-    {
-        $this->workflows[$workflowName] = $workflow;
-    }
-
-    public function allWorkflows()
-    {
-        return $this->workflows;
-    }
-
-    // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Workflow.php
-    public function canTransition(string $workflowName, string $transitionName)
-    {
-        $workflow = $this->getWorkflow($workflowName);
-        return $workflow->can($transitionName);
-    }
-
-    public function applyTransition(string $workflowName, string $transitionName, array $context = [])
-    {
-        $workflow = $this->getWorkflow($workflowName);
-        return $workflow->apply($transitionName, $context);
-    }
-
-    public function getEnabledTransitions(string $workflowName)
-    {
-        $workflow = $this->getWorkflow($workflowName);
-        return $workflow->getEnabledTransitions();
     }
 }

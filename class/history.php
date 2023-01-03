@@ -19,18 +19,19 @@ sys::import('modules.workflow.class.tracker');
 class xarWorkflowHistory extends xarWorkflowTracker
 {
     private static $objectName = 'workflow_history';
-    private static $fieldList = ['workflow', 'user', 'object', 'item', 'marking', 'transition', 'updated', 'context'];
+    private static $fieldList = ['tracker_id', 'workflow', 'user', 'object', 'item', 'marking', 'transition', 'updated', 'context'];
 
     public static function init(array $args = [])
     {
     }
 
-    public static function addItem(string $workflowName, string $objectName, int $itemId, string $marking, string $transition, int $userId = 0, string $context = '')
+    public static function addItem(int $trackerId, string $workflowName, string $objectName, int $itemId, string $marking, string $transition, int $userId = 0, string $context = '')
     {
         if (empty($userId)) {
             $userId = xarSession::getVar('role_id');
         }
         $newItem = [
+            'tracker_id' => $trackerId,
             'workflow' => $workflowName,
             'object' => $objectName,
             'item' => $itemId,

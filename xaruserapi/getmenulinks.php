@@ -50,7 +50,14 @@ function workflow_userapi_getmenulinks()
             'instances'
         ),
                               'title' => xarML('View your workflow instances'),
-                              'label' => xarML('sInstances'), ];
+                              'label' => xarML('Instances'), ];
+        $menulinks[] = ['url'   => xarController::URL(
+            'workflow',
+            'user',
+            'test'
+        ),
+                              'title' => xarML('View your workflow test'),
+                              'label' => xarML('Test'), ];
     }
 
     return $menulinks;
