@@ -49,3 +49,14 @@ $transitions = $workflow->getEnabledTransition($subject, "request");
 echo "Transitions: " . var_export($transitions, true) . "\n";
 $items = xarWorkflowTracker::getItems("cd_loans", "cdcollection", 0, '', 6);
 echo "Items: " . var_export($items, true) . "\n";
+$todo = [];
+foreach ($items as $id => $item) {
+    $todo[$item['object']] ??= [];
+    $todo[$item['object']][] = ((int) $item['item'] > 20) ? ((int) $item['item'] - 20) : (int) $item['item'];
+}
+echo "Todo: " . var_export($todo, true) . "\n";
+foreach ($todo as $object => $itemids) {
+    //$values = xarWorkflowTracker::getObjectValues($object, $itemids, ['status']);
+    $values = xarWorkflowTracker::getObjectValues($object, $itemids);
+    echo "Values: " . var_export($values, true) . "\n";
+}

@@ -21,10 +21,9 @@ class WorkflowsProperty extends TextAreaProperty
     public $desc       = 'Workflows';
     public $reqmodules = ['workflow'];
 
-    private $marking   = [];
+    private $marking;  // array for workflow or string for state_machine
     private $context   = [];
     private $workflows = [];
-    private $transitions = [];
 
     public function __construct(ObjectDescriptor $descriptor)
     {
@@ -78,6 +77,11 @@ class WorkflowsProperty extends TextAreaProperty
         return true;
     }
 
+    //public function getId()
+    //{
+    //    return spl_object_id($this);
+    //}
+
     // See https://write.vanoix.com/alexandre/creer-un-workflow-metier-avec-le-composant-symfony-workflow
     //
     // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Tests/Subject.php
@@ -108,24 +112,32 @@ class WorkflowsProperty extends TextAreaProperty
         return $this->workflows[$workflowName];
     }
 
+    public function addWorkflow(string $workflowName, $workflow = [])
+    {
+        $this->workflows[$workflowName] = $workflow;
+    }
+
     public function allWorkflows()
     {
         return $this->workflows;
     }
 
     // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Workflow.php
-    public function canTransition(string $transitionName)
+    public function canTransition(string $workflowName, string $transitionName)
     {
-        return array_key_exists($workflowName, $this->workflows);
+        $workflow = $this->getWorkflow($workflowName);
+        return $workflow->can($transitionName);
     }
 
-    public function applyTransition(string $transitionName, array $context = [])
+    public function applyTransition(string $workflowName, string $transitionName, array $context = [])
     {
-        return $this->workflows[$workflowName];
+        $workflow = $this->getWorkflow($workflowName);
+        return $workflow->apply($transitionName, $context);
     }
 
-    public function getEnabledTransitions()
+    public function getEnabledTransitions(string $workflowName)
     {
-        return $this->workflows;
+        $workflow = $this->getWorkflow($workflowName);
+        return $workflow->getEnabledTransitions();
     }
 }

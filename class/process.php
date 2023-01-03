@@ -103,7 +103,7 @@ class xarWorkflowProcess extends xarObject
             'completed' => function (Event $event, string $eventName) use ($objectName, $userId) {
                 $workflowName = $event->getWorkflowName();
                 $subject = $event->getSubject();
-                $trackerId = xarWorkflowTracker::addItem($workflowName, $objectName, $subject->getId(), $subject->getMarking(), $userId);
+                $trackerId = xarWorkflowTracker::setItem($workflowName, $objectName, $subject->getId(), $subject->getMarking(), $userId);
             },
         ];
         foreach ($eventTypes as $eventType) {
