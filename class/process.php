@@ -41,7 +41,7 @@ class xarWorkflowProcess extends xarObject
     public static function loadConfig()
     {
         if (!empty(static::$config)) {
-            return;
+            return static::$config;
         }
         static::$config = [];
         //$configFile = sys::varpath() . '/cache/processes/config.json';
@@ -51,6 +51,7 @@ class xarWorkflowProcess extends xarObject
             //static::$config = json_decode($contents, true);
             static::$config = include($configFile);
         }
+        return static::$config;
     }
 
     public static function hasWorkflowConfig(string $workflowName)
@@ -185,10 +186,6 @@ class xarWorkflowProcess extends xarObject
         $validator = new WorkflowValidator();
         $validator->validate($definition, $workflowName);
 
-        // @checkme this creates the wrong graph if we split the from ANY above - it's better with ALL
-        // php test.php | dot -Tpng -o cd_loans.png
-        //$dumper = new GraphvizDumper();
-        //echo $dumper->dump($definition);
         return $workflow;
     }
 
@@ -222,12 +219,22 @@ class xarWorkflowProcess extends xarObject
         $validator = new StateMachineValidator();
         $validator->validate($definition, $workflowName);
 
+        return $workflow;
+    }
+
+    public static function dumpProcess(string $workflowName)
+    {
+        $workflow = static::getProcess($workflowName);
+        if ($workflow instanceof StateMachine) {
+            // php test.php | dot -Tpng -o cd_loans.png
+            $dumper = new StateMachineGraphvizDumper();
+            return $dumper->dump($workflow->getDefinition(), null, ['node' => ['href' => '/'], 'edge' => ['href' => '/']]);
+        }
         // @checkme this creates the wrong graph if we split the from ANY above - it's better with ALL
         // php test.php | dot -Tpng -o cd_loans.png
-        //$dumper = new StateMachineGraphvizDumper();
-        //echo $dumper->dump($definition);
-        //continue;
-        return $workflow;
+        $dumper = new GraphvizDumper();
+        //return $dumper->dump($workflow->getDefinition(), null, ['graph' => ['href' => '/'], 'node' => ['href' => '/']]);
+        return $dumper->dump($workflow->getDefinition(), null, ['node' => ['href' => '/']]);
     }
 
     // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Workflow.php

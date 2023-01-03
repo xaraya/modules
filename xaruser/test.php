@@ -27,5 +27,18 @@ function workflow_user_test()
         return;
     }
 
+    // @checkme we need to require composer autoload here
+    $root = sys::root();
+    // flat install supporting symlinks
+    if (empty($root)) {
+        $vendor = realpath(dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/../vendor');
+    } else {
+        $vendor = realpath($root . 'vendor');
+    }
+    if (!file_exists($vendor . '/autoload.php')) {
+        return ['warning' => '<p>This test uses composer autoload<br/><code>$ composer require --dev symfony/workflow</code></p>'];
+    }
+    require_once $vendor .'/autoload.php';
+    sys::import('modules.workflow.class.process');
     return [];
 }

@@ -1,0 +1,26 @@
+digraph workflow {
+  ratio="compress" rankdir="LR"
+  node [fontsize="9" fontname="Arial" color="#333333" fillcolor="lightblue" fixedsize="false" width="1" href="/"];
+  edge [fontsize="9" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5" href="/"];
+
+  place_7b231a50a498ef151e291795f46f56bee569eae5 [label="available", shape=circle style="filled"];
+  place_fcb0885159dfe15b8d42ad42750ddc7b6729c66d [label="requested", shape=circle];
+  place_c9560d94ee19830374678a9c9f9a0833801c9f62 [label="approved", shape=circle];
+  place_1f087a5954f6249bb7245576c304a0520d4178c5 [label="rejected", shape=circle];
+  place_a4619fa66be5254dc0b921040c174a3df7760bdd [label="escalated", shape=circle];
+  place_d35cfe68796252cbf4929b773681ab2572ef229c [label="acknowledged", shape=circle];
+  place_4927f398ef1972944d54627f35b58876a3c963be [label="retrieved", shape=circle];
+  place_1302aeee7db4b8b7ffcf91019d299aeb21bf6f39 [label="returned", shape=circle];
+  place_b639f5cc719831458c83999303237e8499c0cabe [label="deleted", shape=circle];
+  place_5f2391220833847e88fa717eb295a329dd3b3c55 [label="not available", shape=circle];
+  place_7b231a50a498ef151e291795f46f56bee569eae5 -> place_fcb0885159dfe15b8d42ad42750ddc7b6729c66d [label="request" style="solid"];
+  place_fcb0885159dfe15b8d42ad42750ddc7b6729c66d -> place_c9560d94ee19830374678a9c9f9a0833801c9f62 [label="approve" style="solid"];
+  place_fcb0885159dfe15b8d42ad42750ddc7b6729c66d -> place_1f087a5954f6249bb7245576c304a0520d4178c5 [label="reject" style="solid"];
+  place_fcb0885159dfe15b8d42ad42750ddc7b6729c66d -> place_a4619fa66be5254dc0b921040c174a3df7760bdd [label="escalate" style="solid"];
+  place_c9560d94ee19830374678a9c9f9a0833801c9f62 -> place_4927f398ef1972944d54627f35b58876a3c963be [label="retrieve" style="solid"];
+  place_1f087a5954f6249bb7245576c304a0520d4178c5 -> place_d35cfe68796252cbf4929b773681ab2572ef229c [label="acknowledge" style="solid"];
+  place_a4619fa66be5254dc0b921040c174a3df7760bdd -> place_1f087a5954f6249bb7245576c304a0520d4178c5 [label="timeout" style="solid"];
+  place_4927f398ef1972944d54627f35b58876a3c963be -> place_1302aeee7db4b8b7ffcf91019d299aeb21bf6f39 [label="return" style="solid"];
+  place_1302aeee7db4b8b7ffcf91019d299aeb21bf6f39 -> place_b639f5cc719831458c83999303237e8499c0cabe [label="close" style="solid"];
+  place_d35cfe68796252cbf4929b773681ab2572ef229c -> place_b639f5cc719831458c83999303237e8499c0cabe [label="close" style="solid"];
+}

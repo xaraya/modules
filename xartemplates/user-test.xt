@@ -9,6 +9,70 @@
     <xar:template file="user_bar" type="module"/>
     <div style="margin: auto;">
         <h3>Workflow Test</h3>
+          <xar:if condition="!empty($warning)">
+            <strong>Requirement:</strong>#$warning#
+          <xar:else/>
+            <xar:set name="config">xarWorkflowProcess::loadConfig()</xar:set>
+            <fieldset>
+              <legend>
+                List of workflows
+              </legend>
+              <table style="border-collapse: separate;">
+                <tr>
+                  <th>Workflow</th>
+                  <th>Places</th>
+                  <th>Transitions</th>
+                  <th>Description</th>
+                </tr>
+                <xar:foreach in="$config" key="$name" value="$info">
+                  <xar:set name="link">xarController::URL('workflow', 'user', 'test', ['workflow' => $name])</xar:set>
+                  <tr>
+                    <td><a href="#$link#">#$info['label']#</a></td>
+                    <td>#count($info['places'])#</td>
+                    <td>#count($info['transitions'])#</td>
+                    <td>#$info['description']#</td>
+                  </tr>
+                </xar:foreach>
+              </table>
+            </fieldset>
+            <xar:set name="dummy">xarVar::fetch('workflow', 'isset', $workflow, null, xarVar::NOT_REQUIRED)</xar:set>
+            <xar:if condition="!empty($workflow)">
+              <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
+              <xar:set name="items">xarWorkflowTracker::getItems($workflow)</xar:set>
+              <fieldset>
+                <legend>
+                  Active subjects for this workflow
+                </legend>
+                <table style="border-collapse: separate;">
+                  <tr>
+                    <th>Tracker Id</th>
+                    <th>Object Name</th>
+                    <th>Item Id</th>
+                    <th>User Name</th>
+                    <th>Current Place</th>
+                    <th>Last Updated</th>
+                    <th>Transitions</th>
+                  </tr>
+                  <xar:foreach in="$items" value="$item">
+                    <tr>
+                      <td>#$item['id']#</td>
+                      <td>#$item['object']#</td>
+                      <td>#$item['item']#</td>
+                      <td>#$item['user']#</td>
+                      <td>#$item['marking']#</td>
+                      <td>#$item['updated']#</td>
+                      <td></td>
+                    </tr>
+                  </xar:foreach>
+                </table>
+              </fieldset>
+            </xar:if>
+          </xar:if>
+          <div style="overflow: hidden">
+              <img src="#xarTpl::getImage('cd_loans.png','workflow')#" alt="#xarML('Workflow example diagram')#" usemap="#workflow"/>
+              <xar:set name="mapfile">sys::code() . 'modules/workflow/xarimages/cd_loans.map'</xar:set>
+              <xar:set name="map">file_get_contents($mapfile)</xar:set>#$map#
+          </div>
           <xar:template file="symfofooter"/>
     </div>
   </div>

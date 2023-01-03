@@ -12,8 +12,6 @@
  * @author Workflow Module Development Team
  */
 
-// sys::import('modules.workflow.class.tracker');
-
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\GuardEvent;
