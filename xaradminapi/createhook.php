@@ -24,19 +24,9 @@ function workflow_adminapi_createhook($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'object ID',
-            'admin',
-            'createhook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        return;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('object id', 'admin', 'createhook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
         $extrainfo = [];
@@ -53,19 +43,9 @@ function workflow_adminapi_createhook($args)
     }
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'module name',
-            'admin',
-            'createhook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        return;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'admin', 'createhook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
 
     if (!isset($itemtype) || !is_numeric($itemtype)) {

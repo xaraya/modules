@@ -24,38 +24,14 @@ function workflow_adminapi_deletehook($args)
     extract($args);
 
     if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'object id',
-            'admin',
-            'deletehook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('object id', 'admin', 'deletehook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
     if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'extrainfo',
-            'admin',
-            'deletehook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('extrainfo', 'admin', 'deletehook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
 
     // When called via hooks, the module name may be empty, so we get it from
@@ -68,21 +44,9 @@ function workflow_adminapi_deletehook($args)
 
     $modid = xarMod::getRegID($modname);
     if (empty($modid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'module name',
-            'admin',
-            'deletehook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module name', 'admin', 'deletehook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
 
     if (!empty($extrainfo['itemtype'])) {
@@ -97,21 +61,9 @@ function workflow_adminapi_deletehook($args)
         $itemid = $objectid;
     }
     if (empty($itemid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'item id',
-            'admin',
-            'deletehook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('item id', 'admin', 'deletehook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
 
     // see if we need to start some workflow activity here

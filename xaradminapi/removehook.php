@@ -30,40 +30,16 @@ function workflow_adminapi_removehook($args)
     // When called via hooks, we should get the real module name from objectid
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'object ID (= module name)',
-            'admin',
-            'removehook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('object ID (= module name)', 'admin', 'removehook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
 
     $modid = xarMod::getRegID($objectid);
     if (empty($modid)) {
-        $msg = xarML(
-            'Invalid #(1) for #(2) function #(3)() in module #(4)',
-            'module ID',
-            'admin',
-            'removehook',
-            'workflow'
-        );
-        xarErrorSet(
-            XAR_USER_EXCEPTION,
-            'BAD_PARAM',
-            new SystemException($msg)
-        );
-        // we *must* return $extrainfo for now, or the next hook will fail
-        //return false;
-        return $extrainfo;
+        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        $vars = array('module ID', 'admin', 'removehook', 'workflow');
+        throw new BadParameterException($vars, $msg);
     }
 
     // TODO: do we delete/close all instances for this module ?
