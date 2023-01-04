@@ -535,53 +535,8 @@ function workflow_init()
 #
     # Set up hooks
 #
-    if (!xarModHooks::register(
-        'item',
-        'create',
-        'API',
-        'workflow',
-        'admin',
-        'createhook'
-    )) {
-        return false;
-    }
-    if (!xarModHooks::register(
-        'item',
-        'update',
-        'API',
-        'workflow',
-        'admin',
-        'updatehook'
-    )) {
-        return false;
-    }
-    if (!xarModHooks::register(
-        'item',
-        'delete',
-        'API',
-        'workflow',
-        'admin',
-        'deletehook'
-    )) {
-        return false;
-    }
-    if (!xarModHooks::register(
-        'module',
-        'remove',
-        'API',
-        'workflow',
-        'admin',
-        'removehook'
-    )) {
-        return false;
-    }
-
-    /* // TODO: show pending instances someday ?
-        if (!xarModHooks::register('item', 'usermenu', 'GUI',
-                'workflow', 'user', 'usermenu')) {
-            return false;
-        }
-    */
+    //workflow_create_old_hooks();
+    workflow_create_new_hooks();
 
     // define privilege instances and masks
     $instances = [
@@ -634,53 +589,88 @@ function workflow_upgrade($oldversion)
         case '1.5':
         case '1.5.0':
             // Code to upgrade from version 1.5.0 goes here
+            workflow_delete_old_hooks();
+            workflow_create_new_hooks();
+
+        case '1.6.0':
+            // Code to upgrade from version 1.6.0 goes here
+
+        case '2.0.0':
             break;
     }
     // Update successful
     return true;
 }
 
-/**
- * delete the workflow module
- * This function is only ever called once during the lifetime of a particular
- * module instance
- * @return bool true on success
- */
-function workflow_delete()
+function workflow_create_new_hooks()
 {
-    $dbconn = xarDB::getConn();
-    $xartable = xarDB::getTables();
+    xarHooks::registerObserver('ItemCreate', 'workflow');
+    xarHooks::registerObserver('ItemUpdate', 'workflow');
+    xarHooks::registerObserver('ItemDelete', 'workflow');
+    xarHooks::registerObserver('ModuleRemove', 'workflow');
+    xarHooks::registerObserver('ItemDisplay', 'workflow');
+    return true;
+}
 
-    sys::import('xaraya.tableddl');
+function workflow_delete_new_hooks()
+{
+    return true;
+}
 
-    $mytables = [
-                      'workflow_activities',
-                      'workflow_activity_roles',
-                      'workflow_instance_activities',
-                      'workflow_instance_comments',
-                      'workflow_instances',
-                      'workflow_processes',
-                      'workflow_roles',
-                      'workflow_transitions',
-                      'workflow_user_roles',
-                      'workflow_workitems',
-                     ];
-
-    foreach ($mytables as $mytable) {
-        // Generate the SQL to drop the table using the API
-        $query = xarTableDDL::dropTable($xartable[$mytable]);
-        if (empty($query)) {
-            return false;
-        } // throw back
-
-        // Drop the table and send exception if returns false.
-        $result = &$dbconn->Execute($query);
-        if (!$result) {
-            return false;
-        }
+function workflow_create_old_hooks()
+{
+    if (!xarModHooks::register(
+        'item',
+        'create',
+        'API',
+        'workflow',
+        'admin',
+        'createhook'
+    )) {
+        return false;
+    }
+    if (!xarModHooks::register(
+        'item',
+        'update',
+        'API',
+        'workflow',
+        'admin',
+        'updatehook'
+    )) {
+        return false;
+    }
+    if (!xarModHooks::register(
+        'item',
+        'delete',
+        'API',
+        'workflow',
+        'admin',
+        'deletehook'
+    )) {
+        return false;
+    }
+    if (!xarModHooks::register(
+        'module',
+        'remove',
+        'API',
+        'workflow',
+        'admin',
+        'removehook'
+    )) {
+        return false;
     }
 
-    // Remove module hooks
+    /* // TODO: show pending instances someday ?
+        if (!xarModHooks::register('item', 'usermenu', 'GUI',
+                'workflow', 'user', 'usermenu')) {
+            return false;
+        }
+    */
+    return true;
+}
+
+function workflow_delete_old_hooks()
+{
     if (!xarModHooks::unregister(
         'item',
         'create',
@@ -729,6 +719,52 @@ function workflow_delete()
             return false;
         }
     */
+    return true;
+}
+
+/**
+ * delete the workflow module
+ * This function is only ever called once during the lifetime of a particular
+ * module instance
+ * @return bool true on success
+ */
+function workflow_delete()
+{
+    $dbconn = xarDB::getConn();
+    $xartable = xarDB::getTables();
+
+    sys::import('xaraya.tableddl');
+
+    $mytables = [
+                      'workflow_activities',
+                      'workflow_activity_roles',
+                      'workflow_instance_activities',
+                      'workflow_instance_comments',
+                      'workflow_instances',
+                      'workflow_processes',
+                      'workflow_roles',
+                      'workflow_transitions',
+                      'workflow_user_roles',
+                      'workflow_workitems',
+                     ];
+
+    foreach ($mytables as $mytable) {
+        // Generate the SQL to drop the table using the API
+        $query = xarTableDDL::dropTable($xartable[$mytable]);
+        if (empty($query)) {
+            return false;
+        } // throw back
+
+        // Drop the table and send exception if returns false.
+        $result = &$dbconn->Execute($query);
+        if (!$result) {
+            return false;
+        }
+    }
+
+    // Remove module hooks
+    //workflow_delete_old_hooks();
+    workflow_delete_new_hooks();
 
     // Remove all process files
     workflow_remove_processes();
@@ -737,8 +773,8 @@ function workflow_delete()
     xarMasks::removemasks('workflow');
     xarPrivileges::removeInstances('workflow');
 
-    // Deletion successful
-    return true;
+    $module = 'workflow';
+    return xarMod::apiFunc('modules', 'admin', 'standarddeinstall', ['module' => $module]);
 }
 
 function workflow_remove_processes()
