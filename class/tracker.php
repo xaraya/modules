@@ -84,13 +84,19 @@ class xarWorkflowTracker extends xarObject
         return $loader->getValues($itemIds);
     }
 
+    public static function getTrackerItem(int $trackerId)
+    {
+        $objectRef = DataObjectMaster::getObject(['name' => static::$objectName, 'itemid' => $trackerId]);
+        $trackerId = $objectRef->getItem();
+        // @checkme bypass getValue() for properties here
+        return $objectRef->getFieldValues([], 1);
+    }
+
     public static function getItem(string $workflowName, string $objectName, int $itemId, string $marking = '', int $userId = 0, int $trackerId = 0)
     {
         // we have the internal trackerId of the item that we want to get/update/delete for some reason
         if (!empty($trackerId)) {
-            $objectRef = DataObjectMaster::getObject(['name' => static::$objectName, 'itemid' => $trackerId]);
-            $trackerId = $objectRef->getItem();
-            return $objectRef->getFieldValues();
+            return static::getTrackerItem($trackerId);
         }
         // we want to get the tracker for a particular workflow, object item and user here, regardless of the marking
         if (empty($userId)) {

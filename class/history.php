@@ -25,6 +25,12 @@ class xarWorkflowHistory extends xarWorkflowTracker
     {
     }
 
+    public static function getTrackerItems(int $trackerId)
+    {
+        // @todo get items for a particular trackerId
+        return [];
+    }
+
     public static function addItem(int $trackerId, string $workflowName, string $objectName, int $itemId, string $marking, string $transition, int $userId = 0, string $context = '')
     {
         if (empty($userId)) {

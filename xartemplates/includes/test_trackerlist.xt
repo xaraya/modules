@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <!-- this relies on $workflow and $trackerId if available -->
+  <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
+  <xar:if condition="!empty($trackerId)">
+    <xar:set name="items">[xarWorkflowTracker::getTrackerItem($trackerId)]</xar:set>
+  <xar:else/>
+    <xar:set name="items">xarWorkflowTracker::getItems($workflow)</xar:set>
+  </xar:if>
+  <fieldset>
+    <legend>
+      Active subjects for this workflow
+    </legend>
+    <table style="border-collapse: separate;">
+      <tr>
+        <th>Tracker Id</th>
+        <th>Object Name</th>
+        <th>Item Id</th>
+        <th>User Name</th>
+        <th>Current Place</th>
+        <th>Last Updated</th>
+        <th>Transitions</th>
+      </tr>
+      <xar:foreach in="$items" value="$item">
+        <xar:set name="objectlink">xarServer::getObjectURL($item['object'])</xar:set>
+        <xar:set name="itemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+        <tr>
+          <td>
+            <xar:if condition="!empty($trackerId) and $trackerId eq $item['id']">
+              <strong>#$item['id']#</strong>
+            <xar:else/>
+              <xar:set name="idlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'trackerId' => $item['id']])</xar:set>
+              <a href="#$idlink#">#$item['id']#</a>
+            </xar:if>
+          </td>
+          <td><a href="#$objectlink#">#$item['object']#</a></td>
+          <td><a href="#$itemlink#">#$item['item']#</a></td>
+          <td>#xarUser::getVar('name', $item['user'])#</td>
+          <td>#$item['marking']#</td>
+          <!-- you can choose how to display the date and time here, e.g. show
+             the time for the last 12 hours and the date for anything older -->
+          <xar:if condition="$item['updated'] > time() - 12*60*60">
+            <td>#xarLocale::getFormattedTime('short',$item['updated'])#</td>
+          <xar:else/>
+            <td>#xarLocale::getFormattedDate('medium',$item['updated'])#</td>
+          </xar:if>
+          <td></td>
+        </tr>
+      </xar:foreach>
+    </table>
+  </fieldset>
+</xar:template>

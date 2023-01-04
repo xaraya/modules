@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <!-- this relies on $workflow and $trackerId if available -->
+  <xar:set name="dummy">sys::import('modules.workflow.class.history')</xar:set>
+  <xar:if condition="!empty($trackerId)">
+    <xar:set name="items">xarWorkflowHistory::getTrackerItems($trackerId)</xar:set>
+  <xar:else/>
+    <xar:set name="items">xarWorkflowHistory::getItems($workflow)</xar:set>
+  </xar:if>
+  <fieldset>
+    <legend>
+      Transition History
+    </legend>
+    <table style="border-collapse: separate;">
+      <tr>
+        <th>History Id</th>
+        <th>Last Place</th>
+        <th>Transition</th>
+        <th>User Name</th>
+        <th>Updated</th>
+      </tr>
+      <xar:foreach in="$items" value="$item">
+        <tr>
+          <td>#$item['id']#</td>
+          <td>#$item['marking']#</td>
+          <td>#$item['transition']#</td>
+          <td>#xarUser::getVar('name', $item['user'])#</td>
+          <td>#xarLocale::getFormattedDate('medium',$item['updated'])#
+          #xarLocale::getFormattedTime('short',$item['updated'])#</td>
+          <td></td>
+        </tr>
+      </xar:foreach>
+    </table>
+  </fieldset>
+</xar:template>

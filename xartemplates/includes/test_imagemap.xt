@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <xar:set name="workflow">'cd_loans'</xar:set>
+  <div style="overflow: hidden">
+    <img src="#xarTpl::getImage($workflow . '.png','workflow')#" alt="#xarML('Workflow example diagram')#" usemap="#workflow"/>
+    <xar:set name="mapfile">sys::code() . 'modules/workflow/xarimages/' . $workflow . '.map'</xar:set>
+    <xar:set name="map">file_get_contents($mapfile)</xar:set>
+    #$map#
+  </div>
+</xar:template>

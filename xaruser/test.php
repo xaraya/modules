@@ -39,6 +39,11 @@ function workflow_user_test()
         return ['warning' => '<p>This test uses composer autoload<br/><code>$ composer require --dev symfony/workflow</code></p>'];
     }
     require_once $vendor .'/autoload.php';
-    sys::import('modules.workflow.class.process');
-    return [];
+    //sys::import('modules.workflow.class.process');
+    xarVar::fetch('workflow', 'isset', $workflow, null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('trackerId', 'isset', $trackerId, null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('subject', 'isset', $subject, null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('place', 'isset', $place, null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('transition', 'isset', $transition, null, xarVar::NOT_REQUIRED);
+    return ['workflow' => $workflow, 'trackerId' => $trackerId, 'subject' => $subject, 'place' => $place, 'transition' => $transition];
 }
