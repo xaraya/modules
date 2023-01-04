@@ -56,7 +56,7 @@ foreach ($items as $id => $item) {
 }
 echo "Todo: " . var_export($todo, true) . "\n";
 foreach ($todo as $object => $itemids) {
-    //$values = xarWorkflowTracker::getSubjectValues($object, $itemids, ['status']);
-    $values = xarWorkflowTracker::getSubjectValues($object, $itemids);
+    //$values = xarWorkflowTracker::getObjectValues($object, $itemids, ['status']);
+    $values = xarWorkflowTracker::getObjectValues($object, $itemids);
     echo "Values: " . var_export($values, true) . "\n";
 }

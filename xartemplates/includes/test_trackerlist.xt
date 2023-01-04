@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $workflow and $trackerId if available -->
+  <!-- this relies on $workflow, $subject and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
   <xar:if condition="!empty($trackerId)">
     <xar:set name="items">[xarWorkflowTracker::getTrackerItem($trackerId)]</xar:set>
@@ -14,16 +14,16 @@
     <table style="border-collapse: separate;">
       <tr>
         <th>Tracker Id</th>
-        <th>Object Name</th>
-        <th>Item Id</th>
+        <th>Subject Id</th>
         <th>User Name</th>
         <th>Current Place</th>
         <th>Last Updated</th>
         <th>Transitions</th>
       </tr>
       <xar:foreach in="$items" value="$item">
-        <xar:set name="objectlink">xarServer::getObjectURL($item['object'])</xar:set>
         <xar:set name="itemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+        <xar:set name="subjectid">implode('.', [$item['object'], $item['item']])</xar:set>
+        <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'subject' => $subjectid])</xar:set>
         <tr>
           <td>
             <xar:if condition="!empty($trackerId) and $trackerId eq $item['id']">
@@ -33,8 +33,16 @@
               <a href="#$idlink#">#$item['id']#</a>
             </xar:if>
           </td>
-          <td><a href="#$objectlink#">#$item['object']#</a></td>
-          <td><a href="#$itemlink#">#$item['item']#</a></td>
+          <td>
+            <a href="#$itemlink#" title="Display #$subjectid#">
+              <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
+            </a>&#160;
+            <xar:if condition="!empty($subject) and $subject eq $subjectid">
+              <strong><a href="#$filterlink#">#$subjectid#</a></strong>
+            <xar:else/>
+              <a href="#$filterlink#">#$subjectid#</a>
+            </xar:if>
+          </td>
           <td>#xarUser::getVar('name', $item['user'])#</td>
           <td>#$item['marking']#</td>
           <!-- you can choose how to display the date and time here, e.g. show

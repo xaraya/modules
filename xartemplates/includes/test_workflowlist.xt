@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $workflow and $trackerId if available -->
+  <!-- this relies on $workflow, $subject, $place, $transition and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.process')</xar:set>
   <xar:set name="config">xarWorkflowProcess::loadConfig()</xar:set>
   <fieldset>
@@ -10,6 +10,7 @@
     <table style="border-collapse: separate;">
       <tr>
         <th>Workflow</th>
+        <th>Subjects</th>
         <th>Places</th>
         <th>Transitions</th>
         <th>Description</th>
@@ -19,7 +20,7 @@
         <tr>
           <td>
             <xar:if condition="!empty($workflow) and $workflow eq $name">
-              <xar:if condition="!empty($trackerId)">
+              <xar:if condition="!empty($trackerId) or !empty($subject)">
                 <strong><a href="#$link#">#$info['label']#</a></strong>
               <xar:else/>
                 <strong>#$info['label']#</strong>
@@ -28,6 +29,20 @@
               <a href="#$link#">#$info['label']#</a>
             </xar:if>
           </td>
+          <td>
+            <xar:foreach in="$info['supports']" value="$item">
+              <xar:set name="objectlink">xarServer::getObjectURL($item)</xar:set>
+              <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $name, 'subject' => $item])</xar:set>
+              <a href="#$objectlink#" title="View #$item#">
+                <xar:img scope="theme" file="icons/item-list.png" class="xar-icon" alt="view"/>
+              </a>&#160;
+              <xar:if condition="!empty($subject) and substr($subject, 0, strlen($item)) eq $item">
+                <strong><a href="#$filterlink#">#$item#</a></strong>
+              <xar:else/>
+                <a href="#$filterlink#">#$item#</a>
+              </xar:if><br/>
+            </xar:foreach>
+          </td>
           <td>#count($info['places'])#</td>
           <td>#count($info['transitions'])#</td>
           <td>#$info['description']#</td>
@@ -35,7 +50,7 @@
       </xar:foreach>
     </table>
   </fieldset>
-  <xar:if condition="!empty($workflow) and !empty($config[$workflow]) and empty($trackerId)">
+  <xar:if condition="!empty($workflow) and !empty($config[$workflow]) and empty($trackerId) and empty($subject)">
   <fieldset>
     <legend>
       Transitions
@@ -43,8 +58,8 @@
     <table style="border-collapse: separate; width: 50%">
       <tr>
         <th>Transition</th>
-        <th>From</th>
-        <th>To</th>
+        <th>From Place</th>
+        <th>To Place</th>
         <th>Change Status</th>
       </tr>
       <xar:foreach in="$config[$workflow]['transitions']" key="$name" value="$info">

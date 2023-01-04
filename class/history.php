@@ -25,8 +25,13 @@ class xarWorkflowHistory extends xarWorkflowTracker
     {
     }
 
-    public static function getTrackerItems(int $trackerId)
+    // this method overrides the one in xarWorkflowTracker to get the history for trackerId(s)
+    public static function getTrackerItems(int|array $trackerIds = [])
     {
+        if (is_array($trackerIds)) {
+            // @todo get items for an array of trackerIds
+            return [];
+        }
         // @todo get items for a particular trackerId
         return [];
     }

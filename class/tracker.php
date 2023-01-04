@@ -35,8 +35,7 @@ class xarWorkflowTracker extends xarObject
     {
         // we have a list of internal trackerIds for the items that we want to get/update/delete for some reason
         if (!empty($trackerIds)) {
-            $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
-            return $loader->getValues($trackerIds);
+            return static::getTrackerItems($trackerIds);
         }
         // we want to filter on any combination of elements to get tracker items here
         if (empty($userId)) {
@@ -77,7 +76,31 @@ class xarWorkflowTracker extends xarObject
         return $items;
     }
 
-    public static function getSubjectValues(string $objectName, array $itemIds, array $fieldList = [])
+    // this method is overridden in xarWorkflowHistory to get the history for trackerId(s)
+    public static function getTrackerItems(int|array $trackerIds = [])
+    {
+        // we have a list of internal trackerIds for the items that we want to get/update/delete for some reason
+        if (is_array($trackerIds)) {
+            $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
+            return $loader->getValues($trackerIds);
+        }
+        return [ static::getTrackerItem($trackerIds) ];
+    }
+
+    public static function getSubjectItems(string $subjectId, string $workflowName = '')
+    {
+        // get items for a particular subjectId = objectName.itemId or objectName for all DD object items
+        [$objectName, $itemId] = explode('.', $subjectId . '.0');
+        return static::getItems($workflowName, $objectName, (int) $itemId);
+    }
+
+    public static function getWorkflowItems(string $workflowName)
+    {
+        // get items for a particular workflow
+        return static::getItems($workflowName);
+    }
+
+    public static function getObjectValues(string $objectName, array $itemIds, array $fieldList = [])
     {
         // with an empty fieldlist, let DataObjectMaster setup the fieldlist
         $loader = new DataObjectLoader($objectName, $fieldList);

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $workflow and $trackerId if available -->
+  <!-- this relies on $workflow, $subject and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.history')</xar:set>
   <xar:if condition="!empty($trackerId)">
     <xar:set name="items">xarWorkflowHistory::getTrackerItems($trackerId)</xar:set>
+  <xar:elseif condition="!empty($subject)"/>
+    <xar:set name="items">xarWorkflowHistory::getSubjectItems($subject)</xar:set>
   <xar:else/>
-    <xar:set name="items">xarWorkflowHistory::getItems($workflow)</xar:set>
+    <xar:set name="items">xarWorkflowHistory::getWorkflowItems($workflow)</xar:set>
   </xar:if>
   <fieldset>
     <legend>
@@ -20,6 +22,7 @@
         <th>Updated</th>
       </tr>
       <xar:foreach in="$items" value="$item">
+        <xar:set name="subjectid">implode('.', [$item['object'], $item['item']])</xar:set>
         <tr>
           <td>#$item['id']#</td>
           <td>#$item['marking']#</td>
