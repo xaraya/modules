@@ -31,7 +31,7 @@ function workflow_admin_modifyconfig()
     $data = [];
     $data['settings'] = [];
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'blocks']);
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'workflow']);
     $data['module_settings']->getItem();
 
     $create = xarModVars::get('workflow', 'default.create');

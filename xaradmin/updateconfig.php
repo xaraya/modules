@@ -16,9 +16,6 @@
  */
 function workflow_admin_updateconfig()
 {
-    // Get parameters
-    xarVar::fetch('settings', 'isset', $settings, '', xarVar::DONT_SET);
-
     // Confirm authorisation code
     if (!xarSec::confirmAuthKey()) {
         return;
@@ -26,6 +23,15 @@ function workflow_admin_updateconfig()
     // Security Check
     if (!xarSecurity::check('AdminWorkflow')) {
         return;
+    }
+
+    // Get parameters
+    xarVar::fetch('settings', 'isset', $settings, '', xarVar::DONT_SET);
+    if (empty($settings)) {
+        $settings = [];
+    }
+    foreach ($settings as $key => $val) {
+        xarModVars::set('workflow', $key, $val);
     }
 
     if (!xarVar::fetch('jobs', 'isset', $jobs, [], xarVar::NOT_REQUIRED)) {
@@ -93,7 +99,7 @@ function workflow_admin_updateconfig()
         }
     }
 
-    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'blocks']);
+    $data['module_settings'] = xarMod::apiFunc('base', 'admin', 'getmodulesettings', ['module' => 'workflow']);
     $data['module_settings']->getItem();
     $isvalid = $data['module_settings']->checkInput();
     if (!$isvalid) {

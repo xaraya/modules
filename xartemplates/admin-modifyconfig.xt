@@ -17,6 +17,7 @@
             <b>Description:</b> first enable workflow hooks for a particular module+itemtype,
               then specify here which workflow process should be started when a particular hook is called
               by that module+itemtype. Only non-interactive start activities can be used here...
+              Activity code can use $args['module'], $args['itemtype'] and $args['itemid'] as standard arguments to update the $instance.
           </p>
 
           <table border="0" cellpadding="8" cellspacing="0">
