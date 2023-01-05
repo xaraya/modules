@@ -48,7 +48,7 @@ class xarWorkflowConfig extends xarObject
         } else {
             $vendor = realpath($root . 'vendor');
         }
-        if (!file_exists($vendor . '/autoload.php') || true) {
+        if (!file_exists($vendor . '/autoload.php')) {
             $message = <<<EOT
 This test needs composer autoload to run the workflows
 $ composer require --dev symfony/workflow
