@@ -37,7 +37,7 @@ function workflow_user_test()
     }
     xarVar::fetch('workflow', 'isset', $data['workflow'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('trackerId', 'isset', $data['trackerId'], null, xarVar::NOT_REQUIRED);
-    xarVar::fetch('subject', 'isset', $data['subject'], null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('subjectId', 'isset', $data['subjectId'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('place', 'isset', $data['place'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('transition', 'isset', $data['transition'], null, xarVar::NOT_REQUIRED);
     return $data;

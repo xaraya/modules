@@ -18,8 +18,16 @@ class xarWorkflowSubject
 {
     use xarWorkflowMarkingTrait;
 
+    public $objectName = 'dummy';
+
     public function getId()
     {
-        return spl_object_id($this);
+        $itemId = spl_object_id($this);
+        return implode('.', [$this->objectName, (string) $itemId]);
+    }
+
+    public function setObjectName(string $objectName)
+    {
+        $this->objectName = $objectName;
     }
 }

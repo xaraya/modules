@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $workflow, $subject, $place, $transition and $trackerId if available -->
+  <!-- this relies on $workflow, $subjectId, $place, $transition and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.config')</xar:set>
   <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
   <fieldset>
@@ -20,7 +20,7 @@
         <tr>
           <td>
             <xar:if condition="!empty($workflow) and $workflow eq $name">
-              <xar:if condition="!empty($trackerId) or !empty($subject)">
+              <xar:if condition="!empty($trackerId) or !empty($subjectId)">
                 <strong><a href="#$link#">#$info['label']#</a></strong>
               <xar:else/>
                 <strong>#$info['label']#</strong>
@@ -30,16 +30,16 @@
             </xar:if>
           </td>
           <td>
-            <xar:foreach in="$info['supports']" value="$item">
-              <xar:set name="objectlink">xarServer::getObjectURL($item)</xar:set>
-              <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $name, 'subject' => $item])</xar:set>
-              <a href="#$objectlink#" title="View #$item#">
+            <xar:foreach in="$info['supports']" value="$objectName">
+              <xar:set name="objectlink">xarServer::getObjectURL($objectName)</xar:set>
+              <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $name, 'subjectId' => $objectName])</xar:set>
+              <a href="#$objectlink#" title="View #$objectName#">
                 <xar:img scope="theme" file="icons/item-list.png" class="xar-icon" alt="view"/>
               </a>&#160;
-              <xar:if condition="!empty($subject) and substr($subject, 0, strlen($item)) eq $item">
-                <strong><a href="#$filterlink#">#$item#</a></strong>
+              <xar:if condition="!empty($subjectId) and substr($subjectId, 0, strlen($objectName)) eq $objectName">
+                <strong><a href="#$filterlink#">#$objectName#</a></strong>
               <xar:else/>
-                <a href="#$filterlink#">#$item#</a>
+                <a href="#$filterlink#">#$objectName#</a>
               </xar:if><br/>
             </xar:foreach>
           </td>
@@ -50,7 +50,7 @@
       </xar:foreach>
     </table>
   </fieldset>
-  <xar:if condition="!empty($workflow) and !empty($config[$workflow]) and empty($trackerId) and empty($subject)">
+  <xar:if condition="!empty($workflow) and !empty($config[$workflow]) and empty($trackerId) and empty($subjectId)">
   <fieldset>
     <legend>
       Transitions

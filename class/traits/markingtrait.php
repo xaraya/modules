@@ -17,10 +17,14 @@ trait xarWorkflowMarkingTrait
     protected $_workflowMarking;  // array for workflow or string for state_machine
     protected $_workflowContext;
 
-    //public function getId()
-    //{
-    //    return spl_object_id($this);
-    //}
+    public function getId()
+    {
+        //return spl_object_id($this);
+        if (empty($this->objectref)) {
+            throw new Exception('Property ' . $this->name . ' of class ' . get_class($this) . ' is missing an objectref to create a valid subjectId for workflows');
+        }
+        return implode('.', [$this->objectref->name, (string) $this->objectref->itemid]);
+    }
 
     // See https://write.vanoix.com/alexandre/creer-un-workflow-metier-avec-le-composant-symfony-workflow
     //

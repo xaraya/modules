@@ -38,4 +38,14 @@
     </xsl:processing-instruction>
   </xsl:template>
 
+  <xsl:template match="xar:workflow-actions">
+    <xsl:processing-instruction name="php">
+      <xsl:text>echo xarMod::apiFunc('workflow','user','showactions',</xsl:text>
+        <xsl:call-template name="atts2args">
+          <xsl:with-param name="nodeset" select="@*"/>
+        </xsl:call-template>
+      <xsl:text>);</xsl:text>
+    </xsl:processing-instruction>
+  </xsl:template>
+
 </xsl:stylesheet>

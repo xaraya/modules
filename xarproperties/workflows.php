@@ -15,6 +15,7 @@
 sys::import('modules.base.xarproperties.textarea');
 sys::import('modules.workflow.class.traits.markingtrait');
 sys::import('modules.workflow.class.traits.transitiontrait');
+sys::import('modules.workflow.class.tracker');
 
 class WorkflowsProperty extends TextAreaProperty
 {
@@ -34,6 +35,8 @@ class WorkflowsProperty extends TextAreaProperty
         $this->filepath   = 'modules/workflow/xarproperties';
         // We want a reference to the object here
         $this->include_reference = 1;
+        // Use the dummy datastore for this property
+        $this->source = 'none';
 
         // @checkme initialize workflows based on defaultvalue = {"loans":[]}
         $this->parseConfigValue($this->defaultvalue);
@@ -63,9 +66,16 @@ class WorkflowsProperty extends TextAreaProperty
      */
     public function showOutput(array $data = [])
     {
-        if (empty($data['value'])) {
-            $data['value'] = $this->workflows;
-        }
+        $data['subjectId'] = $this->getId();
+        // pass along objectref for xarWorkflowTracker::getItems()
+        $data['objectref'] = $this->objectref;
+        // from xarWorkflowMarkingTrait
+        $data['marking'] = $this->getMarking();
+        $data['context'] = $this->getContext();
+        // from xarWorkflowRegistryTrait
+        $data['workflows'] = $this->allWorkflows();
+        // from xarWorkflowTransitionTrait
+        //$data['transitions'] = $this->getEnabledTransitions($workflow);
         return parent::showOutput($data);
     }
 

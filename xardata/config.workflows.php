@@ -2,6 +2,7 @@
 
 // See config/packages/workflow.yaml at https://symfony.com/doc/current/workflow.html
 // and corresponding config/workflow.php at https://github.com/zerodahero/laravel-workflow
+// See also https://pimcore.com/docs/pimcore/current/Development_Documentation/Workflow_Management/Configuration_Details/index.html
 return [
     'cd_loans' => [
         'label' => 'Music CD Loans',
@@ -29,6 +30,9 @@ return [
             'returned',
             'deleted',
             'not available'
+        ],
+        // @todo custom templates to use for particular places?
+        'templates' => [
         ],
         'transitions' => [
             'request' => [

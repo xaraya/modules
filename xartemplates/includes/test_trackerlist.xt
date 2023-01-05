@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $workflow, $subject and $trackerId if available -->
+  <!-- this relies on $workflow, $subjectId and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
   <xar:if condition="!empty($trackerId)">
-    <xar:set name="items">[xarWorkflowTracker::getTrackerItem($trackerId)]</xar:set>
+    <xar:set name="items">[ xarWorkflowTracker::getTrackerItem($trackerId) ]</xar:set>
   <xar:else/>
-    <xar:set name="items">xarWorkflowTracker::getItems($workflow)</xar:set>
+    <xar:set name="items">xarWorkflowTracker::getWorkflowItems($workflow)</xar:set>
   </xar:if>
   <fieldset>
     <legend>
@@ -22,8 +22,8 @@
       </tr>
       <xar:foreach in="$items" value="$item">
         <xar:set name="itemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
-        <xar:set name="subjectid">implode('.', [$item['object'], $item['item']])</xar:set>
-        <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'subject' => $subjectid])</xar:set>
+        <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
+        <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'subjectId' => $currentId])</xar:set>
         <tr>
           <td>
             <xar:if condition="!empty($trackerId) and $trackerId eq $item['id']">
@@ -34,13 +34,13 @@
             </xar:if>
           </td>
           <td>
-            <a href="#$itemlink#" title="Display #$subjectid#">
+            <a href="#$itemlink#" title="Display #$currentId#">
               <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
             </a>&#160;
-            <xar:if condition="!empty($subject) and $subject eq $subjectid">
-              <strong><a href="#$filterlink#">#$subjectid#</a></strong>
+            <xar:if condition="!empty($subjectId) and $subjectId eq $currentId">
+              <strong><a href="#$filterlink#">#$currentId#</a></strong>
             <xar:else/>
-              <a href="#$filterlink#">#$subjectid#</a>
+              <a href="#$filterlink#">#$currentId#</a>
             </xar:if>
           </td>
           <td>#xarUser::getVar('name', $item['user'])#</td>

@@ -8,6 +8,7 @@
  * Note: each user can only handle 1 instance of a workflow for each object item (e.g. cd_loans for CD 123)
  * @checkme this also means that you cannot assign a workflow instance to another user even if they need to
  * handle the next step e.g. to review or approve it
+ * @checkme extend this to be able to handle any kind of subject like module + itemtype + itemid too?
  *
  * @package modules
  * @copyright (C) copyright-placeholder
@@ -31,6 +32,7 @@ class xarWorkflowTracker extends xarObject
     {
     }
 
+    // @checkme we want to be able to get items for a list of itemIds of a particular objectName here (= dataobjectlist)
     public static function getItems(string $workflowName = '', string $objectName = '', int|array $itemId = 0, string|array $marking = '', int|array $userId = 0, array $trackerIds = [])
     {
         // we have a list of internal trackerIds for the items that we want to get/update/delete for some reason
@@ -39,7 +41,7 @@ class xarWorkflowTracker extends xarObject
         }
         // we want to filter on any combination of elements to get tracker items here
         if (empty($userId)) {
-            $userId = xarSession::getVar('role_id');
+            $userId = xarSession::getVar('role_id') ?? 0;
         }
         //$objectList = DataObjectMaster::getObjectList(['name' => static::$objectName]);
         //$items = $objectList->getItems(['where' => "user eq $userId"]);
@@ -123,7 +125,7 @@ class xarWorkflowTracker extends xarObject
         }
         // we want to get the tracker for a particular workflow, object item and user here, regardless of the marking
         if (empty($userId)) {
-            $userId = xarSession::getVar('role_id');
+            $userId = xarSession::getVar('role_id') ?? 0;
         }
         $oldItems = static::getItems($workflowName, $objectName, $itemId, '', $userId);
         if (empty($oldItems)) {
@@ -140,7 +142,7 @@ class xarWorkflowTracker extends xarObject
     public static function setItem(string $workflowName, string $objectName, int $itemId, string $marking, int $userId = 0, int $trackerId = 0)
     {
         if (empty($userId)) {
-            $userId = xarSession::getVar('role_id');
+            $userId = xarSession::getVar('role_id') ?? 0;
         }
         $newItem = [
             'workflow' => $workflowName,
@@ -170,7 +172,7 @@ class xarWorkflowTracker extends xarObject
     public static function deleteItem(string $workflowName, string $objectName, int $itemId, string $marking = '', int $userId = 0, int $trackerId = 0)
     {
         if (empty($userId)) {
-            $userId = xarSession::getVar('role_id');
+            $userId = xarSession::getVar('role_id') ?? 0;
         }
         $oldItem = static::getItem($workflowName, $objectName, $itemId, '', $userId, $trackerId);
         if (empty($oldItem)) {

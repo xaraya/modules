@@ -592,8 +592,12 @@ function workflow_upgrade($oldversion)
             workflow_delete_old_hooks();
             workflow_create_new_hooks();
 
+            // no break
         case '1.6.0':
             // Code to upgrade from version 1.6.0 goes here
+
+        case '1.6.1':
+            // Code to upgrade from version 1.6.1 goes here
 
         case '2.0.0':
             break;

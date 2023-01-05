@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <!-- this relies on $item from trackerlist, or on $workflow, $subjectId, $place and $trackerId if available -->
+  <xar:foreach in="$config[$workflow]['transitions']" key="$name" value="$info">
+    <xar:set name="from">is_array($info['from']) ? $info['from'] : [ $info['from'] ]</xar:set>
+    <xar:if condition="!in_array($place, $from)">
+      <xar:continue/>
+    </xar:if>
+    <xar:if condition="!empty($trackerId)">
+      <xar:set name="link">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'trackerId' => $trackerId, 'transition' => $name])</xar:set>
+    <xar:else/>
+      <xar:set name="link">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'subjectId' => $subjectId, 'transition' => $name])</xar:set>
+    </xar:if>
+    <xar:set name="label">ucwords(implode(' ', explode('_', $name)))</xar:set>&#160;
+    <xar:button type="link" name="$name" target="$link" label="$label"/>&#160;
+  </xar:foreach>
+</xar:template>

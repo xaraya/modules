@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <!-- this relies on $item from trackerlist, or on $workflow, $subjectId, $place and $trackerId if available -->
+  <xar:if condition="empty($config)">
+    <xar:set name="dummy">sys::import('modules.workflow.class.config')</xar:set>
+    <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
+  </xar:if>
+  <xar:if condition="!empty($trackerId) and empty($workflow) and empty($item)">
+    <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
+    <xar:set name="item">xarWorkflowTracker::getTrackerItem($trackerId)</xar:set>
+  </xar:if>
+  <xar:if condition="empty($workflow) and !empty($item)">
+    <xar:set name="trackerId">$item['id']</xar:set>
+    <xar:set name="workflow">$item['workflow']</xar:set>
+    <xar:set name="user">$item['user']</xar:set>
+    <xar:set name="place">$item['marking']</xar:set>
+    <xar:set name="updated">$item['updated']</xar:set>
+    <xar:set name="subjectId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
+  </xar:if>
+  <xar:set name="params">['workflow' => $workflow, 'subjectId' => $subjectId]</xar:set>
+  <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
+  <xar:if condition="!empty($trackerId)">
+    <xar:set name="params">$params + ['trackerId' => $trackerId]</xar:set>
+  </xar:if>
+  <xar:set name="idlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
+  <xar:if condition="!empty($workflow) and !empty($config[$workflow])">
+    <a href="#$idlink#">#$config[$workflow]['label']#</a>&#160;(#$trackerId#)
+    <xar:template file="test_actionbuttons"/>
+    <!-- xar:template file="test_actiontable"/-->
+  </xar:if>
+</xar:template>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+<!-- This is the template which will be shown when there is
+     a xar:workflow-actions tag somewhere in the code
+     The ideas is to use a layout attribute in tag tag to select the proper layout
+     or to override the template based on the place name - see *-requested.xt
+-->
+  <xar:if condition="empty($layout) or $layout eq 'default'">
+    <xar:if condition="!isset($title)">
+      <xar:set name="title">'Action List'</xar:set>
+    </xar:if>
+    <fieldset>
+      <xar:if condition="!empty($title)">
+      <legend>
+        #$title#
+      </legend>
+      </xar:if>
+      <!-- Produce the list of actions -->
+      <xar:template file="test_actionlist"/>
+    </fieldset>
+  <xar:else/>
+    <!-- Layout apparently had a value -->
+    Trying to use layout : #$layout#
+    Not implemented yet
+    This layout is undefined - please specify it in modules/workflow/xartemplates/user-showactions.xt
+  </xar:if>
+</xar:template>

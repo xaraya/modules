@@ -57,7 +57,7 @@ class xarWorkflowProcess extends xarObject
         if (!isset($eventTypes)) {
             $eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
         }
-        $userId = 6;
+        // @todo move this outside of process and make it configurable
         $checkSubjectStatus = [
             'request' => 'available',
         ];
@@ -74,10 +74,12 @@ class xarWorkflowProcess extends xarObject
                 }
             },
             // @checkme this is where we add the successful transition to a new marking to the tracker
-            'completed' => function (Event $event, string $eventName) use ($objectName, $userId) {
+            'completed' => function (Event $event, string $eventName) {
                 $workflowName = $event->getWorkflowName();
                 $subject = $event->getSubject();
-                $trackerId = xarWorkflowTracker::setItem($workflowName, $objectName, $subject->getId(), $subject->getMarking(), $userId);
+                // @checkme assuming subjectId = objectName.itemId here
+                [$objectName, $itemId] = explode('.', (string) $subject->getId() . '.0');
+                $trackerId = xarWorkflowTracker::setItem($workflowName, $objectName, (int) $itemId, $subject->getMarking());
             },
         ];
         // @checkme actually we're only interested in events where we have a callback function here :-)

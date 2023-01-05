@@ -38,8 +38,15 @@ $subject = new xarWorkflowSubject();
 // initiate workflow
 $marking = $workflow->getMarking($subject);
 echo "Marking: " . var_export($marking, true) . "\n";
+$transitions = $workflow->getEnabledTransitions($subject);
+echo "Transitions: " . var_export($transitions, true) . "\n";
+foreach ($transitions as $transition) {
+    echo "Transition '" . $transition->getName() . "': from '" . implode("', '", $transition->getFroms()) . "' to '" . implode("', '", $transition->getTos()) . "'\n";
+}
 $result = $workflow->can($subject, "request");
 echo "Result: " . var_export($result, true) . "\n";
+$subjectId = $subject->getId();
+echo "SubjectId: " . var_export($subjectId, true) . "\n";
 $marking = $workflow->apply($subject, "request", [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 echo "Marking: " . var_export($marking, true) . "\n";
 $context = $subject->getContext();
