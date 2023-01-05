@@ -27,23 +27,18 @@ function workflow_user_test()
         return;
     }
 
-    // @checkme we need to require composer autoload here
-    $root = sys::root();
-    // flat install supporting symlinks
-    if (empty($root)) {
-        $vendor = realpath(dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/../vendor');
-    } else {
-        $vendor = realpath($root . 'vendor');
+    $data = [];
+    // @checkme we don't actually need to require composer autoload here
+    sys::import('modules.workflow.class.config');
+    try {
+        xarWorkflowConfig::checkAutoload();
+    } catch (Exception $e) {
+        $data['warning'] = nl2br($e->getMessage());
     }
-    if (!file_exists($vendor . '/autoload.php')) {
-        return ['warning' => '<p>This test uses composer autoload<br/><code>$ composer require --dev symfony/workflow</code></p>'];
-    }
-    require_once $vendor .'/autoload.php';
-    //sys::import('modules.workflow.class.process');
-    xarVar::fetch('workflow', 'isset', $workflow, null, xarVar::NOT_REQUIRED);
-    xarVar::fetch('trackerId', 'isset', $trackerId, null, xarVar::NOT_REQUIRED);
-    xarVar::fetch('subject', 'isset', $subject, null, xarVar::NOT_REQUIRED);
-    xarVar::fetch('place', 'isset', $place, null, xarVar::NOT_REQUIRED);
-    xarVar::fetch('transition', 'isset', $transition, null, xarVar::NOT_REQUIRED);
-    return ['workflow' => $workflow, 'trackerId' => $trackerId, 'subject' => $subject, 'place' => $place, 'transition' => $transition];
+    xarVar::fetch('workflow', 'isset', $data['workflow'], null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('trackerId', 'isset', $data['trackerId'], null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('subject', 'isset', $data['subject'], null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('place', 'isset', $data['place'], null, xarVar::NOT_REQUIRED);
+    xarVar::fetch('transition', 'isset', $data['transition'], null, xarVar::NOT_REQUIRED);
+    return $data;
 }

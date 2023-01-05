@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <!-- this relies on $workflow, $subject, $place, $transition and $trackerId if available -->
-  <xar:set name="dummy">sys::import('modules.workflow.class.process')</xar:set>
-  <xar:set name="config">xarWorkflowProcess::loadConfig()</xar:set>
+  <xar:set name="dummy">sys::import('modules.workflow.class.config')</xar:set>
+  <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
   <fieldset>
     <legend>
       List of workflows

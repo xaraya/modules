@@ -12,6 +12,7 @@
  * @author Workflow Module Development Team
  */
 
+sys::import('modules.workflow.class.config');
 sys::import('modules.workflow.class.eventsubscriber');
 sys::import('modules.workflow.class.tracker');
 
@@ -29,46 +30,12 @@ use Symfony\Component\Workflow\Event\Event;
 
 class xarWorkflowProcess extends xarObject
 {
-    public static $config = [];
     public static $workflows = [];
     public static $dispatcher;
 
     public static function init(array $args = [])
     {
-        static::loadConfig();
-    }
-
-    public static function loadConfig()
-    {
-        if (!empty(static::$config)) {
-            return static::$config;
-        }
-        static::$config = [];
-        //$configFile = sys::varpath() . '/cache/processes/config.json';
-        $configFile = dirname(__DIR__).'/xardata/config.workflows.php';
-        if (file_exists($configFile)) {
-            //$contents = file_get_contents($configFile);
-            //static::$config = json_decode($contents, true);
-            static::$config = include($configFile);
-        }
-        return static::$config;
-    }
-
-    public static function hasWorkflowConfig(string $workflowName)
-    {
-        static::loadConfig();
-        if (!empty(static::$config) && !empty(static::$config[$workflowName])) {
-            return true;
-        }
-        return false;
-    }
-
-    public static function getWorkflowConfig(string $workflowName)
-    {
-        if (!static::hasWorkflowConfig($workflowName)) {
-            throw new Exception('Unknown workflow ' . $workflowName);
-        }
-        return static::$config[$workflowName];
+        xarWorkflowConfig::init($args);
     }
 
     public static function getEventDispatcher()
@@ -156,7 +123,7 @@ class xarWorkflowProcess extends xarObject
     public static function buildWorkflow(string $workflowName, array $info = [])
     {
         if (empty($info)) {
-            $info = static::getWorkflowConfig($workflowName);
+            $info = xarWorkflowConfig::getWorkflowConfig($workflowName);
         }
         if ($info['type'] == 'state_machine') {
             return static::buildStateMachine($workflowName, $info);
@@ -192,7 +159,7 @@ class xarWorkflowProcess extends xarObject
     public static function buildStateMachine(string $workflowName, array $info = [])
     {
         if (empty($info)) {
-            $info = static::getWorkflowConfig($workflowName);
+            $info = xarWorkflowConfig::getWorkflowConfig($workflowName);
         }
         // @checkme add subscribed events for each object supported by this workflow?
         if (is_array($info['supports'])) {
