@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <!-- this relies on $config and $item from test_run -->
   <div class="xar-mod-head">
     <span class="xar-mod-title">
       Workflow Module
@@ -8,21 +9,12 @@
   <div class="xar-mod-body">
     <xar:template file="user_bar" type="module"/>
     <div style="margin: auto;">
-      <h3>Workflow Test</h3>
+      <h3>Workflow Test Run</h3>
       <xar:if condition="!empty($warning)">
         <p><strong>Requirement:</strong>#$warning#</p>
       </xar:if>
-      <xar:template file="test_workflowlist"/>
-      <xar:if condition="!empty($workflow)">
-        <xar:template file="test_trackerlist"/>
-      </xar:if>
-      <xar:if condition="!empty($trackerId)">
-        <xar:template file="test_historylist"/>
-      </xar:if>
-      <xar:template file="test_imagemap"/>
-      <xar:if condition="!empty($workflow)">
-        <xar:template file="test_transitionlist"/>
-      </xar:if>
+      <xar:template file="test_trackeritem"/>
+      <xar:workflow-actions name="actions" config="$config" item="$item" title="$item['marking']" template="$item['marking']"/>
       <xar:template file="test_footer"/>
     </div>
   </div>

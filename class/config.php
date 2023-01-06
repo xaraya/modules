@@ -86,4 +86,10 @@ EOT;
         }
         return static::$config[$workflowName];
     }
+
+    public static function getInitialMarking(string $workflowName)
+    {
+        $config = static::getWorkflowConfig($workflowName);
+        return is_array($config['initial_marking']) ? $config['initial_marking'][0] : $config['initial_marking'];
+    }
 }

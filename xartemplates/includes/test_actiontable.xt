@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $item from trackerlist, or on $workflow, $subjectId, $place and $trackerId if available -->
+  <!-- this relies on $config and $item from trackerlist or test_run, or on $workflow, $subjectId, $place and $trackerId if available -->
   <table style="border-collapse: separate; width: 50%">
     <tr>
       <th>Transition</th>
@@ -13,7 +13,7 @@
       <xar:if condition="!in_array($place, $from)">
         <xar:continue/>
       </xar:if>
-	<!-- @checkme state machine only supports 1 to, use 2 for status change -->
+      <!-- @checkme state machine only supports 1 to, use 2 for status change -->
       <xar:set name="to">is_array($info['to']) ? $info['to'][0] : $info['to']</xar:set>
       <tr>
         <td>#ucfirst($name)#</td>

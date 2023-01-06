@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $workflow, $subjectId and $trackerId if available -->
+  <!-- this relies on $workflow, $subjectId, $place and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
   <xar:if condition="!empty($trackerId)">
     <xar:set name="items">[ xarWorkflowTracker::getTrackerItem($trackerId) ]</xar:set>
+  <xar:elseif condition="!empty($subjectId)"/>
+    <xar:if condition="empty($place)">
+      <xar:set name="items">xarWorkflowTracker::getSubjectItems($subjectId, $workflow)</xar:set>
+    <xar:else/>
+      <xar:set name="pieces">explode('.', $subjectId . '.0')</xar:set>
+      <xar:set name="items">xarWorkflowTracker::getItems($workflow, $pieces[0], (int) $pieces[1], $place)</xar:set>
+    </xar:if>
+  <xar:elseif condition="!empty($place)"/>
+    <xar:set name="items">xarWorkflowTracker::getItems($workflow, '', 0, $place)</xar:set>
   <xar:else/>
     <xar:set name="items">xarWorkflowTracker::getWorkflowItems($workflow)</xar:set>
   </xar:if>
@@ -21,21 +30,29 @@
         <th>Transitions</th>
       </tr>
       <xar:foreach in="$items" value="$item">
-        <xar:set name="itemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+        <xar:set name="objectitemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
         <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
         <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'subjectId' => $currentId])</xar:set>
+        <xar:set name="subjectlink">xarServer::getModuleURL('workflow', 'user', 'test_run', ['workflow' => $workflow, 'subjectId' => $currentId])</xar:set>
+        <xar:set name="trackerlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'trackerId' => $item['id']])</xar:set>
+        <xar:set name="actionlink">xarServer::getModuleURL('workflow', 'user', 'test_run', ['workflow' => $workflow, 'trackerId' => $item['id']])</xar:set>
         <tr>
           <td>
+            <a href="#$actionlink#" title="Actions Tracker (#$item['id']#) #$currentId#">
+              <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="go-next"/>
+            </a>&#160;
             <xar:if condition="!empty($trackerId) and $trackerId eq $item['id']">
               <strong>#$item['id']#</strong>
             <xar:else/>
-              <xar:set name="idlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'trackerId' => $item['id']])</xar:set>
-              <a href="#$idlink#">#$item['id']#</a>
+              <a href="#$trackerlink#">#$item['id']#</a>
             </xar:if>
           </td>
           <td>
-            <a href="#$itemlink#" title="Display #$currentId#">
+            <a href="#$objectitemlink#" title="Display Subject #$currentId#">
               <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
+            </a>&#160;
+            <a href="#$subjectlink#" title="Actions Tracker #$currentId#">
+              <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="go-next"/>
             </a>&#160;
             <xar:if condition="!empty($subjectId) and $subjectId eq $currentId">
               <strong><a href="#$filterlink#">#$currentId#</a></strong>
@@ -44,7 +61,13 @@
             </xar:if>
           </td>
           <td>#xarUser::getVar('name', $item['user'])#</td>
-          <td>#$item['marking']#</td>
+          <td>
+            <xar:if condition="!empty($place) and $place eq $item['marking']">
+              <strong>#$item['marking']#</strong>
+            <xar:else/>
+              #$item['marking']#
+            </xar:if>
+          </td>
           <!-- you can choose how to display the date and time here, e.g. show
              the time for the last 12 hours and the date for anything older -->
           <xar:if condition="$item['updated'] > time() - 12*60*60">

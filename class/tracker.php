@@ -33,7 +33,7 @@ class xarWorkflowTracker extends xarObject
     }
 
     // @checkme we want to be able to get items for a list of itemIds of a particular objectName here (= dataobjectlist)
-    public static function getItems(string $workflowName = '', string $objectName = '', int|array $itemId = 0, string|array $marking = '', int|array $userId = 0, array $trackerIds = [])
+    public static function getItems(string $workflowName = '', string $objectName = '', int|array $itemId = 0, string|array $marking = '', int|array $userId = 0, array $trackerIds = [], array $paging = [])
     {
         // we have a list of internal trackerIds for the items that we want to get/update/delete for some reason
         if (!empty($trackerIds)) {
@@ -41,7 +41,11 @@ class xarWorkflowTracker extends xarObject
         }
         // we want to filter on any combination of elements to get tracker items here
         if (empty($userId)) {
+            // we want to get tracker items for current user here
             $userId = xarSession::getVar('role_id') ?? 0;
+        } elseif ($userId < 0) {
+            // @checkme we want to get tracker items for all users here
+            $userId = null;
         }
         //$objectList = DataObjectMaster::getObjectList(['name' => static::$objectName]);
         //$items = $objectList->getItems(['where' => "user eq $userId"]);
@@ -73,8 +77,16 @@ class xarWorkflowTracker extends xarObject
                 $filter[] = implode(",", ["marking", "eq", $marking]);
             }
         }
+        // for paging params see DataObjectLoader = aligned with API params, not DD list params
+        $params = ['filter' => $filter];
+        if (!empty($paging)) {
+            $allowed = array_flip(['order', 'offset', 'limit', 'count']);
+            //$allowed = array_flip(['order', 'offset', 'limit', 'filter', 'count', 'access']);
+            $paging = array_intersect_key($paging, $allowed);
+            $params += $paging;
+        }
         $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
-        $items = $loader->query(['filter' => $filter]);
+        $items = $loader->query($params);
         return $items;
     }
 

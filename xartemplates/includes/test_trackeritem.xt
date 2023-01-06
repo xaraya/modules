@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <!-- this relies on $item from trackerlist, or on $workflow, $subjectId, $place and $trackerId if available -->
+  <!-- this relies on $config and $item from trackerlist or test_run, or on $workflow, $subjectId, $place and $trackerId if available -->
   <xar:if condition="empty($config)">
     <xar:set name="dummy">sys::import('modules.workflow.class.config')</xar:set>
     <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
@@ -9,46 +9,62 @@
     <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
     <xar:set name="item">xarWorkflowTracker::getTrackerItem($trackerId)</xar:set>
   </xar:if>
+  <xar:set name="objectitemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+  <xar:set name="params">['workflow' => $item['workflow']]</xar:set>
+  <xar:set name="workflowlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
   <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
-  <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $item['workflow'], 'subjectId' => $currentId])</xar:set>
-  <xar:set name="idlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $item['workflow'], 'trackerId' => $item['id']])</xar:set>
-  <div class="xar-form-container">
+  <xar:set name="params">$params + ['subjectId' => $subjectId]</xar:set>
+  <xar:set name="subjectlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
+  <xar:set name="params">$params + ['trackerId' => $item['id']]</xar:set>
+  <xar:set name="trackerlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
+  <fieldset>
+    <legend><a href="#$workflowlink#">#$config[$item['workflow']]['label']#</a></legend>
     <div class="xar-row">
       <div class="xar-col">
-        <label title="" style="">Workflow:</label>&#160;
-        <a href="#$idlink#">#$config[$item['workflow']]['label']#</a>
+        <label>Tracker Id</label>
+      </div>
+      <div class="xar-col">
+        <a href="#$trackerlink#" title="Info Tracker (#$item['id']#) #$currentId#">
+          <xar:img scope="theme" file="icons/info.png" class="xar-icon" alt="info"/>
+        </a>&#160;
+        <a href="#$trackerlink#">#$item['id']#</a>
       </div>
     </div>
     <div class="xar-row">
       <div class="xar-col">
-        <label title="" style="">Tracker Id:</label>&#160;
-        <a href="#$idlink#">#$item['id']#</a>
+        <label>Subject Id</label>
+      </div>
+      <div class="xar-col">
+        <a href="#$objectitemlink#" title="Display Subject #$currentId#">
+          <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
+        </a>&#160;
+        <a href="#$subjectlink#">#$currentId#</a>
       </div>
     </div>
     <div class="xar-row">
       <div class="xar-col">
-        <label title="" style="">Subject Id:</label>&#160;
-        <a href="#$filterlink#">#$currentId#</a>
+        <label>User Name</label>
       </div>
-    </div>
-    <div class="xar-row">
       <div class="xar-col">
-        <label title="" style="">User Name:</label>&#160;
         #xarUser::getVar('name', $item['user'])#
       </div>
     </div>
     <div class="xar-row">
       <div class="xar-col">
-        <label title="" style="">Current Place:</label>&#160;
+        <label>Current Place</label>
+      </div>
+      <div class="xar-col">
         #$item['marking']#
       </div>
     </div>
     <div class="xar-row">
       <div class="xar-col">
-        <label title="" style="">Last Updated:</label>&#160;
+        <label>Last Updated</label>
+      </div>
+      <div class="xar-col">
         #xarLocale::getFormattedDate('medium',$item['updated'])#
         #xarLocale::getFormattedTime('short',$item['updated'])#
       </div>
     </div>
-  </div>
+  </fieldset>
 </xar:template>
