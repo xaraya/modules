@@ -15,6 +15,7 @@
 sys::import('modules.workflow.class.config');
 sys::import('modules.workflow.class.eventsubscriber');
 sys::import('modules.workflow.class.tracker');
+sys::import('modules.workflow.class.logger');
 
 use Symfony\Component\Workflow\Definition;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
@@ -27,15 +28,22 @@ use Symfony\Component\Workflow\Validator\WorkflowValidator;
 use Symfony\Component\Workflow\Workflow;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Workflow\Event\Event;
+use Symfony\Component\Workflow\EventListener\AuditTrailListener;
 
 class xarWorkflowProcess extends xarObject
 {
     public static $workflows = [];
     public static $dispatcher;
+    public static $logger;
 
     public static function init(array $args = [])
     {
         xarWorkflowConfig::init($args);
+    }
+
+    public static function setLogger($logger)
+    {
+        static::$logger = $logger;
     }
 
     public static function getEventDispatcher()
@@ -43,6 +51,9 @@ class xarWorkflowProcess extends xarObject
         // See https://symfony.com/doc/current/components/event_dispatcher.html#using-event-subscribers
         if (empty(static::$dispatcher)) {
             static::$dispatcher = new EventDispatcher();
+            if (!empty(static::$logger)) {
+                static::$dispatcher->addSubscriber(new AuditTrailListener(static::$logger));
+            }
         }
         // @checkme do this *after* adding the subscribed events and callback functions
         //$dispatcher->addSubscriber($subscriber);
@@ -60,6 +71,7 @@ class xarWorkflowProcess extends xarObject
         // @todo move this outside of process and make it configurable
         $checkSubjectStatus = [
             'request' => 'available',
+            'approve' => 'requested',
         ];
         $callbackFuncs = [
             // @todo this would be where we check the actual status of the subject, rather than the places
@@ -70,7 +82,7 @@ class xarWorkflowProcess extends xarObject
                 if (!empty($checkSubjectStatus[$transitionName]) && !in_array($checkSubjectStatus[$transitionName], array_keys($places))) {
                     $message = 'Sorry, this subject is not available...';
                     $event->setBlocked(true, $message);
-                    echo "Blocked: $message\n";
+                    xarLog::message("Transition $transitionName blocked: $message");
                 }
             },
             // @checkme this is where we add the successful transition to a new marking to the tracker

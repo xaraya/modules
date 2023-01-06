@@ -32,9 +32,11 @@ function workflow_user_test()
     sys::import('modules.workflow.class.config');
     try {
         xarWorkflowConfig::checkAutoload();
+        //xarWorkflowConfig::setAutoload();
     } catch (Exception $e) {
         $data['warning'] = nl2br($e->getMessage());
     }
+
     xarVar::fetch('workflow', 'isset', $data['workflow'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('trackerId', 'isset', $data['trackerId'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('subjectId', 'isset', $data['subjectId'], null, xarVar::NOT_REQUIRED);

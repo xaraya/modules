@@ -54,7 +54,7 @@ class xarWorkflowHistory extends xarWorkflowTracker
         ];
         $objectRef = DataObjectMaster::getObject(['name' => static::$objectName]);
         $historyId = $objectRef->createItem($newItem);
-        echo "New history item $historyId added\n";
+        xarLog::message("New history item $historyId added");
         return $historyId;
     }
 }

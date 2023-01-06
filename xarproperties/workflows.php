@@ -15,6 +15,7 @@
 sys::import('modules.base.xarproperties.textarea');
 sys::import('modules.workflow.class.traits.markingtrait');
 sys::import('modules.workflow.class.traits.transitiontrait');
+sys::import('modules.workflow.class.config');
 sys::import('modules.workflow.class.tracker');
 
 class WorkflowsProperty extends TextAreaProperty

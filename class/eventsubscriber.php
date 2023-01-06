@@ -49,14 +49,15 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
         $transition = $event->getTransition();
         //$workflowName = $event->getWorkflowName();
         //$metadata = $event->getMetadata();
-        echo sprintf(
-            'Subject (id: "%s") had event "%s" for transition "%s" from "%s" to "%s"' . "\n",
+        $message = sprintf(
+            'Subject (id: "%s") had event "%s" for transition "%s" from "%s" to "%s"',
             isset($subject) ? $subject->getId() : '',
             $eventName,
             isset($transition) ? $transition->getName() : '',
             isset($marking) ? implode(', ', array_keys($marking->getPlaces())) : '',
             isset($transition) ? implode(', ', $transition->getTos()) : ''
         );
+        xarLog::message($message, xarLog::LEVEL_INFO);
     }
 
     public function onGuardEvent(GuardEvent $event, string $eventName)

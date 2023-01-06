@@ -18,16 +18,11 @@ class xarWorkflowSubject
 {
     use xarWorkflowMarkingTrait;
 
-    public $objectName = 'dummy';
+    // @checkme create minimal objectref object for use in getId()
+    public $objectref;
 
-    public function getId()
+    public function __construct(string $objectName = 'dummy', int $itemId = 0)
     {
-        $itemId = spl_object_id($this);
-        return implode('.', [$this->objectName, (string) $itemId]);
-    }
-
-    public function setObjectName(string $objectName)
-    {
-        $this->objectName = $objectName;
+        $this->objectref = (object) ['name' => $objectName, 'itemid' => $itemId ?: spl_object_id($this)];
     }
 }

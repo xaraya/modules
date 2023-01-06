@@ -6,11 +6,11 @@
     <xar:if condition="!in_array($place, $from)">
       <xar:continue/>
     </xar:if>
+    <xar:set name="params">['workflow' => $workflow, 'subjectId' => $subjectId, 'transition' => $name]</xar:set>
     <xar:if condition="!empty($trackerId)">
-      <xar:set name="link">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'trackerId' => $trackerId, 'transition' => $name])</xar:set>
-    <xar:else/>
-      <xar:set name="link">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $workflow, 'subjectId' => $subjectId, 'transition' => $name])</xar:set>
+      <xar:set name="params">$params + ['trackerId' => $trackerId]</xar:set>
     </xar:if>
+    <xar:set name="link">xarServer::getModuleURL('workflow', 'user', 'test_run', $params)</xar:set>
     <xar:set name="label">ucwords(implode(' ', explode('_', $name)))</xar:set>&#160;
     <xar:button type="link" name="$name" target="$link" label="$label"/>&#160;
   </xar:foreach>

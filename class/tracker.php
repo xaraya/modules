@@ -156,15 +156,15 @@ class xarWorkflowTracker extends xarObject
         if (empty($oldItem)) {
             $objectRef = DataObjectMaster::getObject(['name' => static::$objectName]);
             $trackerId = $objectRef->createItem($newItem);
-            echo "New item $trackerId created\n";
+            xarLog::message("New tracker item $trackerId created");
         } elseif ($newItem['marking'] != $oldItem['marking']) {
             $objectRef = DataObjectMaster::getObject(['name' => static::$objectName, 'itemid' => $oldItem['id']]);
             $trackerId = $objectRef->updateItem($newItem);
-            echo "Old item $trackerId updated\n";
+            xarLog::message("Old tracker item $trackerId updated");
         } else {
             // nothing to do here
             $trackerId = $oldItem['id'];
-            echo "Old item $trackerId unchanged\n";
+            xarLog::message("Old tracker item $trackerId unchanged");
         }
         return $trackerId;
     }
@@ -181,7 +181,7 @@ class xarWorkflowTracker extends xarObject
         } else {
             $objectRef = DataObjectMaster::getObject(['name' => static::$objectName, 'itemid' => $oldItem['id']]);
             $trackerId = $objectRef->deleteItem();
-            echo "Old item $trackerId deleted\n";
+            xarLog::message("Old tracker item $trackerId deleted");
         }
         return $trackerId;
     }

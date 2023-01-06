@@ -28,8 +28,11 @@ xarDatabase::init();
 sys::import('modules.workflow.class.process');
 sys::import('modules.workflow.class.subject');
 sys::import('modules.workflow.class.tracker');
+//sys::import('modules.workflow.class.logger');
 
 use Symfony\Component\Workflow\Workflow;
+
+//xarWorkflowProcess::setLogger(new xarWorkflowLogger());
 
 $workflow = xarWorkflowProcess::getProcess('cd_loans');
 
