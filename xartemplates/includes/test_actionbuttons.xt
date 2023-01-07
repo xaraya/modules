@@ -12,7 +12,7 @@
     </xar:if>
     <xar:set name="params">$params + ['transition' => $name]</xar:set>
     <xar:set name="runlink">xarServer::getModuleURL('workflow', 'user', 'test_run', $params)</xar:set>
-    <xar:set name="label">ucwords(implode(' ', explode('_', $name)))</xar:set>&#160;
+    <xar:set name="label">ucwords(implode(' ', explode('_', $name)))</xar:set>
     <xar:button type="link" name="$name" target="$runlink" label="$label"/>&#160;
   </xar:foreach>
 </xar:template>

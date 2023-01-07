@@ -37,7 +37,11 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
             return;
         }
         foreach (static::$callbackFunctions[$eventName] as $callbackFunc) {
-            $callbackFunc($event, $eventName);
+            try {
+                $callbackFunc($event, $eventName);
+            } catch (Exception $e) {
+                xarLog::message("Error in callback for $eventName: " . $e->getMessage(), xarLog::LEVEL_INFO);
+            }
         }
     }
 
@@ -50,12 +54,13 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
         //$workflowName = $event->getWorkflowName();
         //$metadata = $event->getMetadata();
         $message = sprintf(
-            'Subject (id: "%s") had event "%s" for transition "%s" from "%s" to "%s"',
+            'Subject (id: "%s") had event "%s" for transition "%s" from "%s" to "%s" with %s callbacks',
             isset($subject) ? $subject->getId() : '',
             $eventName,
             isset($transition) ? $transition->getName() : '',
             isset($marking) ? implode(', ', array_keys($marking->getPlaces())) : '',
-            isset($transition) ? implode(', ', $transition->getTos()) : ''
+            isset($transition) ? implode(', ', $transition->getTos()) : '',
+            count(static::$callbackFunctions[$eventName] ?? [])
         );
         xarLog::message($message, xarLog::LEVEL_INFO);
     }
@@ -65,7 +70,7 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
         //$subject = $event->getSubject();
         $this->logEvent($event, $eventName);
         $this->callBack($event, $eventName);
-        // @todo this would be where we check the actual status of the subject, rather than the places
+        // this would be where we check the actual status of the subject, rather than the places
     }
 
     public function onLeaveEvent(Event $event, string $eventName)
@@ -101,7 +106,8 @@ class xarWorkflowEventSubscriber implements EventSubscriberInterface
         $subject = $event->getSubject();
         $this->logEvent($event, $eventName);
         $this->callBack($event, $eventName);
-        // @checkme this is where we add the successful transition to a new marking to the tracker
+        // this is where we add the successful transition to a new marking to the tracker
+        // this would be where we update the actual status of the subject, rather than the places
     }
 
     public function onAnnounceEvent(Event $event, string $eventName)

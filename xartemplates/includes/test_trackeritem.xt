@@ -13,7 +13,7 @@
   <xar:set name="params">['workflow' => $item['workflow']]</xar:set>
   <xar:set name="workflowlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
   <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
-  <xar:set name="params">$params + ['subjectId' => $subjectId]</xar:set>
+  <xar:set name="params">$params + ['subjectId' => $currentId]</xar:set>
   <xar:set name="subjectlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
   <xar:set name="params">$params + ['trackerId' => $item['id']]</xar:set>
   <xar:set name="trackerlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>

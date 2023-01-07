@@ -36,7 +36,7 @@ use Symfony\Component\Workflow\Workflow;
 
 $workflow = xarWorkflowProcess::getProcess('cd_loans');
 
-$subject = new xarWorkflowSubject();
+$subject = new xarWorkflowSubject('cdcollection');
 
 // initiate workflow
 $marking = $workflow->getMarking($subject);
@@ -46,7 +46,12 @@ echo "Transitions: " . var_export($transitions, true) . "\n";
 foreach ($transitions as $transition) {
     echo "Transition '" . $transition->getName() . "': from '" . implode("', '", $transition->getFroms()) . "' to '" . implode("', '", $transition->getTos()) . "'\n";
 }
-$result = $workflow->can($subject, "request");
+try {
+    $result = $workflow->can($subject, "request");
+} catch (Exception $e) {
+    echo $e->getMessage();
+    exit;
+}
 echo "Result: " . var_export($result, true) . "\n";
 $subjectId = $subject->getId();
 echo "SubjectId: " . var_export($subjectId, true) . "\n";

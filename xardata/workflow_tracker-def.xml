@@ -2,7 +2,7 @@
 <object name="workflow_tracker">
   <objectid>45</objectid>
   <label>Workflow Tracker</label>
-  <module_id>182</module_id>
+  <module_id>188</module_id>
   <itemtype>24</itemtype>
   <class>DataObject</class>
   <filepath>auto</filepath>

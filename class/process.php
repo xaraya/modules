@@ -14,7 +14,6 @@
 
 sys::import('modules.workflow.class.config');
 sys::import('modules.workflow.class.eventsubscriber');
-sys::import('modules.workflow.class.tracker');
 sys::import('modules.workflow.class.logger');
 
 use Symfony\Component\Workflow\Definition;
@@ -61,48 +60,39 @@ class xarWorkflowProcess extends xarObject
     }
 
     // @checkme add subscribed events for each object supported by this workflow?
-    public static function getEventSubscriber(string $workflowName, string $objectName, array|null $eventTypes = null)
+    public static function getEventSubscriber(string $workflowName, string $objectName, array $callbackList)
     {
         $subscriber = new xarWorkflowEventSubscriber();
-        // @checkme this is the list of all possible events we might be interested in
-        if (!isset($eventTypes)) {
-            $eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
-        }
-        // @todo move this outside of process and make it configurable
-        $checkSubjectStatus = [
-            'request' => 'available',
-            'approve' => 'requested',
-        ];
-        $callbackFuncs = [
-            // @todo this would be where we check the actual status of the subject, rather than the places
-            'guard' => function (Event $event, string $eventName) use ($checkSubjectStatus) {
-                $transitionName = $event->getTransition()->getName();
-                $places = $event->getMarking()->getPlaces();
-                //if ($transitionName == 'request' && !in_array('available', array_keys($places))) {
-                if (!empty($checkSubjectStatus[$transitionName]) && !in_array($checkSubjectStatus[$transitionName], array_keys($places))) {
-                    $message = 'Sorry, this subject is not available...';
-                    $event->setBlocked(true, $message);
-                    xarLog::message("Transition $transitionName blocked: $message");
-                }
-            },
-            // @checkme this is where we add the successful transition to a new marking to the tracker
-            'completed' => function (Event $event, string $eventName) {
-                $workflowName = $event->getWorkflowName();
-                $subject = $event->getSubject();
-                // @checkme assuming subjectId = objectName.itemId here
-                [$objectName, $itemId] = explode('.', (string) $subject->getId() . '.0');
-                $trackerId = xarWorkflowTracker::setItem($workflowName, $objectName, (int) $itemId, $subject->getMarking());
-            },
-        ];
-        // @checkme actually we're only interested in events where we have a callback function here :-)
-        $eventTypes = array_keys($callbackFuncs);
-        foreach ($eventTypes as $eventType) {
-            $eventName = $subscriber->addSubscribedEvent($eventType, $workflowName);
-            if (!empty($callbackFuncs[$eventType])) {
+        foreach ($callbackList as $transitionName => $callbackFuncs) {
+            foreach (array_keys($callbackFuncs) as $eventType) {
+                $eventName = $subscriber->addSubscribedEvent($eventType, $workflowName, $transitionName);
                 $subscriber->addCallbackFunction($eventName, $callbackFuncs[$eventType]);
             }
         }
+        sys::import('modules.workflow.class.handlers');
+        // @checkme this is where we add the successful transition to a new marking to the tracker
+        $eventType = 'completed';
+        $eventName = $subscriber->addSubscribedEvent($eventType);
+        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::setTrackerItemHandler());
         return $subscriber;
+    }
+
+    public static function getCallbackList(array $info)
+    {
+        $callbackList = [];
+        // @checkme this is the list of all possible events we might be interested in
+        //$eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
+        foreach ($info['transitions'] as $transitionName => $fromto) {
+            if (!empty($fromto['guard'])) {
+                $callbackList[$transitionName] ??= [];
+                $callbackList[$transitionName]['guard'] = $fromto['guard'];
+            }
+            if (!empty($fromto['completed'])) {
+                $callbackList[$transitionName] ??= [];
+                $callbackList[$transitionName]['completed'] = $fromto['completed'];
+            }
+        }
+        return $callbackList;
     }
 
     public static function getTransitions(array $transitionsConfig, string $workflowType)
@@ -149,8 +139,11 @@ class xarWorkflowProcess extends xarObject
             $objectName = $info['supports'];
         }
         $dispatcher = static::getEventDispatcher();
+        // @checkme we need at least ['workflow.completed'] + callbackList here
         $eventTypes = $info['events_to_dispatch'] ?? null;
-        $subscriber = static::getEventSubscriber($workflowName, $objectName, $eventTypes);
+        // @checkme add guard and completed callback functions per transaction
+        $callbackList = static::getCallbackList($info);
+        $subscriber = static::getEventSubscriber($workflowName, $objectName, $callbackList);
         // @checkme do this *after* adding the subscribed events and callback functions
         $dispatcher->addSubscriber($subscriber);
 
@@ -182,8 +175,11 @@ class xarWorkflowProcess extends xarObject
             $objectName = $info['supports'];
         }
         $dispatcher = static::getEventDispatcher();
+        // @checkme we need at least ['workflow.completed'] + callbackList here
         $eventTypes = $info['events_to_dispatch'] ?? null;
-        $subscriber = static::getEventSubscriber($workflowName, $objectName, $eventTypes);
+        // @checkme add guard and completed callback functions per transaction
+        $callbackList = static::getCallbackList($info);
+        $subscriber = static::getEventSubscriber($workflowName, $objectName, $callbackList);
         // @checkme do this *after* adding the subscribed events and callback functions
         $dispatcher->addSubscriber($subscriber);
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <!-- this relies on $workflow, $subjectId, $place, $transition and $trackerId if available -->
-  <xar:set name="dummy">sys::import('modules.workflow.class.config')</xar:set>
-  <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
+  <xar:if condition="empty($config)">
+    <xar:set name="dummy">sys::import('modules.workflow.class.config')</xar:set>
+    <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
+  </xar:if>
   <xar:if condition="!empty($workflow) and !empty($config[$workflow]) and empty($trackerId) and empty($subjectId)">
   <fieldset>
     <legend>

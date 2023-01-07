@@ -36,6 +36,7 @@ function workflow_user_test_run()
     } catch (Exception $e) {
         $data['warning'] = nl2br($e->getMessage());
     }
+    $data['config'] = xarWorkflowConfig::loadConfig();
 
     xarVar::fetch('workflow', 'isset', $data['workflow'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('trackerId', 'isset', $data['trackerId'], null, xarVar::NOT_REQUIRED);
@@ -92,7 +93,6 @@ function workflow_user_test_run()
 
     // <xar:workflow-actions name="actions" config="$config" item="$item" title="$item['marking']" template="$item['marking']"/>
     if (empty($data['transition'])) {
-        $data['config'] = xarWorkflowConfig::loadConfig();
         $data['item'] = $item;
         return $data;
     }
@@ -129,10 +129,15 @@ function workflow_user_test_run()
         $marking = $workflow->apply($subject, $data['transition']);
         $data['place'] = implode(', ', $marking->getPlaces());
     } else {
+        $blockers = $workflow->buildTransitionBlockerList($subject, $data['transition']);
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
+        foreach ($blockers as $blocker) {
+            $msg .= "\nBlocker: " . $blocker->getMessage();
+        }
         $vars = array('transition', 'user', 'test_run', 'workflow');
         throw new BadParameterException($vars, $msg);
     }
+    unset($data['place']);
 
     return xarTpl::module('workflow', 'user', 'test', $data);
 }

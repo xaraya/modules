@@ -3,6 +3,25 @@
 // See config/packages/workflow.yaml at https://symfony.com/doc/current/workflow.html
 // and corresponding config/workflow.php at https://github.com/zerodahero/laravel-workflow
 // See also https://pimcore.com/docs/pimcore/current/Development_Documentation/Workflow_Management/Configuration_Details/index.html
+
+sys::import('modules.workflow.class.handlers');
+
+// list of callback functions per workflow, transition & event type
+$callbackFuncs = [
+    // here you can specify callback functions as transition blockers - expression language is not supported
+    'cd_loans.request.guard' => xarWorkflowHandlers::guardPropertyHandler([
+        'cdcollection' => ['status' => 'available'],
+    ]),
+    // here you can specify callback functions to update the actual objects once the transition is completed
+    'cd_loans.retrieve.completed' => xarWorkflowHandlers::updatePropertyHandler([
+        'cdcollection' => ['status' => 'not available'],
+    ]),
+    'cd_loans.return.completed' => xarWorkflowHandlers::updatePropertyHandler([
+        'cdcollection' => ['status' => 'available'],
+    ])
+];
+
+// return configuration of the workflow(s)
 return [
     'cd_loans' => [
         'label' => 'Music CD Loans',
@@ -40,7 +59,9 @@ return [
                 // we mean from ANY here, not from ALL like default for workflow
                 //'from' => ['available', 'requested', 'rejected', 'escalated', 'acknowledged', 'returned'],
                 'from' => ['available'],
-                'to' => ['requested']
+                'to' => ['requested'],
+                // here you can specify callback functions as transition blockers - expression language is not supported
+                'guard' => $callbackFuncs['cd_loans.request.guard']
             ],
             'approve' => [
                 'from' => 'requested',
@@ -48,7 +69,9 @@ return [
             ],
             'retrieve' => [
                 'from' => 'approved',
-                'to' => ['retrieved', 'not available']  // not supported for state_machine, pick the first
+                'to' => ['retrieved', 'not available'],  // not supported for state_machine, pick the first
+                // here you can specify callback functions to update the actual objects once the transition is completed
+                'completed' => $callbackFuncs['cd_loans.retrieve.completed']
             ],
             'reject' => [
                 'from' => 'requested',
@@ -68,7 +91,9 @@ return [
             ],
             'return' => [
                 'from' => 'retrieved',
-                'to' => ['returned', 'available']  // not supported for state_machine, pick the first
+                'to' => ['returned', 'available'],  // not supported for state_machine, pick the first
+                // here you can specify callback functions to update the actual objects once the transition is completed
+                'completed' => $callbackFuncs['cd_loans.return.completed']
             ],
             'close' => [
                 'from' => ['returned', 'acknowledged'],

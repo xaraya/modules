@@ -36,6 +36,7 @@ function workflow_user_test()
     } catch (Exception $e) {
         $data['warning'] = nl2br($e->getMessage());
     }
+    $data['config'] = xarWorkflowConfig::loadConfig();
 
     xarVar::fetch('workflow', 'isset', $data['workflow'], null, xarVar::NOT_REQUIRED);
     xarVar::fetch('trackerId', 'isset', $data['trackerId'], null, xarVar::NOT_REQUIRED);
