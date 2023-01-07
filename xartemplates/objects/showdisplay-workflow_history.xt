@@ -17,9 +17,7 @@
         <xar:foreach in="$properties" key="$name" value="$property">
             <xar:set name="item">$item + [$name => $property->value]</xar:set>
         </xar:foreach>
-        <xar:template file="test_trackeritem"/>
-        <xar:workflow-actions name="actions" config="$config" item="$item" title="$item['marking']" template="$item['marking']"/>
-        <xar:template file="test_historylist"/>
+        <xar:template file="test_historyitem"/>
     <xar:else />
         <!-- You can include your own layout here or specify a separate template, e.g. if you want to handle individual fields differently for a particular module / itemtype -->
         <xar:template module="$tplmodule" file="display-$layout"/>

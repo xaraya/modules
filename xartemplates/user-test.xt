@@ -16,7 +16,7 @@
       <xar:if condition="!empty($workflow)">
         <xar:template file="test_trackerlist"/>
       </xar:if>
-      <xar:if condition="!empty($trackerId)">
+      <xar:if condition="!empty($trackerId) or !empty($subjectId)">
         <xar:template file="test_historylist"/>
       </xar:if>
       <xar:template file="test_imagemap"/>

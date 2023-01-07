@@ -25,8 +25,10 @@ sys::import('modules.dynamicdata.class.objects.loader');
 
 class xarWorkflowTracker extends xarObject
 {
-    private static $objectName = 'workflow_tracker';
-    private static $fieldList = ['workflow', 'user', 'object', 'item', 'marking', 'updated'];
+    protected static $objectName = 'workflow_tracker';
+    protected static $fieldList = ['workflow', 'user', 'object', 'item', 'marking', 'updated'];
+    protected static $paging = [];
+    protected static $count = false;
 
     public static function init(array $args = [])
     {
@@ -80,22 +82,37 @@ class xarWorkflowTracker extends xarObject
         // for paging params see DataObjectLoader = aligned with API params, not DD list params
         $params = ['filter' => $filter];
         if (!empty($paging)) {
-            $allowed = array_flip(['order', 'offset', 'limit', 'count']);
-            //$allowed = array_flip(['order', 'offset', 'limit', 'filter', 'count', 'access']);
-            $paging = array_intersect_key($paging, $allowed);
-            $params += $paging;
+            static::setPaging($paging);
+        }
+        if (!empty(static::$paging)) {
+            $params += static::$paging;
         }
         $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
         $items = $loader->query($params);
+        // @checkme if we didn't ask for a count in paging, this will return false
+        static::$count = $loader->count;
         return $items;
     }
 
+    public static function setPaging(array $paging = [])
+    {
+        $allowed = array_flip(['order', 'offset', 'limit', 'count']);
+        //$allowed = array_flip(['order', 'offset', 'limit', 'filter', 'count', 'access']);
+        static::$paging = array_intersect_key($paging, $allowed);
+    }
+
+    public static function getCount()
+    {
+        return static::$count;
+    }
+
     // this method is overridden in xarWorkflowHistory to get the history for trackerId(s)
-    public static function getTrackerItems(int|array $trackerIds = [])
+    public static function getTrackerItems(int|array $trackerIds = [], array $paging = [])
     {
         // we have a list of internal trackerIds for the items that we want to get/update/delete for some reason
         if (is_array($trackerIds)) {
             $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
+            // @todo add paging - not really used here, but in history
             return $loader->getValues($trackerIds);
         }
         return [ static::getTrackerItem($trackerIds) ];
@@ -126,7 +143,11 @@ class xarWorkflowTracker extends xarObject
         $objectRef = DataObjectMaster::getObject(['name' => static::$objectName, 'itemid' => $trackerId]);
         $trackerId = $objectRef->getItem();
         // @checkme bypass getValue() for properties here
-        return $objectRef->getFieldValues([], 1);
+        $item = $objectRef->getFieldValues([], 1);
+        if (empty($item['workflow'])) {
+            return;
+        }
+        return $item;
     }
 
     public static function getItem(string $workflowName, string $objectName, int $itemId, string $marking = '', int $userId = 0, int $trackerId = 0)

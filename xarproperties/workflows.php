@@ -60,6 +60,17 @@ class WorkflowsProperty extends TextAreaProperty
     }
 
     /**
+     * Show an input field for setting/modifying the value of this property
+     *
+     * @return string containing the HTML (or other) text to output in the BL template
+     */
+    public function showInput(array $data = [])
+    {
+        // always return hidden input here if needed
+        return parent::showHidden($data);
+    }
+
+    /**
      * Show some default output for this property
      *
      * @param mixed $data['value'] value of the property (default is the current value)
@@ -67,6 +78,11 @@ class WorkflowsProperty extends TextAreaProperty
      */
     public function showOutput(array $data = [])
     {
+        // check if we are in preview mode for the object itself
+        xarVar::fetch('preview', 'isset', $data['preview'], null, xarVar::DONT_SET);
+        if (!empty($data['preview'])) {
+            return xarML('Preview');
+        }
         $data['subjectId'] = $this->getId();
         // pass along objectref for xarWorkflowTracker::getItems()
         $data['objectref'] = $this->objectref;

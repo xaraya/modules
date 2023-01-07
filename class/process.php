@@ -63,33 +63,68 @@ class xarWorkflowProcess extends xarObject
     public static function getEventSubscriber(string $workflowName, string $objectName, array $callbackList)
     {
         $subscriber = new xarWorkflowEventSubscriber();
+        // this is the list of all possible events we might be interested in
+        $eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
+        // add some predefined callbacks here, e.g. 'access' => 'update' means guardCheckAccess('update')
+        sys::import('modules.workflow.class.handlers');
+        $deleteTracker = [];
         foreach ($callbackList as $transitionName => $callbackFuncs) {
             foreach (array_keys($callbackFuncs) as $eventType) {
-                $eventName = $subscriber->addSubscribedEvent($eventType, $workflowName, $transitionName);
-                $subscriber->addCallbackFunction($eventName, $callbackFuncs[$eventType]);
+                switch ($eventType) {
+                    case 'admin':
+                        $eventName = $subscriber->addSubscribedEvent('guard', $workflowName, $transitionName);
+                        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::guardCheckAdmin($callbackFuncs[$eventType]));
+                        break;
+                    case 'roles':
+                        $eventName = $subscriber->addSubscribedEvent('guard', $workflowName, $transitionName);
+                        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::guardCheckRoles($callbackFuncs[$eventType]));
+                        break;
+                    case 'access':
+                        $eventName = $subscriber->addSubscribedEvent('guard', $workflowName, $transitionName);
+                        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::guardCheckAccess($callbackFuncs[$eventType]));
+                        break;
+                    case 'guard':
+                    case 'completed':
+                        $eventName = $subscriber->addSubscribedEvent($eventType, $workflowName, $transitionName);
+                        $subscriber->addCallbackFunction($eventName, $callbackFuncs[$eventType]);
+                        break;
+                    case 'delete':
+                        // @checkme delete tracker at the end of this transition - pass along eventName to completed
+                        //$eventName = $subscriber->getEventName($eventType, $workflowName, $transitionName);
+                        $eventName = "workflow.$workflowName.delete.$transitionName";
+                        $deleteTracker[$eventName] = $callbackFuncs[$eventType];
+                        break;
+                    case 'leave':
+                    case 'transition':
+                    case 'enter':
+                    case 'entered':
+                    case 'announce':
+                    default:
+                        // @checkme unsupported for now
+                        break;
+                }
             }
         }
-        sys::import('modules.workflow.class.handlers');
-        // @checkme this is where we add the successful transition to a new marking to the tracker
+        // this is where we add the successful transition to a new marking to the tracker
         $eventType = 'completed';
         $eventName = $subscriber->addSubscribedEvent($eventType);
-        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::setTrackerItemHandler());
+        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::setTrackerItem($deleteTracker));
         return $subscriber;
     }
 
     public static function getCallbackList(array $info)
     {
         $callbackList = [];
-        // @checkme this is the list of all possible events we might be interested in
+        // this is the list of all possible events we might be interested in
         //$eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
+        // add some predefined callbacks here, e.g. 'access' => 'update' means guardCheckAccess('update')
+        $checkTypes = ['guard', 'completed', 'admin', 'roles', 'access', 'delete'];
         foreach ($info['transitions'] as $transitionName => $fromto) {
-            if (!empty($fromto['guard'])) {
-                $callbackList[$transitionName] ??= [];
-                $callbackList[$transitionName]['guard'] = $fromto['guard'];
-            }
-            if (!empty($fromto['completed'])) {
-                $callbackList[$transitionName] ??= [];
-                $callbackList[$transitionName]['completed'] = $fromto['completed'];
+            foreach ($checkTypes as $checkType) {
+                if (!empty($fromto[$checkType])) {
+                    $callbackList[$transitionName] ??= [];
+                    $callbackList[$transitionName][$checkType] = $fromto[$checkType];
+                }
             }
         }
         return $callbackList;
@@ -139,9 +174,9 @@ class xarWorkflowProcess extends xarObject
             $objectName = $info['supports'];
         }
         $dispatcher = static::getEventDispatcher();
-        // @checkme we need at least ['workflow.completed'] + callbackList here
+        // @todo we need at least ['workflow.completed'] + callbackList here
         $eventTypes = $info['events_to_dispatch'] ?? null;
-        // @checkme add guard and completed callback functions per transaction
+        // add guard and completed callback functions per transaction
         $callbackList = static::getCallbackList($info);
         $subscriber = static::getEventSubscriber($workflowName, $objectName, $callbackList);
         // @checkme do this *after* adding the subscribed events and callback functions
@@ -175,9 +210,9 @@ class xarWorkflowProcess extends xarObject
             $objectName = $info['supports'];
         }
         $dispatcher = static::getEventDispatcher();
-        // @checkme we need at least ['workflow.completed'] + callbackList here
+        // @todo we need at least ['workflow.completed'] + callbackList here
         $eventTypes = $info['events_to_dispatch'] ?? null;
-        // @checkme add guard and completed callback functions per transaction
+        // add guard and completed callback functions per transaction
         $callbackList = static::getCallbackList($info);
         $subscriber = static::getEventSubscriber($workflowName, $objectName, $callbackList);
         // @checkme do this *after* adding the subscribed events and callback functions

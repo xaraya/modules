@@ -18,28 +18,43 @@ sys::import('modules.workflow.class.tracker');
 
 class xarWorkflowHistory extends xarWorkflowTracker
 {
-    private static $objectName = 'workflow_history';
-    private static $fieldList = ['tracker_id', 'workflow', 'user', 'object', 'item', 'marking', 'transition', 'updated', 'context'];
+    protected static $objectName = 'workflow_history';
+    protected static $fieldList = ['tracker_id', 'workflow', 'user', 'object', 'item', 'transition', 'marking', 'updated', 'context'];
 
     public static function init(array $args = [])
     {
     }
 
     // this method overrides the one in xarWorkflowTracker to get the history for trackerId(s)
-    public static function getTrackerItems(int|array $trackerIds = [])
+    public static function getTrackerItems(int|array $trackerIds = [], array $paging = [])
     {
-        if (is_array($trackerIds)) {
-            // @todo get items for an array of trackerIds
-            return [];
+        $filter = [];
+        if (!empty($trackerIds)) {
+            if (is_array($trackerIds)) {
+                $filter[] = implode(",", ["tracker_id", "in", implode(",", $trackerIds)]);
+            } else {
+                $filter[] = implode(",", ["tracker_id", "eq", (string) $trackerIds]);
+            }
         }
-        // @todo get items for a particular trackerId
-        return [];
+        // for paging params see DataObjectLoader = aligned with API params, not DD list params
+        $params = ['filter' => $filter];
+        if (!empty($paging)) {
+            static::setPaging($paging);
+        }
+        if (!empty(static::$paging)) {
+            $params += static::$paging;
+        }
+        $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
+        $items = $loader->query($params);
+        // @checkme if we didn't ask for a count in paging, this will return false
+        static::$count = $loader->count;
+        return $items;
     }
 
-    public static function addItem(int $trackerId, string $workflowName, string $objectName, int $itemId, string $marking, string $transition, int $userId = 0, string $context = '')
+    public static function addItem(int $trackerId, string $workflowName, string $objectName, int $itemId, string $transition, string $marking = '', string $context = '', int $userId = 0)
     {
         if (empty($userId)) {
-            $userId = xarSession::getVar('role_id');
+            $userId = xarSession::getVar('role_id') ?? 0;
         }
         $newItem = [
             'tracker_id' => $trackerId,
@@ -47,8 +62,8 @@ class xarWorkflowHistory extends xarWorkflowTracker
             'object' => $objectName,
             'item' => $itemId,
             'user' => $userId,
-            'marking' => $marking,
             'transition' => $transition,
+            'marking' => $marking,
             'updated' => time(),
             'context' => $context,  // json_encode($context, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
         ];

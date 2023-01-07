@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow Module Logger for Symfony Workflow events
+ * Workflow Module PSR-3 LoggerInterface compliant bridge to xarLog::message() for Symfony & other packages
  *
  * @package modules
  * @copyright (C) copyright-placeholder

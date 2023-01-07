@@ -2,31 +2,44 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <!-- this relies on $workflow, $subjectId and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.history')</xar:set>
+  <xar:set name="paging">['limit' => 10, 'count' => false, 'offset' => 0, 'order' => null]</xar:set>
+  <xar:set name="dummy">xarWorkflowHistory::setPaging($paging)</xar:set>
+  <xar:if condition="empty($trackerId) and !empty($item)">
+    <xar:set name="trackerId">$item['id']</xar:set>
+  </xar:if>
   <xar:if condition="!empty($trackerId)">
     <xar:set name="items">xarWorkflowHistory::getTrackerItems($trackerId)</xar:set>
   <xar:elseif condition="!empty($subjectId)"/>
     <xar:set name="items">xarWorkflowHistory::getSubjectItems($subjectId)</xar:set>
-  <xar:else/>
+  <xar:elseif condition="!empty($workflow)"/>
     <xar:set name="items">xarWorkflowHistory::getWorkflowItems($workflow)</xar:set>
+  <xar:else/>
+    <xar:set name="items">[]</xar:set>
   </xar:if>
+  <xar:if condition="!empty($items)">
   <fieldset>
     <legend>
-      Transition History
+      <xar:if condition="!empty($trackerId)">
+        Transition History (#$trackerId#)
+      <xar:else/>
+        Transition History [#$subjectId#]
+      </xar:if>
     </legend>
     <table style="border-collapse: separate;">
       <tr>
         <th>History Id</th>
-        <th>Last Place</th>
         <th>Transition</th>
+        <th>To Place</th>
         <th>User Name</th>
         <th>Updated</th>
       </tr>
       <xar:foreach in="$items" value="$item">
-        <xar:set name="subjectid">implode('.', [$item['object'], $item['item']])</xar:set>
+        <xar:set name="objectlink">xarServer::getObjectURL('workflow_history', 'display', ['itemid' => $item['id']])</xar:set>
+        <xar:set name="currentId">implode('.', [$item['object'], $item['item']])</xar:set>
         <tr>
-          <td>#$item['id']#</td>
-          <td>#$item['marking']#</td>
-          <td>#$item['transition']#</td>
+          <td><a href="#$objectlink#">#$item['id']#</a></td>
+          <td>#ucwords(implode(' ', explode('_', $item['transition'])))#</td>
+          <td>#ucwords(implode(' ', explode('_', $item['marking'])))#</td>
           <td>#xarUser::getVar('name', $item['user'])#</td>
           <td>#xarLocale::getFormattedDate('medium',$item['updated'])#
           #xarLocale::getFormattedTime('short',$item['updated'])#</td>
@@ -34,5 +47,7 @@
         </tr>
       </xar:foreach>
     </table>
+    <!-- Count: #xarWorkflowHistory::getCount()# -->
   </fieldset>
+  </xar:if>
 </xar:template>

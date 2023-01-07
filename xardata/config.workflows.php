@@ -9,14 +9,14 @@ sys::import('modules.workflow.class.handlers');
 // list of callback functions per workflow, transition & event type
 $callbackFuncs = [
     // here you can specify callback functions as transition blockers - expression language is not supported
-    'cd_loans.request.guard' => xarWorkflowHandlers::guardPropertyHandler([
+    'cd_loans.guard.request' => xarWorkflowHandlers::guardPropertyHandler([
         'cdcollection' => ['status' => 'available'],
     ]),
     // here you can specify callback functions to update the actual objects once the transition is completed
-    'cd_loans.retrieve.completed' => xarWorkflowHandlers::updatePropertyHandler([
+    'cd_loans.completed.retrieve' => xarWorkflowHandlers::updatePropertyHandler([
         'cdcollection' => ['status' => 'not available'],
     ]),
-    'cd_loans.return.completed' => xarWorkflowHandlers::updatePropertyHandler([
+    'cd_loans.completed.return' => xarWorkflowHandlers::updatePropertyHandler([
         'cdcollection' => ['status' => 'available'],
     ])
 ];
@@ -48,7 +48,7 @@ return [
             'retrieved',
             'returned',
             'deleted',
-            'not available'
+            'not available',
         ],
         // @todo custom templates to use for particular places?
         'templates' => [
@@ -61,44 +61,52 @@ return [
                 'from' => ['available'],
                 'to' => ['requested'],
                 // here you can specify callback functions as transition blockers - expression language is not supported
-                'guard' => $callbackFuncs['cd_loans.request.guard']
+                'guard' => $callbackFuncs['cd_loans.guard.request'],
+                'access' => 'update',
             ],
             'approve' => [
                 'from' => 'requested',
-                'to' => 'approved'
+                'to' => 'approved',
+                'admin' => true,
+                //'roles' => ['administrators', 'sitemanagers'],
             ],
             'retrieve' => [
                 'from' => 'approved',
                 'to' => ['retrieved', 'not available'],  // not supported for state_machine, pick the first
                 // here you can specify callback functions to update the actual objects once the transition is completed
-                'completed' => $callbackFuncs['cd_loans.retrieve.completed']
+                'completed' => $callbackFuncs['cd_loans.completed.retrieve'],
             ],
             'reject' => [
                 'from' => 'requested',
-                'to' => 'rejected'
+                'to' => 'rejected',
+                //'admin' => true,
+                'roles' => ['administrators', 'sitemanagers'],
             ],
             'acknowledge' => [
                 'from' => 'rejected',
-                'to' => 'acknowledged'
+                'to' => 'acknowledged',
             ],
             'escalate' => [
                 'from' => 'requested',
-                'to' => 'escalated'
+                'to' => 'escalated',
+                'roles' => ['scheduler'],
             ],
             'timeout' => [
                 'from' => 'escalated',
-                'to' => 'rejected'
+                'to' => 'rejected',
             ],
             'return' => [
                 'from' => 'retrieved',
                 'to' => ['returned', 'available'],  // not supported for state_machine, pick the first
                 // here you can specify callback functions to update the actual objects once the transition is completed
-                'completed' => $callbackFuncs['cd_loans.return.completed']
+                'completed' => $callbackFuncs['cd_loans.completed.return'],
             ],
             'close' => [
                 'from' => ['returned', 'acknowledged'],
-                'to' => 'deleted'
+                'to' => 'deleted',
+                // here you can specify that this workflow is finished and we can delete the tracker
+                'delete' => true,
             ],
         ],
-    ]
+    ],
 ];

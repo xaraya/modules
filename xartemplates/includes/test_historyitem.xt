@@ -6,7 +6,7 @@
     <xar:set name="config">xarWorkflowConfig::loadConfig()</xar:set>
   </xar:if>
   <xar:if condition="!empty($trackerId) and empty($workflow) and empty($item)">
-    <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
+    <xar:set name="dummy">sys::import('modules.workflow.class.history')</xar:set>
     <xar:set name="item">xarWorkflowTracker::getTrackerItem($trackerId)</xar:set>
   </xar:if>
   <xar:set name="objectitemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
@@ -15,10 +15,18 @@
   <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
   <xar:set name="params">$params + ['subjectId' => $currentId]</xar:set>
   <xar:set name="subjectlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
-  <xar:set name="params">$params + ['trackerId' => $item['id']]</xar:set>
+  <xar:set name="params">$params + ['trackerId' => $item['tracker_id']]</xar:set>
   <xar:set name="trackerlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
   <fieldset>
     <legend><a href="#$workflowlink#">#$config[$item['workflow']]['label']#</a></legend>
+    <div class="xar-row">
+      <div class="xar-col">
+        <label>History Id</label>
+      </div>
+      <div class="xar-col">
+        #$item['id']#
+      </div>
+    </div>
     <div class="xar-row">
       <div class="xar-col">
         <label>Tracker Id</label>
@@ -27,7 +35,7 @@
         <a href="#$trackerlink#" title="Info Tracker (#$item['id']#) #$currentId#">
           <xar:img scope="theme" file="icons/info.png" class="xar-icon" alt="info"/>
         </a>&#160;
-        <a href="#$trackerlink#">#$item['id']#</a>
+        <a href="#$trackerlink#">#$item['tracker_id']#</a>
       </div>
     </div>
     <div class="xar-row">
@@ -43,10 +51,19 @@
     </div>
     <div class="xar-row">
       <div class="xar-col">
-        <label>Current Place</label>
+        <label>Transition</label>
       </div>
       <div class="xar-col">
-        #ucwords(implode(' ', explode('_', $item['marking'])))#
+        #ucwords(implode(' ', explode('_', $item['transition'])))#
+      </div>
+    </div>
+    <div class="xar-row">
+      <div class="xar-col">
+        <label>To Place</label>
+      </div>
+      <div class="xar-col">
+        <xar:set name="placelink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $item['workflow'], 'place' => $item['marking']])</xar:set>
+        <a href="#$placelink#">#ucwords(implode(' ', explode('_', $item['marking'])))#</a>
       </div>
     </div>
     <div class="xar-row">
@@ -59,11 +76,19 @@
     </div>
     <div class="xar-row">
       <div class="xar-col">
-        <label>Last Updated</label>
+        <label>Updated</label>
       </div>
       <div class="xar-col">
         #xarLocale::getFormattedDate('medium',$item['updated'])#
         #xarLocale::getFormattedTime('short',$item['updated'])#
+      </div>
+    </div>
+    <div class="xar-row">
+      <div class="xar-col">
+        <label>Context</label>
+      </div>
+      <div class="xar-col">
+        #$item['context']#
       </div>
     </div>
   </fieldset>
