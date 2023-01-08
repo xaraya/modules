@@ -1,9 +1,24 @@
 <map id="workflow" name="workflow">
-<area shape="circle" id="node1" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=waiting" title="waiting" alt="" coords="53,53,48"/>
-<area shape="circle" id="node2" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=hooked" title="hooked" alt="" coords="259,53,48"/>
-<area shape="poly" id="edge1" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=hook event" title="hook event" alt="" coords="102,51,204,51,204,56,102,56"/>
-<area shape="rect" id="edge1-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=hook event" title="hook event" alt="" coords="125,40,187,53"/>
-<area shape="circle" id="node3" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=deleted" title="deleted" alt="" coords="476,53,48"/>
-<area shape="poly" id="edge2" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="307,51,421,51,421,56,307,56"/>
-<area shape="rect" id="edge2-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="331,40,404,53"/>
+<area shape="circle" id="node1" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=waiting" title="waiting" alt="" coords="53,235,48"/>
+<area shape="circle" id="node2" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=created" title="created" alt="" coords="271,53,48"/>
+<area shape="poly" id="edge1" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=create event" title="create event" alt="" coords="89,202,226,86,230,90,92,206"/>
+<area shape="rect" id="edge1-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=create event" title="create event" alt="" coords="128,104,196,117"/>
+<area shape="circle" id="node3" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=updated" title="updated" alt="" coords="271,173,48"/>
+<area shape="poly" id="edge2" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=update event" title="update event" alt="" coords="99,219,217,185,219,191,100,224"/>
+<area shape="rect" id="edge2-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=update event" title="update event" alt="" coords="126,183,198,196"/>
+<area shape="circle" id="node4" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=deleted" title="deleted" alt="" coords="271,293,48"/>
+<area shape="poly" id="edge3" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=delete event" title="delete event" alt="" coords="101,245,218,277,217,282,99,250"/>
+<area shape="rect" id="edge3-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=delete event" title="delete event" alt="" coords="128,243,196,256"/>
+<area shape="circle" id="node5" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=displayed" title="displayed" alt="" coords="271,413,48"/>
+<area shape="poly" id="edge4" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=display event" title="display event" alt="" coords="93,263,230,377,226,381,89,267"/>
+<area shape="rect" id="edge4-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=display event" title="display event" alt="" coords="125,285,199,299"/>
+<area shape="circle" id="node6" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;place=closed" title="closed" alt="" coords="488,235,48"/>
+<area shape="poly" id="edge5" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="310,82,447,198,444,202,306,86"/>
+<area shape="rect" id="edge5-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="343,104,416,117"/>
+<area shape="poly" id="edge6" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="318,184,436,217,434,223,316,189"/>
+<area shape="rect" id="edge6-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="343,183,416,196"/>
+<area shape="poly" id="edge7" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="317,278,434,246,436,251,318,283"/>
+<area shape="rect" id="edge7-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="343,243,416,256"/>
+<area shape="poly" id="edge8" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="307,381,444,267,447,271,310,385"/>
+<area shape="rect" id="edge8-label" href="/bermuda/index.php?module=workflow&amp;type=user&amp;func=test&amp;workflow=hook_sample&amp;transition=acknowledge" title="acknowledge" alt="" coords="343,285,416,299"/>
 </map>

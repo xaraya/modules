@@ -25,23 +25,44 @@ $callbackFuncs = [
 return [
     'hook_sample' => [
         'label' => 'Hook Sample',
-        'description' => "Experiment with hook events triggering workflow",
+        'description' => "Experiment with hook events triggering workflow transitions",
         'type' => 'state_machine',
         'supports' => ['sample'],  // DynamicData Object this workflow should apply to
         'initial_marking' => ['waiting'],
         'places' => [
             'waiting',
-            'hooked',
+            //'hooked',
+            'created',
+            'updated',
             'deleted',
+            'displayed',
+            'closed',
         ],
         'transitions' => [
-            'hook event' => [
+            //'hook event' => [
+            //    'from' => ['waiting'],
+            //    'to' => ['hooked'],
+            //],
+            'create event' => [
                 'from' => ['waiting'],
-                'to' => ['hooked'],
+                'to' => ['created'],
+            ],
+            'update event' => [
+                'from' => ['waiting'],
+                'to' => ['updated'],
+            ],
+            'delete event' => [
+                'from' => ['waiting'],
+                'to' => ['deleted'],
+            ],
+            'display event' => [
+                'from' => ['waiting'],
+                'to' => ['displayed'],
             ],
             'acknowledge' => [
-                'from' => ['hooked'],
-                'to' => ['deleted'],
+                //'from' => ['hooked'],
+                'from' => ['created', 'updated', 'deleted', 'displayed'],
+                'to' => ['closed'],
                 'admin' => true,
                 'delete' => true,
             ],

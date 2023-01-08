@@ -4,8 +4,17 @@ digraph workflow {
   edge [fontsize="9" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5" href="/"];
 
   place_12625ba3c14eddfc43fddb76cbc069528cec8b7f [label="waiting", shape=circle style="filled" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=waiting"];
-  place_e2862b5d6c43f3681af64aadec5cb2ff892656c2 [label="hooked", shape=circle href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=hooked"];
+  place_21c50805b553b7a40e48394a5d77d442587ddee2 [label="created", shape=circle href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=created"];
+  place_13a1891af75c642306a6b695377d16e4a91f0e1b [label="updated", shape=circle href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=updated"];
   place_b639f5cc719831458c83999303237e8499c0cabe [label="deleted", shape=circle href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=deleted"];
-  place_12625ba3c14eddfc43fddb76cbc069528cec8b7f -> place_e2862b5d6c43f3681af64aadec5cb2ff892656c2 [label="hook event" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=hook event"];
-  place_e2862b5d6c43f3681af64aadec5cb2ff892656c2 -> place_b639f5cc719831458c83999303237e8499c0cabe [label="acknowledge" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=acknowledge"];
+  place_cf9711ca06b31cb9cac3bc15bdc04bcbce3ced03 [label="displayed", shape=circle href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=displayed"];
+  place_ea88fbaa99b73225752e2ef67593f775848160ad [label="closed", shape=circle href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&place=closed"];
+  place_12625ba3c14eddfc43fddb76cbc069528cec8b7f -> place_21c50805b553b7a40e48394a5d77d442587ddee2 [label="create event" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=create event"];
+  place_12625ba3c14eddfc43fddb76cbc069528cec8b7f -> place_13a1891af75c642306a6b695377d16e4a91f0e1b [label="update event" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=update event"];
+  place_12625ba3c14eddfc43fddb76cbc069528cec8b7f -> place_b639f5cc719831458c83999303237e8499c0cabe [label="delete event" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=delete event"];
+  place_12625ba3c14eddfc43fddb76cbc069528cec8b7f -> place_cf9711ca06b31cb9cac3bc15bdc04bcbce3ced03 [label="display event" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=display event"];
+  place_21c50805b553b7a40e48394a5d77d442587ddee2 -> place_ea88fbaa99b73225752e2ef67593f775848160ad [label="acknowledge" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=acknowledge"];
+  place_13a1891af75c642306a6b695377d16e4a91f0e1b -> place_ea88fbaa99b73225752e2ef67593f775848160ad [label="acknowledge" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=acknowledge"];
+  place_b639f5cc719831458c83999303237e8499c0cabe -> place_ea88fbaa99b73225752e2ef67593f775848160ad [label="acknowledge" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=acknowledge"];
+  place_cf9711ca06b31cb9cac3bc15bdc04bcbce3ced03 -> place_ea88fbaa99b73225752e2ef67593f775848160ad [label="acknowledge" style="solid" href="/bermuda/index.php?module=workflow&type=user&func=test&workflow=hook_sample&transition=acknowledge"];
 }

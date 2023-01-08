@@ -70,7 +70,8 @@ function workflow_userapi_run_transition($args)
     //$transitions = $workflow->getEnabledTransitions($subject);
     // request transition
     if ($workflow->can($subject, $transitionName)) {
-        $marking = $workflow->apply($subject, $transitionName);
+        $context = $args;
+        $marking = $workflow->apply($subject, $transitionName, $context);
     //$place = implode(', ', array_keys($marking->getPlaces()));
     } else {
         $blockers = $workflow->buildTransitionBlockerList($subject, $transitionName);
