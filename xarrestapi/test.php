@@ -107,6 +107,7 @@ function workflow_restapi_test($args = [])
                 'marking' => $subject->getMarking(),
                 'context' => $subject->getContext(),
                 'objectref' => $subject->getObject()->getFieldValues([], 1),
+                'descriptor' => $subject->getObject()->descriptor->getArgs(),
             ];
             break;
         default:

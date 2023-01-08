@@ -142,6 +142,29 @@ function workflow_admin_modifyconfig()
         }
     }
 
+    // for Symfony Workflows build a list of transitions from initial marking
+    sys::import('modules.workflow.class.config');
+    $config = xarWorkflowConfig::loadConfig();
+    //$data['transitions'] = [];
+    foreach ($config as $workflowName => $info) {
+        $start = $info['initial_marking'];
+        $start = !is_array($start) ?: $start[0];
+        $label = ($info['label'] ?? $workflowName) . " : $start";
+        $label = ucwords(implode(' ', explode('_', $label)));
+        foreach ($info['transitions'] as $transitionName => $fromto) {
+            $name = ucwords(implode(' ', explode('_', $transitionName)));
+            if (is_array($fromto['from']) && in_array($start, $fromto['from'])) {
+                //$data['transitions'][$workflowName] ??= [];
+                //$data['transitions'][$workflowName][$transitionName] = "$label - $name";
+                $data['activities']["$workflowName/$transitionName"] = "$label - $name";
+            } elseif (!is_array($fromto['from']) && $start == $fromto['from']) {
+                //$data['transitions'][$workflowName] ??= [];
+                //$data['transitions'][$workflowName][$transitionName] = "$label - $name";
+                $data['activities']["$workflowName/$transitionName"] = "$label - $name";
+            }
+        }
+    }
+
     // We need to keep track of our own set of jobs here, because the scheduler won't know what
     // workflow activities to run when. Other modules will typically have 1 job that corresponds
     // to 1 API function, so they won't need this...

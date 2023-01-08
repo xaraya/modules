@@ -238,12 +238,15 @@ class xarWorkflowProcess extends xarObject
         return $workflow;
     }
 
-    public static function dumpProcess(string $workflowName)
+    public static function dumpProcess(string $workflowName, string $sitePrefix = '')
     {
+        sys::import('modules.workflow.class.dumper');
         $workflow = static::getProcess($workflowName);
         if ($workflow instanceof StateMachine) {
-            // php test.php | dot -Tpng -o cd_loans.png
-            $dumper = new StateMachineGraphvizDumper();
+            // php test.php | dot -Tpng -o cd_loans.png -Tcmapx -o cd_loans.map
+            //$dumper = new StateMachineGraphvizDumper();
+            $dumper = new xarWorkflowDumper();
+            $dumper->setBaseURL($workflowName, $sitePrefix);
             return $dumper->dump($workflow->getDefinition(), null, ['node' => ['href' => '/'], 'edge' => ['href' => '/']]);
         }
         // @checkme this creates the wrong graph if we split the from ANY above - it's better with ALL

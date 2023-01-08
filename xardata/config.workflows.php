@@ -23,6 +23,30 @@ $callbackFuncs = [
 
 // return configuration of the workflow(s)
 return [
+    'hook_sample' => [
+        'label' => 'Hook Sample',
+        'description' => "Experiment with hook events triggering workflow",
+        'type' => 'state_machine',
+        'supports' => ['sample'],  // DynamicData Object this workflow should apply to
+        'initial_marking' => ['waiting'],
+        'places' => [
+            'waiting',
+            'hooked',
+            'deleted',
+        ],
+        'transitions' => [
+            'hook event' => [
+                'from' => ['waiting'],
+                'to' => ['hooked'],
+            ],
+            'acknowledge' => [
+                'from' => ['hooked'],
+                'to' => ['deleted'],
+                'admin' => true,
+                'delete' => true,
+            ],
+        ],
+    ],
     'cd_loans' => [
         'label' => 'Music CD Loans',
         'description' => "Borrow CD's, browse CDs, etc...",

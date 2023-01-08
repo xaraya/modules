@@ -34,6 +34,9 @@ use Symfony\Component\Workflow\Workflow;
 
 //xarWorkflowProcess::setLogger(new xarWorkflowLogger());
 
+$sitePrefix = '/bermuda';
+echo xarWorkflowProcess::dumpProcess('hook_sample', $sitePrefix);
+exit;
 $workflow = xarWorkflowProcess::getProcess('cd_loans');
 
 $subject = new xarWorkflowSubject('cdcollection');

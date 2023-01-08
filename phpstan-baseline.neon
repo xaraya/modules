@@ -6,6 +6,11 @@ parameters:
 			path: lib/galaxia/api/instance.php
 
 		-
+			message: "#^Call to static method import\\(\\) on an unknown class sys\\.$#"
+			count: 1
+			path: lib/galaxia/api/instance.php
+
+		-
 			message: "#^Call to static method redirect\\(\\) on an unknown class xarController\\.$#"
 			count: 1
 			path: lib/galaxia/api/instance.php

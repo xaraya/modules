@@ -80,6 +80,26 @@ function workflow_adminapi_deletehook($args)
         return $extrainfo;
     }
 
+    // Symfony Workflow transition
+    if (!is_numeric($activityId) && strpos($activityId, '/') !== false) {
+        [$workflowName, $transitionName] = explode('/', $activityId);
+        if (!xarMod::apiFunc('workflow', 'user', 'run_transition', [
+                'workflow' => $workflowName,
+                'subjectId' => null,
+                'transition' => $transitionName,
+                // extra parameters from hook functions
+                'hooktype' => 'ItemDelete',
+                'moduleid' => $modid,
+                'itemtype' => $itemtype,
+                'itemid' => $itemid,
+                'extrainfo' => $extrainfo,
+            ])) {
+            return $extrainfo;
+        }
+        return $extrainfo;
+    }
+
+    // Galaxia Workflow activity
     if (!xarMod::apiFunc(
         'workflow',
         'user',

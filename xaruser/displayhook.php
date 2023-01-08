@@ -12,8 +12,13 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
-function workflow_user_displayhook()
+function workflow_user_displayhook($args)
 {
-    //return 'workflow was here...';
+    //return var_export($args, true);
+
+    // Symfony Workflow transition
+    //return 'Workflow user displayhook was here for Symfony Workflow transition...';
+    // Galaxia Workflow activity
+    //return 'Workflow user displayhook was here for Galaxia Workflow activity...';
     return '';
 }
