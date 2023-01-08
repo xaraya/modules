@@ -91,7 +91,7 @@ class xarWorkflowTracker extends xarObject
         $items = $loader->query($params);
         // @checkme if we didn't ask for a count in paging, this will return false
         static::$count = $loader->count;
-        return $items;
+        return array_values($items);
     }
 
     public static function setPaging(array $paging = [])
@@ -113,7 +113,7 @@ class xarWorkflowTracker extends xarObject
         if (is_array($trackerIds)) {
             $loader = new DataObjectLoader(static::$objectName, static::$fieldList);
             // @todo add paging - not really used here, but in history
-            return $loader->getValues($trackerIds);
+            return array_values($loader->getValues($trackerIds));
         }
         return [ static::getTrackerItem($trackerIds) ];
     }
@@ -165,7 +165,7 @@ class xarWorkflowTracker extends xarObject
             // nothing to do here
             $oldItem = null;
         } elseif (count($oldItems) < 2) {
-            $oldItem = array_values($oldItems)[0];
+            $oldItem = $oldItems[0];
         } else {
             throw new Exception("More than 1 item matches the selection criteria:\n" . var_export($oldItems, true));
         }

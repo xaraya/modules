@@ -111,7 +111,7 @@ class xarWorkflowHandlers extends xarObject
             [$objectName, $itemId] = explode('.', (string) $subjectId . '.0');
             $objectRef = DataObjectMaster::getObject(['name' => $objectName, 'itemid' => $itemId]);
             $userId = $roleId ?? xarSession::getVar('role_id') ?? 0;
-            if (!$objectRef->checkAccess($action, $itemId, $userId)) {
+            if (empty($objectref) || !$objectRef->checkAccess($action, $itemId, $userId)) {
                 $transitionName = $event->getTransition()->getName();
                 $message = "Sorry, you do not have '$action' access to this subject";
                 $event->setBlocked(true, $message);
@@ -124,6 +124,9 @@ class xarWorkflowHandlers extends xarObject
     public static function doCheckAccess($objectName, $itemId, $action, $roleId = null)
     {
         $objectRef = DataObjectMaster::getObject(['name' => $objectName, 'itemid' => $itemId]);
+        if (empty($objectRef)) {
+            return false;
+        }
         $userId = $roleId ?? xarSession::getVar('role_id') ?? 0;
         return $objectRef->checkAccess($action, $itemId, $userId);
     }
@@ -157,6 +160,11 @@ class xarWorkflowHandlers extends xarObject
                 throw new Exception($message);
             }
             $objectRef = DataObjectMaster::getObject(['name' => $objectName, 'itemid' => $itemId]);
+            if (empty($objectRef)) {
+                $message = "Unknown subject $subjectId";
+                xarLog::message("Event $eventName stopped: $message", xarLog::LEVEL_WARNING);
+                throw new Exception($message);
+            }
             $id = $objectRef->getItem();
             foreach ($propertyMapping[$objectName] as $propertyName => $match) {
                 if (!array_key_exists($propertyName, $objectRef->properties)) {
@@ -181,6 +189,9 @@ class xarWorkflowHandlers extends xarObject
             return false;
         }
         $objectRef = DataObjectMaster::getObject(['name' => $objectName, 'itemid' => $itemId]);
+        if (empty($objectRef)) {
+            return false;
+        }
         $id = $objectRef->getItem();
         foreach ($propertyMapping[$objectName] as $propertyName => $match) {
             if (!array_key_exists($propertyName, $objectRef->properties)) {
@@ -195,7 +206,7 @@ class xarWorkflowHandlers extends xarObject
     }
 
     // here you can specify callback functions to update the actual objects once the transition is completed
-    // this would be where we update the actual status of the subject, rather than the places
+    // this would be where we update the actual status of the object, rather than the places of the subject
     public static function updatePropertyHandler(array $propertyMapping, array $valueMapping = [])
     {
         sys::import('modules.dynamicdata.class.objects.master');
@@ -218,6 +229,11 @@ class xarWorkflowHandlers extends xarObject
                 $newItem[$propertyName] = $value;
             }
             $objectRef = DataObjectMaster::getObject(['name' => $objectName, 'itemid' => $itemId]);
+            if (empty($objectRef)) {
+                $message = "Unknown subject $subjectId";
+                xarLog::message("Event $eventName stopped: $message", xarLog::LEVEL_WARNING);
+                throw new Exception($message);
+            }
             $id = $objectRef->updateItem($newItem);
         };
         return $handler;

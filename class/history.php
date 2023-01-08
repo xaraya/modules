@@ -48,7 +48,7 @@ class xarWorkflowHistory extends xarWorkflowTracker
         $items = $loader->query($params);
         // @checkme if we didn't ask for a count in paging, this will return false
         static::$count = $loader->count;
-        return $items;
+        return array_values($items);
     }
 
     public static function addItem(int $trackerId, string $workflowName, string $objectName, int $itemId, string $transition, string $marking = '', string $context = '', int $userId = 0)

@@ -29,7 +29,7 @@
               </a>&#160;
             <xar:if condition="!empty($workflow) and $workflow eq $name">
               <xar:if condition="!empty($trackerId) or !empty($subjectId)">
-                <strong><a href="#$workflowlink#">#$info['label']#</a></strong>
+                <strong><a href="#$workflowlink#" title="Search Workflow #$info['label']#">#$info['label']#</a></strong>
               <xar:else/>
                 <strong>#$info['label']#</strong>
               </xar:if>
@@ -39,15 +39,15 @@
           </td>
           <td>
             <xar:foreach in="$info['supports']" value="$objectName">
-              <xar:set name="objectviewlink">xarServer::getObjectURL($objectName)</xar:set>
+              <xar:set name="viewlink">xarServer::getObjectURL($objectName)</xar:set>
               <xar:set name="subjectlink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $name, 'subjectId' => $objectName])</xar:set>
-              <a href="#$objectviewlink#" title="View Subjects #$objectName#">
+              <a href="#$viewlink#" title="View Subjects #$objectName#">
                 <xar:img scope="theme" file="icons/item-list.png" class="xar-icon" alt="view"/>
               </a>&#160;
               <xar:if condition="!empty($subjectId) and substr($subjectId, 0, strlen($objectName)) eq $objectName">
-                <strong><a href="#$subjectlink#">#$objectName#</a></strong>
+                <strong><a href="#$subjectlink#" title="Filter Subjects #$objectName#">#$objectName#</a></strong>
               <xar:else/>
-                <a href="#$subjectlink#">#$objectName#</a>
+                <a href="#$subjectlink#" title="Filter Subjects #$objectName#">#$objectName#</a>
               </xar:if><br/>
             </xar:foreach>
           </td>

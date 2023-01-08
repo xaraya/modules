@@ -64,7 +64,7 @@ class xarWorkflowProcess extends xarObject
     {
         $subscriber = new xarWorkflowEventSubscriber();
         // this is the list of all possible events we might be interested in
-        $eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
+        //$eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
         // add some predefined callbacks here, e.g. 'access' => 'update' means guardCheckAccess('update')
         sys::import('modules.workflow.class.handlers');
         $deleteTracker = [];
@@ -82,6 +82,10 @@ class xarWorkflowProcess extends xarObject
                     case 'access':
                         $eventName = $subscriber->addSubscribedEvent('guard', $workflowName, $transitionName);
                         $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::guardCheckAccess($callbackFuncs[$eventType]));
+                        break;
+                    case 'update':
+                        $eventName = $subscriber->addSubscribedEvent('completed', $workflowName, $transitionName);
+                        $subscriber->addCallbackFunction($eventName, xarWorkflowHandlers::updatePropertyHandler($callbackFuncs[$eventType]));
                         break;
                     case 'guard':
                     case 'completed':
@@ -118,7 +122,7 @@ class xarWorkflowProcess extends xarObject
         // this is the list of all possible events we might be interested in
         //$eventTypes = ['guard', 'leave', 'transition', 'enter', 'entered', 'completed', 'announce'];
         // add some predefined callbacks here, e.g. 'access' => 'update' means guardCheckAccess('update')
-        $checkTypes = ['guard', 'completed', 'admin', 'roles', 'access', 'delete'];
+        $checkTypes = ['guard', 'completed', 'admin', 'roles', 'access', 'update', 'delete'];
         foreach ($info['transitions'] as $transitionName => $fromto) {
             foreach ($checkTypes as $checkType) {
                 if (!empty($fromto[$checkType])) {
@@ -247,6 +251,39 @@ class xarWorkflowProcess extends xarObject
         $dumper = new GraphvizDumper();
         //return $dumper->dump($workflow->getDefinition(), null, ['graph' => ['href' => '/'], 'node' => ['href' => '/']]);
         return $dumper->dump($workflow->getDefinition(), null, ['node' => ['href' => '/']]);
+    }
+
+    public static function showProcess(Workflow $workflow)
+    {
+        $result = [
+            'name' => $workflow->getName(),
+            'definition' => [
+                'places' => $workflow->getDefinition()->getPlaces(),
+                'initialPlaces' => $workflow->getDefinition()->getInitialPlaces(),
+                'transitions' => [],
+            ],
+            'markingStore' => $workflow->getMarkingStore(),
+            'metadataStore' => [
+                'workflow' => $workflow->getMetadataStore()->getWorkflowMetadata(),
+                'places' => [], // $workflow->getMetadataStore()->getPlaceMetadata(),
+                'transitions' => [], // $workflow->getMetadataStore()->getTransitionMetadata(),
+            ],
+        ];
+        $places = $workflow->getDefinition()->getPlaces();
+        foreach ($places as $place) {
+            $result['metadataStore']['places'][$place] = $workflow->getMetadataStore()->getPlaceMetadata($place);
+        }
+        $transitions = $workflow->getDefinition()->getTransitions();
+        foreach ($transitions as $transition) {
+            $transitionName = $transition->getName();
+            $result['metadataStore']['transitions'][$transitionName] = $workflow->getMetadataStore()->getTransitionMetadata($transition);
+            $result['definition']['transitions'][] = [
+                'name' => $transition->getName(),
+                'froms' => $transition->getFroms(),
+                'tos' => $transition->getTos(),
+            ];
+        }
+        return $result;
     }
 
     // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Workflow.php

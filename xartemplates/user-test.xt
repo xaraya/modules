@@ -12,6 +12,14 @@
       <xar:if condition="!empty($warning)">
         <p><strong>Requirement:</strong>#$warning#</p>
       </xar:if>
+      <xar:if condition="!empty($message)">
+        <fieldset>
+          <legend>
+            Message
+          </legend>
+          <p>#$message#</p>
+        </fieldset>
+      </xar:if>
       <xar:template file="test_workflowlist"/>
       <xar:if condition="!empty($workflow)">
         <xar:template file="test_trackerlist"/>

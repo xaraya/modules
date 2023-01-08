@@ -62,7 +62,11 @@ return [
                 'to' => ['requested'],
                 // here you can specify callback functions as transition blockers - expression language is not supported
                 'guard' => $callbackFuncs['cd_loans.guard.request'],
-                'access' => 'update',
+                // or you can check permission to run the transition in predefined ways
+                //'admin' => false,                               // true or false userId belongs to admin role groups
+                //'roles' => ['administrators', 'sitemanagers'],  // parent role groups the userId can belong to
+                'access' => 'update',                             // $dataobject->checkAccess()
+                //'security' => 'SubmitWorkflow',                 // xarSecurity::check()
             ],
             'approve' => [
                 'from' => 'requested',
@@ -72,9 +76,11 @@ return [
             ],
             'retrieve' => [
                 'from' => 'approved',
-                'to' => ['retrieved', 'not available'],  // not supported for state_machine, pick the first
+                'to' => ['retrieved', 'not available'],  // two places not supported for state_machine, pick the first
                 // here you can specify callback functions to update the actual objects once the transition is completed
-                'completed' => $callbackFuncs['cd_loans.completed.retrieve'],
+                //'completed' => $callbackFuncs['cd_loans.completed.retrieve'],
+                // or you can update the actual objects in predefined ways
+                'update' => ['cdcollection' => ['status' => 'not available']],
             ],
             'reject' => [
                 'from' => 'requested',
@@ -97,9 +103,11 @@ return [
             ],
             'return' => [
                 'from' => 'retrieved',
-                'to' => ['returned', 'available'],  // not supported for state_machine, pick the first
+                'to' => ['returned', 'available'],  // two places not supported for state_machine, pick the first
                 // here you can specify callback functions to update the actual objects once the transition is completed
                 'completed' => $callbackFuncs['cd_loans.completed.return'],
+                // or you can update the actual objects in predefined ways
+                //'update' => ['cdcollection' => ['status' => 'available']],
             ],
             'close' => [
                 'from' => ['returned', 'acknowledged'],

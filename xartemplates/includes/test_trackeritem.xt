@@ -9,7 +9,8 @@
     <xar:set name="dummy">sys::import('modules.workflow.class.tracker')</xar:set>
     <xar:set name="item">xarWorkflowTracker::getTrackerItem($trackerId)</xar:set>
   </xar:if>
-  <xar:set name="objectitemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+  <xar:set name="displaylink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+  <xar:set name="infolink">xarServer::getObjectURL('workflow_tracker', 'display', ['itemid' => $item['id']])</xar:set>
   <xar:set name="params">['workflow' => $item['workflow']]</xar:set>
   <xar:set name="workflowlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
   <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
@@ -24,7 +25,7 @@
         <label>Tracker Id</label>
       </div>
       <div class="xar-col">
-        <a href="#$trackerlink#" title="Info Tracker (#$item['id']#) #$currentId#">
+        <a href="#$infolink#" title="Info Tracker (#$item['id']#) #$currentId#">
           <xar:img scope="theme" file="icons/info.png" class="xar-icon" alt="info"/>
         </a>&#160;
         <a href="#$trackerlink#">#$item['id']#</a>
@@ -35,7 +36,7 @@
         <label>Subject Id</label>
       </div>
       <div class="xar-col">
-        <a href="#$objectitemlink#" title="Display Subject #$currentId#">
+        <a href="#$displaylink#" title="Display Subject #$currentId#">
           <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
         </a>&#160;
         <a href="#$subjectlink#">#$currentId#</a>

@@ -25,4 +25,17 @@ class xarWorkflowSubject
     {
         $this->objectref = (object) ['name' => $objectName, 'itemid' => $itemId ?: spl_object_id($this)];
     }
+
+    public function getObject(bool $build = true)
+    {
+        sys::import('modules.dynamicdata.class.objects.base');
+        if ($build && !$this->objectref instanceof DataObject) {
+            $objectref = DataObjectMaster::getObject(['name' => $this->objectref->name, 'itemid' => $this->objectref->itemid]);
+            if (!empty($this->objectref->itemid)) {
+                $objectref->getItem();
+            }
+            $this->objectref = $objectref;
+        }
+        return $this->objectref;
+    }
 }

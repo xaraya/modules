@@ -68,7 +68,8 @@
         <th>Transitions</th>
       </tr>
       <xar:foreach in="$items" value="$item">
-        <xar:set name="objectitemlink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+        <xar:set name="displaylink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+        <xar:set name="infolink">xarServer::getObjectURL('workflow_tracker', 'display', ['itemid' => $item['id']])</xar:set>
         <xar:set name="currentId">implode('.', [$item['object'], (string) $item['item']])</xar:set>
         <xar:set name="params">['workflow' => $workflow, 'subjectId' => $currentId]</xar:set>
         <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
@@ -78,26 +79,29 @@
         <xar:set name="actionlink">xarServer::getModuleURL('workflow', 'user', 'test_run', $params)</xar:set>
         <tr>
           <td>
+            <a href="#$infolink#" title="Info Tracker (#$item['id']#) #$currentId#">
+              <xar:img scope="theme" file="icons/info.png" class="xar-icon" alt="info"/>
+            </a>&#160;
             <a href="#$actionlink#" title="Actions Tracker (#$item['id']#) #$currentId#">
               <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="go-next"/>
             </a>&#160;
             <xar:if condition="!empty($trackerId) and $trackerId eq $item['id']">
               <strong>#$item['id']#</strong>
             <xar:else/>
-              <a href="#$trackerlink#">#$item['id']#</a>
+              <a href="#$trackerlink#" title="Filter Tracker (#$item['id']#)">#$item['id']#</a>
             </xar:if>
           </td>
           <td>
-            <a href="#$objectitemlink#" title="Display Subject #$currentId#">
+            <a href="#$displaylink#" title="Display Subject #$currentId#">
               <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
             </a>&#160;
-            <a href="#$subjectlink#" title="Actions Tracker #$currentId#">
+            <a href="#$subjectlink#" title="Actions Subject #$currentId#">
               <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="go-next"/>
             </a>&#160;
             <xar:if condition="!empty($subjectId) and $subjectId eq $currentId">
-              <strong><a href="#$filterlink#">#$currentId#</a></strong>
+              <strong><a href="#$filterlink#" title="Filter Subject #$currentId#">#$currentId#</a></strong>
             <xar:else/>
-              <a href="#$filterlink#">#$currentId#</a>
+              <a href="#$filterlink#" title="Filter Subject #$currentId#">#$currentId#</a>
             </xar:if>
           </td>
           <td>#xarUser::getVar('name', $item['user'])#</td>

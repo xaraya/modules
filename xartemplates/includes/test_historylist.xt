@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
   <!-- this relies on $workflow, $subjectId and $trackerId if available -->
   <xar:set name="dummy">sys::import('modules.workflow.class.history')</xar:set>
-  <xar:set name="paging">['limit' => 10, 'count' => false, 'offset' => 0, 'order' => null]</xar:set>
+  <xar:set name="paging">['limit' => 10, 'count' => false, 'offset' => 0, 'order' => '-updated']</xar:set>
   <xar:set name="dummy">xarWorkflowHistory::setPaging($paging)</xar:set>
   <xar:if condition="empty($trackerId) and !empty($item)">
     <xar:set name="trackerId">$item['id']</xar:set>
@@ -28,16 +28,26 @@
     <table style="border-collapse: separate;">
       <tr>
         <th>History Id</th>
+        <th>Subject Id</th>
         <th>Transition</th>
         <th>To Place</th>
         <th>User Name</th>
         <th>Updated</th>
       </tr>
       <xar:foreach in="$items" value="$item">
-        <xar:set name="objectlink">xarServer::getObjectURL('workflow_history', 'display', ['itemid' => $item['id']])</xar:set>
+        <xar:set name="displaylink">xarServer::getObjectURL($item['object'], 'display', ['itemid' => $item['item']])</xar:set>
+        <xar:set name="infolink">xarServer::getObjectURL('workflow_history', 'display', ['itemid' => $item['id']])</xar:set>
         <xar:set name="currentId">implode('.', [$item['object'], $item['item']])</xar:set>
+        <xar:set name="params">['workflow' => $item['workflow'], 'subjectId' => $currentId]</xar:set>
+        <xar:set name="filterlink">xarServer::getModuleURL('workflow', 'user', 'test', $params)</xar:set>
         <tr>
-          <td><a href="#$objectlink#">#$item['id']#</a></td>
+          <td><a href="#$infolink#" title="Info History (#$item['id']#)">#$item['id']#</a></td>
+          <td>
+            <a href="#$displaylink#" title="Display Subject #$currentId#">
+              <xar:img scope="theme" file="icons/display.png" class="xar-icon" alt="display"/>
+            </a>&#160;
+            <a href="#$filterlink#" title="Filter Subject #$currentId#">#$currentId#</a>
+          </td>
           <td>#ucwords(implode(' ', explode('_', $item['transition'])))#</td>
           <td>#ucwords(implode(' ', explode('_', $item['marking'])))#</td>
           <td>#xarUser::getVar('name', $item['user'])#</td>
