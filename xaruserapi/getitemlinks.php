@@ -31,6 +31,10 @@ function workflow_userapi_getitemlinks($args)
     sys::import('modules.workflow.lib.galaxia.config');
     include(GALAXIA_LIBRARY.'/gui.php');
 
+    if (empty($user)) {
+        $user = xarSession::getVar('role_id') ?? 0;
+    }
+
     // get the instances this user has access to
     $sort = 'pId_asc, instanceId_asc';
     $find = '';
@@ -46,6 +50,10 @@ function workflow_userapi_getitemlinks($args)
     $itemid2key = [];
     foreach ($items['data'] as $key => $item) {
         $itemid2key[$item['instanceId']] = $key;
+    }
+    // if we didn't have a list of itemids, return all the items we found
+    if (empty($itemids)) {
+        $itemids = array_keys($itemid2key);
     }
     foreach ($itemids as $itemid) {
         if (!isset($itemid2key[$itemid])) {

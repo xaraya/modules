@@ -2,6 +2,11 @@
 
 namespace Galaxia\Api;
 
+// @checkme Galaxia library has issues unserializing Instance without Creole being loaded - set_include_path
+if (!defined('GALAXIA_LIBRARY')) {
+    define('GALAXIA_LIBRARY', dirname(dirname(__FILE__)));
+    \sys::import('creole.Creole');
+}
 include_once(GALAXIA_LIBRARY.'/common/base.php');
 use Galaxia\Common\Base;
 
