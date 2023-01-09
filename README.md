@@ -1,5 +1,38 @@
 
-## Overview
+## Overview with Symfony Workflow Component
+
+### What is it?
+
+### Getting started
+
+```
+$ composer require --dev symfony/workflow
+```
+
+[Defining Workflows](xardata/config.workflows.php)
+
+#### Hook Sample
+
+Use Workflow as **hook module** and let item create/update/delete/display hook events from other modules trigger the workflow transitions you want
+
+![Hook Sample](xarimages/hook_sample.png)
+
+#### Music CD Loans
+
+Or add the new **Workflows property** to an existing object and let the value of its properties affect the workflow
+
+![Music CD Loans](xarimages/cd_loans.png)
+
+### Further Information
+
+1. [The Workflow Component](https://symfony.com/doc/current/components/workflow.html)
+
+2. [Workflows and State Machines](https://symfony.com/doc/current/workflow/workflow-and-state-machine.html)
+
+3. [Making Decisions with a Workflow](https://symfony.com/doc/current/the-fast-track/en/19-workflow.html)
+
+
+## Overview with Galaxia Workflow Engine
 
 ### What is it?
 
