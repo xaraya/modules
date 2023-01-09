@@ -102,8 +102,8 @@ function publications_admin_manage_versions($args)
         sys::import('modules.publications.class.difflib');
         sys::import('modules.publications.class.showdiff');
 
-        $diff = new Diff( explode("\n",$orig_str), explode("\n",$final_str));
-        $objshowdiff = new showdiff();
+        $diff = new \Xaraya\Modules\Publications\Diff( explode("\n",$orig_str), explode("\n",$final_str));
+        $objshowdiff = new \Xaraya\Modules\Publications\showdiff();
         $data['result'] = $objshowdiff->checkdiff($orig_str,$final_str,$diff,'Line');
 
         $string_arr= explode("<br>",$data['result']);

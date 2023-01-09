@@ -11,7 +11,10 @@
  * jojodee - Updated with 2005/02/04 php5 changes and prior by rurban
  * http://cvs.sourceforge.net/viewcvs.py/phpwiki/phpwiki/lib/difflib.php
  *
+ * @deprecated No longer used by publications and replaced by lib/Diff.php
  */
+
+namespace Xaraya\Modules\Publications;
 
 // FIXME: possibly remove assert()'s for production version?
 

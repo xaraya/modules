@@ -2,7 +2,12 @@
 /**
  * PSSPL:Added the code for formating the difference.
  * Get The diff between two string and apply the formating.
-*/
+ *
+ * @deprecated No longer used by publications and replaced by lib/Diff.php
+ */
+
+namespace Xaraya\Modules\Publications;
+
 //Psspl:Define the character sequences
 
 define('ADDED_GREEN_START_TAG', '@~$#%*^');
