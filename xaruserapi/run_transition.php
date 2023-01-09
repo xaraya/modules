@@ -36,9 +36,10 @@ function workflow_userapi_run_transition($args)
     // if we come from a hook function
     if (empty($subjectId)) {
         sys::import('modules.dynamicdata.class.objects.descriptor');
-        $moduleId = $args['moduleid'];
-        $itemType = $args['itemtype'];
-        $itemId = $args['itemid'];
+        $moduleName = $args['module'] ?? xarMod::getName();
+        $itemType = $args['itemtype'] ?? 0;
+        $itemId = $args['itemid'] ?? 0;
+        $moduleId = $args['module_id'] ?? xarMod::getRegID($moduleName);
         $info = DataObjectDescriptor::getObjectID(['moduleid' => $moduleId, 'itemtype' => $itemType]);
         if (empty($info) || empty($info['name'])) {
             xarLog::message("No object associated with " . var_export($info, true) . " for '$transitionName' in '$workflowName'", xarLog::LEVEL_INFO);

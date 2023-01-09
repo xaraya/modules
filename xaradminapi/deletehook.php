@@ -89,9 +89,10 @@ function workflow_adminapi_deletehook($args)
                 'transition' => $transitionName,
                 // extra parameters from hook functions
                 'hooktype' => 'ItemDelete',
-                'moduleid' => $modid,
+                'module' => $modname,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
+                'module_id' => $modid,
                 'extrainfo' => $extrainfo,
             ])) {
             return $extrainfo;

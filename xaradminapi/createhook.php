@@ -79,9 +79,10 @@ function workflow_adminapi_createhook($args)
                 'transition' => $transitionName,
                 // extra parameters from hook functions
                 'hooktype' => 'ItemCreate',
-                'moduleid' => $modid,
+                'module' => $modname,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
+                'module_id' => $modid,
                 'extrainfo' => $extrainfo,
             ])) {
             return $extrainfo;

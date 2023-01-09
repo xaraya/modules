@@ -89,9 +89,10 @@ function workflow_adminapi_updatehook($args)
                 'transition' => $transitionName,
                 // extra parameters from hook functions
                 'hooktype' => 'ItemUpdate',
-                'moduleid' => $modid,
+                'module' => $modname,
                 'itemtype' => $itemtype,
                 'itemid' => $itemid,
+                'module_id' => $modid,
                 'extrainfo' => $extrainfo,
             ])) {
             return $extrainfo;
