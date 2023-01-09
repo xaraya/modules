@@ -3,7 +3,11 @@
  *    $Id: class.calendar.php,v 1.5 2003/06/24 20:30:28 roger Exp $
  *  xarCalendar
  *    Class to gather data for a specific calendar view
+ *
+ *  @checkme are these actually in use or not?
  */
+
+namespace Xaraya\Modules\Calendar;
 
 class Calendar
 {

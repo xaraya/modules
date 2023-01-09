@@ -1,4 +1,9 @@
 <?php
+/**
+ *
+ *  @checkme are these actually in use or not?
+ */
+namespace Xaraya\Modules\Calendar;
 
 include_once CALENDAR_ROOT.'Day.php';
 include_once CALENDAR_ROOT.'Hour.php';

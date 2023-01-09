@@ -16,6 +16,8 @@
  *  @version $Id: factory.php,v 1.5 2003/06/24 21:30:30 roger Exp $
  *  @param string $class the name of the object to create
  *  @return object the created object
+ *
+ *  @checkme are these actually in use or not?
  */
 function &calendar_userapi_factory($class)
 {
@@ -35,7 +37,7 @@ function &calendar_userapi_factory($class)
         case 'calendar':
             if (!isset($calobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.calendar");
-                $calobject = new Calendar();
+                $calobject = new \Xaraya\Modules\Calendar\Calendar();
             }
             return $calobject;
             break;
@@ -43,7 +45,7 @@ function &calendar_userapi_factory($class)
         case 'ical_parser':
             if (!isset($icalobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.ical_parser");
-                $icalobject = new iCal_Parser();
+                $icalobject = new \Xaraya\Modules\Calendar\iCal_Parser();
             }
             return $icalobject;
             break;
@@ -51,7 +53,7 @@ function &calendar_userapi_factory($class)
         case 'event':
             if (!isset($eventobject)) {
                 sys::import("modules.$modInfo[osdirectory].class.event");
-                $eventobject = new Event();
+                $eventobject = new \Xaraya\Modules\Calendar\Event();
             }
             return $eventobject;
             break;
