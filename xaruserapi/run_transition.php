@@ -42,10 +42,13 @@ function workflow_userapi_run_transition($args)
         $moduleId = $args['module_id'] ?? xarMod::getRegID($moduleName);
         $info = DataObjectDescriptor::getObjectID(['moduleid' => $moduleId, 'itemtype' => $itemType]);
         if (empty($info) || empty($info['name'])) {
-            xarLog::message("No object associated with " . var_export($info, true) . " for '$transitionName' in '$workflowName'", xarLog::LEVEL_INFO);
-            return false;
+            xarLog::message("No object associated with module '$moduleName' ($moduleId) itemtype '$itemType' for '$transitionName' in '$workflowName'", xarLog::LEVEL_INFO);
+            // @checkme create fake objectName for module:itemtype if no object is available for now?
+            //return false;
+            $objectName = "$moduleName:$itemType";
+        } else {
+            $objectName = $info['name'];
         }
-        $objectName = $info['name'];
         $subjectId = implode('.', [$objectName, $itemId]);
     } else {
         [$objectName, $itemId] = explode('.', $subjectId . '.0');

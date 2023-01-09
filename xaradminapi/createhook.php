@@ -81,7 +81,7 @@ function workflow_adminapi_createhook($args)
                 'hooktype' => 'ItemCreate',
                 'module' => $modname,
                 'itemtype' => $itemtype,
-                'itemid' => $itemid,
+                'itemid' => $objectid,
                 'module_id' => $modid,
                 'extrainfo' => $extrainfo,
             ])) {

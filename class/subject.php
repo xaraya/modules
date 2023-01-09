@@ -23,18 +23,21 @@ class xarWorkflowSubject
 
     public function __construct(string $objectName = 'dummy', int $itemId = 0)
     {
-        $this->objectref = (object) ['name' => $objectName, 'itemid' => $itemId ?: spl_object_id($this)];
+        $this->objectref = (object) ['name' => $objectName, 'itemid' => $itemId];
     }
 
     public function getObject(bool $build = true)
     {
         sys::import('modules.dynamicdata.class.objects.base');
-        if ($build && !$this->objectref instanceof DataObject) {
+        // @checkme create fake objectName for module:itemtype if no object is available for now?
+        if ($build && !$this->objectref instanceof DataObject && strpos($this->objectref->name, ':') === false) {
             $objectref = DataObjectMaster::getObject(['name' => $this->objectref->name, 'itemid' => $this->objectref->itemid]);
-            if (!empty($this->objectref->itemid)) {
-                $objectref->getItem();
+            if (!empty($objectref)) {
+                if (!empty($this->objectref->itemid)) {
+                    $objectref->getItem();
+                }
+                $this->objectref = $objectref;
             }
-            $this->objectref = $objectref;
         }
         return $this->objectref;
     }
