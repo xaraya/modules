@@ -150,9 +150,9 @@ function workflow_admin_modifyconfig()
         $start = $info['initial_marking'];
         $start = !is_array($start) ?: $start[0];
         $label = ($info['label'] ?? $workflowName) . " : $start";
-        $label = ucwords(implode(' ', explode('_', $label)));
+        $label = xarWorkflowConfig::formatName($label);
         foreach ($info['transitions'] as $transitionName => $fromto) {
-            $name = ucwords(implode(' ', explode('_', $transitionName)));
+            $name = xarWorkflowConfig::formatName($transitionName);
             if (is_array($fromto['from']) && in_array($start, $fromto['from'])) {
                 //$data['transitions'][$workflowName] ??= [];
                 //$data['transitions'][$workflowName][$transitionName] = "$label - $name";

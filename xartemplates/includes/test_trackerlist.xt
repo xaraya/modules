@@ -107,9 +107,9 @@
           <td>#xarUser::getVar('name', $item['user'])#</td>
           <td>
             <xar:if condition="!empty($place) and $place eq $item['marking']">
-              <strong>#ucwords(implode(' ', explode('_', $item['marking'])))#</strong>
+              <strong>#xarWorkflowConfig::formatName($item['marking'])#</strong>
             <xar:else/>
-              #ucwords(implode(' ', explode('_', $item['marking'])))#
+              #xarWorkflowConfig::formatName($item['marking'])#
             </xar:if>
           </td>
           <!-- you can choose how to display the date and time here, e.g. show
@@ -122,7 +122,7 @@
           <td>
           <xar:if condition="!empty($places[$item['marking']])">
             <xar:foreach in="$places[$item['marking']]" key="$name" value="$enabled">
-              <xar:set name="label">ucwords(implode(' ', explode('_', $name)))</xar:set> 
+              <xar:set name="label">xarWorkflowConfig::formatName($name)</xar:set>
               <xar:if condition="!empty($enabled)">
                 <xar:set name="runlink">xarServer::getModuleURL('workflow', 'user', 'test_run', $params + ['transition' => $name])</xar:set>
                 <xar:button type="link" name="$name" target="$runlink" label="$label"/>&#160;

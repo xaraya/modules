@@ -25,11 +25,17 @@ class xarWorkflowDumper extends StateMachineGraphvizDumper
         $this->baseURL = $sitePrefix . '/index.php?module=workflow&type=user&func=test&workflow=' . $workflowName;
     }
 
+    public function formatName(string $name)
+    {
+        return ucwords(str_replace('_', ' ', $name));
+    }
+
     protected function findPlaces(Definition $definition, Marking $marking = null): array
     {
         $places = parent::findPlaces($definition, $marking);
         foreach (array_keys($places) as $place) {
             $places[$place]['attributes']['href'] = $this->baseURL . '&place=' . $place;
+            $places[$place]['attributes']['name'] = $this->formatName($place);
         }
         return $places;
     }
@@ -41,6 +47,7 @@ class xarWorkflowDumper extends StateMachineGraphvizDumper
             $edgelist = [];
             foreach ($edges[$from] as $edge) {
                 $edge['attributes']['href'] = $this->baseURL . '&transition=' . $edge['name'];
+                $edge['name'] = $this->formatName($edge['name']);
                 $edgelist[] = $edge;
             }
             $edges[$from] = $edgelist;

@@ -47,7 +47,7 @@
         <label>Current Place</label>
       </div>
       <div class="xar-col">
-        #ucwords(implode(' ', explode('_', $item['marking'])))#
+        #xarWorkflowConfig::formatName($item['marking'])#
       </div>
     </div>
     <div class="xar-row">

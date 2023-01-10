@@ -43,19 +43,19 @@ return [
             //    'from' => ['waiting'],
             //    'to' => ['hooked'],
             //],
-            'create event' => [
+            'create_event' => [
                 'from' => ['waiting'],
                 'to' => ['created'],
             ],
-            'update event' => [
+            'update_event' => [
                 'from' => ['waiting'],
                 'to' => ['updated'],
             ],
-            'delete event' => [
+            'delete_event' => [
                 'from' => ['waiting'],
                 'to' => ['deleted'],
             ],
-            'display event' => [
+            'display_event' => [
                 'from' => ['waiting'],
                 'to' => ['displayed'],
             ],
@@ -93,7 +93,7 @@ return [
             'retrieved',
             'returned',
             'deleted',
-            'not available',
+            'not_available',
         ],
         // @todo custom templates to use for particular places?
         'templates' => [
@@ -121,7 +121,7 @@ return [
             ],
             'retrieve' => [
                 'from' => 'approved',
-                'to' => ['retrieved', 'not available'],  // two places not supported for state_machine, pick the first
+                'to' => ['retrieved', 'not_available'],  // two places not supported for state_machine, pick the first
                 // here you can specify callback functions to update the actual objects once the transition is completed
                 //'completed' => $callbackFuncs['cd_loans.completed.retrieve'],
                 // or you can update the actual objects in predefined ways

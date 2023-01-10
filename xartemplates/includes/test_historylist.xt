@@ -48,8 +48,8 @@
             </a>&#160;
             <a href="#$filterlink#" title="Filter Subject #$currentId#">#$currentId#</a>
           </td>
-          <td>#ucwords(implode(' ', explode('_', $item['transition'])))#</td>
-          <td>#ucwords(implode(' ', explode('_', $item['marking'])))#</td>
+          <td>#xarWorkflowConfig::formatName($item['transition'])#</td>
+          <td>#xarWorkflowConfig::formatName($item['marking'])#</td>
           <td>#xarUser::getVar('name', $item['user'])#</td>
           <td>#xarLocale::getFormattedDate('medium',$item['updated'])#
           #xarLocale::getFormattedTime('short',$item['updated'])#</td>

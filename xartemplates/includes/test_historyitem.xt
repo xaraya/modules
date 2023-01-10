@@ -55,7 +55,7 @@
         <label>Transition</label>
       </div>
       <div class="xar-col">
-        #ucwords(implode(' ', explode('_', $item['transition'])))#
+        #xarWorkflowConfig::formatName($item['transition'])#
       </div>
     </div>
     <div class="xar-row">
@@ -64,7 +64,7 @@
       </div>
       <div class="xar-col">
         <xar:set name="placelink">xarServer::getModuleURL('workflow', 'user', 'test', ['workflow' => $item['workflow'], 'place' => $item['marking']])</xar:set>
-        <xar:set name="where">ucwords(implode(' ', explode('_', $item['marking'])))</xar:set>
+        <xar:set name="where">xarWorkflowConfig::formatName($item['marking'])</xar:set>
         <a href="#$placelink#" title="Filter Place #$where#">#$where#</a>
       </div>
     </div>

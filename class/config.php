@@ -38,6 +38,11 @@ class xarWorkflowConfig extends xarObject
         return static::$config;
     }
 
+    public static function formatName(string $name)
+    {
+        return ucwords(str_replace('_', ' ', $name));
+    }
+
     public static function checkAutoload()
     {
         // @checkme we need to require composer autoload here

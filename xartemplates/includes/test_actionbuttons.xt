@@ -24,7 +24,7 @@
         <xar:set name="enabled">false</xar:set>
       </xar:if>
     </xar:if>
-    <xar:set name="label">ucwords(implode(' ', explode('_', $name)))</xar:set>
+    <xar:set name="label">xarWorkflowConfig::formatName($name)</xar:set>
     <xar:if condition="!empty($enabled)">
       <xar:set name="params">['workflow' => $workflow, 'subjectId' => $subjectId]</xar:set>
       <xar:if condition="!empty($trackerId)">

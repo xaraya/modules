@@ -128,7 +128,7 @@ function workflow_user_test_run()
     if ($workflow->can($subject, $data['transition'])) {
         $marking = $workflow->apply($subject, $data['transition']);
         $data['place'] = implode(', ', array_keys($marking->getPlaces()));
-        $data['message'] = "The transition of subject " . $subject->getId() . " to " . ucwords(implode(' ', explode('_', $data['place']))) . " was successful";
+        $data['message'] = "The transition of subject " . $subject->getId() . " to " . xarWorkflowConfig::formatName($data['place']) . " was successful";
     } else {
         $blockers = $workflow->buildTransitionBlockerList($subject, $data['transition']);
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';

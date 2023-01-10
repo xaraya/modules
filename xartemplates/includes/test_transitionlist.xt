@@ -22,36 +22,36 @@
         <xar:set name="to">is_array($info['to']) ? $info['to'][0] : $info['to']</xar:set>
         <tr>
           <xar:if condition="!empty($transition) and $transition eq $name">
-            <td><strong>#$name#</strong></td>
+            <td><strong>#xarWorkflowConfig::formatName($name)#</strong></td>
           <xar:else/>
-            <td>#$name#</td>
+            <td>#xarWorkflowConfig::formatName($name)#</td>
           </xar:if>
           <xar:if condition="is_array($info['from'])">
             <td>
             <xar:foreach in="$info['from']" value="$from">
               <xar:if condition="!empty($place) and $place eq $from">
-               <strong>#$from#</strong><br/>
+               <strong>#xarWorkflowConfig::formatName($from)#</strong><br/>
               <xar:else/>
-                #$from#<br/>
+                #xarWorkflowConfig::formatName($from)#<br/>
               </xar:if>
             </xar:foreach>
             </td>
           <xar:elseif condition="!empty($place) and $place eq $info['from']"/>
-            <td><strong>#$info['from']#</strong></td>
+            <td><strong>#xarWorkflowConfig::formatName($info['from'])#</strong></td>
           <xar:else/>
-            <td>#$info['from']#</td>
+            <td>#xarWorkflowConfig::formatName($info['from'])#</td>
           </xar:if>
           <xar:if condition="!empty($place) and $place eq $to">
-            <td><strong>#$to#</strong></td>
+            <td><strong>#xarWorkflowConfig::formatName($to)#</strong></td>
           <xar:else/>
-            <td>#$to#</td>
+            <td>#xarWorkflowConfig::formatName($to)#</td>
           </xar:if>
         <!-- @checkme state machine only supports 1 to, use 2 for status change -->
           <xar:if condition="is_array($info['to']) and count($info['to']) gt 1">
             <xar:if condition="!empty($place) and $place eq $info['to'][1]">
-              <td><strong>#$info['to'][1]#</strong></td>
+              <td><strong>#xarWorkflowConfig::formatName($info['to'][1])#</strong></td>
             <xar:else/>
-              <td>#$info['to'][1]#</td>
+              <td>#xarWorkflowConfig::formatName($info['to'][1])#</td>
             </xar:if>
           <xar:else/>
             <td></td>
