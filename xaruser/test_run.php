@@ -53,7 +53,7 @@ function workflow_user_test_run()
     }
     if (!empty($invalid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array(join(', ', $invalid), 'user', 'test_run', 'workflow');
+        $vars = [join(', ', $invalid), 'user', 'test_run', 'workflow'];
         throw new BadParameterException($vars, $msg);
     }
 
@@ -63,7 +63,7 @@ function workflow_user_test_run()
         $item = xarWorkflowTracker::getTrackerItem($data['trackerId']);
         if (empty($item)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-            $vars = array('trackerId', 'user', 'test_run', 'workflow');
+            $vars = ['trackerId', 'user', 'test_run', 'workflow'];
             throw new BadParameterException($vars, $msg);
         }
         $data['place'] = $item['marking'];
@@ -71,7 +71,7 @@ function workflow_user_test_run()
         [$objectName, $itemId] = explode('.', $data['subjectId'] . '.0');
         if (empty($objectName) || empty($itemId)) {
             $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-            $vars = array('subjectId', 'user', 'test_run', 'workflow');
+            $vars = ['subjectId', 'user', 'test_run', 'workflow'];
             throw new BadParameterException($vars, $msg);
         }
         $items = xarWorkflowTracker::getSubjectItems($data['subjectId'], $data['workflow']);
@@ -135,7 +135,7 @@ function workflow_user_test_run()
         foreach ($blockers as $blocker) {
             $msg .= "\nBlocker: " . $blocker->getMessage();
         }
-        $vars = array('transition', 'user', 'test_run', 'workflow');
+        $vars = ['transition', 'user', 'test_run', 'workflow'];
         throw new BadParameterException($vars, $msg);
     }
     unset($data['place']);

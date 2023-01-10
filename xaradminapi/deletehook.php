@@ -30,7 +30,7 @@ function workflow_adminapi_deletehook($args)
     $modid = $extrainfo['module_id'];
     if (empty($itemid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('item id', 'admin', 'deletehook', 'workflow');
+        $vars = ['item id', 'admin', 'deletehook', 'workflow'];
         throw new BadParameterException($vars, $msg);
     }
 

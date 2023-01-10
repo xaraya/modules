@@ -18,7 +18,7 @@ $callbackFuncs = [
     ]),
     'cd_loans.completed.return' => xarWorkflowHandlers::updatePropertyHandler([
         'cdcollection' => ['status' => 'available'],
-    ])
+    ]),
 ];
 
 // return configuration of the workflow(s)

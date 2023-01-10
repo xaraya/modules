@@ -83,7 +83,7 @@ function workflow_userapi_run_transition($args)
         foreach ($blockers as $blocker) {
             $msg .= "\nBlocker: " . $blocker->getMessage();
         }
-        $vars = array('transition', 'user', 'run_transition', 'workflow');
+        $vars = ['transition', 'user', 'run_transition', 'workflow'];
         throw new BadParameterException($vars, $msg);
     }
 

@@ -82,7 +82,7 @@ class xarWorkflowHookObserver extends HookObserver implements ixarEventObserver
         $message = sprintf(
             '%s: Subject (id: "%s") had event "%s"',
             get_class($this),
-            isset($args['objectid']) ? $args['objectid'] : '',
+            $args['objectid'] ?? '',
             $subjectName,
         );
         xarLog::message($message, xarLog::LEVEL_INFO);

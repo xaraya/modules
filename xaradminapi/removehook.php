@@ -31,14 +31,14 @@ function workflow_adminapi_removehook($args)
     // here, because the current module is probably going to be 'modules' !!!
     if (!isset($objectid) || !is_string($objectid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('object ID (= module name)', 'admin', 'removehook', 'workflow');
+        $vars = ['object ID (= module name)', 'admin', 'removehook', 'workflow'];
         throw new BadParameterException($vars, $msg);
     }
 
     $modid = xarMod::getRegID($objectid);
     if (empty($modid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module ID', 'admin', 'removehook', 'workflow');
+        $vars = ['module ID', 'admin', 'removehook', 'workflow'];
         throw new BadParameterException($vars, $msg);
     }
 

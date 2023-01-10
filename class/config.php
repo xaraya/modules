@@ -50,15 +50,15 @@ class xarWorkflowConfig extends xarObject
         }
         if (!file_exists($vendor . '/autoload.php')) {
             $message = <<<EOT
-This test needs composer autoload to run the workflows
-$ composer require --dev symfony/workflow
-...
-$ head html/code/modules/workflow/xaruser/test_run.php
-&lt;?php
-sys::import('modules.workflow.class.config');
-xarWorkflowConfig::setAutoload();
-...
-EOT;
+                This test needs composer autoload to run the workflows
+                $ composer require --dev symfony/workflow
+                ...
+                $ head html/code/modules/workflow/xaruser/test_run.php
+                &lt;?php
+                sys::import('modules.workflow.class.config');
+                xarWorkflowConfig::setAutoload();
+                ...
+                EOT;
             throw new Exception($message);
         }
         return $vendor .'/autoload.php';

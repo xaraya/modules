@@ -48,10 +48,10 @@ class xarWorkflowLogger extends AbstractLogger
      * Interpolates context values into the message placeholders.
      * Source: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
      */
-    public function interpolate($message, array $context = array())
+    public function interpolate($message, array $context = [])
     {
         // build a replacement array with braces around the context keys
-        $replace = array();
+        $replace = [];
         foreach ($context as $key => $val) {
             // check that the value can be cast to string
             if (!is_array($val) && (!is_object($val) || method_exists($val, '__toString'))) {
