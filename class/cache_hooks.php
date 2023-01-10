@@ -169,9 +169,9 @@ class xarCache_Hooks extends xarObject
                 break;
             case 'dynamicdata':
                 // get the objectname
-                sys::import('modules.dynamicdata.class.objects.master');
-                $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
-                                                                    'itemtype' => $itemtype, ]);
+                sys::import('modules.dynamicdata.class.objects.descriptor');
+                $objectinfo = DataObjectDescriptor::getObjectID(['moduleid'  => $modid,
+                                                                 'itemtype' => $itemtype, ]);
                 // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarOutputCache::$pageCacheIsEnabled) {
@@ -527,9 +527,9 @@ class xarCache_Hooks extends xarObject
                 break;
             case 'dynamicdata':
                 // get the objectname
-                sys::import('modules.dynamicdata.class.objects.master');
-                $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
-                                                                    'itemtype' => $itemtype, ]);
+                sys::import('modules.dynamicdata.class.objects.descriptor');
+                $objectinfo = DataObjectDescriptor::getObjectID(['moduleid'  => $modid,
+                                                                 'itemtype' => $itemtype, ]);
                 // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
@@ -695,9 +695,9 @@ class xarCache_Hooks extends xarObject
                 break;
             case 'dynamicdata':
                 // get the objectname
-                sys::import('modules.dynamicdata.class.objects.master');
-                $objectinfo = DataObjectMaster::getObjectInfo(['moduleid' => $modid,
-                                                                    'itemtype' => $itemtype, ]);
+                sys::import('modules.dynamicdata.class.objects.descriptor');
+                $objectinfo = DataObjectDescriptor::getObjectID(['moduleid'  => $modid,
+                                                                 'itemtype' => $itemtype, ]);
                 // CHECKME: how do we know if we need to e.g. flush dyn_example pages here ?
                 // flush dynamicdata and objecturl pages
                 if (xarCache::$outputCacheIsEnabled && xarOutputCache::$pageCacheIsEnabled) {
