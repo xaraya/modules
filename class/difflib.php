@@ -47,7 +47,7 @@ class _DiffOp_Copy extends _DiffOp
 {
     public $type = 'copy';
 
-    public function _DiffOp_Copy($orig, $final = false)
+    public function __construct($orig, $final = false)
     {
         if (!is_array($final)) {
             $final = $orig;
@@ -66,7 +66,7 @@ class _DiffOp_Delete extends _DiffOp
 {
     public $type = 'delete';
 
-    public function _DiffOp_Delete($lines)
+    public function __construct($lines)
     {
         $this->orig = $lines;
         $this->final = false;
@@ -82,7 +82,7 @@ class _DiffOp_Add extends _DiffOp
 {
     public $type = 'add';
 
-    public function _DiffOp_Add($lines)
+    public function __construct($lines)
     {
         $this->final = $lines;
         $this->orig = false;
@@ -98,7 +98,7 @@ class _DiffOp_Change extends _DiffOp
 {
     public $type = 'change';
 
-    public function _DiffOp_Change($orig, $final)
+    public function __construct($orig, $final)
     {
         $this->orig = $orig;
         $this->final = $final;
@@ -257,7 +257,7 @@ class _DiffEngine
             // when the shortest sequence in X.
             $flip = true;
             [$xoff, $xlim, $yoff, $ylim]
-        = [ $yoff, $ylim, $xoff, $xlim];
+            = [ $yoff, $ylim, $xoff, $xlim];
         }
 
         if ($flip) {
@@ -292,7 +292,7 @@ class _DiffEngine
                 }
                 $matches = $ymatches[$line];
                 reset($matches);
-                while ([$junk, $y] = each($matches)) {
+                foreach ($matches as $junk => $y) {
                     if (empty($this->in_seq[$y])) {
                         $k = $this->_lcs_pos($y);
                         USE_ASSERTS && assert($k > 0);
@@ -300,7 +300,7 @@ class _DiffEngine
                         break;
                     }
                 }
-                while ([$junk, $y] = each($matches)) {
+                foreach ($matches as $junk => $y) {
                     if ($y > $this->seq[$k-1]) {
                         USE_ASSERTS && assert($y < $this->seq[$k]);
                         // Optimization: this is a common case:
@@ -371,14 +371,14 @@ class _DiffEngine
     {
         // Slide down the bottom initial diagonal.
         while ($xoff < $xlim && $yoff < $ylim
-               && $this->xv[$xoff] == $this->yv[$yoff]) {
+                   && $this->xv[$xoff] == $this->yv[$yoff]) {
             ++$xoff;
             ++$yoff;
         }
 
         // Slide up the top initial diagonal.
         while ($xlim > $xoff && $ylim > $yoff
-               && $this->xv[$xlim - 1] == $this->yv[$ylim - 1]) {
+                   && $this->xv[$xlim - 1] == $this->yv[$ylim - 1]) {
             --$xlim;
             --$ylim;
         }
@@ -391,7 +391,7 @@ class _DiffEngine
             //$nchunks = max(2,min(8,(int)$nchunks));
             $nchunks = min(7, $xlim - $xoff, $ylim - $yoff) + 1;
             [$lcs, $seps]
-        = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
+            = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
         }
 
         if ($lcs == 0) {
@@ -560,7 +560,7 @@ class Diff
      *        (Typically these are lines from a file.)
      * @param $to_lines array An array of strings.
      */
-    public function Diff($from_lines, $to_lines)
+    public function __construct($from_lines, $to_lines)
     {
         $eng = new _DiffEngine();
         $this->edits = $eng->diff($from_lines, $to_lines);
@@ -727,7 +727,7 @@ class MappedDiff extends Diff
      * @param $mapped_to_lines array This array should
      *  have the same number of elements as $to_lines.
      */
-    public function MappedDiff(
+    public function __construct(
         $from_lines,
         $to_lines,
         $mapped_from_lines,
@@ -736,7 +736,7 @@ class MappedDiff extends Diff
         assert(sizeof($from_lines) == sizeof($mapped_from_lines));
         assert(sizeof($to_lines) == sizeof($mapped_to_lines));
 
-        $this->Diff($mapped_from_lines, $mapped_to_lines);
+        parent::__construct($mapped_from_lines, $mapped_to_lines);
 
         $xi = $yi = 0;
         // Optimizing loop invariants:
@@ -943,7 +943,7 @@ class DiffFormatter
  */
 class UnifiedDiffFormatter extends DiffFormatter
 {
-    public function UnifiedDiffFormatter($context_lines = 4)
+    public function __construct($context_lines = 4)
     {
         $this->leading_context_lines = $context_lines;
         $this->trailing_context_lines = $context_lines;
