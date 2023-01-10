@@ -760,7 +760,7 @@ function workflow_delete()
         } // throw back
 
         // Drop the table and send exception if returns false.
-        $result = &$dbconn->Execute($query);
+        $result = $dbconn->Execute($query);
         if (!$result) {
             return false;
         }

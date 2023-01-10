@@ -23,43 +23,11 @@ function workflow_adminapi_deletehook($args)
 {
     extract($args);
 
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('object id', 'admin', 'deletehook', 'workflow');
-        throw new BadParameterException($vars, $msg);
-    }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('extrainfo', 'admin', 'deletehook', 'workflow');
-        throw new BadParameterException($vars, $msg);
-    }
-
-    // When called via hooks, the module name may be empty, so we get it from
-    // the current module
-    if (empty($extrainfo['module'])) {
-        $modname = xarMod::getName();
-    } else {
-        $modname = $extrainfo['module'];
-    }
-
-    $modid = xarMod::getRegID($modname);
-    if (empty($modid)) {
-        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'admin', 'deletehook', 'workflow');
-        throw new BadParameterException($vars, $msg);
-    }
-
-    if (!empty($extrainfo['itemtype'])) {
-        $itemtype = $extrainfo['itemtype'];
-    } else {
-        $itemtype = 0;
-    }
-
-    if (!empty($extrainfo['itemid'])) {
-        $itemid = $extrainfo['itemid'];
-    } else {
-        $itemid = $objectid;
-    }
+    // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
+    $modname = $extrainfo['module'];
+    $itemtype = $extrainfo['itemtype'];
+    $itemid = $extrainfo['itemid'];
+    $modid = $extrainfo['module_id'];
     if (empty($itemid)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
         $vars = array('item id', 'admin', 'deletehook', 'workflow');

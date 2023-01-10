@@ -23,38 +23,11 @@ function workflow_adminapi_createhook($args)
 {
     extract($args);
 
-    if (!isset($objectid) || !is_numeric($objectid)) {
-        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('object id', 'admin', 'createhook', 'workflow');
-        throw new BadParameterException($vars, $msg);
-    }
-    if (!isset($extrainfo) || !is_array($extrainfo)) {
-        $extrainfo = [];
-    }
-
-    // When called via hooks, modname wil be empty, but we get it from the
-    // extrainfo or the current module
-    if (empty($modname)) {
-        if (!empty($extrainfo['module'])) {
-            $modname = $extrainfo['module'];
-        } else {
-            $modname = xarMod::getName();
-        }
-    }
-    $modid = xarMod::getRegID($modname);
-    if (empty($modid)) {
-        $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
-        $vars = array('module name', 'admin', 'createhook', 'workflow');
-        throw new BadParameterException($vars, $msg);
-    }
-
-    if (!isset($itemtype) || !is_numeric($itemtype)) {
-        if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
-            $itemtype = $extrainfo['itemtype'];
-        } else {
-            $itemtype = 0;
-        }
-    }
+    // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
+    $modname = $extrainfo['module'];
+    $itemtype = $extrainfo['itemtype'];
+    $itemid = $extrainfo['itemid'];
+    $modid = $extrainfo['module_id'];
 
     // see if we need to start some workflow activity here
     if (!empty($itemtype)) {

@@ -15,6 +15,13 @@
 function workflow_user_displayhook($args)
 {
     //return var_export($args, true);
+    extract($args);
+
+    // everything is already validated in HookSubject, except possible empty objectid/itemid for create/display
+    $modname = $extrainfo['module'];
+    $itemtype = $extrainfo['itemtype'];
+    $itemid = $extrainfo['itemid'];
+    $modid = $extrainfo['module_id'];
 
     // Symfony Workflow transition
     //return 'Workflow user displayhook was here for Symfony Workflow transition...';
