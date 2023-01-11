@@ -16,6 +16,7 @@ sys::import('modules.workflow.class.config');
 sys::import('modules.workflow.class.eventsubscriber');
 sys::import('modules.workflow.class.logger');
 
+//use Psr\Log\LoggerInterface;
 use Symfony\Component\Workflow\Definition;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
 use Symfony\Component\Workflow\Dumper\StateMachineGraphvizDumper;

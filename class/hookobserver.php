@@ -22,6 +22,12 @@ class xarWorkflowHookObserver extends HookObserver implements ixarEventObserver
     public $type   = 'admin';
     public $func   = 'OVERRIDE';
 
+    public function __construct(array $args = [])
+    {
+        // nothing special to do here for now - maybe later...
+        parent::__construct($args);
+    }
+
     public function notify(ixarEventSubject $subject)
     {
         // @checkme Xaraya only fires one event per subject type, so subjectName = subjectType here

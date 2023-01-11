@@ -61,7 +61,7 @@ function workflow_userapi_run_transition($args)
     sys::import('modules.workflow.class.logger');
     sys::import('modules.workflow.class.process');
     sys::import('modules.workflow.class.subject');
-    xarWorkflowProcess::setLogger(new xarWorkflowLogger());
+    //xarWorkflowProcess::setLogger(new xarWorkflowLogger());
 
     $workflow = xarWorkflowProcess::getProcess($workflowName);
     $subject = new xarWorkflowSubject($objectName, (int) $itemId);
