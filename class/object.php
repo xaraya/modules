@@ -12,6 +12,11 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+namespace Xaraya\Modules\Workflow;
+
+use DataObject;
+use sys;
+
 sys::import('modules.dynamicdata.class.objects.base');
 
 class WorkflowObject extends DataObject

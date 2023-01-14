@@ -598,6 +598,19 @@ function workflow_upgrade($oldversion)
 
         case '1.6.1':
             // Code to upgrade from version 1.6.1 goes here
+            sys::import('modules.dynamicdata.class.objects.base');
+            $objectinfo = DataObjectDescriptor::getObjectID(['name' => 'workflow_activities']);
+            $object = DataObjectMaster::getObject(['name' => 'objects', 'itemid' => $objectinfo['objectid']]);
+            $itemid = $object->getItem();
+            if (empty($itemid) || $itemid != $objectinfo['objectid']) {
+                throw new Exception("Invalid item id $itemid");
+            }
+            // switch to fully qualified class name when using namespace
+            $object->updateItem(['class' => 'Xaraya\Modules\Workflow\ActivityObject']);
+
+            // no break
+        case '1.7.0':
+            // Code to upgrade from version 1.7.0 goes here
 
         case '2.0.0':
             break;

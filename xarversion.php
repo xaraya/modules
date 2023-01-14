@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'workflow';
 $modversion['id']             = '188';
-$modversion['version']        = '1.6.1';
+$modversion['version']        = '1.7.0';
 $modversion['displayname']    = xarML('Workflow');
 $modversion['description']    = 'Workflow Module based on the Galaxia Workflow Engine';
 $modversion['credits']        = '';
