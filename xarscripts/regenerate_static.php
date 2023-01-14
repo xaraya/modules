@@ -53,5 +53,5 @@ sys::import('xaraya.core');
 // Load the core with all optional systems loaded
 xarCore::xarInit(xarCore::SYSTEM_ALL);
 
-sys::import('modules.xarcachemanager.class.cache_hooks');
+sys::import('modules.xarcachemanager.class.hooks');
 xarCache_Hooks::regenstatic();

@@ -10,7 +10,7 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.cache_manager');
+sys::import('modules.xarcachemanager.class.manager');
 
 /**
  * get configuration of module caching for all modules

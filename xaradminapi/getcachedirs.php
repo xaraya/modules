@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb
  */
-sys::import('modules.xarcachemanager.class.cache_manager');
+sys::import('modules.xarcachemanager.class.manager');
 
 /**
  * construct an array of output cache subdirectories

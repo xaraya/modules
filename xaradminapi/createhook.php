@@ -10,7 +10,7 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.cache_hooks');
+sys::import('modules.xarcachemanager.class.hooks');
 
 /**
  * flush the appropriate cache when a module item is created- hook for ('item','create','API')

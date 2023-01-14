@@ -190,7 +190,7 @@ function xarcachemanager_upgrade($oldversion)
         return false;
     }
 
-    sys::import('modules.xarcachemanager.class.cache_manager');
+    sys::import('modules.xarcachemanager.class.manager');
     // parse the current distribution config file so we have default values
     include_once($defaultConfigFile);
 

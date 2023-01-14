@@ -12,7 +12,7 @@
  *
  * @author mikespub <mikespub@xaraya.com>
 **/
-sys::import('modules.xarcachemanager.class.cache_manager');
+sys::import('modules.xarcachemanager.class.manager');
 
 class xarCache_Hooks extends xarObject
 {
