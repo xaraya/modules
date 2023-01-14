@@ -35,7 +35,7 @@ use sys;
 
 sys::import('modules.xarcachemanager.class.manager');
 
-class xarCache_Hooks extends xarObject
+class CacheHooks extends xarObject
 {
     public static function init(array $args = [])
     {
@@ -61,7 +61,7 @@ class xarCache_Hooks extends xarObject
         xarPageCache::flushCached('static');
 
         $configKeys = ['Page.SessionLess'];
-        $sessionlessurls = xarCache_Manager::get_config(
+        $sessionlessurls = CacheManager::get_config(
             ['keys' => $configKeys, 'from' => 'file', 'viahook' => true]
         );
 
@@ -383,7 +383,7 @@ class xarCache_Hooks extends xarObject
             }
         }
         if (!empty($blockCacheExpireTime)) {
-            $blockCacheExpireTime = xarCache_Manager::convertseconds(
+            $blockCacheExpireTime = CacheManager::convertseconds(
                 ['starttime' => $blockCacheExpireTime,
                                                          'direction' => 'from', ]
             );
@@ -486,7 +486,7 @@ class xarCache_Hooks extends xarObject
                         $cacheexpire = null;
                     }
                     if (!empty($cacheexpire)) {
-                        $cacheexpire = xarCache_Manager::convertseconds(
+                        $cacheexpire = CacheManager::convertseconds(
                             ['starttime' => $cacheexpire,
                                   'direction' => 'to', ]
                         );

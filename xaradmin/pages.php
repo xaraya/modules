@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * configure page caching (TODO)
@@ -34,7 +34,7 @@ function xarcachemanager_admin_pages($args)
     // Get the output cache directory
     $outputCacheDir = xarCache::getOutputCacheDir();
 
-    $cachingConfiguration = xarCache_Manager::get_config(
+    $cachingConfiguration = CacheManager::get_config(
         ['from' => 'file']
     );
 
@@ -100,7 +100,7 @@ function xarcachemanager_admin_pages($args)
         if (empty($autocache['period'])) {
             $autocache['period'] = 0;
         }
-        $autocache['period'] = xarCache_Manager::convertseconds(
+        $autocache['period'] = CacheManager::convertseconds(
             ['starttime' => $autocache['period'],
                                                    'direction' => 'to', ]
         );
@@ -151,7 +151,7 @@ function xarcachemanager_admin_pages($args)
         $configSettings['AutoCache.Exclude']   = $excludelist;
         $configSettings['AutoCache.KeepStats'] = $autocache['keepstats'];
 
-        xarCache_Manager::save_config(
+        CacheManager::save_config(
             ['configSettings' => $configSettings]
         );
 
@@ -210,7 +210,7 @@ function xarcachemanager_admin_pages($args)
     if (!isset($data['settings']['AutoCachePeriod'])) {
         $data['settings']['AutoCachePeriod'] = 0;
     }
-    $data['settings']['AutoCachePeriod'] = xarCache_Manager::convertseconds(
+    $data['settings']['AutoCachePeriod'] = CacheManager::convertseconds(
         ['starttime' => $data['settings']['AutoCachePeriod'],
                                                      'direction' => 'from', ]
     );

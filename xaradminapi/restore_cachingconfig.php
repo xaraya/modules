@@ -11,18 +11,18 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Restore the caching configuration file
  *
  * @author jsb <jsb@xaraya.com>
  * @access public
- * @uses xarCache_Manager::restore_config()
+ * @uses CacheManager::restore_config()
  * @throws FUNCTION_FAILED
  * @return boolean
  */
 function xarcachemanager_adminapi_restore_cachingconfig()
 {
-    return xarCache_Manager::restore_config();
+    return CacheManager::restore_config();
 }

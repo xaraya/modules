@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Update the configuration parameters of the module based on data from the modification form
@@ -210,19 +210,19 @@ function xarcachemanager_admin_updateconfig()
     $objectsizelimit = (intval($objectsizelimit * 1048576));
 
     //turn hh:mm:ss back into seconds
-    $pageexpiretime = xarCache_Manager::convertseconds(
+    $pageexpiretime = CacheManager::convertseconds(
         ['starttime' => $pageexpiretime,
                                         'direction' => 'to', ]
     );
-    $blockexpiretime = xarCache_Manager::convertseconds(
+    $blockexpiretime = CacheManager::convertseconds(
         ['starttime' => $blockexpiretime,
                                        'direction' => 'to', ]
     );
-    $moduleexpiretime = xarCache_Manager::convertseconds(
+    $moduleexpiretime = CacheManager::convertseconds(
         ['starttime' => $moduleexpiretime,
                                        'direction' => 'to', ]
     );
-    $objectexpiretime = xarCache_Manager::convertseconds(
+    $objectexpiretime = CacheManager::convertseconds(
         ['starttime' => $objectexpiretime,
                                        'direction' => 'to', ]
     );
@@ -280,7 +280,7 @@ function xarcachemanager_admin_updateconfig()
     $configSettings['Object.CacheMethods'] = $objectmethods;
     xarModVars::set('xarcachemanager', 'DefaultObjectCacheMethods', serialize($objectmethods));
 
-    xarCache_Manager::save_config(
+    CacheManager::save_config(
         ['configSettings' => $configSettings,
                         'cachingConfigFile' => $cachingConfigFile, ]
     );

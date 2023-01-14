@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Show cache statistics
@@ -61,7 +61,7 @@ function xarcachemanager_admin_stats($args)
     $data['itemsperpage'] = $numitems;
 
     // get the caching config settings from the config file
-    $data['settings'] = xarCache_Manager::get_config(
+    $data['settings'] = CacheManager::get_config(
         ['from' => 'file', 'tpl_prep' => true]
     );
 

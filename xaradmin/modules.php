@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * configure module caching
@@ -66,7 +66,7 @@ function xarcachemanager_admin_modules($args)
                     $newmodules[$name][$func]['params'] = '';
                 }
                 if (!empty($expire)) {
-                    $expire = xarCache_Manager::convertseconds(
+                    $expire = CacheManager::convertseconds(
                         ['starttime' => $expire,
                                                     'direction' => 'to', ]
                     );

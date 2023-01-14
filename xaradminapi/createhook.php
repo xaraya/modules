@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.hooks');
-use Xaraya\Modules\CacheManager\xarCache_Hooks;
+use Xaraya\Modules\CacheManager\CacheHooks;
 
 /**
  * flush the appropriate cache when a module item is created- hook for ('item','create','API')
  *
- * @uses xarCache_Hooks::createhook()
+ * @uses CacheHooks::createhook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information
@@ -26,5 +26,5 @@ use Xaraya\Modules\CacheManager\xarCache_Hooks;
  */
 function xarcachemanager_adminapi_createhook($args)
 {
-    return xarCache_Hooks::createhook($args);
+    return CacheHooks::createhook($args);
 }

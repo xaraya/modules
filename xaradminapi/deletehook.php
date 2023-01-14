@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.hooks');
-use Xaraya\Modules\CacheManager\xarCache_Hooks;
+use Xaraya\Modules\CacheManager\CacheHooks;
 
 /**
  * delete entry for a module item - hook for ('item','delete','API')
  *
- * @uses xarCache_Hooks::deletehook()
+ * @uses CacheHooks::deletehook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information
@@ -26,5 +26,5 @@ use Xaraya\Modules\CacheManager\xarCache_Hooks;
  */
 function xarcachemanager_adminapi_deletehook($args)
 {
-    return xarCache_Hooks::deletehook($args);
+    return CacheHooks::deletehook($args);
 }

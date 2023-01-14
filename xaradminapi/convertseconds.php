@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Update the configuration parameters of the module based on data from the modification form
@@ -19,7 +19,7 @@ use Xaraya\Modules\CacheManager\xarCache_Manager;
  * @author Jon Haworth
  * @author jsb <jsb@xaraya.com>
  * @access public
- * @uses xarCache_Manager::convertseconds()
+ * @uses CacheManager::convertseconds()
  * @param string $args['starttime'] (seconds or hh:mm:ss)
  * @param string $args['direction'] (from or to)
  * @return string $convertedtime (hh:mm:ss or seconds)
@@ -28,5 +28,5 @@ use Xaraya\Modules\CacheManager\xarCache_Manager;
  */
 function xarcachemanager_adminapi_convertseconds($args)
 {
-    return xarCache_Manager::convertseconds($args);
+    return CacheManager::convertseconds($args);
 }

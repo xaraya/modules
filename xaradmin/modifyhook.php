@@ -11,12 +11,12 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.hooks');
-use Xaraya\Modules\CacheManager\xarCache_Hooks;
+use Xaraya\Modules\CacheManager\CacheHooks;
 
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')
  *
- * @uses xarCache_Hooks::modifyhook()
+ * @uses CacheHooks::modifyhook()
  * @param array $args with mandatory arguments:
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information
@@ -25,5 +25,5 @@ use Xaraya\Modules\CacheManager\xarCache_Hooks;
  */
 function xarcachemanager_admin_modifyhook($args)
 {
-    return xarCache_Hooks::modifyhook($args);
+    return CacheHooks::modifyhook($args);
 }

@@ -11,16 +11,16 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.hooks');
-use Xaraya\Modules\CacheManager\xarCache_Hooks;
+use Xaraya\Modules\CacheManager\CacheHooks;
 
 /**
  * regenerate the page output cache of URLs in the session-less list
  * @author jsb
  *
- * @uses xarCache_Hooks::regenstatic()
+ * @uses CacheHooks::regenstatic()
  * @return void
  */
 function xarcachemanager_adminapi_regenstatic($nolimit = null)
 {
-    xarCache_Hooks::regenstatic($nolimit);
+    CacheHooks::regenstatic($nolimit);
 }

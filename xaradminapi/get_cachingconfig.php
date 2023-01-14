@@ -11,14 +11,14 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Gets caching configuration settings in the config file or modVars
  *
  * @author jsb <jsb@xaraya.com>
  * @access public
- * @uses xarCache_Manager::get_config()
+ * @uses CacheManager::get_config()
  * @param string $args['from'] source of configuration to get - file or db
  * @param array $args['keys'] array of config labels and values
  * @param boolean $args['tpl_prep'] prep the config for use in templates
@@ -28,5 +28,5 @@ use Xaraya\Modules\CacheManager\xarCache_Manager;
  */
 function xarcachemanager_adminapi_get_cachingconfig($args)
 {
-    return xarCache_Manager::get_config($args);
+    return CacheManager::get_config($args);
 }

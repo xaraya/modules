@@ -24,7 +24,7 @@ use xarMLS;
 use Exception;
 use sys;
 
-class xarCache_Manager extends xarObject
+class CacheManager extends xarObject
 {
     public static function init(array $args = [])
     {

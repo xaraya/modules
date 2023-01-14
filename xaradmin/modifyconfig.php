@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Prep the configuration parameters of the module for the modification form
@@ -73,7 +73,7 @@ function xarcachemanager_admin_modifyconfig()
     $data['localeupdatelink'] = xarController::URL('base', 'admin', 'modifyconfig', ['tab'=>'locales']);
 
     // get the caching config settings from the config file
-    $data['settings'] = xarCache_Manager::get_config(
+    $data['settings'] = CacheManager::get_config(
         ['from' => 'file', 'tpl_prep' => true]
     );
 
@@ -166,19 +166,19 @@ function xarcachemanager_admin_modifyconfig()
     $data['settings']['ObjectSizeLimit'] /= 1048576;
 
     // reformat seconds as hh:mm:ss
-    $data['settings']['PageTimeExpiration'] = xarCache_Manager::convertseconds(
+    $data['settings']['PageTimeExpiration'] = CacheManager::convertseconds(
         ['starttime' => $data['settings']['PageTimeExpiration'],
                                                                    'direction' => 'from', ]
     );
-    $data['settings']['BlockTimeExpiration'] = xarCache_Manager::convertseconds(
+    $data['settings']['BlockTimeExpiration'] = CacheManager::convertseconds(
         ['starttime' => $data['settings']['BlockTimeExpiration'],
                                                                    'direction' => 'from', ]
     );
-    $data['settings']['ModuleTimeExpiration'] = xarCache_Manager::convertseconds(
+    $data['settings']['ModuleTimeExpiration'] = CacheManager::convertseconds(
         ['starttime' => $data['settings']['ModuleTimeExpiration'],
                                                                    'direction' => 'from', ]
     );
-    $data['settings']['ObjectTimeExpiration'] = xarCache_Manager::convertseconds(
+    $data['settings']['ObjectTimeExpiration'] = CacheManager::convertseconds(
         ['starttime' => $data['settings']['ObjectTimeExpiration'],
                                                                    'direction' => 'from', ]
     );

@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb | mikespub
  */
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * initialise the xarcachemanager module
@@ -193,7 +193,7 @@ function xarcachemanager_upgrade($oldversion)
     $cachingConfiguration = [];
 
     sys::import('modules.xarcachemanager.class.manager');
-    //use Xaraya\Modules\CacheManager\xarCache_Manager;
+    //use Xaraya\Modules\CacheManager\CacheManager;
     // parse the current distribution config file so we have default values
     include_once($defaultConfigFile);
 
@@ -204,7 +204,7 @@ function xarcachemanager_upgrade($oldversion)
             // Do conversion of MB to bytes in config file
             include($cachingConfigFile);
             $cachingConfiguration['Output.SizeLimit'] = $cachingConfiguration['Output.SizeLimit'] * 1048576;
-            xarCache_Manager::save_config(
+            CacheManager::save_config(
                 ['configSettings' => $cachingConfiguration,
                       'cachingConfigFile' => $cachingConfigFile, ]
             );
@@ -214,7 +214,7 @@ function xarcachemanager_upgrade($oldversion)
             // Code to upgrade from the 0.2 version (cleaned-up page level caching)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarCache_Manager::get_config(
+                $configSettings = CacheManager::get_config(
                     ['from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile, ]
                 );
@@ -223,7 +223,7 @@ function xarcachemanager_upgrade($oldversion)
                 }
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
-                xarCache_Manager::save_config(
+                CacheManager::save_config(
                     ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
                 );
@@ -246,13 +246,13 @@ function xarcachemanager_upgrade($oldversion)
             // Code to upgrade from the 0.3.0
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarCache_Manager::get_config(
+                $configSettings = CacheManager::get_config(
                     ['from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
-                xarCache_Manager::save_config(
+                CacheManager::save_config(
                     ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
                 );
@@ -272,13 +272,13 @@ function xarcachemanager_upgrade($oldversion)
             // Code to upgrade from the 0.3.1 version (base block level caching)
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarCache_Manager::get_config(
+                $configSettings = CacheManager::get_config(
                     ['from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
-                xarCache_Manager::save_config(
+                CacheManager::save_config(
                     ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
                 );
@@ -302,13 +302,13 @@ function xarcachemanager_upgrade($oldversion)
             }
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarCache_Manager::get_config(
+                $configSettings = CacheManager::get_config(
                     ['from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
-                xarCache_Manager::save_config(
+                CacheManager::save_config(
                     ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
                 );
@@ -323,36 +323,36 @@ function xarcachemanager_upgrade($oldversion)
 
             // Bring the config file up to current version
             if (file_exists($cachingConfigFile)) {
-                $configSettings = xarCache_Manager::get_config(
+                $configSettings = CacheManager::get_config(
                     ['from' => 'file',
                                                       'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 @unlink($cachingConfigFile);
                 copy($defaultConfigFile, $cachingConfigFile);
-                xarCache_Manager::save_config(
+                CacheManager::save_config(
                     ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
                 );
             } else {
                 // as of version 0.3.3 we can restore the config from modvars
-                $configSettings = xarCache_Manager::get_config(
+                $configSettings = CacheManager::get_config(
                     ['from' => 'db',
                                                       'cachingConfigFile' => $cachingConfigFile, ]
                 );
                 copy($defaultConfigFile, $cachingConfigFile);
-                xarCache_Manager::save_config(
+                CacheManager::save_config(
                     ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
                 );
             }
             // no break
         case '0.3.4':
-            $configSettings = xarCache_Manager::get_config(
+            $configSettings = CacheManager::get_config(
                 ['from' => 'db',
                                                   'cachingConfigFile' => $cachingConfigFile, ]
             );
             copy($defaultConfigFile, $cachingConfigFile);
-            xarCache_Manager::save_config(
+            CacheManager::save_config(
                 ['configSettings' => $configSettings,
                           'cachingConfigFile' => $cachingConfigFile, ]
             );

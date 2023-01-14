@@ -19,7 +19,7 @@ use xarObject;
 use xarMod;
 use xarServer;
 
-class xarCache_Scheduler extends xarObject
+class CacheScheduler extends xarObject
 {
     public static function init(array $args = [])
     {

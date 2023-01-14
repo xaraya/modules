@@ -11,7 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * @author jsb
@@ -29,7 +29,7 @@ function xarcachemanager_adminapi_getcachetypes()
     $typelist = ['page', 'block', 'module', 'object', 'variable'];
 
     // get the caching config settings from the config file
-    $settings = xarCache_Manager::get_config(
+    $settings = CacheManager::get_config(
         ['from' => 'file']
     );
 

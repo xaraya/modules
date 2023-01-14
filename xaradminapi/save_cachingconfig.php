@@ -11,18 +11,18 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\xarCache_Manager;
+use Xaraya\Modules\CacheManager\CacheManager;
 
 /**
  * Save configuration settings in the config file and modVars
  *
  * @author jsb <jsb@xaraya.com>
  * @access public
- * @uses xarCache_Manager::save_config()
+ * @uses CacheManager::save_config()
  * @param $args['config'] array of config labels and values
  * @throws FUNCTION_FAILED
  */
 function xarcachemanager_adminapi_save_cachingconfig($args)
 {
-    return xarCache_Manager::save_config($args);
+    return CacheManager::save_config($args);
 }
