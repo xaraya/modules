@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  * @author jsb | mikespub
  */
+use Xaraya\Modules\CacheManager\xarCache_Manager;
 
 /**
  * initialise the xarcachemanager module
@@ -189,8 +190,10 @@ function xarcachemanager_upgrade($oldversion)
         throw new Exception($msg);
         return false;
     }
+    $cachingConfiguration = [];
 
     sys::import('modules.xarcachemanager.class.manager');
+    //use Xaraya\Modules\CacheManager\xarCache_Manager;
     // parse the current distribution config file so we have default values
     include_once($defaultConfigFile);
 

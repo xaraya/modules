@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
+use Xaraya\Modules\CacheManager\xarCache_Manager;
 
 /**
  * Save configuration settings in the config file and modVars

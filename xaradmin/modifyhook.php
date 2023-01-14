@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.hooks');
+use Xaraya\Modules\CacheManager\xarCache_Hooks;
 
 /**
  * modify an entry for a module item - hook for ('item','modify','GUI')

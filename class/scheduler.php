@@ -13,6 +13,12 @@
  * @author mikespub <mikespub@xaraya.com>
 **/
 
+namespace Xaraya\Modules\CacheManager;
+
+use xarObject;
+use xarMod;
+use xarServer;
+
 class xarCache_Scheduler extends xarObject
 {
     public static function init(array $args = [])

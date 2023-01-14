@@ -12,6 +12,27 @@
  *
  * @author mikespub <mikespub@xaraya.com>
 **/
+
+namespace Xaraya\Modules\CacheManager;
+
+use xarObject;
+use xarSecurity;
+use xarCache;
+use xarOutputCache;
+use xarPageCache;
+use xarModuleCache;
+use xarBlockCache;
+use xarObjectCache;
+use xarVar;
+use xarMod;
+use xarModVars;
+use xarDB;
+use xarMLS;
+use xarTpl;
+use DataObjectDescriptor;
+use Exception;
+use sys;
+
 sys::import('modules.xarcachemanager.class.manager');
 
 class xarCache_Hooks extends xarObject

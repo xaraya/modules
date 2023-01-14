@@ -11,6 +11,7 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.hooks');
+use Xaraya\Modules\CacheManager\xarCache_Hooks;
 
 /**
  * regenerate the page output cache of URLs in the session-less list

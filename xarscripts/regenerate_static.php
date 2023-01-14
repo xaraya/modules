@@ -54,4 +54,6 @@ sys::import('xaraya.core');
 xarCore::xarInit(xarCore::SYSTEM_ALL);
 
 sys::import('modules.xarcachemanager.class.hooks');
+use Xaraya\Modules\CacheManager\xarCache_Hooks;
+
 xarCache_Hooks::regenstatic();

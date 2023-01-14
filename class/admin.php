@@ -13,6 +13,11 @@
  * @author mikespub <mikespub@xaraya.com>
 **/
 
+namespace Xaraya\Modules\CacheManager;
+
+use xarObject;
+use xarMod;
+
 class xarCache_Admin extends xarObject
 {
     public static function init(array $args = [])
