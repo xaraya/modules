@@ -612,6 +612,9 @@ function workflow_upgrade($oldversion)
         case '1.7.0':
             // Code to upgrade from version 1.7.0 goes here
 
+        case '1.7.1':
+            // Code to upgrade from version 1.7.1 goes here
+
         case '2.0.0':
             break;
     }

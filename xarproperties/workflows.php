@@ -12,6 +12,16 @@
  * @author Workflow Module Development Team
  */
 
+namespace Xaraya\Modules\Workflow;
+
+use TextAreaProperty;
+use ObjectDescriptor;
+use xarVar;
+use sys;
+// @checkme remove once moved to the same namespace
+use xarWorkflowMarkingTrait;
+use xarWorkflowTransitionTrait;
+
 sys::import('modules.base.xarproperties.textarea');
 sys::import('modules.workflow.class.traits.markingtrait');
 sys::import('modules.workflow.class.traits.transitiontrait');
