@@ -21,13 +21,20 @@ sys::import('modules.dynamicdata.class.objects.base');
 
 class WorkflowObject extends DataObject
 {
-    protected function normalize($name, $version = null)
+    protected static function normalize($name, $version = null)
     {
         $name = str_replace(" ", "_", $name);
         $name = preg_replace("/[^0-9A-Za-z\_]/", '', $name);
         return $name;
     }
 
+    // @checkme this contains the name of the dataobject here - probably not what you want
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    // @checkme do we even need to support this in activity code or templates?
     public function getNormalizedName()
     {
         return self::normalize($this->getName());

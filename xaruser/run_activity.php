@@ -233,7 +233,7 @@ function workflow_user_run_activity()
 
             // If we are not testing, then display the output in its own page
             // Otherwise display it as part of this page
-            if (xarSession::getVar('role_id') != xarModvars::get('roles', 'admin')) {
+            if (xarSession::getVar('role_id') != xarModVars::get('roles', 'admin')) {
                 return $output;
             }
         } elseif (isset($_REQUEST['auto']) && $activity->isInteractive()) {
