@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'xarcachemanager';
 $modversion['id']             = '1652';
-$modversion['version']        = '2.4.4';
+$modversion['version']        = '2.4.5';
 $modversion['displayname']    = xarMLS::translate('xarCacheManager');
 $modversion['description']    = 'Manage the output cache system of Xaraya';
 $modversion['credits']        = '';
