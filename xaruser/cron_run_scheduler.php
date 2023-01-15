@@ -33,8 +33,8 @@ function getUrlContent($url, $loop = 0, $delay = 0)
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 
         $file_contents = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($httpCode['http_code'] < "300") {
+        $httpCode = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        if ($httpCode < 300) {
             if ($file_contents != '' || $loop == 0) {
                 break;
             }

@@ -59,7 +59,7 @@ function scheduler_admin_test()
         $job->properties['function']->value
     );
 
-    // Go back to the view page
-    xarController::redirect(xarController::URL('scheduler', 'admin', 'view'));
-    return true;
+    // Show the result
+    $data['result'] = $result;
+    return $data;
 }
