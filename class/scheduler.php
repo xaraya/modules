@@ -35,6 +35,9 @@ class CacheScheduler extends xarObject
     public static function prefetch($args)
     {
         extract($args);
+        $method = __METHOD__;
+        $logs = [];
+        $logs[] = "$method start";
 
         // default start page is the homepage
         if (empty($starturl)) {
@@ -61,6 +64,7 @@ class CacheScheduler extends xarObject
             foreach ($todo as $url) {
                 $seen[$url] = 1;
 
+                $logs[] = "$method get $url";
                 // get the current page
                 $page = xarMod::apiFunc(
                     'base',
@@ -96,7 +100,8 @@ class CacheScheduler extends xarObject
             }
             $level++;
         }
+        $logs[] = "$method stop";
 
-        return true;
+        return implode("\n", $logs);
     }
 }

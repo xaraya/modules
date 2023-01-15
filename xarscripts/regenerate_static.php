@@ -56,4 +56,11 @@ xarCore::xarInit(xarCore::SYSTEM_ALL);
 sys::import('modules.xarcachemanager.class.hooks');
 use Xaraya\Modules\CacheManager\CacheHooks;
 
-CacheHooks::regenstatic();
+$result = CacheHooks::regenstatic();
+if (empty($result)) {
+    $result = "Done";
+} elseif (is_array($result)) {
+    $result = implode("\n", $result);
+}
+echo $result;
+echo "\n";

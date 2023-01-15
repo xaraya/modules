@@ -49,12 +49,17 @@ class CacheHooks extends xarObject
      */
     public static function regenstatic($nolimit = null)
     {
+        $method = __METHOD__;
+        $logs = [];
+        $logs[] = "$method start";
         $urls = [];
         $outputCacheDir = sys::varpath() . '/cache/output/';
 
         // make sure output caching is really enabled, and that we are caching pages
         if (!xarCache::$outputCacheIsEnabled || !xarOutputCache::$pageCacheIsEnabled) {
-            return;
+            $logs[] = "$method no page caching";
+            $logs[] = "$method stop";
+            return implode("\n", $logs);
         }
 
         // flush the static pages
@@ -78,6 +83,7 @@ class CacheHooks extends xarObject
         }
 
         foreach ($urls as $url) {
+            $logs[] = "$method get $url";
             // Make sure the url isn't empty before calling getfile()
             if (strlen(trim($url))) {
                 xarMod::apiFunc('base', 'user', 'getfile', ['url' => $url, 'superrors' => true]);
@@ -86,8 +92,9 @@ class CacheHooks extends xarObject
                 break;
             }
         }
+        $logs[] = "$method stop";
 
-        return;
+        return implode("\n", $logs);
     }
 
     /**
