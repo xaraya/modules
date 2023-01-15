@@ -6,7 +6,7 @@
  * @deprecated No longer used by publications and replaced by lib/Diff.php
  */
 
-namespace Xaraya\Modules\Publications;
+namespace Xaraya\Modules\Publications\DiffLib;
 
 //Psspl:Define the character sequences
 
