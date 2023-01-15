@@ -57,7 +57,7 @@ function workflow_userapi_getmenulinks()
             'test'
         ),
                               'title' => xarML('View your workflow test'),
-                              'label' => xarML('Test'), ];
+                              'label' => xarML('Test New Workflows'), ];
     }
 
     return $menulinks;

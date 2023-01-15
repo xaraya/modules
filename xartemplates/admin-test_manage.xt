@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+  <div class="xar-mod-head">
+    <span class="xar-mod-title">
+      Workflow Administration
+    </span>
+  </div>
+  <div class="xar-mod-body">
+    <xar:template module="workflow" type="module" file="admin-menu"/>
+    <h2>Manage New Workflows</h2>
+    <p>
+      Try out the test <a href="#xarServer::getModuleURL('workflow', 'user', 'test')#">user interface</a>
+    </p>
+    <xar:template file="test_workflowlist"/>
+    <!-- Show a courtesy footer -->
+    <xar:template file="test_footer"/>
+  </div>
+</xar:template>

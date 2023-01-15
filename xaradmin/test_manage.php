@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow Module Fake Marking
+ * Workflow Module
  *
  * @package modules
  * @copyright (C) copyright-placeholder
@@ -11,11 +11,11 @@
  * @link http://xaraya.com/index.php/release/188.html
  * @author Workflow Module Development Team
  */
-
-namespace Xaraya\Modules\Workflow;
-
-use xarObject;
-
-class xarWorkflowMarking extends xarObject
+/**
+ * Test manage Symfony Workflows
+ */
+function workflow_admin_test_manage()
 {
+    $data=[];
+    return $data;
 }

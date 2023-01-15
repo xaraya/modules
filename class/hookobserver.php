@@ -12,6 +12,7 @@
  * @author Workflow Module Development Team
  */
 
+//namespace Xaraya\Modules\Workflow\HookObservers;  // not supported by events.php yet
 sys::import('xaraya.structures.hooks.observer');
 sys::import('xaraya.structures.hooks.apisubject');
 sys::import('xaraya.structures.hooks.guisubject');
@@ -36,14 +37,14 @@ class xarWorkflowHookObserver extends HookObserver implements ixarEventObserver
 
         // @todo pass along the event to the workflow dispatcher(s) where needed
 
-        // for gui hooks the subject expects a string to display, return the display gui func
-        if ($subject instanceof GuiHookSubject) {
-            return $this->getGuiResult($subject, $subjectName);
-        }
-
         // for api hooks the subject expects an array of extrainfo
         if ($subject instanceof ApiHookSubject) {
             return $this->getApiResult($subject, $subjectName);
+        }
+
+        // for gui hooks the subject expects a string to display, return the display gui func
+        if ($subject instanceof GuiHookSubject) {
+            return $this->getGuiResult($subject, $subjectName);
         }
 
         throw new Exception('Unknown HookSubject class: ' . $subject::class);

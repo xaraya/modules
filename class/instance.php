@@ -12,6 +12,10 @@
  * @author Workflow Module Development Team
  */
 
+namespace Xaraya\Modules\Workflow;
+
+use xarObject;
+
 class xarWorkflowInstance extends xarObject
 {
 }

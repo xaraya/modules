@@ -59,5 +59,19 @@
             Instances
           </a>
         </li>
+
+        <xar:if condition="$func eq 'test'">
+          <xar:set name="tabclass">'xar-tab-active'</xar:set>
+          <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+        <xar:else />
+          <xar:set name="tabclass">'xar-tab'</xar:set>
+          <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+        </xar:if>
+        <li class="#$tabclass#">
+          <a href="#xarController::URL('workflow','user','test')#" class="#$linkclass#">
+            <xar:img scope="theme" file="icons/move.png" class="xar-icon" alt="test"/>
+            Test New Workflows
+          </a>
+        </li>
       </ul>
 </xar:template>

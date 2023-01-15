@@ -12,6 +12,7 @@
  * @author Workflow Module Development Team
  */
 
+//namespace Xaraya\Modules\Workflow\HookObservers;  // not supported by events.php yet
 sys::import('modules.workflow.class.hookobserver');
 
 class WorkflowItemDisplayObserver extends xarWorkflowHookObserver implements ixarEventObserver

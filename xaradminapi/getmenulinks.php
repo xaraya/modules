@@ -26,6 +26,13 @@ function workflow_adminapi_getmenulinks()
         $menulinks[] = ['url'   => xarController::URL(
             'workflow',
             'admin',
+            'overview'
+        ),
+                              'title' => xarML('Overview of the Workflow module'),
+                              'label' => xarML('Overview'), ];
+        $menulinks[] = ['url'   => xarController::URL(
+            'workflow',
+            'admin',
             'monitor_processes'
         ),
                               'title' => xarML('Monitor the workflow processes'),
@@ -37,6 +44,13 @@ function workflow_adminapi_getmenulinks()
         ),
                               'title' => xarML('Edit the workflow processes'),
                               'label' => xarML('Manage Processes'), ];
+        $menulinks[] = ['url'   => xarController::URL(
+            'workflow',
+            'admin',
+            'test_manage'
+        ),
+                                'title' => xarML('Manage New Workflows'),
+                                'label' => xarML('New Workflows'), ];
         $menulinks[] = ['url'   => xarController::URL(
             'workflow',
             'admin',

@@ -3,13 +3,24 @@
 
 ### What is it?
 
+This is a modern **State Machine** approach using the Symfony Workflow component.
+
 ### Getting started
+
+1. Use *composer* to install the symfony/workflow package
 
 ```
 $ composer require --dev symfony/workflow
+$ composer update
 ```
 
-[Defining Workflows](xardata/config.workflows.php)
+2. Define the workflows in configuration
+
+<p> See [xardata/config.workflows.php](xardata/config.workflows.php)</p>
+
+3. Use the workflows with modules or objects
+
+4. Try out the user interface
 
 #### Hook Sample
 

@@ -13,6 +13,7 @@
  * @author Workflow Module Development Team
  */
 
+//namespace Xaraya\Modules\Workflow\HookObservers;  // not supported by events.php yet
 sys::import('xaraya.structures.hooks.observer');
 sys::import('xaraya.structures.hooks.apisubject');
 sys::import('xaraya.structures.hooks.guisubject');

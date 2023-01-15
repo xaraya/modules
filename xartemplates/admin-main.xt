@@ -8,7 +8,72 @@
         <xar:template module="workflow" type="module" file="admin-menu"/>
         <img src="#xarTpl::getImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
 
-      <h2>Overview</h2>
+      <h2>Overview with Symfony Workflow Component</h2>
+
+      <h3>What is it?</h3>
+
+      This is a modern <strong>State Machine</strong> approach using the Symfony Workflow component.
+
+      <h3>Getting started</h3>
+
+      <ol>
+      <li>
+        Use <em>composer</em> to install the symfony/workflow package
+        <pre>
+        $ composer require --dev symfony/workflow
+        $ composer update
+        </pre>
+      </li>
+      <li>
+        Define the workflows in configuration
+        <p>See <a href="https://github.com/xaraya-modules/workflow/blob/master/xardata/config.workflows.php">xardata/config.workflows.php</a></p>
+      </li>
+      <li>
+        Use the workflows with modules or objects
+        <p>See examples below</p>
+      </li>
+      <li>
+        Try out the test <a href="#xarServer::getModuleURL('workflow', 'user', 'test')#">user interface</a>
+      </li>
+      </ol>
+
+      <h4>Hook Sample</h4>
+      <p>
+      Use Workflow as <strong>hook module</strong> and let item create/update/delete/display hook events from other modules trigger the workflow transitions you want
+      </p>
+
+      <div style="overflow: hidden">
+        <img src="#xarTpl::getImage('hook_sample.png','workflow')#" alt="#xarML('Hook Sample')#"/>
+      </div>
+
+      <h4>Music CD Loans</h4>
+      <p>
+      Or add the new <strong>Workflows property</strong> to an existing object and let the value of its properties affect the workflow
+      </p>
+
+      <div style="overflow: hidden">
+        <img src="#xarTpl::getImage('cd_loans.png','workflow')#" alt="#xarML('Music CD Loans')#"/>
+      </div>
+
+      <h3>Further Information</h3>
+
+      <p>
+      <ol>
+        <li>
+          <a href="https://symfony.com/doc/current/components/workflow.html">The Workflow Component</a>
+        </li>
+        <li>
+          <a href="https://symfony.com/doc/current/workflow/workflow-and-state-machine.html">Workflows and State Machines</a>
+        </li>
+        <li>
+          <a href="https://symfony.com/doc/current/the-fast-track/en/19-workflow.html">Making Decisions with a Workflow</a>
+        </li>
+      </ol>
+      </p>
+
+      <hr/>
+
+      <h2>Overview with Galaxia Workflow Engine</h2>
 
       <h3>What is it?</h3>
 

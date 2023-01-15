@@ -52,6 +52,19 @@
                 </a>
             </li>
 
+            <xar:if condition="$activetab eq 'test_manage'">
+              <xar:set name="tabclass">'xar-tab-active'</xar:set>
+              <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
+            <xar:else />
+              <xar:set name="tabclass">'xar-tab'</xar:set>
+              <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
+            </xar:if>
+            <li class="#$tabclass#">
+              <a href="#xarController::URL('workflow','admin','test_manage')#" class="#$linkclass#">
+                New Workflows
+              </a>
+            </li>
+
             <xar:if condition="$activetab eq 'modifyconfig'">
               <xar:set name="tabclass">'xar-tab-active'</xar:set>
               <xar:set name="linkclass">'xar-accent xar-accent-outline'</xar:set>
