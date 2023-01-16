@@ -11,6 +11,12 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+namespace Xaraya\Modules\Scheduler;
+
+use DataProperty;
+use ObjectDescriptor;
+use sys;
+
 sys::import('modules.dynamicdata.class.properties.base');
 
 class CrontabProperty extends DataProperty

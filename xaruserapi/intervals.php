@@ -32,7 +32,7 @@ function scheduler_userapi_intervals()
                        '4h' => xarML('every #(1) hours', 4),
                        '5h' => xarML('every #(1) hours', 5),
                        '6h' => xarML('every #(1) hours', 6),
-                       '6h' => xarML('every #(1) hours', 6),
+                       '7h' => xarML('every #(1) hours', 7),
                        '8h' => xarML('every #(1) hours', 8),
                        '9h' => xarML('every #(1) hours', 9),
                        '10h' => xarML('every #(1) hours', 10),

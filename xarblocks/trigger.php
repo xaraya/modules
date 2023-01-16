@@ -10,9 +10,18 @@
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
+
+namespace Xaraya\Modules\Scheduler\Blocks;
+
+use BasicBlock;
+use iBlock;
+use xarModVars;
+use xarMod;
+use sys;
+
 sys::import('xaraya.structures.containers.blocks.basicblock');
 
-class Scheduler_TriggerBlock extends BasicBlock implements iBlock
+class TriggerBlock extends BasicBlock implements iBlock
 {
     // File Information, supplied by developer, never changes during a versions lifetime, required
     protected $type             = 'trigger';
@@ -51,7 +60,8 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
         // Check when we last ran the scheduler
         $lastrun = xarModVars::get('scheduler', 'lastrun');
         $now = time() + 60; // add some margin here
-        if (!empty($lastrun) && $lastrun > $now - 60*60) {
+        $interval = xarModVars::get('scheduler', 'interval');    // The interval is set in modifyconfig
+        if (!empty($lastrun) && $lastrun >= $now - $interval) {  // Make sure the defined interval has passed
             if (empty($vars['showstatus'])) {
                 return;
             } else {
@@ -89,7 +99,7 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
         $GLOBALS['xarScheduler_BaseDir'] = realpath('.');
 
         // register the shutdown function that will execute the jobs after this script finishes
-        register_shutdown_function('scheduler_triggerblock_runjobs');
+        register_shutdown_function(__NAMESPACE__ . '\triggerblock_runjobs');
 
         if (empty($vars['showstatus'])) {
             return;
@@ -102,8 +112,9 @@ class Scheduler_TriggerBlock extends BasicBlock implements iBlock
 
 /**
  * run scheduler jobs when the script is finished
+ * @checkme phpstan complains about redeclaring this function when analysing trigger_admin
  */
-function scheduler_triggerblock_runjobs()
+function triggerblock_runjobs()
 {
     // For some reason, PHP thinks it's in the Apache root during shutdown functions,
     // so we move back to our own base dir first - otherwise xarMod::apiFunc() will fail

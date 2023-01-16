@@ -10,6 +10,13 @@
  * @link http://xaraya.com/index.php/release/189.html
  * @author mikespub
  */
+
+namespace Xaraya\Modules\Scheduler\Blocks;
+
+use iBlock;
+use xarVar;
+use sys;
+
 /**
  * Manage block
  *
@@ -22,7 +29,7 @@
 */
 sys::import('modules.scheduler.xarblocks.trigger');
 
-class Scheduler_TriggerBlockAdmin extends Scheduler_TriggerBlock implements iBlock
+class TriggerBlockAdmin extends TriggerBlock implements iBlock
 {
     /**
      * Modify Function to the Blocks Admin

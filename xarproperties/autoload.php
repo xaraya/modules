@@ -11,12 +11,22 @@
  * @author Marc Lutolf <mfl@netspan.ch>
  */
 
+namespace Xaraya\Modules\Scheduler;
+
+use xarAutoload;
+use sys;
+
 /**
- * Autoload function for this module's properties
- */
-function scheduler_properties_autoload($class)
+* Autoload function for this module's properties
+*/
+function properties_autoload($class)
 {
     $class = strtolower($class);
+    $namespace = strtolower(__NAMESPACE__) . '\\';
+    if (strpos($class, $namespace) !== 0) {
+        return false;
+    }
+    $class = str_replace($namespace, '', $class);
 
     $class_array = [
         'crontabproperty'               => 'modules.scheduler.xarproperties.crontab',
@@ -33,7 +43,7 @@ function scheduler_properties_autoload($class)
  * Register this function for autoload on import
  */
 if (class_exists('xarAutoload')) {
-    xarAutoload::registerFunction('scheduler_properties_autoload');
+    xarAutoload::registerFunction(__NAMESPACE__ . '\properties_autoload');
 } else {
     // guess you'll have to register it yourself :-)
 }
