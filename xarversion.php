@@ -26,6 +26,7 @@ $modversion['admin']          = true;
 $modversion['user']           = false;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
+$modversion['namespace']      = 'Xaraya\Modules\Scheduler';
 $modversion['dependencyinfo'] = [
     0 => [
             'name' => 'Xaraya Core',
