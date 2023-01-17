@@ -536,7 +536,7 @@ function workflow_init()
     # Set up hooks
 #
     //workflow_create_old_hooks();
-    workflow_create_new_hooks();
+    //workflow_create_new_hooks();
 
     // define privilege instances and masks
     $instances = [
@@ -614,12 +614,28 @@ function workflow_upgrade($oldversion)
 
         case '1.7.1':
             // Code to upgrade from version 1.7.1 goes here
+            workflow_delete_new_hooks();
+            workflow_create_new_hooks();
 
-        case '2.0.0':
+            // no break
+        case '2.4.1':
+            // Code to upgrade from version 2.4.1 goes here
+
+        case '3.0.0':
             break;
     }
     // Update successful
     return true;
+}
+
+function workflow_activate()
+{
+    return workflow_create_new_hooks();
+}
+
+function workflow_deactivate()
+{
+    return workflow_delete_new_hooks();
 }
 
 function workflow_create_new_hooks()
@@ -634,6 +650,11 @@ function workflow_create_new_hooks()
 
 function workflow_delete_new_hooks()
 {
+    xarHooks::unregisterObserver('ItemCreate', 'workflow');
+    xarHooks::unregisterObserver('ItemUpdate', 'workflow');
+    xarHooks::unregisterObserver('ItemDelete', 'workflow');
+    xarHooks::unregisterObserver('ModuleRemove', 'workflow');
+    xarHooks::unregisterObserver('ItemDisplay', 'workflow');
     return true;
 }
 
@@ -784,7 +805,7 @@ function workflow_delete()
 
     // Remove module hooks
     //workflow_delete_old_hooks();
-    workflow_delete_new_hooks();
+    //workflow_delete_new_hooks();
 
     // Remove all process files
     workflow_remove_processes();

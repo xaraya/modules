@@ -12,12 +12,22 @@
  * @author Workflow Module Development Team
  */
 
-//namespace Xaraya\Modules\Workflow\HookObservers;  // not supported by events.php yet
+namespace Xaraya\Modules\Workflow\HookObservers;
+
+use HookObserver;
+use ixarEventSubject;
+use ApiHookSubject;
+use GuiHookSubject;
+use Exception;
+use xarMod;
+use xarLog;
+use sys;
+
 sys::import('xaraya.structures.hooks.observer');
 sys::import('xaraya.structures.hooks.apisubject');
 sys::import('xaraya.structures.hooks.guisubject');
 
-class xarWorkflowHookObserver extends HookObserver implements ixarEventObserver
+class GenericObserver extends HookObserver
 {
     public $module = 'workflow';
     public $type   = 'admin';

@@ -12,10 +12,13 @@
  * @author Workflow Module Development Team
  */
 
-//namespace Xaraya\Modules\Workflow\HookObservers;  // not supported by events.php yet
-sys::import('modules.workflow.class.hookobserver');
+namespace Xaraya\Modules\Workflow\HookObservers;
 
-class WorkflowItemDeleteObserver extends xarWorkflowHookObserver implements ixarEventObserver
+use sys;
+
+sys::import('modules.workflow.class.hookobservers.generic');
+
+class ItemDeleteObserver extends GenericObserver
 {
     public $module = 'workflow';
     public $type   = 'admin';

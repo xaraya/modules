@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'workflow';
 $modversion['id']             = '188';
-$modversion['version']        = '1.7.1';
+$modversion['version']        = '2.4.1';
 $modversion['displayname']    = xarML('Workflow');
 $modversion['description']    = 'Workflow Module based on the Galaxia Workflow Engine';
 $modversion['credits']        = '';
@@ -27,3 +27,9 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
+$modversion['dependencyinfo'] = [
+    0 => [
+            'name' => 'Xaraya Core',
+            'version_ge' => '2.4.1',
+         ],
+];

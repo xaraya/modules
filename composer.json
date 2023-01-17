@@ -9,6 +9,9 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
+    "conflict": {
+        "xaraya/core": "<2.4.1"
+    },
     "autoload": {
         "classmap": ["./"]
     },

@@ -13,13 +13,15 @@
  * @author Workflow Module Development Team
  */
 
-//namespace Xaraya\Modules\Workflow\HookObservers;  // not supported by events.php yet
-sys::import('xaraya.structures.hooks.observer');
+//namespace Xaraya\Modules\Workflow\HookObservers;
+
+use Xaraya\Modules\Workflow\HookObservers\GenericObserver;
+
+sys::import('modules.workflow.class.hookobservers.generic');
 sys::import('xaraya.structures.hooks.apisubject');
 sys::import('xaraya.structures.hooks.guisubject');
-sys::import('modules.workflow.class.hookobserver');
 
-class xarWorkflowHookMediator extends xarWorkflowHookObserver implements ixarEventObserver
+class xarWorkflowHookMediator extends GenericObserver
 {
     private static $subjectNamePrefix = '';  // no prefix used by Xaraya event/hook subjects
     private static $registeredSubjects = [];
