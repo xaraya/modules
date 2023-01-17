@@ -27,6 +27,7 @@ $modversion['admin']          = 1;
 $modversion['user']           = 1;
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
+$modversion['namespace']      = 'Xaraya\Modules\Workflow';
 $modversion['dependencyinfo'] = [
     0 => [
             'name' => 'Xaraya Core',
