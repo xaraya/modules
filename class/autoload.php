@@ -21,7 +21,12 @@ use sys;
  */
 function autoload($class)
 {
-    $class = str_replace(strtolower(__NAMESPACE__) . "\\", '', strtolower($class));
+    $class = strtolower($class);
+    $namespace = strtolower(__NAMESPACE__) . '\\';
+    if (strpos($class, $namespace) !== 0) {
+        return false;
+    }
+    $class = str_replace($namespace, '', $class);
 
     $class_array = [
         'cachemanager'    => 'modules.xarcachemanager.class.manager',

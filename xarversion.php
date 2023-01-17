@@ -13,7 +13,7 @@
  */
 $modversion['name']           = 'xarcachemanager';
 $modversion['id']             = '1652';
-$modversion['version']        = '2.4.5';
+$modversion['version']        = '2.4.6';
 $modversion['displayname']    = xarMLS::translate('xarCacheManager');
 $modversion['description']    = 'Manage the output cache system of Xaraya';
 $modversion['credits']        = '';
@@ -28,10 +28,10 @@ $modversion['user']           = false;
 $modversion['securityschema'] = ['xarCacheManager::' => '::'];
 $modversion['class']          = 'Utility';
 $modversion['category']       = 'Miscellaneous';
+$modversion['namespace']      = 'Xaraya\Modules\CacheManager';
 $modversion['dependencyinfo'] = [
-                                    0 => [
-                                            'name' => 'Xaraya Core',
-                                            'version_ge' => '2.1.0',
-                                            'version_le' => '2.99.99',
-                                         ],
-                                      ];
+    0 => [
+            'name' => 'Xaraya Core',
+            'version_ge' => '2.4.1',
+         ],
+];
