@@ -10,7 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * get configuration of module caching for all modules
@@ -121,13 +122,7 @@ function xarcachemanager_adminapi_getmodules($args)
         if (isset($modulesettings[$name])) {
             foreach ($modulesettings[$name] as $func => $settings) {
                 if ($settings['cacheexpire'] > 0) {
-                    $settings['cacheexpire'] = xarMod::apiFunc(
-                        'xarcachemanager',
-                        'admin',
-                        'convertseconds',
-                        ['starttime' => $settings['cacheexpire'],
-                                                                     'direction' => 'from', ]
-                    );
+                    $settings['cacheexpire'] = CacheUtility::convertFromSeconds($settings['cacheexpire']);
                 }
                 $moduleconfig[$name]['cachesettings'][$func] = $settings;
             }

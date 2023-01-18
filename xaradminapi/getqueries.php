@@ -10,7 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * get configuration of query caching for expensive queries

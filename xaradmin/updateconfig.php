@@ -11,7 +11,9 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
 use Xaraya\Modules\CacheManager\CacheManager;
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * Update the configuration parameters of the module based on data from the modification form
@@ -210,22 +212,10 @@ function xarcachemanager_admin_updateconfig()
     $objectsizelimit = (intval($objectsizelimit * 1048576));
 
     //turn hh:mm:ss back into seconds
-    $pageexpiretime = CacheManager::convertseconds(
-        ['starttime' => $pageexpiretime,
-                                        'direction' => 'to', ]
-    );
-    $blockexpiretime = CacheManager::convertseconds(
-        ['starttime' => $blockexpiretime,
-                                       'direction' => 'to', ]
-    );
-    $moduleexpiretime = CacheManager::convertseconds(
-        ['starttime' => $moduleexpiretime,
-                                       'direction' => 'to', ]
-    );
-    $objectexpiretime = CacheManager::convertseconds(
-        ['starttime' => $objectexpiretime,
-                                       'direction' => 'to', ]
-    );
+    $pageexpiretime = CacheUtility::convertToSeconds($pageexpiretime);
+    $blockexpiretime = CacheUtility::convertToSeconds($blockexpiretime);
+    $moduleexpiretime = CacheUtility::convertToSeconds($moduleexpiretime);
+    $objectexpiretime = CacheUtility::convertToSeconds($objectexpiretime);
 
     // updated the config.caching settings
     $cachingConfigFile = $varCacheDir . '/config.caching.php';

@@ -11,7 +11,9 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
 use Xaraya\Modules\CacheManager\CacheManager;
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * Prep the configuration parameters of the module for the modification form
@@ -166,22 +168,10 @@ function xarcachemanager_admin_modifyconfig()
     $data['settings']['ObjectSizeLimit'] /= 1048576;
 
     // reformat seconds as hh:mm:ss
-    $data['settings']['PageTimeExpiration'] = CacheManager::convertseconds(
-        ['starttime' => $data['settings']['PageTimeExpiration'],
-                                                                   'direction' => 'from', ]
-    );
-    $data['settings']['BlockTimeExpiration'] = CacheManager::convertseconds(
-        ['starttime' => $data['settings']['BlockTimeExpiration'],
-                                                                   'direction' => 'from', ]
-    );
-    $data['settings']['ModuleTimeExpiration'] = CacheManager::convertseconds(
-        ['starttime' => $data['settings']['ModuleTimeExpiration'],
-                                                                   'direction' => 'from', ]
-    );
-    $data['settings']['ObjectTimeExpiration'] = CacheManager::convertseconds(
-        ['starttime' => $data['settings']['ObjectTimeExpiration'],
-                                                                   'direction' => 'from', ]
-    );
+    $data['settings']['PageTimeExpiration'] = CacheUtility::convertFromSeconds($data['settings']['PageTimeExpiration']);
+    $data['settings']['BlockTimeExpiration'] = CacheUtility::convertFromSeconds($data['settings']['BlockTimeExpiration']);
+    $data['settings']['ModuleTimeExpiration'] = CacheUtility::convertFromSeconds($data['settings']['ModuleTimeExpiration']);
+    $data['settings']['ObjectTimeExpiration'] = CacheUtility::convertFromSeconds($data['settings']['ObjectTimeExpiration']);
 
     // get the themes list
     $filter['Class'] = 2;

@@ -34,6 +34,7 @@ use Exception;
 use sys;
 
 sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
 
 class CacheHooks extends xarObject
 {
@@ -45,7 +46,7 @@ class CacheHooks extends xarObject
      * regenerate the page output cache of URLs in the session-less list
      * @author jsb
      *
-     * @return void
+     * @return string
      */
     public static function regenstatic($nolimit = null)
     {
@@ -390,10 +391,7 @@ class CacheHooks extends xarObject
             }
         }
         if (!empty($blockCacheExpireTime)) {
-            $blockCacheExpireTime = CacheManager::convertseconds(
-                ['starttime' => $blockCacheExpireTime,
-                                                         'direction' => 'from', ]
-            );
+            $blockCacheExpireTime = CacheUtility::convertFromSeconds($blockCacheExpireTime);
         }
         return xarTpl::module(
             'xarcachemanager',
@@ -493,10 +491,7 @@ class CacheHooks extends xarObject
                         $cacheexpire = null;
                     }
                     if (!empty($cacheexpire)) {
-                        $cacheexpire = CacheManager::convertseconds(
-                            ['starttime' => $cacheexpire,
-                                  'direction' => 'to', ]
-                        );
+                        $cacheexpire = CacheUtility::convertToSeconds($cacheexpire);
                     }
 
                     $systemPrefix = xarDB::getPrefix();

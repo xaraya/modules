@@ -60,9 +60,20 @@ function xarcachemanager_restapi_getlist($args = [])
         'description' => 'Call xarcachemanager api function getcachelist() in module blocks',
         'caching' => false,
     ];
-    // $func name as used in xarMod::apiFunc($module, $type, $func, $args)
-    $apilist['getcacheitem'] = [
+    // $func name as used in xarMod::apiFunc($module, $type, $func, $args) - not here
+    $apilist['getcacheitemkey'] = [
         'type' => 'admin',  // default = rest, other $type options are user, admin, ... as usual
+        'name' => 'getcacheitem',  // default = $api array key above
+        'path' => 'cacheitem/{type}/{key}',  // path to use in REST API operation /modules/{module}/{path} with path parameter
+        'method' => 'get',  // method to use in REST API operation
+        'security' => 'AdminXarCache',  // default = false REST APIs are public, if true check for authenticated user
+        'description' => 'Call xarcachemanager api function getcacheitem() in module blocks',
+        'caching' => false,
+    ];
+    // $func name as used in xarMod::apiFunc($module, $type, $func, $args) - not here
+    $apilist['getcacheitemcode'] = [
+        'type' => 'admin',  // default = rest, other $type options are user, admin, ... as usual
+        'name' => 'getcacheitem',  // default = $api array key above
         'path' => 'cacheitem/{type}/{key}/{code}',  // path to use in REST API operation /modules/{module}/{path} with path parameter
         'method' => 'get',  // method to use in REST API operation
         'security' => 'AdminXarCache',  // default = false REST APIs are public, if true check for authenticated user

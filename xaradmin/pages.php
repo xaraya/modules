@@ -11,7 +11,9 @@
  * @link http://xaraya.com/index.php/release/1652.html
  */
 sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
 use Xaraya\Modules\CacheManager\CacheManager;
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * configure page caching (TODO)
@@ -100,10 +102,7 @@ function xarcachemanager_admin_pages($args)
         if (empty($autocache['period'])) {
             $autocache['period'] = 0;
         }
-        $autocache['period'] = CacheManager::convertseconds(
-            ['starttime' => $autocache['period'],
-                                                   'direction' => 'to', ]
-        );
+        $autocache['period'] = CacheUtility::convertToSeconds($autocache['period']);
         if (empty($autocache['threshold'])) {
             $autocache['threshold'] = 0;
         }
@@ -210,10 +209,7 @@ function xarcachemanager_admin_pages($args)
     if (!isset($data['settings']['AutoCachePeriod'])) {
         $data['settings']['AutoCachePeriod'] = 0;
     }
-    $data['settings']['AutoCachePeriod'] = CacheManager::convertseconds(
-        ['starttime' => $data['settings']['AutoCachePeriod'],
-                                                     'direction' => 'from', ]
-    );
+    $data['settings']['AutoCachePeriod'] = CacheUtility::convertFromSeconds($data['settings']['AutoCachePeriod']);
 
     if (!isset($data['settings']['AutoCacheThreshold'])) {
         $data['settings']['AutoCacheThreshold'] = 10;

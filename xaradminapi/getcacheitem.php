@@ -13,18 +13,23 @@
 sys::import('modules.xarcachemanager.class.manager');
 
 /**
- * Construct an array of the current cache info
+ * Construct an array of the current cache item
  *
  * @author jsb
  *
- * @param $type cachetype to start the search for cacheinfo
- * @return array array of cacheinfo
+ * @param array $args['type'] cachetype to get the cache item from, with $args['key'] the cache key
+ * @return array array of cacheitem
 */
 
-function xarcachemanager_adminapi_getcacheitem($type = '')
+function xarcachemanager_adminapi_getcacheitem($args = ['type' => '', 'key' => '', 'code' => ''])
 {
-    if (is_array($type)) {
-        extract($type);
+    $type = '';
+    $key = '';
+    $code = '';
+    if (is_array($args)) {
+        extract($args);
+    } else {
+        $type = $args;
     }
     $item = [];
 
@@ -51,6 +56,7 @@ function xarcachemanager_adminapi_getcacheitem($type = '')
                                           'type'     => $type,
                                           'cachedir' => $outputCacheDir, ]);
     if (empty($cachestorage)) {
+        $item = "Got no storage for " . var_export($args, true);
         return $item;
     }
 
@@ -67,9 +73,12 @@ function xarcachemanager_adminapi_getcacheitem($type = '')
             if (!empty($value) && is_string($value) && strpos($value, ':serial:') === 0) {
                 try {
                     $item = unserialize(substr($value, 8));
-                } catch (Exception $e) {
-                    $item = $value;
+                } catch (Throwable $e) {
+                    return $e->getMessage();
+                    //$item = $value;
                 }
+            } else {
+                $item = $value;
             }
         } else {
             // do nothing

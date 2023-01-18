@@ -10,7 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.utility');
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * get configuration of block caching for all blocks
@@ -61,13 +62,7 @@ function xarcachemanager_adminapi_getblocks($args)
             $cacheexpire = 0;
         }*/
         if ($cacheexpire > 0) {
-            $cacheexpire = xarMod::apiFunc(
-                'xarcachemanager',
-                'admin',
-                'convertseconds',
-                ['starttime' => $cacheexpire,
-                                                'direction' => 'from', ]
-            );
+            $cacheexpire = CacheUtility::convertFromSeconds($cacheexpire);
         }
 
         $key = $bid2key[$bid];

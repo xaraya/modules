@@ -17,14 +17,17 @@ sys::import('modules.xarcachemanager.class.manager');
  *
  * @author jsb
  *
- * @param $type cachetype to start the search for cacheinfo
+ * @param array $args['type'] cachetype to start the search for cacheinfo
  * @return array array of cacheinfo
 */
 
-function xarcachemanager_adminapi_getcacheinfo($type = '')
+function xarcachemanager_adminapi_getcacheinfo($args = ['type' => ''])
 {
-    if (is_array($type)) {
-        extract($type);
+    $type = '';
+    if (is_array($args)) {
+        extract($args);
+    } else {
+        $type = $args;
     }
     $cacheinfo = [];
 

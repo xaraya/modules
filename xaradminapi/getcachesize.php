@@ -15,12 +15,18 @@ sys::import('modules.xarcachemanager.class.manager');
 /**
  * @author jsb
  *
- * @param $type cachetype to get the size for
+ * @param array $args['type'] cachetype to get the size for
  * @return int size of the cache
 */
 
-function xarcachemanager_adminapi_getcachesize($type = '')
+function xarcachemanager_adminapi_getcachesize($args = ['type' => ''])
 {
+    $type = '';
+    if (is_array($args)) {
+        extract($args);
+    } else {
+        $type = $args;
+    }
     $cachesize = 0;
 
     // get cache type settings

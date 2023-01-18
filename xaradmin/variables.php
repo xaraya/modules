@@ -10,8 +10,8 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\CacheManager;
+sys::import('modules.xarcachemanager.class.utility');
+use Xaraya\Modules\CacheManager\CacheUtility;
 
 /**
  * configure variable caching
@@ -63,10 +63,7 @@ function xarcachemanager_admin_variables($args)
                 $newvariables[$name]['nocache'] = 1;
             }
             if (!empty($expire)) {
-                $expire = CacheManager::convertseconds(
-                    ['starttime' => $expire,
-                                                'direction' => 'to', ]
-                );
+                $expire = CacheUtility::convertToSeconds($expire);
             } elseif ($expire === '0') {
                 $expire = 0;
             } else {
