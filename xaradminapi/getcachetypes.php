@@ -10,45 +10,16 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.manager');
-use Xaraya\Modules\CacheManager\CacheManager;
+sys::import('modules.xarcachemanager.class.config');
+use Xaraya\Modules\CacheManager\CacheConfig;
 
 /**
  * @author jsb
- *
+ * @uses CacheConfig::getTypes()
  * @return array Cache types, with key set to cache type and value set to its settings
  */
 function xarcachemanager_adminapi_getcachetypes()
 {
-    static $cachetypes;
-    if (!empty($cachetypes)) {
-        return $cachetypes;
-    }
-
-    // list of currently supported cache types
-    $typelist = ['page', 'block', 'module', 'object', 'variable'];
-
-    // get the caching config settings from the config file
-    $settings = CacheManager::get_config(
-        ['from' => 'file']
-    );
-
-    // map the settings to the right cache type
-    $cachetypes = [];
-    foreach ($typelist as $type) {
-        $cachetypes[$type] = [];
-        foreach (array_keys($settings) as $setting) {
-            if (preg_match("/^$type\.(.+)$/i", $setting, $matches)) {
-                $info = $matches[1];
-                $cachetypes[$type][$info] = $settings[$setting];
-            }
-        }
-        // default cache storage is 'filesystem' if necessary
-        if (empty($cachetypes[$type]['CacheStorage'])) {
-            $cachetypes[$type]['CacheStorage'] = 'filesystem';
-        }
-    }
-
     // return the cache types and their settings
-    return $cachetypes;
+    return CacheConfig::getTypes();
 }

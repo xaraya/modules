@@ -10,15 +10,15 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.manager');
+sys::import('modules.xarcachemanager.class.info');
+use Xaraya\Modules\CacheManager\CacheInfo;
 
 /**
  * @author jsb
- *
+ * @uses CacheInfo::getSize()
  * @param array $args['type'] cachetype to get the size for
  * @return int size of the cache
 */
-
 function xarcachemanager_adminapi_getcachesize($args = ['type' => ''])
 {
     $type = '';
@@ -27,36 +27,5 @@ function xarcachemanager_adminapi_getcachesize($args = ['type' => ''])
     } else {
         $type = $args;
     }
-    $cachesize = 0;
-
-    // get cache type settings
-    $cachetypes = xarMod::apiFunc('xarcachemanager', 'admin', 'getcachetypes');
-
-    // check if we have some settings for this cache type
-    if (empty($type) || empty($cachetypes[$type])) {
-        return $cachesize;
-    }
-
-    // Get the output cache directory so you can get cache size even if output caching is disabled
-    $outputCacheDir = xarCache::getOutputCacheDir();
-
-    // default cache storage is 'filesystem' if necessary
-    if (!empty($cachetypes[$type]['CacheStorage'])) {
-        $storage = $cachetypes[$type]['CacheStorage'];
-    } else {
-        $storage = 'filesystem';
-    }
-
-    // get cache storage
-    $cachestorage = xarCache::getStorage(['storage'  => $storage,
-                                               'type'     => $type,
-                                               'cachedir' => $outputCacheDir, ]);
-    if (empty($cachestorage)) {
-        return $cachesize;
-    }
-
-    // get cache size
-    $cachesize = $cachestorage->getCacheSize();
-
-    return $cachesize;
+    return CacheInfo::getSize($type);
 }

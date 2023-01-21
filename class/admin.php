@@ -17,6 +17,8 @@ namespace Xaraya\Modules\CacheManager;
 
 use xarObject;
 use xarMod;
+use xarTpl;
+use sys;
 
 class CacheAdmin extends xarObject
 {
@@ -73,59 +75,94 @@ class CacheAdmin extends xarObject
     }
 
     /**
-     * @uses xarcachemanager_admin_pages()
+     * @uses Config\PageCache::modifyConfig()
      */
     public static function pages(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'pages', $args);
+        sys::import('modules.xarcachemanager.class.config.pagecache');
+        $tplData = Config\PageCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'pages', $tplData);
     }
 
     /**
-     * @uses xarcachemanager_admin_blocks()
+     * @uses Config\BlockCache::modifyConfig()
      */
     public static function blocks(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'blocks', $args);
+        sys::import('modules.xarcachemanager.class.config.blockcache');
+        $tplData = Config\BlockCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'blocks', $tplData);
     }
 
     /**
-     * @uses xarcachemanager_admin_modules()
+     * @uses Config\ModuleCache::modifyConfig()
      */
     public static function modules(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'modules', $args);
+        sys::import('modules.xarcachemanager.class.config.modulecache');
+        $tplData = Config\ModuleCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'modules', $tplData);
     }
 
     /**
-     * @uses xarcachemanager_admin_objects()
+     * @uses Config\ObjectCache::modifyConfig()
      */
     public static function objects(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'objects', $args);
+        sys::import('modules.xarcachemanager.class.config.objectcache');
+        $tplData = Config\ObjectCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'objects', $tplData);
     }
 
     /**
-     * @uses xarcachemanager_admin_variables()
+     * @uses Config\VariableCache::modifyConfig()
      */
     public static function variables(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'variables', $args);
+        sys::import('modules.xarcachemanager.class.config.variablecache');
+        $tplData = Config\VariableCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'variables', $tplData);
     }
 
     /**
-     * @uses xarcachemanager_admin_queries()
+     * @uses Config\QueryCache::modifyConfig()
      */
     public static function queries(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'queries', $args);
+        sys::import('modules.xarcachemanager.class.config.querycache');
+        $tplData = Config\QueryCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'queries', $tplData);
     }
 
     /**
-     * @uses xarcachemanager_admin_modifyhook()
+     * @uses Config\TemplateCache::modifyConfig()
      */
-    public static function modifyhook(array $args = [])
+    public static function templates(array $args = [])
     {
-        return xarMod::guiFunc('xarcachemanager', 'admin', 'modifyhook', $args);
+        sys::import('modules.xarcachemanager.class.config.templatecache');
+        $tplData = Config\TemplateCache::modifyConfig($args);
+        if (!is_array($tplData)) {
+            return $tplData;
+        }
+        return xarTpl::module('xarcachemanager', 'admin', 'templates', $tplData);
     }
 
     /**

@@ -33,6 +33,9 @@ function autoload($class)
         'cacheadmin'      => 'modules.xarcachemanager.class.admin',
         'cachehooks'      => 'modules.xarcachemanager.class.hooks',
         'cachescheduler'  => 'modules.xarcachemanager.class.scheduler',
+        'cacheutility'    => 'modules.xarcachemanager.class.utility',
+        'cacheconfig'     => 'modules.xarcachemanager.class.config',
+        'cacheinfo'       => 'modules.xarcachemanager.class.info',
     ];
 
     if (isset($class_array[$class])) {

@@ -10,12 +10,12 @@
  * @subpackage xarCacheManager module
  * @link http://xaraya.com/index.php/release/1652.html
  */
-sys::import('modules.xarcachemanager.class.utility');
-use Xaraya\Modules\CacheManager\CacheUtility;
+sys::import('modules.xarcachemanager.class.config.variablecache');
+use Xaraya\Modules\CacheManager\Config\VariableCache;
 
 /**
  * get configuration of variable caching for all variables
- *
+ * @uses VariableCache::getConfig()
  * @return array variable caching configurations
  */
 function xarcachemanager_adminapi_getvariables($args)
@@ -23,34 +23,5 @@ function xarcachemanager_adminapi_getvariables($args)
     extract($args);
 
     // Get all variable cache settings
-    $variablesettings = [];
-    $serialsettings = xarModVars::get('dynamicdata', 'variablecache_settings');
-    if (!empty($serialsettings)) {
-        $variablesettings = unserialize($serialsettings);
-    }
-
-    // Get all variables
-    //$variables = xarMod::apiFunc('dynamicdata', 'user', 'getvariables');
-    $variables = array_keys(xarVariableCache::getCacheSettings());
-
-    $variableconfig = [];
-    foreach ($variables as $name) {
-        $settings = [];
-        $settings['name'] = $name;
-        if (isset($variablesettings[$name])) {
-            $settings = $variablesettings[$name];
-            if ($settings['cacheexpire'] > 0) {
-                $settings['cacheexpire'] = CacheUtility::convertFromSeconds($settings['cacheexpire']);
-            } else {
-                $settings['cacheexpire'] = '';
-            }
-        } else {
-            $settings['name'] = $name;
-            // flip from docache in config to nocache in settings
-            $settings['nocache'] = 1;
-            $settings['cacheexpire'] = '';
-        }
-        $variableconfig[$name] = $settings;
-    }
-    return $variableconfig;
+    return VariableCache::getConfig();
 }
