@@ -19,6 +19,8 @@ require $baseDir.'/vendor/autoload.php';
 sys::init();
 // initialize caching - delay until we need results
 xarCache::init();
+// initialize loggers
+xarLog::init();
 // initialize database - delay until caching fails
 xarDatabase::init();
 // initialize modules
@@ -34,12 +36,14 @@ use Symfony\Component\Workflow\Workflow;
 
 //xarWorkflowProcess::setLogger(new xarWorkflowLogger());
 
-$sitePrefix = '/bermuda';
-echo xarWorkflowProcess::dumpProcess('hook_sample', $sitePrefix);
-exit;
+//$sitePrefix = '/bermuda';
+//echo xarWorkflowProcess::dumpProcess('hook_sample', $sitePrefix);
+//exit;
 $workflow = xarWorkflowProcess::getProcess('cd_loans');
 
-$subject = new xarWorkflowSubject('cdcollection');
+//$_SESSION[xarSession::PREFIX.'role_id'] = 6;
+
+$subject = new xarWorkflowSubject('cdcollection', 5);
 
 // initiate workflow
 $marking = $workflow->getMarking($subject);
@@ -49,8 +53,9 @@ echo "Transitions: " . var_export($transitions, true) . "\n";
 foreach ($transitions as $transition) {
     echo "Transition '" . $transition->getName() . "': from '" . implode("', '", $transition->getFroms()) . "' to '" . implode("', '", $transition->getTos()) . "'\n";
 }
+$transition = "request";
 try {
-    $result = $workflow->can($subject, "request");
+    $result = $workflow->can($subject, $transition);
 } catch (Exception $e) {
     echo $e->getMessage();
     exit;
@@ -58,11 +63,20 @@ try {
 echo "Result: " . var_export($result, true) . "\n";
 $subjectId = $subject->getId();
 echo "SubjectId: " . var_export($subjectId, true) . "\n";
+if (!$result) {
+    $blockers = $workflow->buildTransitionBlockerList($subject, $transition);
+    $msg = 'Invalid transition ' . $transition;
+    foreach ($blockers as $blocker) {
+        $msg .= "\nBlocker: " . $blocker->getMessage();
+    }
+    echo $msg;
+    exit;
+}
 $marking = $workflow->apply($subject, "request", [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 echo "Marking: " . var_export($marking, true) . "\n";
 $context = $subject->getContext();
 echo "Context: " . var_export($context, true) . "\n";
-$transitions = $workflow->getEnabledTransition($subject, "request");
+$transitions = $workflow->getEnabledTransition($subject, $transition);
 //$transitions = $workflow->buildTransitionBlockerList($subject, "request");
 echo "Transitions: " . var_export($transitions, true) . "\n";
 $items = xarWorkflowTracker::getItems("cd_loans", "cdcollection", 0, '', 6);

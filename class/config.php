@@ -50,6 +50,8 @@ class xarWorkflowConfig extends xarObject
         // flat install supporting symlinks
         if (empty($root)) {
             $vendor = realpath(dirname(realpath($_SERVER['SCRIPT_FILENAME'])) . '/../vendor');
+        } elseif ($root == sys::web() && is_dir($root . '../vendor')) {
+            $vendor = realpath($root . '../vendor');
         } else {
             $vendor = realpath($root . 'vendor');
         }
@@ -64,7 +66,7 @@ class xarWorkflowConfig extends xarObject
                 xarWorkflowConfig::setAutoload();
                 ...
                 EOT;
-            throw new Exception($message);
+            throw new Exception($message . "\nVendor: $root - $vendor\n");
         }
         return $vendor .'/autoload.php';
     }

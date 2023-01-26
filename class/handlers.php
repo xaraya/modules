@@ -111,7 +111,7 @@ class xarWorkflowHandlers extends xarObject
             [$objectName, $itemId] = explode('.', (string) $subjectId . '.0');
             $objectRef = DataObjectMaster::getObject(['name' => $objectName, 'itemid' => $itemId]);
             $userId = $roleId ?? xarSession::getVar('role_id') ?? 0;
-            if (empty($objectref) || !$objectRef->checkAccess($action, $itemId, $userId)) {
+            if (empty($objectRef) || !$objectRef->checkAccess($action, $itemId, $userId)) {
                 $transitionName = $event->getTransition()->getName();
                 $message = "Sorry, you do not have '$action' access to this subject";
                 $event->setBlocked(true, $message);
