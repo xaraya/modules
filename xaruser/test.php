@@ -20,14 +20,15 @@
  * @return array empty
  * @throws XAR_SYSTEM_EXCEPTION, 'NO_PERMISSION'
  */
-function workflow_user_test()
+function workflow_user_test(array $args = [])
 {
     // Security Check
     if (!xarSecurity::check('ReadWorkflow')) {
         return;
     }
 
-    $data = [];
+    $data = $args ?? [];
+    $data['warning'] = '';
     // @checkme we don't actually need to require composer autoload here
     sys::import('modules.workflow.class.config');
     try {

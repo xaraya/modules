@@ -103,13 +103,13 @@ if ($actinfo) {
 <input type="hidden" name="activityId" value="#$activityId#"/>
 <input type="hidden" name="cdId" value="#$cd['id']#"/>
 <input type="hidden" name="status" value="#$cd['status']#"/>
-<input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" title="Change Status"/>
+<input type="image" name="whatever" src="#xarTpl::getImage('../lib/galaxia/img/icons/refresh2.gif','module','workflow')#" title="Change Status"/>
 </xar:if>
 <xar:if condition="$cd['status'] eq 'available'">
 <input type="hidden" name="activityId" value="#$requestId#"/>
 <input type="hidden" name="cd" value="#$cd['id']#"/>
 <input type="hidden" name="request" value="1"/>
-<input type="image" name="whatever" src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" title="Request CD"/>
+<input type="image" name="whatever" src="#xarTpl::getImage('../lib/galaxia/img/icons/next.gif','module','workflow')#" title="Request CD"/>
 </xar:if>
     </td>
 </form>
