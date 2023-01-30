@@ -37,18 +37,34 @@ function xarcachemanager_adminapi_getstoragetypes()
     $storagetypes['doctrine']     = ['name'    => 'doctrine',
                                           'label'   => 'Doctrine Cache (via composer)',
                                           'enabled' => class_exists('Doctrine\\Common\\Cache\\CacheProvider') ? true : false, ];
+    /**
     $storagetypes['eaccelerator'] = ['name'    => 'eaccelerator',
                                           'label'   => 'eAccelerator',
                                           'enabled' => function_exists('eaccelerator_get') ? true : false, ];
+     */
     $storagetypes['memcached']    = ['name'    => 'memcached',
                                           'label'   => 'Memcached Server(s)',
                                           'enabled' => class_exists('Memcache') ? true : false, ];
+    /**
     $storagetypes['mmcache']      = ['name'    => 'mmcache',
                                           'label'   => 'Turck MMCache',
                                           'enabled' => function_exists('mmcache_get') ? true : false, ];
+     */
+    /**
+    $storagetypes['predis']       = ['name'    => 'predis',
+                                          'label'   => 'Redis Server(s) (via composer)',
+                                          'enabled' => class_exists('Predis\\Client') ?  true : false, ];
+     */
+    /**
+    $storagetypes['redis']        = ['name'    => 'redis',
+                                          'label'   => 'Redis Server(s) (extension)',
+                                          'enabled' => class_exists('Redis') ? true : false, ];
+     */
+    /**
     $storagetypes['xcache']       = ['name'    => 'xcache',
                                           'label'   => 'XCache',
                                           'enabled' => function_exists('xcache_get') ? true : false, ];
+     */
     $storagetypes['dummy']        = ['name'    => 'dummy',
                                           'label'   => 'Dummy Storage',
                                           'enabled' => false, ];

@@ -47,9 +47,6 @@ function xarcachemanager_admin_view($args)
         return;
     }
 
-    // Get the output cache directory so you can view items even if output caching is disabled
-    $outputCacheDir = xarCache::getOutputCacheDir();
-
     $data = [];
 
     $data['tab'] = $tab;

@@ -47,6 +47,7 @@ class CacheUtility
                 return static::convertToSeconds((string) $starttime);
             default:
                 throw new BadParameterException($direction, "Unknown direction #(1)");
+                return 0;
         }
     }
 
