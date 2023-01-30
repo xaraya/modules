@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <xar:set name="wf_icons">sys::code() . 'modules/workflow/lib/galaxia/img/icons'</xar:set>
   <xar:if condition="$action eq 'run'">
-    <input type="image" name="run" value="1" title="#xarML('run instance')#" alt="#xarML('run instance')#" src="#$wf_icons#/next.gif"/>
+    <input type="image" name="run" value="1" title="#xarML('run instance')#" alt="#xarML('run instance')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/next.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'send'"/>
-    <input type="image" name="send" value="1" title="#xarML('send instance')#" alt="#xarML('send instance')#" src="#$wf_icons#/linkto.gif"/>
+    <input type="image" name="send" value="1" title="#xarML('send instance')#" alt="#xarML('send instance')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/linkto.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'exception'"/>
-    <input type="image" name="exception" value="1" title="#xarML('exception handling')#" alt="#xarML('exception handling')#" src="#$wf_icons#/stop.gif"/>
+    <input type="image" name="exception" value="1" title="#xarML('exception handling')#" alt="#xarML('exception handling')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/stop.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'resume'"/>
-    <input type="image" name="resume" value="1" title="#xarML('resume instance')#" alt="#xarML('resume instance')#" src="#$wf_icons#/refresh2.gif"/>
+    <input type="image" name="resume" value="1" title="#xarML('resume instance')#" alt="#xarML('resume instance')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/refresh2.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'abort'"/>
-    <input type="image" name="abort" value="1" title="#xarML('abort instance')#" alt="#xarML('abort instance')#" src="#$wf_icons#/trash.gif"/>
+    <input type="image" name="abort" value="1" title="#xarML('abort instance')#" alt="#xarML('abort instance')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/trash.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'release'"/>
-    <input type="image" name="release" value="1" title="#xarML('release instance')#" alt="#xarML('release instance')#" src="#$wf_icons#/float.gif"/>
+    <input type="image" name="release" value="1" title="#xarML('release instance')#" alt="#xarML('release instance')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/float.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'grab'"/>
-    <input type="image" name="grab" value="1" title="#xarML('grab instance')#" alt="#xarML('grab instance')#" src="#$wf_icons#/fix.gif"/>
+    <input type="image" name="grab" value="1" title="#xarML('grab instance')#" alt="#xarML('grab instance')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/fix.gif','module','workflow')#"/>
   <xar:elseif condition="$action eq 'remove'"/>
-    <input type="image" name="remove" value="1" title="#xarML('remove from list')#" alt="#xarML('remove from list')#" src="#$wf_icons#/select.gif"/>
+    <input type="image" name="remove" value="1" title="#xarML('remove from list')#" alt="#xarML('remove from list')#" src="#xarTpl::getImage('../lib/galaxia/img/icons/select.gif','module','workflow')#"/>
   <xar:else/>
     #$action#
   </xar:if>

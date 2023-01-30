@@ -33,9 +33,9 @@
       <tr>
         <xar:foreach in="$fieldlist" value="$field">
           <xar:if condition="$sort_mode eq $field . '_desc'">
-            <th><a href="#xarServer::getCurrentURL(array('sort_mode' => $field . '_asc'))#">#$fieldlabel[$field]#</a></th>
+            <th><a href="#xarServer::getCurrentURL(['sort_mode' => $field . '_asc'])#">#$fieldlabel[$field]#</a></th>
           <xar:else/>
-            <th><a href="#xarServer::getCurrentURL(array('sort_mode' => $field . '_desc'))#">#$fieldlabel[$field]#</a></th>
+            <th><a href="#xarServer::getCurrentURL(['sort_mode' => $field . '_desc'])#">#$fieldlabel[$field]#</a></th>
           </xar:if>
         </xar:foreach>
         <xar:if condition="!empty($actionlist)">
@@ -49,7 +49,7 @@
       </tr>
       <xar:foreach in="$items" value="$item">
         <tr>
-          <form method="post" action="&xar-modurl-workflow-user-instances;">
+          <form method="post" action="#xarController::URL('workflow','user','instances')#">
             <xar:foreach in="$fieldlist" value="$field">
               <xar:if condition="$field eq 'procname'">
                 <td>#$item[$field]#</td>

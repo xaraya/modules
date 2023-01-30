@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <form action="&xar-modurl-workflow-user-instances;" method="post">
+    <form action="#xarController::URL('workflow','user','instances')#" method="post">
       <input type="hidden" name="offset" value="#$offset#"/>
       <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
       <table>

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-  <xar:set name="wf_icons">sys::code() . 'modules/workflow/lib/galaxia/img/icons'</xar:set>
   <xar:if condition="$type eq 'start'">
-    <img src="#$wf_icons#/mini_blue_circle.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_circle.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'end'"/>
-    <img src="#$wf_icons#/mini_blue_dbl_circle.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_dbl_circle.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'activity'"/>
-    <img src="#$wf_icons#/mini_blue_rectangle.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_rectangle.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'switch'"/>
-    <img src="#$wf_icons#/mini_blue_diamond.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_diamond.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'standalone'"/>
-    <img src="#$wf_icons#/mini_blue_hexagon.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_hexagon.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'split'"/>
-    <img src="#$wf_icons#/mini_blue_triangle.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_triangle.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:elseif condition="$type eq 'join'"/>
-    <img src="#$wf_icons#/mini_blue_inv_triangle.gif" alt="#$type#" title="#$type#"/>
+    <img src="#xarTpl::getImage('../lib/galaxia/img/icons/mini_blue_inv_triangle.gif','module','workflow')#" alt="#$type#" title="#$type#"/>
   <xar:else/>
     #$type#
   </xar:if>

@@ -39,7 +39,7 @@
       </tr>
       <xar:foreach in="$items" value="$item">
         <tr>
-          <form method="post" action="&xar-modurl-workflow-user-instances;">
+          <form method="post" action="#xarController::URL('workflow','user','instances')#">
             <xar:foreach in="$fieldlist" value="$field">
               <xar:if condition="$field eq 'procname'">
                 <td>#$item[$field]#</td>

@@ -43,7 +43,7 @@
       </p>
 
       <div style="overflow: hidden">
-        <img src="#xarTpl::getImage('hook_sample.png','workflow')#" alt="#xarML('Hook Sample')#"/>
+        <img src="#xarTpl::getImage('hook_sample.png','module','workflow')#" alt="#xarML('Hook Sample')#"/>
       </div>
 
       <h4>Music CD Loans</h4>
@@ -52,7 +52,7 @@
       </p>
 
       <div style="overflow: hidden">
-        <img src="#xarTpl::getImage('cd_loans.png','workflow')#" alt="#xarML('Music CD Loans')#"/>
+        <img src="#xarTpl::getImage('cd_loans.png','module','workflow')#" alt="#xarML('Music CD Loans')#"/>
       </div>
 
       <h3>Further Information</h3>
@@ -78,8 +78,8 @@
       <h3>What is it?</h3>
 
       <p>
-        <xar:set name="concepts">sys::code() . 'modules/workflow/xardocs/concepts.htm'</xar:set>
-        <xar:set name="manual">sys::code() . 'modules/workflow/xardocs/manual.htm'</xar:set>
+        <xar:set name="concepts">xarTpl::getFile('xardocs/concepts.htm','module','workflow')</xar:set>
+        <xar:set name="manual">xarTpl::getFile('xardocs/manual.htm','module','workflow')</xar:set>
         See the <a href="#$concepts#">introduction</a> and <a href="#$manual#">user manual</a> of
         Galaxia for more details on what this module is all about, and how to use it.
       </p>
@@ -93,7 +93,7 @@
       </p>
 
       <div style="overflow: hidden">
-        <img src="#xarTpl::getImage('whowhatwhenhow.gif','workflow')#" alt="#xarML('Workflow overview diagram')#"/>
+        <img src="#xarTpl::getImage('whowhatwhenhow.gif','module','workflow')#" alt="#xarML('Workflow overview diagram')#"/>
       </div>
 
       <p>
@@ -124,12 +124,12 @@
       <li>
         go to the Dynamic Data <a href="index.php?module=dynamicdata&amp;type=util&amp;func=import">Import
         Object Definition</a> page and paste the content of the file
-        <a  href="#sys::code()#modules/workflow/xardata/cdcollection3_dd.xml">cdcollection3_dd.xml</a>
+        <a  href="#xarTpl::getFile('xardata/cdcollection3-def.xml','module','workflow')#">cdcollection3-def.xml</a>
         in the text area to create the sample database table;
       </li>
       <li>
         go to <a href="index.php?module=workflow&amp;type=admin&amp;func=processes">Admin Processes</a>
-        and upload the file <a href="#sys::code()#modules/workflow/xardata/cdcollection3.xml">cdcollection3.xml</a> to
+        and upload the file <a href="#xarTpl::getFile('xardata/cdcollection3.xml','module','workflow')#">cdcollection3.xml</a> to
         create a sample process;
       </li>
       <li>
@@ -160,7 +160,7 @@
 
     <p>With version 1.1, you can also automatically start a workflow process after some module item is created, updated or deleted. To try this out, you should :
     <ol>
-    <li>upload the <a href="#sys::code()#modules/workflow/xardata/review_articles.xml">review_articles.xml</a> file to create the Review Articles process</li>
+    <li>upload the <a href="#xarTpl::getFile('xardata/review_articles.xml','module','workflow')#">review_articles.xml</a> file to create the Review Articles process</li>
     <li>assign some users to the 'editors' workflow role and mark the process as active</li>
     <li>enable the workflow hooks for articles</li>
     <li>configure the workflow module so that the Review Articles - start activity is started when Create hooks are called from articles</li>
@@ -186,8 +186,8 @@
     <p><i>Based on the <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaWorkflow">Galaxia Workflow Engine</a></i></p>
     <pre>
     // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-    // All Rights Reserved. See <a href="modules/workflow/lib/copyright.txt">copyright.txt</a> for details and a complete list of authors.
-    // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See <a href="#sys::code()#modules/workflow/lib/license.txt">license.txt</a> for details.
+    // All Rights Reserved. See <a href="#xarTpl::getFile('lib/galaxia/docs/copyright.txt','module','workflow')#">copyright.txt</a> for details and a complete list of authors.
+    // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See <a href="#xarTpl::getFile('lib/galaxia/docs/license.txt','module','workflow')#">license.txt</a> for details.
     </pre>
       <h3>
         Further Information

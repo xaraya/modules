@@ -14,7 +14,7 @@
         <legend>
           List of processes (#$cant#)
         </legend>
-        <form action="&xar-modurl-workflow-user-processes;" method="post">
+        <form action="#xarController::URL('workflow','user','processes')#" method="post">
           <input type="hidden" name="offset" value="#$offset#"/>
           <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
           <table>
@@ -29,7 +29,7 @@
           </table>
         </form>
 
-        <form action="&xar-modurl-workflow-user-processes;" method="post">
+        <form action="#xarController::URL('workflow','user','processes')#" method="post">
           <input type="hidden" name="offset" value="#$offset#"/>
           <input type="hidden" name="find" value="#$find#"/>
           <input type="hidden" name="where" value="#$where#"/>
@@ -39,9 +39,9 @@
               <tr>
                 <th>
                   <xar:if condition="$sort_mode eq 'procname_desc'">
-                    <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a>
+                    <a href="#xarServer::getCurrentURL(['sort_mode' => 'procname_asc'])#">Process</a>
                     <xar:else/>
-                    <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#">Process</a>
+                    <a href="#xarServer::getCurrentURL(['sort_mode' => 'procname_desc'])#">Process</a>
                   </xar:if>
                 </th>
                 <th>Version</th>
@@ -54,10 +54,10 @@
                   <xar:set name="rowclass">'xar-alt'</xar:set>
                 </xar:if>
                 <tr class="#$rowclass#">
-                  <td><a href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['procname']#</a></td>
+                  <td><a href="#xarController::URL('workflow','user','activities',['filter_process'=>$items[$ix]['pId']])#">#$items[$ix]['procname']#</a></td>
                   <td style="text-align: right;">#$items[$ix]['version']#</td>
-                  <td style="text-align:right;"><a href="&xar-modurl-workflow-user-activities;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['activities']#</a></td>
-                  <td style="text-align:right;"><a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#">#$items[$ix]['instances']#</a></td>
+                  <td style="text-align:right;"><a href="#xarController::URL('workflow','user','activities',['filter_process'=>$items[$ix]['pId']])#">#$items[$ix]['activities']#</a></td>
+                  <td style="text-align:right;"><a href="#xarController::URL('workflow','user','instances',['filter_process'=>$items[$ix]['pId']])#">#$items[$ix]['instances']#</a></td>
                 </tr>
               </xar:foreach>
             <xar:else/>

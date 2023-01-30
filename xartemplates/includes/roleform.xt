@@ -10,7 +10,7 @@
       </xar:if>
     </legend>
 
-    <form action="&xar-modurl-workflow-admin-roles;" method="post">
+    <form action="#xarController::URL('workflow','admin','roles')#" method="post">
       <input type="hidden" name="pid" value="#$pid#"/>
       <input type="hidden" name="roleId" value="#$info['roleId']#"/>
       <input type="hidden" name="sort_mode" value="#$sort_mode#"/>

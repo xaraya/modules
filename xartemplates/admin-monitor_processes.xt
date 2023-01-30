@@ -84,33 +84,33 @@
               <table style="border-collapse: separate; width: 99%;">
                 <xar:if condition="!empty($items) and count($items) gt 0">
                   <tr>
-                    <th><a class="tableheading" href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#">Process</a></th>
+                    <th><a class="tableheading" href="#xarServer::getCurrentURL(['sort_mode' => 'name_asc'])#">Process</a></th>
                     <th>Activities</th>
-                    <th><a class="tableheading" href="#xarServer::getCurrentURL(array('sort_mode' => 'isActive_asc'))#">Active</a></th>
-                    <th><a class="tableheading" href="#xarServer::getCurrentURL(array('sort_mode' => 'isValid_asc'))#">Valid</a></th>
+                    <th><a class="tableheading" href="#xarServer::getCurrentURL(['sort_mode' => 'isActive_asc'])#">Active</a></th>
+                    <th><a class="tableheading" href="#xarServer::getCurrentURL(['sort_mode' => 'isValid_asc'])#">Valid</a></th>
                     <th>Instances</th>
                     <th>Duration of completed processes - min/avg/max</th>
                   </tr>
                   <xar:foreach in="$items" key="$ix">
                     <tr>
                       <td>
-                        <a class="link" href="#xarController::URL('workflow','admin','processes',array('pid' => $items[$ix]['pId']))#">#$items[$ix]['name']# #$items[$ix]['version']#</a>
+                        <a class="link" href="#xarController::URL('workflow','admin','processes',['pid' => $items[$ix]['pId']])#">#$items[$ix]['name']# #$items[$ix]['version']#</a>
                       </td>
                       <td style="text-align:right;">
-                        <a href="#xarController::URL('workflow','admin','monitor_activities',array('filter_process' => $items[$ix]['pId']))#" class="link">#$items[$ix]['activities']#</a>
+                        <a href="#xarController::URL('workflow','admin','monitor_activities',['filter_process' => $items[$ix]['pId']])#" class="link">#$items[$ix]['activities']#</a>
                       </td>
                       <td style="text-align:center;">
                         <xar:if condition="$items[$ix]['isActive']">
-                          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#"/>
+                          <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/refresh2.gif" alt=" (#xarML('active')#) " title="#xarML('active process')#"/>
                           <xar:else/>
                           &#160;
                         </xar:if>
                       </td>
                       <td style="text-align:center;">
                         <xar:if condition="$items[$ix]['isValid'] eq 0">
-                          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#"/>
+                          <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/red_dot.gif" alt="(#xarML('invalid')#)" title="#xarML('invalid process')#"/>
                           <xar:else/>
-                          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#"/>
+                          <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/green_dot.gif" alt="(#xarML('valid')#)" title="#xarML('valid process')#"/>
                         </xar:if>
 
                       </td>
@@ -118,19 +118,19 @@
                       <td style="text-align:right;">
                         <table >
                           <tr>
-                            <td style="text-align:right;"><a style="color:green;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'active'))#">#$items[$ix]['active_instances']#</a></td>
-                            <td style="text-align:right;"><a style="color:black;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'completed'))#">#$items[$ix]['completed_instances']#</a></td>
-                            <td style="text-align:right;"><a style="color:grey;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'aborted'))#">#$items[$ix]['aborted_instances']#</a></td>
-                            <td style="text-align:right;"><a style="color:red;" href="#xarController::URL('workflow','admin','monitor_instances',array('filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception'))#">#$items[$ix]['exception_instances']#</a></td>
+                            <td style="text-align:right;"><a style="color:green;" href="#xarController::URL('workflow','admin','monitor_instances',['filter_process' => $items[$ix]['pId'], 'filter_status' => 'active'])#">#$items[$ix]['active_instances']#</a></td>
+                            <td style="text-align:right;"><a style="color:black;" href="#xarController::URL('workflow','admin','monitor_instances',['filter_process' => $items[$ix]['pId'], 'filter_status' => 'completed'])#">#$items[$ix]['completed_instances']#</a></td>
+                            <td style="text-align:right;"><a style="color:grey;" href="#xarController::URL('workflow','admin','monitor_instances',['filter_process' => $items[$ix]['pId'], 'filter_status' => 'aborted'])#">#$items[$ix]['aborted_instances']#</a></td>
+                            <td style="text-align:right;"><a style="color:red;" href="#xarController::URL('workflow','admin','monitor_instances',['filter_process' => $items[$ix]['pId'], 'filter_status' => 'exception'])#">#$items[$ix]['exception_instances']#</a></td>
                           </tr>
                         </table>
                       </td>
 
                       <td style="text-align:left;">
                         <xar:if condition="!empty($items[$ix]['duration'])">
-                          <xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="#sys::code()#modules/workflow/xarimages/bluepixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#"/></xar:if>
-                          <xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="#sys::code()#modules/workflow/xarimages/greenpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#"/></xar:if>
-                          <xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="#sys::code()#modules/workflow/xarimages/redpixel.gif" class="xar-noborder" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#"/></xar:if>
+                          <xar:if condition="!empty($items[$ix]['timescale']['min'])"><img src="#xarTpl::getImage('bluepixel.gif','module','workflow')#" class="xar-noborder" width="#$items[$ix]['timescale']['min']#" height="10" alt="minimum" title="minimum = #$items[$ix]['duration']['min']#"/></xar:if>
+                          <xar:if condition="!empty($items[$ix]['timescale']['avg'])"><img src="#xarTpl::getImage('greenpixel.gif','module','workflow')#" class="xar-noborder" width="#$items[$ix]['timescale']['avg']#" height="10" alt="average" title="average = #$items[$ix]['duration']['avg']#"/></xar:if>
+                          <xar:if condition="!empty($items[$ix]['timescale']['max'])"><img src="#xarTpl::getImage('redpixel.gif','module','workflow')#" class="xar-noborder" width="#$items[$ix]['timescale']['max']#" height="10" alt="maximum" title="maximum = #$items[$ix]['duration']['max']#"/></xar:if>
                           #$items[$ix]['duration']['avg']#
                         </xar:if>
                       </td>

@@ -9,7 +9,7 @@
             Instance: #$ins_info['instanceId']# (Process: #$proc_info['name']# #$proc_info['version']#)
           </legend>
 
-          <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-instance;" method="post">
+          <form style="margin-left: 1em;" action="#xarController::URL('workflow','admin','instance')#" method="post">
             <input type="hidden" name="iid" value="#$iid#"/>
 
             <div class="xar-form-input-wrapper">
@@ -18,7 +18,7 @@
             </div>
             <div class="xar-form-input-wrapper">
               <label class="xar-form-label">Workitems</label>
-              <a href="#xarController::URL('workflow','admin','monitor_workitems',array('filter_instance' => $ins_info['instanceId']))#">#$ins_info['workitems']#</a>
+              <a href="#xarController::URL('workflow','admin','monitor_workitems',['filter_instance' => $ins_info['instanceId']])#">#$ins_info['workitems']#</a>
             </div>
             <div class="xar-form-input-wrapper">
               <label class="xar-form-label">Status</label>
@@ -85,8 +85,8 @@
                     <tr>
                       <td class="odd">#$acts[$ix]['name']#
                         <xar:if condition="$acts[$ix]['isInteractive'] eq 1">
-                          <a href="#xarController::URL('workflow','user','run_activity',array('activityId' => $acts[$ix]['activityId'], 'iid' => $iid))#">
-                            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run')#"/></a>
+                          <a href="#xarController::URL('workflow','user','run_activity',['activityId' => $acts[$ix]['activityId'], 'iid' => $iid])#">
+                            <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run')#"/></a>
                         </xar:if>
                       </td>
                       <td class="odd">#$acts[$ix]['actstatus']#</td>
@@ -121,7 +121,7 @@
 
         <fieldset>
           <legend>Properties</legend>
-          <form style="margin-left: 1em;" action="&xar-modurl-workflow-admin-instance;" method="post">
+          <form style="margin-left: 1em;" action="#xarController::URL('workflow','admin','instance')#" method="post">
             <input type="hidden" name="iid" value="#$iid#"/>
             <xar:foreach in="$props" key="$key" value="$item">
               <div class="xar-form-input-wrapper">
@@ -131,8 +131,8 @@
                 <xar:else/>
                   <input type="text" name="props[#$key#]" value="#$item#"/>
                 </xar:if>
-                <a href="&xar-modurl-workflow-admin-instance;&amp;iid=#$iid#&amp;unsetprop=#$key#">
-                  <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('del')#"/>
+                <a href="#xarController::URL('workflow','admin','instance',['iid'=>$iid,'unsetprop'=>$key])#">
+                  <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('del')#"/>
                 </a>
               </div>
             </xar:foreach>
@@ -144,7 +144,7 @@
 
         <fieldset>
           <legend>Add property</legend>
-          <form style="margin-left:1em;" action="&xar-modurl-workflow-admin-instance;" method="post">
+          <form style="margin-left:1em;" action="#xarController::URL('workflow','admin','instance')#" method="post">
             <input type="hidden" name="iid" value="#$iid#"/>
             <div class="xar-form-input-wrapper">
               <label for="propname" class="xar-form-label">

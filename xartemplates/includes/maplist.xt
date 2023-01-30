@@ -3,7 +3,7 @@
     <div>
       <fieldset>
         <legend>List of mappings</legend>
-        <form action="&xar-modurl-workflow-admin-roles;" method="post">
+        <form action="#xarController::URL('workflow','admin','roles')#" method="post">
           <div>
             <input type="hidden" name="pid" value="#$pid#"/>
             <input type="hidden" name="offset" value="#$offset#"/>
@@ -13,7 +13,7 @@
             <input type="submit" name="filter" value="#xarML('find')#"/>
           </div>
         </form>
-        <form action="&xar-modurl-workflow-admin-roles;" method="post">
+        <form action="#xarController::URL('workflow','admin','roles')#" method="post">
           <div>
             <input type="hidden" name="pid" value="#$pid#"/>
             <input type="hidden" name="offset" value="#$offset#"/>
@@ -25,26 +25,26 @@
             <tr>
               <xar:if condition="$sort_mode eq 'name_desc'">
                 <th>
-                  <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=name_asc">
+                  <a href="#xarController::URL('workflow','admin','roles',['pid'=>$pid,'find'=>$find,'offset'=>$offset,'sort_mode'=>'name_asc'])#">
                     Role
                   </a>
                 </th>
               <xar:else/>
                 <th>
-                  <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=name_desc">
+                  <a href="#xarController::URL('workflow','admin','roles',['pid'=>$pid,'find'=>$find,'offset'=>$offset,'sort_mode'=>'name_desc'])#">
                     Role
                   </a>
                 </th>
               </xar:if>
               <xar:if condition="$sort_mode eq 'user_desc'">
                 <th>
-                  <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=user_asc">
+                  <a href="#xarController::URL('workflow','admin','roles',['pid'=>$pid,'find'=>$find,'offset'=>$offset,'sort_mode'=>'user_asc'])#">
                     User
                   </a>
                 </th>
               <xar:else/>
                 <th>
-                  <a href="&xar-modurl-workflow-admin-roles;&amp;pid=#$pid#&amp;find=#$find#&amp;offset=#$offset#&amp;sort_mode=user_desc">
+                  <a href="#xarController::URL('workflow','admin','roles',['pid'=>$pid,'find'=>$find,'offset'=>$offset,'sort_mode'=>'user_desc'])#">
                     User
                   </a>
                 </th>

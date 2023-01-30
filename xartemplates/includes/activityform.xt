@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <div class="xar-form-input-container">
-      <form action="&xar-modurl-workflow-admin-activities;" method="post">
+      <form action="#xarController::URL('workflow','admin','activities')#" method="post">
         <fieldset>
           <legend>
             <xar:if condition="$activityId gt 0">
@@ -11,8 +11,6 @@
             </xar:if>
           </legend>
           
-          <input type="hidden" name="where2" value="#$where2#"/>
-          <input type="hidden" name="sort_mode2" value="#$sort_mode2#"/>
           <input type="hidden" name="find" value="#$find#"/>
           <input type="hidden" name="where" value="#$where#"/>
           <input type="hidden" name="sort_mode" value="#$sort_mode#"/>
@@ -67,8 +65,8 @@
                 <xar:foreach in="$roles" key="$ix">
                   <tr>
                     <td>
-                      <a class="link" href="&xar-modurl-workflow-admin-activities;&amp;where2=#$where2#&amp;sort_mode2=#$sort_mode2#&amp;sort_mode=#$sort_mode#&amp;find=#$find#&amp;where=#$where#&amp;activityId=#$activityId#&amp;pid=#$pid#&amp;remove_role=#$roles[$ix]['roleId']#">
-                        <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('Delete role')#"/>
+                      <a class="link" href="#xarController::URL('workflow','admin','activities',['pid'=>$pid,'activityId'=>$activityId,'remove_role'=>$roles[$ix]['roleId']])#">
+                        <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/trash.gif" alt="#xarML('del')#" title="#xarML('Delete role')#"/>
                       </a>
                     </td>
                     <td>#$roles[$ix]['name']#</td>

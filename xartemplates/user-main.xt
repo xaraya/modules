@@ -11,8 +11,8 @@
         <h3>Available Processes</h3>
         <xar:data-input type="listing" objectname="workflow_processes" fieldlist="name,version,valid,active,last_modified"/>
         <p>
-          <xar:set name="concepts">sys::code() . 'modules/workflow/xardocs/concepts.htm'</xar:set>
-          <xar:set name="manual">sys::code() . 'modules/workflow/xardocs/manual.htm'</xar:set>
+          <xar:set name="concepts">xarTpl::getFile('xardocs/concepts.htm','module','workflow')</xar:set>
+          <xar:set name="manual">xarTpl::getFile('xardocs/manual.htm','module','workflow')</xar:set>
           See the <a href="#$concepts#">introduction</a> and <a href="#$manual#">user manual</a> of
           Galaxia for more details on what this module is all about, and how to use it.
         </p>

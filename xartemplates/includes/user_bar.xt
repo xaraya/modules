@@ -13,7 +13,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarController::URL('workflow','user','main')#" class="#$linkclass#">
-            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/home.gif" alt="#xarML('workflows')#" title="#xarML('my workflows')#"/>
+            <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/home.gif" class="xar-icon" alt="#xarML('workflows')#" title="#xarML('my workflows')#"/>
             My Workflow
           </a>
         </li>
@@ -27,7 +27,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarController::URL('workflow','user','processes')#" class="#$linkclass#">
-            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/process.gif" alt="#xarML('processes')#" title="#xarML('user processes')#"/>
+            <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/process.gif" class="xar-icon" alt="#xarML('processes')#" title="#xarML('user processes')#"/>
             Processes
           </a>
         </li>
@@ -41,7 +41,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarController::URL('workflow','user','activities')#" class="#$linkclass#">
-            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/activity.gif" alt="#xarML('activities')#" title="#xarML('user activities')#"/>
+            <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/activity.gif" class="xar-icon" alt="#xarML('activities')#" title="#xarML('user activities')#"/>
             Activities
           </a>
         </li>
@@ -55,7 +55,7 @@
         </xar:if>
         <li class="#$tabclass#">
           <a href="#xarController::URL('workflow','user','instances')#" class="#$linkclass#">
-            <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/instance.gif" alt="#xarML('instances')#" title="#xarML('user instances')#"/>
+            <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/instance.gif" class="xar-icon" alt="#xarML('instances')#" title="#xarML('user instances')#"/>
             Instances
           </a>
         </li>

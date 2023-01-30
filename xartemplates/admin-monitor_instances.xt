@@ -131,13 +131,13 @@
           <table style="border-collapse: separate; width: 99%">
             <xar:if condition="!empty($items) and count($items) gt 0">
               <tr>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#">Ins</a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'owner_asc'))#">Owner</a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'status_asc'))#">Status</a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#">Current Activity</a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#">User</a></th>
-                <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#">Start</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'procname_asc'])#">Process</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'instanceId_asc'])#">Ins</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'owner_asc'])#">Owner</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'status_asc'])#">Status</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'name_asc'])#">Current Activity</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'user_asc'])#">User</a></th>
+                <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'started_asc'])#">Start</a></th>
                 <th>Duration of this instance</th>
               </tr>
               <xar:foreach in="$items" key="$ix">
@@ -151,7 +151,7 @@
                   </td>
 
                   <td>
-                    <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
+                    <a class="link" href="#xarController::URL('workflow','admin','instance',['iid'=>$items[$ix]['instanceId']])#">#$items[$ix]['instanceId']#</a>
                   </td>
 
                   <td style="text-align:left;">

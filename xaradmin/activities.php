@@ -326,9 +326,7 @@ function workflow_admin_activities()
     // Build the new process graph based on the changes.
     $activityManager->build_process_graph($data['pid']);
 
-    // unknown variables ?
-    $data['where2'] = '';
-    $data['find2'] = '';
+    // for roles sorting
     $data['sort_mode2'] = '';
 
     return $data;

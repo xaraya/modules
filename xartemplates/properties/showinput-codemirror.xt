@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 
-    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/lib/codemirror.js" type="text/javascript"/>
-    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/lib/codemirror.css"/>
-    <script src="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.js"/>
-    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.css"/>
+    <script src="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/lib/codemirror.js','property','codemirror')#" type="text/javascript"/>
+    <link rel="stylesheet" href="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/lib/codemirror.css','property','codemirror')#"/>
+    <script src="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.js','property','codemirror')#"/>
+    <link rel="stylesheet" href="#xarTpl::getFile('codemirrorui/lib/CodeMirror-2.0/mode/javascript/javascript.css','property','codemirror')#"/>
     
-    <script src="#sys::code()#properties/codemirror/codemirrorui/js/codemirror-ui.js" type="text/javascript"/>
-    <link rel="stylesheet" href="#sys::code()#properties/codemirror/codemirrorui/css/codemirror-ui.css" type="text/css" media="screen" />
+    <script src="#xarTpl::getFile('codemirrorui/js/codemirror-ui.js','property','codemirror')#" type="text/javascript"/>
+    <link rel="stylesheet" href="#xarTpl::getFile('codemirrorui/css/codemirror-ui.css','property','codemirror')#" type="text/css" media="screen" />
 
 
     <xar:if condition="empty($style)">
@@ -26,6 +26,7 @@
         <xar:data-input type="textarea" id="$name" name="$name" style="$style" rows="$rows" cols="$cols" value="$value"/>
     </div>
     
+    <xar:set name="path">dirname(xarTpl::getFile('codemirrorui/js/codemirror-ui.js','property','codemirror'))</xar:set>
     <script>
       var textarea = document.getElementById('#$name#');
       // undo prepForDisplay() for textarea showinput
@@ -33,7 +34,7 @@
       textarea.value = cleanup.replaceAll(String.fromCharCode(38)+'lt;', String.fromCharCode(60)).replaceAll(String.fromCharCode(38)+'gt;', String.fromCharCode(62)).replace(String.fromCharCode(38)+'amp;', String.fromCharCode(38)).replaceAll(String.fromCharCode(38)+'quot;', String.fromCharCode(34));
       var editor = new CodeMirrorUI(textarea,
        {
-        path : '#sys::code()#properties/codemirror/codemirrorui/js/',
+        path : '#$path#/',
           searchMode : 'inline',
           buttons : ['undo','redo','jump','reindent','about']
        },

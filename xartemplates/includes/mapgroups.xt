@@ -4,7 +4,7 @@
       <fieldset>
         <legend>Map groups to roles</legend>
 
-        <form method="post" action="&xar-modurl-workflow-admin-roles;">
+        <form method="post" action="#xarController::URL('workflow','admin','roles')#">
           <input type="hidden" name="pid" value="#$pid#"/>
           <input type="hidden" name="offset" value="#$offset#"/>
           <input type="hidden" name="sort_mode" value="#$sort_mode#"/>

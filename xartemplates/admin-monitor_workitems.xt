@@ -100,25 +100,25 @@
             <table style="border-collapse: separate; width: 99%">
               <xar:if condition="!empty($items) and count($items) gt 0">
                 <tr>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'itemId_asc'))#">Id</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'instanceId_asc'))#">Ins</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'orderId_asc'))#">#</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'actname_asc'))#">Activity</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'user_asc'))#">User</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'started_asc'))#">Start</a></th>
-                  <th><a href="#xarServer::getCurrentURL(array('sort_mode' => 'duration_asc'))#">Duration of this workitem</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'itemId_asc'])#">Id</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'procname_asc'])#">Process</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'instanceId_asc'])#">Ins</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'orderId_asc'])#">#</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'actname_asc'])#">Activity</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'user_asc'])#">User</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'started_asc'])#">Start</a></th>
+                  <th><a href="#xarServer::getCurrentURL(['sort_mode' => 'duration_asc'])#">Duration of this workitem</a></th>
                 </tr>
                 <xar:foreach in="$items" key="$ix">
                   <tr>
                     <td style="text-align:left;">
-                      <a href="&xar-modurl-workflow-admin-workitem;&amp;itemId=#$items[$ix]['itemId']#" class="link">#$items[$ix]['itemId']#</a>
+                      <a href="#xarController::URL('workflow','admin','workitem',['itemId'=>$items[$ix]['itemId']])#" class="link">#$items[$ix]['itemId']#</a>
                     </td>
 
                     <td style="text-align:left;">#$items[$ix]['procname']# #$items[$ix]['version']#</td>
 
                     <td>
-                      <a class="link" href="&xar-modurl-workflow-admin-instance;&amp;iid=#$items[$ix]['instanceId']#">#$items[$ix]['instanceId']#</a>
+                      <a class="link" href="#xarController::URL('workflow','admin','instance',['iid'=>$items[$ix]['instanceId']])#">#$items[$ix]['instanceId']#</a>
                     </td>
 
                     <td>#$items[$ix]['orderId']#</td>
@@ -135,7 +135,7 @@
 
                     <td style="text-align:left;">
                       <xar:if condition="!empty($items[$ix]['duration'])">
-                        <xar:if condition="!empty($items[$ix]['timescale'])"><img src="#sys::code()#modules/workflow/xarimages/bluepixel.gif" width="#$items[$ix]['timescale']#" height="10" border="0" alt="duration" title="duration = #$items[$ix]['duration']#"/></xar:if>
+                        <xar:if condition="!empty($items[$ix]['timescale'])"><img src="#xarTpl::getImage('bluepixel.gif','module','workflow')#" width="#$items[$ix]['timescale']#" height="10" border="0" alt="duration" title="duration = #$items[$ix]['duration']#"/></xar:if>
                         #$items[$ix]['duration']#
                       </xar:if>
                     </td>

@@ -56,17 +56,17 @@
                 <tr>
                   <th>
                     <xar:if condition="$sort_mode eq 'procname_desc'">
-                      <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_asc'))#">Process</a>
+                      <a href="#xarServer::getCurrentURL(['sort_mode' => 'procname_asc'])#">Process</a>
                       <xar:else/>
-                      <a href="#xarServer::getCurrentURL(array('sort_mode' => 'procname_desc'))#">Process</a>
+                      <a href="#xarServer::getCurrentURL(['sort_mode' => 'procname_desc'])#">Process</a>
                     </xar:if>
                   </th>
                   <th>Version</th>
                   <th>
                     <xar:if condition="$sort_mode eq 'name_desc'">
-                      <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_asc'))#">Activity</a>
+                      <a href="#xarServer::getCurrentURL(['sort_mode' => 'name_asc'])#">Activity</a>
                       <xar:else/>
-                      <a href="#xarServer::getCurrentURL(array('sort_mode' => 'name_desc'))#">Activity</a>
+                      <a href="#xarServer::getCurrentURL(['sort_mode' => 'name_desc'])#">Activity</a>
                     </xar:if>
                   </th>
                   <th>Instances</th>
@@ -83,13 +83,13 @@
                       <!-- Get an image for the activity -->
                       <xar:template file="activity_image" subdata="$items[$ix]"/>
                       <xar:if condition="$items[$ix]['instances'] gt 0">
-                        <a href="&xar-modurl-workflow-user-instances;&amp;filter_process=#$items[$ix]['pId']#&amp;filter_activity=#$items[$ix]['activityId']#">#$items[$ix]['name']#</a>
+                        <a href="#xarController::URL('workflow','user','instances',['filter_process'=>$items[$ix]['pId'],'filter_activity'=>$items[$ix]['activityId']])#">#$items[$ix]['name']#</a>
                         <xar:else/>
                         #$items[$ix]['name']#
                       </xar:if>&#160;
                       <xar:if condition="$items[$ix]['isInteractive'] OR ($items[$ix]['type'] eq 'start') OR ($items[$ix]['type'] eq 'standalone')">
-                        <a href="#xarController::URL('workflow','user','run_activity',array('activityId' => $items[$ix]['activityId']))#">
-                          <img src="#sys::code()#modules/workflow/lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#"/>
+                        <a href="#xarController::URL('workflow','user','run_activity',['activityId' => $items[$ix]['activityId']])#">
+                          <xar:img scope="module" module="workflow" file="../lib/galaxia/img/icons/next.gif" alt="#xarML('run')#" title="#xarML('run activity')#"/>
                         </a>
                       </xar:if>
                     </td>
