@@ -110,9 +110,9 @@
         function fetch()
         {
             if (empty($this->calendar->children)) return array();
-            $child = each($this->calendar->children);
+            $child = current($this->calendar->children);
             if ($child) {
-                return $child['value'];
+                return $child;
             } else {
                 reset($this->calendar->children);
                 return false;

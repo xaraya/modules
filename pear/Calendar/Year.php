@@ -57,7 +57,7 @@ class Calendar_Year extends Calendar
      * @param int year e.g. 2003
      * @access public
      */
-    function Calendar_Year($y)
+    function __construct($y)
     {
         $this->loadTime($y);
     }

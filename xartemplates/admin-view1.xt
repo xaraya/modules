@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
         <p style="text-align: right; margin: 15px 0 0 0;">
         <xar:if condition="xarMod::isAvailable('export')">
-            <a href="#xarModURL('calendar','user','export')#"><b>Download Items</b></a>
+            <a href="#xarModURL('calendar','user','export')#"><strong>Download Items</strong></a>
         </xar:if>
         </p>
         <div class="xar-alt-outline" style="margin:2em; text-align:center; padding: 0 5px 0 5px;">
