@@ -11,7 +11,7 @@
                 <label title="#xarML('Select a type of publication to add')#" class="xar-form-label">
                     Publication Type:
                 </label>
-                <form method="post" action="#xarModURL('publications','admin','view')#">
+                <form method="post" action="#xarController::URL('publications','admin','view')#">
                     <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
                     <xar:data-input name="ptid" type="objectref" refobject="publications_types" store_prop="id" display_prop="description" value="$ptid" onchange="$onchange" />
                 </form>
@@ -35,7 +35,7 @@
                             By Author : #(1)
                         </xar:mlstring>
                         <xar:mlvar>
-                            #xarUserGetVar('name',$owner)#
+                            #xarUser::getVar('name',$owner)#
                         </xar:mlvar>
                     </xar:ml>
                 </xar:if>

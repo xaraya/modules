@@ -37,7 +37,7 @@
             <div class="xar-col">
                 <xar:data-input property="$properties['summary_template']"/>
                 &#160;
-                <a href="#xarModURL('publications','admin','templates_type',array('file' => 'summary','ptid' => $properties['id']->value))#">
+                <a href="#xarController::URL('publications','admin','templates_type',array('file' => 'summary','ptid' => $properties['id']->value))#">
                     Edit template
                 </a>
             </div>
@@ -51,7 +51,7 @@
             <div class="xar-col">
                 <xar:data-input property="$properties['detail_template']"/>
                 &#160;
-                <a href="#xarModURL('publications','admin','templates_type',array('file' => 'detail','ptid' => $properties['id']->value))#">
+                <a href="#xarController::URL('publications','admin','templates_type',array('file' => 'detail','ptid' => $properties['id']->value))#">
                     Edit template
                 </a>
             </div>

@@ -57,11 +57,11 @@
                     <xar:data-input property="$properties['version']" />
                     <xar:if condition="!empty($itemid)">
                         &#160;
-                        <a href="#xarModURL('publications', 'admin' ,'display_version', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Display version')#">
+                        <a href="#xarController::URL('publications', 'admin' ,'display_version', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Display version')#">
                             Display versions
                         </a>
                         &#160;
-                        <a href="#xarModURL('publications', 'admin' ,'manage_versions', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Manage versions')#">
+                        <a href="#xarController::URL('publications', 'admin' ,'manage_versions', array('itemid' => $itemid, 'name' => $object->name))#" title="#xarML('Manage versions')#">
                             Manage versions
                         </a>
                     </xar:if>
@@ -134,7 +134,7 @@
                 <xar:data-input property="$properties['state']" />
                 &#160;
                 <xar:if condition="$properties['parent']->value != 0">
-                    <a href="#xarModURL('publications','admin','delete_translation',array('itemid'=>$properties['id']->value))#" title="#xarML('Delete this translation')#" style="margin-right: 5px">
+                    <a href="#xarController::URL('publications','admin','delete_translation',array('itemid'=>$properties['id']->value))#" title="#xarML('Delete this translation')#" style="margin-right: 5px">
                         <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Translation')#"/>
                     </a>
                 </xar:if>
@@ -189,7 +189,7 @@
                 <div class="xar-col">
                     <xar:data-input property="$properties['summary_template']" />
                     &#160;
-                    <a href="#xarModURL('publications','admin','templates_page',array('file' => 'summary','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
+                    <a href="#xarController::URL('publications','admin','templates_page',array('file' => 'summary','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
                         Edit template
                     </a>
                 </div>
@@ -202,7 +202,7 @@
                 <div class="xar-col">
                     <xar:data-input property="$properties['detail_template']" />
                     &#160;
-                    <a href="#xarModURL('publications','admin','templates_page',array('file' => 'detail','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
+                    <a href="#xarController::URL('publications','admin','templates_page',array('file' => 'detail','ptid' => $properties['itemtype']->value,'itemid' => $properties['id']->value))#">
                         Edit template
                     </a>
                 </div>

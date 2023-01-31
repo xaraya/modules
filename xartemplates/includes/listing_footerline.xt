@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="xarUserIsLoggedIn() AND xarSecurity::check('ManagePublications',0) AND $total gt 0">
+    <xar:if condition="xarUser::isLoggedIn() AND xarSecurity::check('ManagePublications',0) AND $total gt 0">
         <div style="text-align:center; padding-top:10px;">
             <input type="hidden" name="idlist" id="idlist" />
             <input type="hidden" name="redirecttarget" id="redirecttarget" />

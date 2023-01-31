@@ -11,7 +11,7 @@
             <xar:sec mask="ManagePublications" catch="false">
                 <xar:set name="type">xarController::$request->getInfo()</xar:set>
                 <xar:var name="label">Create a new publication</xar:var>
-                <a href="#xarModURL('publications', $type[1], 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
+                <a href="#xarController::URL('publications', $type[1], 'new',array('name' => $object->name))#" style="float:right; margin-right: 10px" title="#$label#">
                     <img src="#xarTpl::getImage('icons/document-new.png','base')#"/>
                 </a>
             </xar:sec> 

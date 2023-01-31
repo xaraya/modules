@@ -7,7 +7,7 @@
         </span>
     </div>
     <div class="xar-mod-body">
-        <form method="post" action="#xarModURL('publications','user','clone')#">
+        <form method="post" action="#xarController::URL('publications','user','clone')#">
             <fieldset>
                 <legend>
                     <strong>Clone this publication</strong>

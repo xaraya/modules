@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <form method="post" action="#xarModURL('publications','admin','clone')#">
+        <form method="post" action="#xarController::URL('publications','admin','clone')#">
             <fieldset>
                 <legend>
                     <strong>Clone this publication</strong>

@@ -8,7 +8,7 @@
         </h2>
           <xar:template type="module" file="util-menu" />
         <h3>Statistics</h3>
-        <form method="post" action="#xarModURL('publications','admin','stats')#">        
+        <form method="post" action="#xarController::URL('publications','admin','stats')#">        
             Group by        
             <xar:for start="$i = 0" test="$i lt 4" iter="$i++">
                 <select name="group[#$i#]" id="group_#$i#">

@@ -3,19 +3,19 @@
     <xar:set name="allowed">$properties['access']->getValue()</xar:set>
     <xar:var name="label">Create a new publication</xar:var>
     <xar:access group="$pubtype_access['add']['group']">
-        <a href="#xarModURL('publications', 'user', 'new')#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'user', 'new')#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/document-new.png','base')#"/>
         </a>
     </xar:access>
     <xar:access group="$allowed['modify']['group']">
         <xar:var name="label">Modify this publication</xar:var>
-        <a href="#xarModURL('publications', 'user', 'modify',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'user', 'modify',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/modify.png','base')#"/>
         </a>
     </xar:access>
     <xar:access group="$allowed['delete']['group']">
         <xar:var name="label">Delete this publication</xar:var>
-        <a href="#xarModURL('publications', 'user', 'delete',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px" title="#$label#">
+        <a href="#xarController::URL('publications', 'user', 'delete',array('itemid' => $properties['id']->value))#" style="float:right; margin-right: 10px" title="#$label#">
             <img src="#xarTpl::getImage('icons/delete.png','base')#"/>
         </a>
     </xar:access>

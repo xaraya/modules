@@ -16,7 +16,7 @@
         <p>
             Create a simple picture gallery based on images and thumbnails located on your server.
         </p>
-        <form method="post" action="#xarModURL('publications','admin','importpictures')#">
+        <form method="post" action="#xarController::URL('publications','admin','importpictures')#">
             <fieldset>
                 <div class="xar-row">
                     <div class="xar-col">

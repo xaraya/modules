@@ -9,7 +9,7 @@
 
     <!-- Title -->
     <div class="xar-publications-news-summary-title">
-        <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $fields['id']))#">
+        <a class="xar-title" href="#xarController::URL('publications','user','display',array('itemid' => $fields['id']))#">
             <xar:data-output property="$properties['title']" value="$fields['title']"/>
         </a>
     </div>
@@ -18,7 +18,7 @@
     <div class="xar-publications-news-summary-postby">
         <xar:ml>
             <xar:mlstring>Posted by: #(1) on #(2) #(3)</xar:mlstring>
-            <xar:mlvar>#xarUserGetVar('name',$fields['author'])#</xar:mlvar>
+            <xar:mlvar>#xarUser::getVar('name',$fields['author'])#</xar:mlvar>
             <xar:mlvar>#xarLocaleGetFormattedDate('long',$fields['created'])#</xar:mlvar>
             <xar:mlvar>#xarLocaleGetFormattedTime('long',$fields['created'])#</xar:mlvar>
         </xar:ml>
@@ -43,7 +43,7 @@
         </xar:if>
 
     <!-- Read more -->
-        <a href="#xarModURL('publications','user','display',array('id' => $fields['id']))#">                
+        <a href="#xarController::URL('publications','user','display',array('id' => $fields['id']))#">                
             Read more
         </a>
     </div>

@@ -91,7 +91,7 @@
                                     #xarVarPrepForDisplay($page.menu_alias)#
                                 </xar:if>
                             <xar:else />
-                                <xar:set name="gourl">#xarModURL('publications','user','display',array('id'=&gt;$page.id))#</xar:set>
+                                <xar:set name="gourl">#xarController::URL('publications','user','display',array('id'=&gt;$page.id))#</xar:set>
                                 <xar:set name="source_flag">$page['menu_source_flag']</xar:set>
                                 <xar:if condition="$source_flag eq 1">
                                     <xar:set name="source_flag">$typeinfo[$page['itemtype']]['menu_source_flag']</xar:set>

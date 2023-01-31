@@ -68,7 +68,7 @@
                 </div>
                 <div class="xar-col">
                     &#160;
-                    <a href="#xarModURL('publications','admin','delete_translation',array('itemid'=>$properties['id']->value))#" title="#xarML('Delete this translation')#" style="margin-right: 5px">
+                    <a href="#xarController::URL('publications','admin','delete_translation',array('itemid'=>$properties['id']->value))#" title="#xarML('Delete this translation')#" style="margin-right: 5px">
                         <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Translation')#"/>
                     </a>
                 </div>

@@ -4,20 +4,20 @@
         <xar:set name="layout">'publications-user'</xar:set>
     </xar:if>
     <xar:if condition="($layout eq 'publications-user') or ($layout eq 'default')">
-        <xar:if condition="xarUserIsLoggedIn()">
+        <xar:if condition="xarUser::isLoggedIn()">
             <td style="text-align: center;" nowrap="nowrap">
                 <xar:access level="500">
-                    <a href="#xarModURL($module, 'user', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
+                    <a href="#xarController::URL($module, 'user', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Modify this item')#" style="margin-right: 5px">
                         <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify')#"/>
                     </a>
                 </xar:access>
                 <xar:access level="700">
-                    <a href="#xarModURL($module, 'user', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
+                    <a href="#xarController::URL($module, 'user', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Delete this item')#" style="margin-right: 5px">
                         <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete')#"/>
                     </a>
                 </xar:access>
                 <xar:access level="200">
-                    <a href="#xarModURL($module, 'user', 'display', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Display this item')#" style="margin-right: 5px">
+                    <a href="#xarController::URL($module, 'user', 'display', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))#" title="#xarML('Display this item')#" style="margin-right: 5px">
                         <img src="#xarTpl::getImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display')#"/>
                     </a>
                 </xar:access>
@@ -25,11 +25,11 @@
             </td>
         </xar:if>
     <xar:elseif condition="($layout eq 'publications-admin')"/>
-        <xar:if condition="xarUserIsLoggedIn()">
+        <xar:if condition="xarUser::isLoggedIn()">
             <td style="text-align: center;" nowrap="nowrap">
                 <xar:access level="500">
                     <xar:set name="link">
-                        xarModURL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
+                        xarController::URL($module, 'admin', 'modify', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Modify this publication')#" style="margin-right: 5px">
@@ -43,7 +43,7 @@
                 </xar:access>
                 <xar:access level="700">
                     <xar:set name="link">
-                        xarModURL($module, 'admin', 'clone', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
+                        xarController::URL($module, 'admin', 'clone', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Clone this publication')#" style="margin-right: 5px">
@@ -57,7 +57,7 @@
                 </xar:access>
                 <xar:access level="700">
                     <xar:set name="link">
-                        xarModURL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
+                        xarController::URL($module, 'admin', 'delete', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Delete this publication')#" style="margin-right: 5px">
@@ -71,7 +71,7 @@
                 </xar:access>
                 <xar:access level="200">
                     <xar:set name="link">
-                        xarModURL($module, 'admin', 'display', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
+                        xarController::URL($module, 'admin', 'display', array('name' => $objectname, 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Display this publication')#" style="margin-right: 5px">
@@ -85,7 +85,7 @@
                 </xar:access>
                 <xar:access level="800">
                     <xar:set name="link">
-                        xarModURL($module, 'admin', 'templates_page', array('ptid' => $loopitem['itemtype'], 'itemid' => $loopitem[$primaryalias]))
+                        xarController::URL($module, 'admin', 'templates_page', array('ptid' => $loopitem['itemtype'], 'itemid' => $loopitem[$primaryalias]))
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Manage templates of this item')#" style="margin-right: 5px">
@@ -107,7 +107,7 @@
             <xar:set name="ptid">$loopitem[$primaryalias]</xar:set>
             <xar:set name="args">DataObjectDescriptor::getObjectID(array('name' => $properties['name']->value))</xar:set>
             <xar:sec mask="ManagePublications" catch="false">
-                <a href="#xarModURL('publications','admin','modify_pubtype',array('itemid' => $ptid))#" title="#xarML('Modify this publication type')#" style="margin-right: 5px">                    
+                <a href="#xarController::URL('publications','admin','modify_pubtype',array('itemid' => $ptid))#" title="#xarML('Modify this publication type')#" style="margin-right: 5px">                    
                     <img src="#xarTpl::getImage('icons/modify.png','base')#" alt="#xarML('Modify')#"/>
                 </a>
             </xar:sec>
@@ -115,20 +115,20 @@
                 <xar:if condition="xarModVars::get('publications', 'defaultpubtype') eq $ptid">
                     <img src="#xarTpl::getImage('icons/delete.png','base')#" style="margin-right: 5px"/>
                 <xar:else/>
-                    <a href="#xarModURL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#" title="#xarML('Delete this publication type')#" style="margin-right: 5px">                    
+                    <a href="#xarController::URL('publications','admin','delete_pubtype',array('itemid' => $ptid, 'name' => 'objects'))#" title="#xarML('Delete this publication type')#" style="margin-right: 5px">                    
                         <img src="#xarTpl::getImage('icons/delete.png','base')#" alt="#xarML('Delete')#"/>
                     </a>
                 </xar:if>
             </xar:sec>
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" title="#xarML('Configure this publication type')#" style="margin-right: 5px">                    
+                <a href="#xarController::URL('publications','admin','modifyconfig',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" title="#xarML('Configure this publication type')#" style="margin-right: 5px">                    
                     <img src="#xarTpl::getImage('icons/modify-config.png','base')#" alt="#xarML('Configure')#"/>
                 </a>
             <xar:else />                
                 Publication Config &#160;|&#160;
             </xar:sec>
             <xar:sec mask="EditPublications" catch="false">
-                <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#" title="#xarML('List the pages of this publication type')#" style="margin-right: 5px">                    
+                <a href="#xarController::URL('publications','admin','view',array('ptid' => $ptid))#" title="#xarML('List the pages of this publication type')#" style="margin-right: 5px">                    
                     <img src="#xarTpl::getImage('icons/item-list.png','base')#" alt="#xarML('List')#"/>
                 </a>
             <xar:else />                
@@ -136,7 +136,7 @@
             </xar:sec>
             <!--
             <xar:sec mask="AddPublications" catch="false">
-                <a href="#xarModURL('publications','admin','new',array('ptid' => $ptid))#" style="margin-right: 5px">                    
+                <a href="#xarController::URL('publications','admin','new',array('ptid' => $ptid))#" style="margin-right: 5px">                    
                     <img src="#xarTpl::getImage('icons/add.png','base')#"/>
                 </a>
             <xar:else />                
@@ -144,7 +144,7 @@
             </xar:sec>
             -->
             <xar:sec mask="AdminPublications" catch="false">
-                <a href="#xarModURL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" title="#xarML('Manage templates of this publication type')#" style="margin-right: 5px">                    
+                <a href="#xarController::URL('publications','admin','templates_type',array('ptid' => $ptid, 'tab' => 'pubtypes'))#" title="#xarML('Manage templates of this publication type')#" style="margin-right: 5px">                    
                     <img src="#xarTpl::getImage('template.png','publications')#" alt="#xarML('Manage Templates')#"/>
                 </a>
             <xar:else />                

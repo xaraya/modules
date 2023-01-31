@@ -142,7 +142,7 @@ function publications_user_view($args)
 
     // Get the users requested number of stories per page.
     // If user doesn't care, use the site default
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
         // TODO: figure how to let users specify their settings
         // COMMENT: if the settings were split into separate module variables,
         // then they could all be individually over-ridden by each user.

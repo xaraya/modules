@@ -7,7 +7,7 @@
             Modify publication type: #$properties['description']->value#
         </h2>
 
-        <form method="post" action="#xarModURL('publications','admin','modify_pubtype')#">
+        <form method="post" action="#xarController::URL('publications','admin','modify_pubtype')#">
             <xar:data-form object="$object" tplmodule="publications"/>
             <div class="xar-row">
                 <div class="xar-col">

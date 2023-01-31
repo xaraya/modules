@@ -18,7 +18,7 @@
             If you want to let users pre-select a category first, before selecting a publication type, you can use the following tag. Note that this only makes sense if you have a single base category for your publications
             xar:data-output type="categorynavigation" layout="trails" showchildren="1" module="publications" urltype="admin" func="new" itemtype="$ptid" catid="$catid" 
         -->
-        <form method="post" action="#xarModURL('publications','user','new')#">
+        <form method="post" action="#xarController::URL('publications','user','new')#">
             <div class="xar-row">
                 <div class="xar-col">
                     <label title="#xarML('Select a type of publication to add')#">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="xar-col" style="text-align: right; min-width: 40%">
                     <xar:set name="type">xarController::$request->getInfo()</xar:set>
-                    <a href="#xarModURL('publications',$type[1],'view',array('ptid' => $ptid))#">
+                    <a href="#xarController::URL('publications',$type[1],'view',array('ptid' => $ptid))#">
                         Publications List
                     </a>
                 </div>
@@ -46,7 +46,7 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" id="post" action="#xarModURL('publications','user','create')#" enctype="#$enctype#" >
+        <form method="post" id="post" action="#xarController::URL('publications','user','create')#" enctype="#$enctype#" >
             <xar:set name="layout">'publications-user'</xar:set>
             <xar:if condition="isset($tab) AND $tab eq 'preview'">
                 <xar:set name="visible">array('none','none','block')</xar:set>

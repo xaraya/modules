@@ -8,21 +8,21 @@
             </dt>
             <xar:if condition="!empty($settings['show_map'])">
                 <dd>
-                    <a href="#xarModURL('publications', 'user', 'viewmap', array('ptid' => !empty($ptid) ? $ptid : null))#">
+                    <a href="#xarController::URL('publications', 'user', 'viewmap', array('ptid' => !empty($ptid) ? $ptid : null))#">
                         View Publication Map
                     </a>
                 </dd>
             </xar:if>
             <xar:if condition="!empty($settings['showsubmit'])">
                 <dd>
-                    <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
+                    <a href="#xarController::URL('publications', 'admin', 'new', array('ptid' => !empty($ptid) ? $ptid : null))#" title="Submit Publication">
                         Contribute 
                     </a>
                 </dd>
             </xar:if>
             <xar:if condition="!empty($settings['show_archives'])">
                 <dd>
-                    <a href="xarModURL('publications', 'user', 'archive', array('ptid' => !empty($ptid) ? $ptid : null))">
+                    <a href="xarController::URL('publications', 'user', 'archive', array('ptid' => !empty($ptid) ? $ptid : null))">
                         View Archives
                     </a>
                 </dd>

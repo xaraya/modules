@@ -9,9 +9,9 @@
     <xar:foreach in="$items" value="$item">
         <xar:if condition="!empty($showtitle)">
             <xar:if condition="isset($linkpubtype)">
-                <a href="#xarModURL('publications', 'user', 'display', array('id' => $item['id'], 'itemtype' => $item['pubtype_id']))#">#$item['title']#</a>
+                <a href="#xarController::URL('publications', 'user', 'display', array('id' => $item['id'], 'itemtype' => $item['pubtype_id']))#">#$item['title']#</a>
             <xar:else />
-                <a href="#xarModURL('publications', 'user', 'display', array('id' => $item['id']))#">#$item['title']#</a>
+                <a href="#xarController::URL('publications', 'user', 'display', array('id' => $item['id']))#">#$item['title']#</a>
             </xar:if>
         </xar:if>
         <xar:if condition="!empty($showsummary) and !empty($item['summary'])">
@@ -33,7 +33,7 @@
 
     <xar:if condition="!empty($showsubmit)">
         <div>
-            <a href="#xarModURL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#">Submit new</a>
+            <a href="#xarController::URL('publications', 'admin', 'new', array('ptid' => $pubtype_id))#">Submit new</a>
         </div>
     </xar:if>
 

@@ -13,7 +13,7 @@
                     <label title="#xarML('Select a template to create or modify')#" class="xar-form-label">
                         Template file:
                     </label>
-                    <form method="post" action="#xarModURL('publications','admin','templates_page')#">
+                    <form method="post" action="#xarController::URL('publications','admin','templates_page')#">
                         <xar:set name="onchange">"javascript:this.form.submit();"</xar:set>
                         <xar:data-input type="dropdown" name="file" options="$files" value="$file" onchange="$onchange" />
                         &#160;

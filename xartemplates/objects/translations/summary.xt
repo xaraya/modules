@@ -11,7 +11,7 @@
     <div class="xar-row">
         <div class="xar-col-expanded" style="width: 100%;">
             <div style="float: left">
-                <a class="xar-title" href="#xarModURL('publications','user','display',array('itemid' => $properties['id']->value))#">
+                <a class="xar-title" href="#xarController::URL('publications','user','display',array('itemid' => $properties['id']->value))#">
                     <xar:data-output property="$properties['title']" />
                 </a>
             </div>

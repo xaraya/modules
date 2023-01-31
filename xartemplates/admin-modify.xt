@@ -8,7 +8,7 @@
             Modify <xar:data-output property="$properties['itemtype']" value="$ptid" link="0"/>
         </h2>
         <div style="float:right">
-            <a href="#xarModURL('publications','admin','view',array('ptid' => $ptid))#">
+            <a href="#xarController::URL('publications','admin','view',array('ptid' => $ptid))#">
                 Publications List
             </a>
         </div>
@@ -16,14 +16,14 @@
             <div class="xar-col">
                 <xar:if condition="!empty($prevpublication)">
                     <xar:var name="prev">Previous</xar:var>
-                    <a href="#xarModURL('publications', 'admin', 'modify', array('ptid' => $prevpublication['pubtype_id'], 'itemid' => $prevpublication['id']))#" title="#$prev#">
+                    <a href="#xarController::URL('publications', 'admin', 'modify', array('ptid' => $prevpublication['pubtype_id'], 'itemid' => $prevpublication['id']))#" title="#$prev#">
                         <xar:img scope="theme" file="icons/go-previous.png" class="xar-icon" alt="$prev"/>
                     </a>
                 </xar:if>
                 &#160;
                 <xar:if condition="!empty($nextpublication)">
                     <xar:var name="next">Next</xar:var>
-                    <a href="#xarModURL('publications', 'admin', 'modify', array('ptid' => $nextpublication['pubtype_id'], 'itemid' => $nextpublication['id']))#" title="#$next#">
+                    <a href="#xarController::URL('publications', 'admin', 'modify', array('ptid' => $nextpublication['pubtype_id'], 'itemid' => $nextpublication['id']))#" title="#$next#">
                         <xar:img scope="theme" file="icons/go-next.png" class="xar-icon" alt="$next"/>
                     </a>
                 </xar:if>
@@ -39,7 +39,7 @@
                 'application/x-www-form-urlencoded'
             </xar:set>
         </xar:if>
-        <form method="post" name="post" id="post" action="#xarModURL('publications','admin','update')#" enctype="#$enctype#" >
+        <form method="post" name="post" id="post" action="#xarController::URL('publications','admin','update')#" enctype="#$enctype#" >
             <xar:set name="layout">'publications-admin'</xar:set>
             <xar:set name="itemcount">count($items)</xar:set>
             <xar:set name="tabs">3*$itemcount</xar:set>
@@ -109,7 +109,7 @@
                     -->
                     <!--
                         <xar:sec mask="ManagePublications" catch="false">
-                            <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
+                            <a href="#xarController::URL('publications','admin','delete',array('id' => $object.itemid))#">
                                 <img src="#xarTpl::getImage('icons/delete.png','base')#"/>
                             </a>
                         </xar:sec>

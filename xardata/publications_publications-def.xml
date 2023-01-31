@@ -139,7 +139,7 @@
       <id>845</id>
       <label>Author</label>
       <type>username</type>
-      <defaultvalue>xarUserGetVar('uname')</defaultvalue>
+      <defaultvalue>xarUser::getVar('uname')</defaultvalue>
       <source>publication.owner</source>
       <status>33</status>
       <seq>20</seq>
