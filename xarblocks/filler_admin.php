@@ -49,12 +49,12 @@ class Publications_FillerBlockAdmin extends Publications_FillerBlock
         function update(Array $data=array())
         {
             $args = array();
-            xarVarFetch('pubtype_id',       'int',       $args['pubtype_id'],      $this->pubtype_id, XARVAR_NOT_REQUIRED);
-            xarVarFetch('pubstate',         'str',       $args['pubstate'],        $this->pubstate, XARVAR_NOT_REQUIRED);
-            xarVarFetch('displaytype',      'str',       $args['displaytype'],     $this->displaytype, XARVAR_NOT_REQUIRED);
-            xarVarFetch('fillerid',         'id',        $args['fillerid'],        $this->fillerid, XARVAR_NOT_REQUIRED);
-            xarVarFetch('alttitle',         'str',       $args['alttitle'],        $this->alttitle, XARVAR_NOT_REQUIRED);
-            xarVarFetch('alttext',          'str',       $args['alttext'],         $this->alttext, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('pubtype_id',       'int',       $args['pubtype_id'],      $this->pubtype_id, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('pubstate',         'str',       $args['pubstate'],        $this->pubstate, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('displaytype',      'str',       $args['displaytype'],     $this->displaytype, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('fillerid',         'id',        $args['fillerid'],        $this->fillerid, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('alttitle',         'str',       $args['alttitle'],        $this->alttitle, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('alttext',          'str',       $args['alttext'],         $this->alttext, XARVAR_NOT_REQUIRED);
             $this->setContent($args);
             return true;
         }

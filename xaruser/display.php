@@ -37,15 +37,15 @@ function publications_user_display($args)
 // this is used to determine whether we come from a pubtype-based view or a
 // categories-based navigation
 // Note we support both id and itemid
-    if(!xarVarFetch('name',      'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',     'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('id',        'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('name',      'str',   $name,  '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',     'id',    $ptid,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',    'id',    $itemid,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('id',        'id',    $id,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('page',      'int:1', $page,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
-    // Override xarVarFetch
+    // Override xarVar::fetch
     extract ($args);
     
     // The itemid var takes precedence if it exiata
@@ -166,7 +166,7 @@ function publications_user_display($args)
     } elseif ($redirect_type == 2) {
         // This displays a page of a different module    
         // If this is from a link of a redirect child page, use the child param as new URL
-        if(!xarVarFetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('child',    'str', $child,  NULL, XARVAR_NOT_REQUIRED)) {return;}
         if (!empty($child)) {
             // This page was submitted
             // Turn entities into amps

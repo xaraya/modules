@@ -19,10 +19,10 @@ function publications_admin_templates_type($args)
 
     extract($args);
 
-    if (!xarVarFetch('confirm',        'int',    $confirm,       0,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',        'id',    $data['ptid'],       xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('file',        'str',   $data['file'],       'summary',  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('source_data',        'str',   $data['source_data'],       '',  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('confirm',        'int',    $confirm,       0,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',        'id',    $data['ptid'],       xarModVars::get('publications', 'defaultpubtype'),  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('file',        'str',   $data['file'],       'summary',  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('source_data',        'str',   $data['source_data'],       '',  XARVAR_NOT_REQUIRED)) {return;}
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
     $pubtypeobject->getItem(array('itemid' => $data['ptid']));

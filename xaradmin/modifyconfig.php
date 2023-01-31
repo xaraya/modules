@@ -17,8 +17,8 @@ function publications_admin_modifyconfig()
     if (!xarSecurityCheck('AdminPublications')) return;
 
     // Get parameters
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'global', XARVAR_NOT_REQUIRED)) return;
-    if(!xarVarFetch('ptid', 'int', $data['ptid'], xarModVars::get('publications', 'defaultpubtype'), XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'global', XARVAR_NOT_REQUIRED)) return;
+    if(!xarVar::fetch('ptid', 'int', $data['ptid'], xarModVars::get('publications', 'defaultpubtype'), XARVAR_DONT_SET)) {return;}
 
     if ($data['tab'] == 'pubtypes') {
         // Configuration specific to a publication type

@@ -17,10 +17,10 @@ function publications_admin_updatestate()
     if (!xarSecurityCheck('EditPublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('state', 'isset', $state,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',   'isset', $ptid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('state', 'isset', $state,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',   'isset', $ptid,    NULL, XARVAR_DONT_SET)) {return;}
 
 
     // Confirm authorisation code

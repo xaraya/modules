@@ -17,10 +17,10 @@ function publications_admin_create()
 {
     if (!xarSecurityCheck('AddPublications')) return;
 
-    if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}
-    if (!xarVarFetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',       'id',    $data['ptid'])) {return;}
+    if (!xarVar::fetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
     
     // Confirm authorisation code
     // This has been disabled for now

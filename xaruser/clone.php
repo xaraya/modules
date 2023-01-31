@@ -16,10 +16,10 @@ function publications_user_clone()
     // Xaraya security
     if (!xarSecurityCheck('ModeratePublications')) return;
 
-    if(!xarVarFetch('name',     'isset', $objectname,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',     'isset', $ptid,            NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $data['itemid'],  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm',  'int',   $confirm,         0, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('name',     'isset', $objectname,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',     'isset', $ptid,            NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',   'isset', $data['itemid'],  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirm',  'int',   $confirm,         0, XARVAR_DONT_SET)) {return;}
 
     if (empty($data['itemid'])) return xarResponse::NotFound();
 
@@ -46,7 +46,7 @@ function publications_user_clone()
         if (!xarSecConfirmAuthKey()) return;
         
         // Get the name for the clone
-        if(!xarVarFetch('newname',   'str', $newname,   "", XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('newname',   'str', $newname,   "", XARVAR_NOT_REQUIRED)) {return;}
         if (empty($newname)) $newname = $data['name'] . "_copy";
         if ($newname == $data['name']) $newname = $data['name'] . "_copy";
         $newname = strtolower(str_ireplace(" ", "_", $newname));
@@ -57,7 +57,7 @@ function publications_user_clone()
         $cloneid = $data['object']->createItem(array('itemid' => 0));
 
         // Create the clone's translations
-        if(!xarVarFetch('clone_translations',   'int', $clone_translations,   0, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('clone_translations',   'int', $clone_translations,   0, XARVAR_NOT_REQUIRED)) {return;}
         if ($clone_translations) {
             // Get the info on all the objects to be cloned
             sys::import('xaraya.structures.query');

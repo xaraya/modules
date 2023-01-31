@@ -16,8 +16,8 @@ function publications_admin_importpubtype($args)
 {
     if (!xarSecurityCheck('AdminPublications')) return;
 
-    if(!xarVarFetch('import', 'isset', $import,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('xml', 'isset', $xml,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('import', 'isset', $import,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('xml', 'isset', $xml,  NULL, XARVAR_DONT_SET)) {return;}
 
     extract($args);
 

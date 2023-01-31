@@ -34,14 +34,14 @@
 
         public function update(Array $data=array())
         {
-            xarVarFetch('locale', 'str', $data['locale'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('alttitle', 'str', $data['alttitle'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('altsummary', 'str', $data['altsummary'], '', XARVAR_NOT_REQUIRED);
-            xarVarFetch('showtitle', 'checkbox', $data['showtitle'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showsummary', 'checkbox', $data['showsummary'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showpubdate', 'checkbox', $data['showpubdate'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showauthor', 'checkbox', $data['showauthor'], false, XARVAR_NOT_REQUIRED);
-            xarVarFetch('showsubmit', 'checkbox', $data['showsubmit'], false, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('locale', 'str', $data['locale'], '', XARVAR_NOT_REQUIRED);
+            xarVar::fetch('alttitle', 'str', $data['alttitle'], '', XARVAR_NOT_REQUIRED);
+            xarVar::fetch('altsummary', 'str', $data['altsummary'], '', XARVAR_NOT_REQUIRED);
+            xarVar::fetch('showtitle', 'checkbox', $data['showtitle'], false, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('showsummary', 'checkbox', $data['showsummary'], false, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('showpubdate', 'checkbox', $data['showpubdate'], false, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('showauthor', 'checkbox', $data['showauthor'], false, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('showsubmit', 'checkbox', $data['showsubmit'], false, XARVAR_NOT_REQUIRED);
             $this->setContent($data);
             return true;
         }

@@ -91,9 +91,9 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $itemtype = xarCoreCache::getCached('Blocks.categories','itemtype');
             } else {
                 // try to get itemtype from input
-                xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
+                xarVar::fetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
                 if (empty($itemtype)) {
-                  xarVarFetch('ptid', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
+                  xarVar::fetch('ptid', 'isset', $itemtype, NULL, XARVAR_DONT_SET);
                 }// if
             }
         }
@@ -107,9 +107,9 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $itemid = xarCoreCache::getCached('Blocks.categories','itemid');
             } else {
                 // try to get itemid from input
-                xarVarFetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
+                xarVar::fetch('itemid', 'isset', $itemid, NULL, XARVAR_DONT_SET);
                 if (empty($itemid)) {
-                  xarVarFetch('id', 'isset', $itemid, NULL, XARVAR_DONT_SET);
+                  xarVar::fetch('id', 'isset', $itemid, NULL, XARVAR_DONT_SET);
                 }// if
             }
         }
@@ -231,7 +231,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         }
         if (empty($catid)) {
             // try to get catid from input
-            xarVarFetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
+            xarVar::fetch('catid', 'isset', $catid, NULL, XARVAR_DONT_SET);
         }
         // turn $catid into $cids array (and set $andcids flag)
         $istree = 0;
@@ -260,8 +260,8 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
             if (empty($cids)) {
                 // try to get cids from input
-                xarVarFetch('cids',    'isset', $cids,    NULL,  XARVAR_DONT_SET);
-                xarVarFetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED);
+                xarVar::fetch('cids',    'isset', $cids,    NULL,  XARVAR_DONT_SET);
+                xarVar::fetch('andcids', 'isset', $andcids, false, XARVAR_NOT_REQUIRED);
     
                 if (empty($cids)) {
                     $cids = array();

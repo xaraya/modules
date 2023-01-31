@@ -15,11 +15,11 @@
 function publications_user_viewmap($args)
 {
     // Get parameters
-    if(!xarVarFetch('ptid',  'id',    $ptid,   xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('by', 'enum:pub:cat:grid',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('go',    'str',   $go,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('catid', 'str',   $catid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('cids',  'array', $cids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('ptid',  'id',    $ptid,   xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('by', 'enum:pub:cat:grid',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('go',    'str',   $go,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('catid', 'str',   $catid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('cids',  'array', $cids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);

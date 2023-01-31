@@ -18,10 +18,10 @@ function publications_user_delete()
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
-    if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('returnurl',  'str', $returnurl,  $return,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  $return,  XARVAR_NOT_REQUIRED)) {return;}
 
     if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));

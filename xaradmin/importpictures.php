@@ -17,19 +17,19 @@ function publications_admin_importpictures()
     if (!xarSecurityCheck('AdminPublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('basedir',      'isset', $basedir,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('baseurl',      'isset', $baseurl,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('thumbnail',    'isset', $thumbnail,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filelist',     'isset', $filelist,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('refresh',      'isset', $refresh,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',         'int',   $data['ptid'], 5,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('title',        'isset', $title,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('summary',      'isset', $summary,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('content',      'isset', $content,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('usefilemtime', 'isset', $usefilemtime, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('test',         'isset', $test,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('import',       'isset', $import,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('basedir',      'isset', $basedir,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('baseurl',      'isset', $baseurl,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('thumbnail',    'isset', $thumbnail,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('filelist',     'isset', $filelist,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('refresh',      'isset', $refresh,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',         'int',   $data['ptid'], 5,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('title',        'isset', $title,        NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('summary',      'isset', $summary,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('content',      'isset', $content,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('usefilemtime', 'isset', $usefilemtime, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('test',         'isset', $test,         NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('import',       'isset', $import,       NULL, XARVAR_DONT_SET)) {return;}
 
 # --------------------------------------------------------
 #

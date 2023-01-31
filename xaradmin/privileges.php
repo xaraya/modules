@@ -21,19 +21,19 @@ function publications_admin_privileges($args)
     extract($args);
 
     // fixed params
-    if (!xarVarFetch('ptid',         'isset', $ptid,         NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('id',           'isset', $id,           NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('ptid',         'isset', $ptid,         NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('cid',          'isset', $cid,          NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('uid',          'isset', $uid,          NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('author',       'isset', $author,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('id',           'isset', $id,           NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('apply',        'isset', $apply,        NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extpid',       'isset', $extpid,       NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extname',      'isset', $extname,      NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extrealm',     'isset', $extrealm,     NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extmodule',    'isset', $extmodule,    NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extcomponent', 'isset', $extcomponent, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extinstance',  'isset', $extinstance,  NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('extlevel',     'isset', $extlevel,     NULL, XARVAR_DONT_SET)) {return;}
 
     sys::import('modules.dynamicdata.class.properties.master');
     $categories = DataPropertyMaster::getProperty(array('name' => 'categories'));

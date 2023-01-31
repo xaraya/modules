@@ -17,20 +17,20 @@ function publications_admin_importwebpage()
     if (!xarSecurityCheck('AdminPublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('url',        'str',   $data['url'], '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('refresh',    'isset', $refresh,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',       'int',   $data['ptid'],0,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('contentfield',    'str', $data['contentfield'],     '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('titlefield',      'str', $data['titlefield'],       '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('cids',       'isset', $cids,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filterhead', 'isset', $filterhead,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('filtertail', 'isset', $filtertail,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('findtitle',  'isset', $findtitle,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('numrules',   'isset', $numrules,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('search',     'isset', $search,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('replace',    'isset', $replace,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('test',       'isset', $test,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('import',     'isset', $import,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('url',        'str',   $data['url'], '', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('refresh',    'isset', $refresh,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',       'int',   $data['ptid'],0,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('contentfield',    'str', $data['contentfield'],     '', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('titlefield',      'str', $data['titlefield'],       '', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('cids',       'isset', $cids,        NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('filterhead', 'isset', $filterhead,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('filtertail', 'isset', $filtertail,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('findtitle',  'isset', $findtitle,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('numrules',   'isset', $numrules,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('search',     'isset', $search,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('replace',    'isset', $replace,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('test',       'isset', $test,        NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('import',     'isset', $import,      NULL, XARVAR_DONT_SET)) {return;}
 
 # --------------------------------------------------------
 #

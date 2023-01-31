@@ -19,7 +19,7 @@ function publications_user_view_pages($args)
     if (!xarSecurityCheck('ManagePublications')) return;
 
     // Accept a parameter to allow selection of a single tree.
-    xarVarFetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
+    xarVar::fetch('contains', 'id', $contains, 0, XARVAR_NOT_REQUIRED);
 
     $data = xarMod::apiFunc(
         'publications', 'user', 'getpagestree',

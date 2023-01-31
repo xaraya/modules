@@ -27,12 +27,12 @@ function publications_user_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid',     'id',    $data['itemid'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('id',         'id',    $data['id'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid',     'id',    $data['itemid'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('id',         'id',    $data['id'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
    
     if (empty($data['itemid']) && empty($data['id'])) return xarResponse::NotFound();
     // The itemid var takes precedence if it exiats

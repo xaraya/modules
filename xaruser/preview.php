@@ -33,9 +33,9 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_preview($data)
 {
-    if(!xarVarFetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
     
-    // Override xarVarFetch
+    // Override xarVar::fetch
     extract ($data);
 
     if (empty($data['object'])) return xarResponse::NotFound();

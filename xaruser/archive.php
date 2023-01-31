@@ -18,11 +18,11 @@ function publications_user_archive($args)
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     // Get parameters from user
-    if (!xarVarFetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('catid', 'str',          $catid, '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('catid', 'str',          $catid, '',   XARVAR_NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);

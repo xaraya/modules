@@ -42,7 +42,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     {
         $vars = $this->getContent();
         
-        if (!xarVarFetch($vars['paramname'], 'str', $glossaryterm, null, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch($vars['paramname'], 'str', $glossaryterm, null, XARVAR_NOT_REQUIRED)) return;
         if (!$glossaryterm) return;
 
         $articlecriteria = array();
@@ -114,9 +114,9 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
     
     public function update()
     {
-        xarVarFetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
-        xarVarFetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
-        xarVarFetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('paramname', 'str:1:20', $vars['paramname'], 'glossaryterm', XARVAR_NOT_REQUIRED);
+        xarVar::fetch('ptid', 'int:0:', $vars['ptid'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('cid', 'int:0:', $vars['cid'], 0, XARVAR_NOT_REQUIRED);
         $this->setContent($vars);
         return true;    
     }

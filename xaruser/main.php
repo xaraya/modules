@@ -26,7 +26,7 @@ function publications_user_main($args)
 #
 # Get the ID of the translation if required
 #
-        if(!xarVarFetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
+        if(!xarVar::fetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
         return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
     } else {
 # --------------------------------------------------------

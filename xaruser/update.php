@@ -27,15 +27,15 @@ function publications_user_update()
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('itemid',       'isset', $data['itemid'],       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
-	if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',       'isset', $data['itemid'],       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
+	if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     // This has been disabled for now
@@ -123,7 +123,7 @@ function publications_user_update()
 
     if ($data['quit']) {
         // Redirect if needed
-        if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
         if (!empty($return_url)) {
             // FIXME: this is a hack for short URLS
             $delimiter = (strpos($return_url, '&')) ? '&' : '?';

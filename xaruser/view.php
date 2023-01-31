@@ -29,30 +29,30 @@
 function publications_user_view($args)
 {
     // Get parameters
-    if (!xarVarFetch('ptid',     'id',    $ptid,      xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('startnum', 'int:0', $startnum,  1,    XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',     'id',    $ptid,      xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('startnum', 'int:0', $startnum,  1,    XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemtype', 'id',    $itemtype,  NULL, XARVAR_NOT_REQUIRED)) {return;}
     // TODO: put the query string through a proper parser, so searches on multiple words can be done.
-    if (!xarVarFetch('q',        'pre:trim:passthru:str:1:200',   $q,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('q',        'pre:trim:passthru:str:1:200',   $q,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     // can't use list enum here, because we don't know which sorts might be used
     // True - but we can provide some form of validation and normalisation.
     // The original 'regexp:/^[\w,]*$/' lets through *any* non-space character.
     // This validation will accept a list of comma-separated words, and will lower-case, trim
     // and strip out non-alphanumeric characters from each word.
-    if (!xarVarFetch('sort',     'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('owner', 'id',    $owner,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('pubdate',  'str:1', $pubdate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('sort',     'strlist:,:pre:trim:lower:alnum', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('numcols',  'int:0', $numcols,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('owner', 'id',    $owner,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('pubdate',  'str:1', $pubdate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
     // This may not be set via user input, only e.g. via template tags, API calls, blocks etc.
-    //    if(!xarVarFetch('startdate','int:0', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    //    if(!xarVarFetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    //    if(!xarVarFetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    //    if(!xarVar::fetch('startdate','int:0', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    //    if(!xarVar::fetch('enddate',  'int:0', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    //    if(!xarVar::fetch('where',    'str',   $where,     NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Added to implement an Alpha Pager
-    if (!xarVarFetch('letter', 'pre:lower:passthru:str:1:20', $letter, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('letter', 'pre:lower:passthru:str:1:20', $letter, NULL, XARVAR_NOT_REQUIRED)) return;
 
     // Override if needed from argument array (e.g. ptid, numitems etc.)
     extract($args);

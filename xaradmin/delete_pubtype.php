@@ -15,10 +15,10 @@ function publications_admin_delete_pubtype()
 {
     if (!xarSecurityCheck('AdminPublications')) return;
 
-    if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
 
     if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));

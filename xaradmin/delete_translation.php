@@ -15,9 +15,9 @@ function publications_admin_delete_translation()
 {
     if (!xarSecurityCheck('ManagePublications')) return;
 
-    if(!xarVarFetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str', $data['itemid'],     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'str', $data['itemid'],     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
 
     if (empty($data['itemid'])) {
         if (isset($returnurl)) {

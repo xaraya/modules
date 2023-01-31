@@ -26,11 +26,11 @@ function publications_admin_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVarFetch('itemid',     'isset', $data['itemid'], NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid',     'isset', $data['itemid'], NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
     
     if (empty($name) && empty($ptid)) return xarResponse::NotFound();
 

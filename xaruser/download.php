@@ -16,7 +16,7 @@
  
 function publications_user_download()
 {
-    if(!xarVarFetch('filepath',  'str', $filepath,      '',     XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('filepath',  'str', $filepath,      '',     XARVAR_NOT_REQUIRED)) {return;}
 
 # --------------------------------------------------------
 # Check the input

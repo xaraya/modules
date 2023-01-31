@@ -18,10 +18,10 @@ function publications_user_create()
     // Xaraya security
     if (!xarSecurityCheck('ModeratePublications')) return;
 
-    if (!xarVarFetch('ptid',       'id',    $data['ptid'])) {return;}
-    if (!xarVarFetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',       'id',    $data['ptid'])) {return;}
+    if (!xarVar::fetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     // This has been disabled for now
@@ -56,7 +56,7 @@ function publications_user_create()
     xarHooks::notify('ItemCreate', $item);
 
     // Redirect if needed
-    if (!xarVarFetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
     if (!empty($return_url)) {
         // FIXME: this is a hack for short URLS
         $delimiter = (strpos($return_url, '&')) ? '&' : '?';

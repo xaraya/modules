@@ -17,16 +17,16 @@ function publications_admin_view($args=array())
     if (!xarSecurityCheck('EditPublications')) return;
 
     // Get parameters
-    if(!xarVarFetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('ptid',     'isset', $ptid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('state',   'isset', $state,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort', 'strlist:,:pre', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('owner', 'isset', $owner, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('object',   'str:1', $object,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('ptid',     'isset', $ptid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('state',   'isset', $state,   NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('sort', 'strlist:,:pre', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('owner', 'isset', $owner, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('object',   'str:1', $object,  NULL, XARVAR_NOT_REQUIRED)) {return;}
 
     extract($args);
 
