@@ -31,7 +31,7 @@
 
         <!-- Description -->
         <div class="xar-publications-download-detail-title">
-            <b>Description</b>
+            <strong>Description</strong>
         </div>
         <xar:if condition="!empty($fields['image'])">
             <div style="width: 400px">
