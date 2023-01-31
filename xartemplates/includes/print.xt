@@ -5,7 +5,7 @@
     </xar:set>
     <xar:if condition="$pageName ne 'module'">
         <a href="#xarServer::getCurrentURL(array('pageName' => 'module'))#" style="float:right; margin-left: 10px; margin-right: 10px">
-            <img src="#xarTplGetImage('icons/document-print.png','base')#"/>
+            <img src="#xarTpl::getImage('icons/document-print.png','base')#"/>
         </a>
     </xar:if>
 </xar:template>

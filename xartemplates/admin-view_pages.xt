@@ -43,7 +43,7 @@
                     </xar:set>
                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                         <a href="#$link#" title="#xarML('Add A New Publication')#" style="margin-right: 5px">
-                            <img src="#xarTplGetImage('icons/'.'document-new.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
+                            <img src="#xarTpl::getImage('icons/'.'document-new.png', 'base')#" width="16" height="16" alt="#xarML('Add')#"/>
                         </a>
                     <xar:else />
                         <a href="#$link#">
@@ -133,7 +133,7 @@
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                             <a href="#$link#" title="#xarML('Modify this publication')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify Publication')#"/>
+                                                <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" width="16" height="16" alt="#xarML('Modify Publication')#"/>
                                             </a>
                                         <xar:else />
                                             <a href="#$link#" title="#xarML('Modify this publication')#" style="margin-right: 5px">
@@ -147,7 +147,7 @@
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                             <a href="#$link#" title="#xarML('Clone this publication')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Clone Publication')#"/>
+                                                <img src="#xarTpl::getImage('icons/'.'add.png', 'base')#" width="16" height="16" alt="#xarML('Clone Publication')#"/>
                                             </a>
                                         <xar:else />
                                             <a href="#$link#" title="#xarML('Clone this publication')#" style="margin-right: 5px">
@@ -161,7 +161,7 @@
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                             <a href="#$link#" title="#xarML('Delete this publication')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Publication')#"/>
+                                                <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" width="16" height="16" alt="#xarML('Delete Publication')#"/>
                                             </a>
                                         <xar:else />
                                             <a href="#$link#" title="#xarML('Delete this publication')#" style="margin-right: 5px">
@@ -175,7 +175,7 @@
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                             <a href="#$link#" title="#xarML('Display this publication')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
+                                                <img src="#xarTpl::getImage('icons/'.'display.png', 'base')#" width="16" height="16" alt="#xarML('Display Publication')#"/>
                                             </a>
                                         <xar:else />
                                             <a href="#$link#" title="#xarML('Display this publication')#" style="margin-right: 5px">
@@ -189,7 +189,7 @@
                                         </xar:set>
                                         <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                             <a href="#$link#" title="#xarML('Manage templates of this publication')#" style="margin-right: 5px">
-                                                <img src="#xarTplGetImage('template.png','publications')#" width="16" height="16" alt="#xarML('Manage Templates')#"/>
+                                                <img src="#xarTpl::getImage('template.png','publications')#" width="16" height="16" alt="#xarML('Manage Templates')#"/>
                                             </a>
                                         <xar:else />
                                             <a href="#$link#" title="#xarML('Manage templates of this publication')#" style="margin-right: 5px">

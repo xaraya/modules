@@ -15,7 +15,7 @@
 function publications_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('EditPublications',0)) return;
+    if (!xarSecurity::check('EditPublications',0)) return;
 
     $data=array();
     

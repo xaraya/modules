@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_create()
 {
-    if (!xarSecurityCheck('AddPublications')) return;
+    if (!xarSecurity::check('AddPublications')) return;
 
     if (!xarVar::fetch('ptid',       'id',    $data['ptid'])) {return;}
     if (!xarVar::fetch('new_cids',   'array', $cids,    NULL, xarVar::NOT_REQUIRED)) {return;}

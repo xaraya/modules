@@ -14,7 +14,7 @@
  */
 function publications_admin_importwebpage()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     // Get parameters
     if(!xarVar::fetch('url',        'str',   $data['url'], '', xarVar::DONT_SET)) {return;}

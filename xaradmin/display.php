@@ -33,7 +33,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_display($args)
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) return;
 
     // Get parameters from user
 // this is used to determine whether we come from a pubtype-based view or a
@@ -490,7 +490,7 @@ function publications_admin_display($args)
             $data['topic_names'][] = $name;
 
             if (!empty($cat['image'])) {
-                $image = xarTplGetImage($cat['image'],'categories');
+                $image = xarTpl::getImage($cat['image'],'categories');
                 $data['topic_icons'] .= '<a href="'. $link .'">'.
                                         '<img src="'. $image .
                                         '" alt="'. $name .'" />'.
@@ -693,14 +693,14 @@ function publications_admin_display($args)
 
 
     // Retrieve the current hitcount from the variable cache
-    if ($data['dohitcount'] && xarVarIsCached('Hooks.hitcount','value')) {
+    if ($data['dohitcount'] && xarTpl::getImage('Hooks.hitcount','value')) {
         $data['counter'] = xarCoreCache::getCached('Hooks.hitcount','value');
     } else {
         $data['counter'] = '';
     }
 
     // Retrieve the current rating from the variable cache
-    if ($data['doratings'] && xarVarIsCached('Hooks.ratings','value')) {
+    if ($data['doratings'] && xarTpl::getImage('Hooks.ratings','value')) {
         $data['rating'] = intval(xarCoreCache::getCached('Hooks.ratings','value'));
     } else {
         $data['rating'] = '';

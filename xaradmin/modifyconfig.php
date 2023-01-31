@@ -14,7 +14,7 @@
  */
 function publications_admin_modifyconfig()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     // Get parameters
     if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'global', xarVar::NOT_REQUIRED)) return;
@@ -22,7 +22,7 @@ function publications_admin_modifyconfig()
 
     if ($data['tab'] == 'pubtypes') {
         // Configuration specific to a publication type
-        if (!xarSecurityCheck('AdminPublications',1,'Publication',$data['ptid'] . ":All:All:All")) return;
+        if (!xarSecurity::check('AdminPublications',1,'Publication',$data['ptid'] . ":All:All:All")) return;
 
         $viewoptions = array();
         $viewoptions[] = array('id' => 1, 'name' => xarML('Latest Items'));
@@ -65,7 +65,7 @@ function publications_admin_modifyconfig()
     
     } else {
         // Global configuration
-        if (!xarSecurityCheck('AdminPublications')) return;
+        if (!xarSecurity::check('AdminPublications')) return;
 
         //The usual bunch of vars
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'publications'));

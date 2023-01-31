@@ -14,7 +14,7 @@
 function publications_user_clone()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) return;
 
     if(!xarVar::fetch('name',     'isset', $objectname,      NULL, xarVar::DONT_SET)) {return;}
     if(!xarVar::fetch('ptid',     'isset', $ptid,            NULL, xarVar::DONT_SET)) {return;}

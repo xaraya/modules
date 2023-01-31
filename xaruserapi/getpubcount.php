@@ -25,7 +25,7 @@ function publications_userapi_getpubcount($args)
         $statestring = $args['state'];
     }
     
-    if (xarVarIsCached('Publications.PubCount',$statestring)) {
+    if (xarTpl::getImage('Publications.PubCount',$statestring)) {
         return xarCoreCache::getCached('Publications.PubCount',$statestring);
     }
 

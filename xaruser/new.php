@@ -16,7 +16,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 function publications_user_new($args)
 {
     // Xaraya security
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) return;
 
     extract($args);
 

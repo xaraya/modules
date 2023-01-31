@@ -95,7 +95,7 @@
         $id = 0;
         if (empty($data['current_source']) || $data['current_source'] == 'AUTO' || $data['current_source'] == 'AUTODEFAULT') {
             // Automatic: that means look at the page cache.
-            if (xarVarIsCached('Blocks.publications', 'current_id')) {
+            if (xarTpl::getImage('Blocks.publications', 'current_id')) {
                 $cached_id = xarCoreCache::getCached('Blocks.publications', 'current_id');
                 // Make sure it is numeric.
                 if (isset($cached_id) && is_numeric($cached_id)) {
@@ -114,7 +114,7 @@
         // The page details *may* have been cached, if
         // we are in the Publications module, or have several
         // blocks on the same page showing the same tree.
-        if (xarVarIsCached('Blocks.publications', 'pagedata')) {
+        if (xarTpl::getImage('Blocks.publications', 'pagedata')) {
             // Pages are cached?
             // The 'serialize' hack ensures we have a proper copy of the
             // paga data, which is a self-referencing array. If we don't
@@ -168,7 +168,7 @@
             // Only cache it if the cache is empty to start with. We only cache a complete
             // tree here, so if any other blocks need it, it contains all possible
             // pages we could need in that tree.
-            if (!xarVarIsCached('Blocks.publications', 'pagedata')) {
+            if (!xarTpl::getImage('Blocks.publications', 'pagedata')) {
                 xarCoreCache::setCached('Blocks.publications', 'pagedata', $pagedata);
             }
         }

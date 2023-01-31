@@ -94,7 +94,7 @@ function publications_user_search($args)
     // Get publication types
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
 
-    if (xarSecurityCheck('AdminPublications',0)) {
+    if (xarSecurity::check('AdminPublications',0)) {
         $isadmin = true;
     } else {
         $isadmin = false;

@@ -15,7 +15,7 @@
 
 function publications_admin_view_pubtypes()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     // Return the template variables defined in this function
     return array();

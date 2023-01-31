@@ -13,7 +13,7 @@
 
 function publications_admin_delete_translation()
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) return;
 
     if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}
     if(!xarVar::fetch('itemid',     'str', $data['itemid'],     NULL,  xarVar::DONT_SET)) {return;}

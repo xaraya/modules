@@ -14,7 +14,7 @@
  */
 function publications_admin_stats($args = array())
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
     
     if (!xarVar::fetch('group','isset',$group,array(),xarVar::NOT_REQUIRED)) return;
     extract($args);

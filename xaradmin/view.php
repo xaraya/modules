@@ -14,7 +14,7 @@
  */
 function publications_admin_view($args=array())
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) return;
 
     // Get parameters
     if(!xarVar::fetch('startnum', 'isset', $startnum, 1,    xarVar::NOT_REQUIRED)) {return;}
@@ -46,10 +46,10 @@ function publications_admin_view($args=array())
         } else {
             // we default to this for convenience
             $default = xarModVars::get('publications','defaultpubtype');
-            if (!empty($default) && !xarSecurityCheck('EditPublications',0,'Publication',"$default:All:All:All")) {
+            if (!empty($default) && !xarSecurity::check('EditPublications',0,'Publication',"$default:All:All:All")) {
                 // try to find some alternate starting pubtype if necessary
                 foreach ($pubtypes as $id => $pubtype) {
-                    if (xarSecurityCheck('EditPublications',0,'Publication',"$id:All:All:All")) {
+                    if (xarSecurity::check('EditPublications',0,'Publication',"$id:All:All:All")) {
                         $ptid = $id;
                         break;
                     }
@@ -90,10 +90,10 @@ function publications_admin_view($args=array())
     $data['catid'] = $catid;
 
     if (empty($ptid)) {
-        if (!xarSecurityCheck('EditPublications',1,'Publication',"All:All:All:All")) return;
+        if (!xarSecurity::check('EditPublications',1,'Publication',"All:All:All:All")) return;
     } elseif (!is_numeric($ptid) || !isset($pubtypes[$ptid])) {
         return xarResponse::NotFound();
-    } elseif (!xarSecurityCheck('EditPublications',1,'Publication',"$ptid:All:All:All")) return;
+    } elseif (!xarSecurity::check('EditPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if (!empty($ptid)) {
         $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
@@ -264,7 +264,7 @@ function publications_admin_view($args=array())
     $pubfilters = array();
     /*
     foreach ($pubtypes as $id => $pubtype) {
-        if (!xarSecurityCheck('EditPublications',0,'Publication',"$id:All:All:All")) {
+        if (!xarSecurity::check('EditPublications',0,'Publication',"$id:All:All:All")) {
             continue;
         }
         $pubitem = array();
@@ -299,7 +299,7 @@ function publications_admin_view($args=array())
     $data['statefilters'] = $statefilters;
     $data['changestatelabel'] = xarML('Change Status');
     // Add link to create new article
-    if (xarSecurityCheck('SubmitPublications',0,'Publication',"$ptid:All:All:All")) {
+    if (xarSecurity::check('SubmitPublications',0,'Publication',"$ptid:All:All:All")) {
         $newurl = xarController::URL('publications',
                            'admin',
                            'new',

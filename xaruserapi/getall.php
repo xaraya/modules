@@ -99,7 +99,7 @@ function publications_userapi_getall($args)
     $publications = array();
 
     // Security check
-    if (!xarSecurityCheck('ViewPublications')) return;
+    if (!xarSecurity::check('ViewPublications')) return;
 
     // Fields requested by the calling function
     $required = array();
@@ -363,7 +363,7 @@ function publications_userapi_getall($args)
             $item[$field] = $value;
         }
         // check security - don't generate an exception here
-        if (empty($required['cids']) && !xarSecurityCheck('ViewPublications',0,'Publication',"$item[pubtype_id]:All:$item[owner]:$item[id]")) {
+        if (empty($required['cids']) && !xarSecurity::check('ViewPublications',0,'Publication',"$item[pubtype_id]:All:$item[owner]:$item[id]")) {
             continue;
         }
         $publications[] = $item;
@@ -403,14 +403,14 @@ function publications_userapi_getall($args)
             if (isset($cids[$article['id']]) && count($cids[$article['id']]) > 0) {
                 $publications[$key]['cids'] = $cids[$article['id']];
                 foreach ($cids[$article['id']] as $cid) {
-                    if (!xarSecurityCheck('ViewPublications',0,'Publication',"$article[pubtype_id]:$cid:$article[owner]:$article[id]")) {
+                    if (!xarSecurity::check('ViewPublications',0,'Publication',"$article[pubtype_id]:$cid:$article[owner]:$article[id]")) {
                         $delete[$key] = 1;
                         break;
                     }
                     if (!isset($cachesec[$cid])) {
                     // TODO: combine with ViewCategoryLink check when we can combine module-specific
                     // security checks with "parent" security checks transparently ?
-                        $cachesec[$cid] = xarSecurityCheck('ReadCategories',0,'Category',"All:$cid");
+                        $cachesec[$cid] = xarSecurity::check('ReadCategories',0,'Category',"All:$cid");
                     }
                     if (!$cachesec[$cid]) {
                         $delete[$key] = 1;
@@ -418,7 +418,7 @@ function publications_userapi_getall($args)
                     }
                 }
             } else {
-                if (!xarSecurityCheck('ViewPublications',0,'Publication',"$article[pubtype_id]:All:$article[owner]:$article[id]")) {
+                if (!xarSecurity::check('ViewPublications',0,'Publication',"$article[pubtype_id]:All:$article[owner]:$article[id]")) {
                     $delete[$key] = 1;
                     continue;
                 }

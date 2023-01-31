@@ -13,7 +13,7 @@
                     <xar:continue />
                 </xar:if>
                 <td>
-                    <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadPublications',0)">
+                    <xar:if condition="$field eq $keyfieldalias AND xarSecurity::check('ReadPublications',0)">
                         <a href="#xarModURL('publications','user','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
                             <xar:data-output property="$properties[$column]" value="$value" />
                         </a>
@@ -39,12 +39,12 @@
                     <xar:continue />
                 </xar:if>
                 <td>
-                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurityCheck('EditPublications',0)">
+                    <xar:if condition="xarUserIsLoggedIn() AND $field eq $keyfieldalias AND xarSecurity::check('EditPublications',0)">
                         <a href="#xarModURL('publications','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname,'tplmodule' => $module))#">
                             <xar:data-output property="$properties[$column]" value="$value" />
                         </a>
                     <xar:else />
-                        <xar:if condition="$field eq $keyfieldalias AND xarSecurityCheck('ReadPublications',0)">
+                        <xar:if condition="$field eq $keyfieldalias AND xarSecurity::check('ReadPublications',0)">
                             <a href="#xarModURL('publications','admin','display',array('itemid' =>$loopitem[$primaryalias], 'name' => $objectname, 'tplmodule' => $module))#">
                                 <xar:data-output property="$properties[$column]" value="$value" />
                             </a>

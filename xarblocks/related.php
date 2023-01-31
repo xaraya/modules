@@ -54,14 +54,14 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
             
             // Trick : work with cached variables here (set by the module function)        
             // Check if we've been through publications display
-            if (!xarVarIsCached('Blocks.publications','current_id')) {return;}
+            if (!xarTpl::getImage('Blocks.publications','current_id')) {return;}
 
             $links = 0;
             
             if ($vars['showpubtype']) {
                 // Show publication type (for now)
                 $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
-                if (xarVarIsCached('Blocks.publications','ptid')) {
+                if (xarTpl::getImage('Blocks.publications','ptid')) {
                     $ptid = xarCoreCache::getCached('Blocks.publications','ptid');
                     if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
                         $vars['pubtypelink'] = xarController::URL('publications','user','view',
@@ -74,7 +74,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
             
             if ($vars['showcategory']) {
                 // Show categories (for now)
-                if (xarVarIsCached('Blocks.publications','cids')) {
+                if (xarTpl::getImage('Blocks.publications','cids')) {
                     $cids = xarCoreCache::getCached('Blocks.publications','cids');
                     // TODO: add related links
                 }
@@ -82,7 +82,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
             
             if ($vars['showauthor']) {
                 // Show author (for now)
-                if (xarVarIsCached('Blocks.publications','author')) {
+                if (xarTpl::getImage('Blocks.publications','author')) {
                     $author = xarCoreCache::getCached('Blocks.publications','author');
                     if (!empty($author)) {
                         $vars['authorlink'] = xarController::URL('publications','user','view',

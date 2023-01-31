@@ -71,7 +71,7 @@
                                     </xar:set>
                                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                         <xar:set name="icon">
-                                            xarTplGetImage('icons/modify.png', 'base')
+                                            xarTpl::getImage('icons/modify.png', 'base')
                                         </xar:set>
                                         <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                     <xar:else />
@@ -88,7 +88,7 @@
                                     </xar:set>
                                     <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                         <xar:set name="icon">
-                                            xarTplGetImage('icons/delete.png', 'base')
+                                            xarTpl::getImage('icons/delete.png', 'base')
                                         </xar:set>
                                         <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                     <xar:else />
@@ -104,7 +104,7 @@
                                 </xar:set>
                                 <xar:if condition="xarModVars::get('publications', 'use_module_icons')">
                                     <xar:set name="icon">
-                                        xarTplGetImage('icons/display.png', 'base')
+                                        xarTpl::getImage('icons/display.png', 'base')
                                     </xar:set>
                                     <xar:data-output type="urlicon" link="$link" icon="$icon"/>
                                 <xar:else />

@@ -28,7 +28,7 @@ function publications_user_download()
     $filename = basename($filepath);
     
     // Xaraya security
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) return;
 
 # --------------------------------------------------------
 # Start buffering for the file

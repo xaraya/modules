@@ -16,7 +16,7 @@ function publications_user_view_pages($args)
 {
     extract($args);
 
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) return;
 
     // Accept a parameter to allow selection of a single tree.
     xarVar::fetch('contains', 'id', $contains, 0, xarVar::NOT_REQUIRED);

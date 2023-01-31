@@ -16,7 +16,7 @@
  */
 function publications_admin_privileges($args)
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) return;
 
     extract($args);
 
@@ -49,9 +49,9 @@ function publications_admin_privileges($args)
 
     if (empty($ptid) || $ptid == 'All' || !is_numeric($ptid)) {
         $ptid = 0;
-        if (!xarSecurityCheck('AdminPublications')) return;
+        if (!xarSecurity::check('AdminPublications')) return;
     } else {
-        if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
+        if (!xarSecurity::check('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
     }
 
 // TODO: do something with cid for security check

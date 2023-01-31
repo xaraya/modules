@@ -31,7 +31,7 @@ function publications_adminapi_deletepubtype($args)
     }
 
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
+    if (!xarSecurity::check('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     // Load user API to obtain item information function
     if (!xarModAPILoad('publications', 'user')) return;

@@ -15,7 +15,7 @@
  */
 function publications_user_delete()
 {
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) return;
 
     $return = xarController::URL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}

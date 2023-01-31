@@ -14,7 +14,7 @@
  */
 function publications_admin_importpictures()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     // Get parameters
     if(!xarVar::fetch('basedir',      'isset', $basedir,      NULL, xarVar::DONT_SET)) {return;}

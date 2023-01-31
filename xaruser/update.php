@@ -24,7 +24,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_update()
 {
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) return;
 
     // Get parameters
     if(!xarVar::fetch('itemid',       'isset', $data['itemid'],       NULL, xarVar::DONT_SET)) {return;}

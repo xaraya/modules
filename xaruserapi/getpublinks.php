@@ -66,7 +66,7 @@ function publications_userapi_getpublinks($args)
     $publinks = array();
     $isfirst = 1;
     foreach ($pubtypes as $id => $pubtype) {
-        if (!xarSecurityCheck('ViewPublications',0,'Publication',$id.':All:All:All')) {
+        if (!xarSecurity::check('ViewPublications',0,'Publication',$id.':All:All:All')) {
             continue;
         }
         if ($all || (isset($pubcount[$id]) && $pubcount[$id] > 0)) {

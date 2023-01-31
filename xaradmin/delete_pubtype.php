@@ -13,7 +13,7 @@
 
 function publications_admin_delete_pubtype()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}
     if(!xarVar::fetch('itemid',     'str', $itemid,     NULL,  xarVar::DONT_SET)) {return;}

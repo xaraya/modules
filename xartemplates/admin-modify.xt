@@ -110,7 +110,7 @@
                     <!--
                         <xar:sec mask="ManagePublications" catch="false">
                             <a href="#xarModURL('publications','admin','delete',array('id' => $object.itemid))#">
-                                <img src="#xarTplGetImage('icons/delete.png','base')#"/>
+                                <img src="#xarTpl::getImage('icons/delete.png','base')#"/>
                             </a>
                         </xar:sec>
                     -->

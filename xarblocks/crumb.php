@@ -64,7 +64,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         $id = 1;
 
         // Automatic: that means look at the page cache.
-        if (xarVarIsCached('Blocks.publications', 'current_id')) {
+        if (xarTpl::getImage('Blocks.publications', 'current_id')) {
             $id = xarCoreCache::getCached('Blocks.publications', 'current_id');
             // Make sure it is numeric.
             if (!isset($id) || !is_numeric($id)) {$id = 0;}
@@ -76,7 +76,7 @@ class Publications_CrumbBlock extends BasicBlock implements iBlock
         // The page details may have been cached, if
         // we have several
         // blocks on the same page showing the same tree.
-        if (xarVarIsCached('Blocks.publications', 'pagedata')) {
+        if (xarTpl::getImage('Blocks.publications', 'pagedata')) {
             // Pages are cached?
             // The 'serialize' hack ensures we have a proper copy of the
             // paga data, which is a self-referencing array. If we don't

@@ -15,7 +15,7 @@
 function publications_user_archive($args)
 {
     // Xaraya security
-    if (!xarSecurityCheck('ModeratePublications')) return;
+    if (!xarSecurity::check('ModeratePublications')) return;
 
     // Get parameters from user
     if (!xarVar::fetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), xarVar::NOT_REQUIRED)) {return;}
@@ -36,10 +36,10 @@ function publications_user_archive($args)
     }
 
     if (empty($ptid)) {
-        if (!xarSecurityCheck('ViewPublications',0,'Publication','All:All:All:All')) {
+        if (!xarSecurity::check('ViewPublications',0,'Publication','All:All:All:All')) {
             return xarML('You have no permission to view these items');
         }
-    } elseif (!xarSecurityCheck('ViewPublications',0,'Publication',$ptid.':All:All:All')) {
+    } elseif (!xarSecurity::check('ViewPublications',0,'Publication',$ptid.':All:All:All')) {
         return xarML('You have no permission to view these items');
     }
 

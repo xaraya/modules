@@ -13,7 +13,7 @@
 
 function publications_admin_delete()
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) return;
 
     //$return = xarController::URL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
     if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}

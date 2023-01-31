@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_manage_versions($args)
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) return;
     
     if (!xarVar::fetch('itemid',  'id',    $data['page_id'],    0,   xarVar::NOT_REQUIRED)) {return;}
     if (!xarVar::fetch('name',    'str',   $data['objectname'], '',  xarVar::NOT_REQUIRED)) {return;}

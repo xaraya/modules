@@ -15,7 +15,7 @@
 function publications_admin_view_pages($args)
 {
 
-   if (!xarSecurityCheck('ManagePublications')) return;
+   if (!xarSecurity::check('ManagePublications')) return;
 
     extract($args);
 

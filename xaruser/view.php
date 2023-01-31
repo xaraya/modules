@@ -290,7 +290,7 @@ function publications_user_view($args)
     // TODO: add this to publications configuration ?
     if ($ishome) {
         $data['ptid'] = null;
-        if (xarSecurityCheck('SubmitPublications',0)) {
+        if (xarSecurity::check('SubmitPublications',0)) {
             $data['submitlink'] = xarController::URL('publications', 'admin', 'new');
         }
     } else {
@@ -302,12 +302,12 @@ function publications_user_view($args)
         }
         if (count($cids) > 0) {
             foreach ($cids as $cid) {
-                if (xarSecurityCheck('SubmitPublications', 0, 'Publication', "$curptid:$cid:All:All")) {
+                if (xarSecurity::check('SubmitPublications', 0, 'Publication', "$curptid:$cid:All:All")) {
                     $data['submitlink'] = xarController::URL('publications', 'admin', 'new', array('ptid' => $ptid, 'catid' => $catid));
                     break;
                 }
             }
-        } elseif (xarSecurityCheck('SubmitPublications', 0, 'Publication', "$curptid:All:All:All")) {
+        } elseif (xarSecurity::check('SubmitPublications', 0, 'Publication', "$curptid:All:All:All")) {
             $data['submitlink'] = xarController::URL('publications', 'admin', 'new', array('ptid' => $ptid));
         }
     }

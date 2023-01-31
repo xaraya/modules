@@ -21,7 +21,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_modify($args)
 {
-    if (!xarSecurityCheck('EditPublications')) return;
+    if (!xarSecurity::check('EditPublications')) return;
 
     extract($args);
 

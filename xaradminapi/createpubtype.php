@@ -48,7 +48,7 @@ function publications_adminapi_createpubtype($args)
     $name = strtolower($name);
 
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     if (!xarModAPILoad('publications', 'user')) return;
 

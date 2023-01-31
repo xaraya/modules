@@ -15,7 +15,7 @@
 function publications_adminapi_importpubtype($args)
 {
     // Security check - we require ADMIN rights here
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     extract($args);
 

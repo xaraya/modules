@@ -57,7 +57,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
             $data = $this->getContent();
 
             // see if we're currently displaying an article
-            if (xarVarIsCached('Blocks.publications', 'id')) {
+            if (xarTpl::getImage('Blocks.publications', 'id')) {
                 $curid = xarCoreCache::getCached('Blocks.publications', 'id');
             } else {
                 $curid = -1;
@@ -86,7 +86,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                     // use the current category
                     // Jonn: this currently only works with one category at a time
                     // it could be reworked to support multiple cids
-                    if (xarVarIsCached('Blocks.publications', 'cids')) {
+                    if (xarTpl::getImage('Blocks.publications', 'cids')) {
                         $curcids = xarCoreCache::getCached('Blocks.publications', 'cids');
                         if (!empty($curcids)) {
                             if ($curid == -1) {
@@ -141,7 +141,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                 // Publication Type should be displayed.  If not, then default to original TopItems configuration.
                 if ($data['pubtype_id'] == 0)
                 {
-                    if (xarVarIsCached('Blocks.publications', 'ptid')) {
+                    if (xarTpl::getImage('Blocks.publications', 'ptid')) {
                         $ptid = xarCoreCache::getCached('Blocks.publications', 'ptid');
                     }
                     if (empty($ptid)) {

@@ -17,7 +17,7 @@ sys::import('modules.dynamicdata.class.properties.master');
 
 function publications_admin_updateconfig()
 {
-    if (!xarSecurityCheck('AdminPublications')) return;
+    if (!xarSecurity::check('AdminPublications')) return;
 
     // Confirm authorisation code
     if (!xarSecConfirmAuthKey()) return;
@@ -33,7 +33,7 @@ function publications_admin_updateconfig()
     if (!xarVar::fetch('multilanguage',    'int',     $multilanguage,   0, xarVar::NOT_REQUIRED)) return;
     if (!xarVar::fetch('tab',              'str:1:10',$data['tab'],     'global', xarVar::NOT_REQUIRED)) return;
 
-    if (!xarSecurityCheck('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
+    if (!xarSecurity::check('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if ($data['tab'] == 'global') {
         if(!xarVar::fetch('defaultpubtype',      'isset', $defaultpubtype,    1,  xarVar::NOT_REQUIRED)) {return;}

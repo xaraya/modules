@@ -178,7 +178,7 @@ function publications_userapi_checksecurity($args)
     $result = false;
     foreach (array_keys($jointcids) as $cid) {
 // TODO: do we want all-or-nothing access here, or is one access enough ?
-        if (xarSecurityCheck($mask,0,'Publication',"$ptid:$cid:$owner:$id")) {
+        if (xarSecurity::check($mask,0,'Publication',"$ptid:$cid:$owner:$id")) {
             $result = true;
         }
     }

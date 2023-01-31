@@ -140,7 +140,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
     
             // See if we're currently displaying a publication
             // We do this to remove a link form a featured item if that item is already being displayed
-            if (xarVarIsCached('Blocks.publications', 'id')) {
+            if (xarTpl::getImage('Blocks.publications', 'id')) {
                 $curid = xarVarGetCached('Blocks.publications', 'id');
             } else {
                 $curid = -1;

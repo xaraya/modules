@@ -15,7 +15,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_admin_templates_page($args)
 {
-    if (!xarSecurityCheck('ManagePublications')) return;
+    if (!xarSecurity::check('ManagePublications')) return;
 
     extract($args);
 

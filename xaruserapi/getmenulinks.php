@@ -17,7 +17,7 @@
 function publications_userapi_getmenulinks()
 {
     $menulinks = array();
-    if (!xarSecurityCheck('ViewPublications',0)) return $menulinks;
+    if (!xarSecurity::check('ViewPublications',0)) return $menulinks;
 
     $menulinks[] = Array('url'   => xarController::URL('publications',
                                               'user',

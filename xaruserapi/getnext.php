@@ -26,7 +26,7 @@
 function publications_userapi_getnext($args)
 {
     // Security check
-    if (!xarSecurityCheck('ViewPublications')) return;
+    if (!xarSecurity::check('ViewPublications')) return;
 
     // Get arguments from argument array
     extract($args);

@@ -71,7 +71,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
 //       (e.g. cross-module categories defined in categories admin ?)
     // Get current module
         if (empty($module)) {
-            if (xarVarIsCached('Blocks.categories','module')) {
+            if (xarTpl::getImage('Blocks.categories','module')) {
                $modname = xarCoreCache::getCached('Blocks.categories','module');
             }
             if (empty($modname)) {
@@ -87,7 +87,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
 
         // Get current item type (if any)
         if (!isset($itemtype)) {
-            if (xarVarIsCached('Blocks.categories','itemtype')) {
+            if (xarTpl::getImage('Blocks.categories','itemtype')) {
                 $itemtype = xarCoreCache::getCached('Blocks.categories','itemtype');
             } else {
                 // try to get itemtype from input
@@ -103,7 +103,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
     
         // Get current item id (if any)
         if (!isset($itemid)) {
-            if (xarVarIsCached('Blocks.categories','itemid')) {
+            if (xarTpl::getImage('Blocks.categories','itemid')) {
                 $itemid = xarCoreCache::getCached('Blocks.categories','itemid');
             } else {
                 // try to get itemid from input
@@ -174,7 +174,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         }
         if (empty($showempty) || !empty($show_catcount)) {
             // A 'deep count' sums the totals at each node with the totals of all descendants.
-            if (xarVarIsCached('Blocks.categories', 'deepcount')) {
+            if (xarTpl::getImage('Blocks.categories', 'deepcount')) {
                 $deepcount = xarCoreCache::getCached('Blocks.categories', 'deepcount');
             } else {
                 $deepcount = xarMod::apiFunc(
@@ -186,7 +186,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         }
     
         if (!empty($show_catcount)) {
-            if (xarVarIsCached('Blocks.categories', 'catcount')) {
+            if (xarTpl::getImage('Blocks.categories', 'catcount')) {
                 $catcount = xarCoreCache::getCached('Blocks.categories', 'catcount');
             } else {
                 // Get number of items per category (for this module).
@@ -209,7 +209,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
     
         // Specify type=... & func = ... arguments for xarController::URL()
         if (empty($type)) {
-            if (xarVarIsCached('Blocks.categories','type')) {
+            if (xarTpl::getImage('Blocks.categories','type')) {
                 $type = xarCoreCache::getCached('Blocks.categories','type');
             }
             if (empty($type)) {
@@ -217,7 +217,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
             }
         }
         if (empty($func)) {
-            if (xarVarIsCached('Blocks.categories','func')) {
+            if (xarTpl::getImage('Blocks.categories','func')) {
                 $func = xarCoreCache::getCached('Blocks.categories','func');
             }
             if (empty($func)) {
@@ -226,7 +226,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
         }
     
         // Get current categories
-        if (xarVarIsCached('Blocks.categories','catid')) {
+        if (xarTpl::getImage('Blocks.categories','catid')) {
            $catid = xarCoreCache::getCached('Blocks.categories','catid');
         }
         if (empty($catid)) {
@@ -252,10 +252,10 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $andcids = false;
             }
         } elseif (empty($cids)) {
-            if (xarVarIsCached('Blocks.categories','cids')) {
+            if (xarTpl::getImage('Blocks.categories','cids')) {
                 $cids = xarCoreCache::getCached('Blocks.categories','cids');
             }
-            if (xarVarIsCached('Blocks.categories','andcids')) {
+            if (xarTpl::getImage('Blocks.categories','andcids')) {
                 $andcids = xarCoreCache::getCached('Blocks.categories','andcids');
             }
             if (empty($cids)) {

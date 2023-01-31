@@ -13,7 +13,7 @@
 
     function publications_admin_clone()
     {
-        if(!xarSecurityCheck('ManagePublications')) return;
+        if(!xarSecurity::check('ManagePublications')) return;
 
         if(!xarVar::fetch('name',     'isset', $objectname,      NULL, xarVar::DONT_SET)) {return;}
         if(!xarVar::fetch('ptid',     'isset', $ptid,            NULL, xarVar::DONT_SET)) {return;}

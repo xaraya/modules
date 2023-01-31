@@ -27,7 +27,7 @@ function publications_adminapi_browse($args)
     $filelist = array();
 
     // Security Check
-    if (!xarSecurityCheck('SubmitPublications',0)) return $filelist;
+    if (!xarSecurity::check('SubmitPublications',0)) return $filelist;
 
     // not supported under safe_mode
     @set_time_limit(120);
