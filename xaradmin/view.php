@@ -344,7 +344,7 @@ function publications_admin_view($args=array())
     
     // Suppress deleted items if not an admin
     // Remove this once listing property works with dataobject access
-    if (!xarIsParent('Administrators',xarUser::getVar('uname'))) $q->ne('state',0);
+    if (!xarRoles::isParent('Administrators',xarUser::getVar('uname'))) $q->ne('state',0);
     $data['conditions'] = $q;
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));

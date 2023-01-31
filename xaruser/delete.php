@@ -71,7 +71,7 @@ function publications_user_delete()
                     case 0:
                     break;
                     case 1:
-                        $allow = xarIsParent('Administrators',xarUser::getVar('uname'));
+                        $allow = xarRoles::isParent('Administrators',xarUser::getVar('uname'));
                     break;
                     case 1:
                         $allow = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
@@ -116,7 +116,7 @@ function publications_user_delete()
                     case 0:
                     break;
                     case 1:
-                        $allow = xarIsParent('Administrators',xarUser::getVar('uname'));
+                        $allow = xarRoles::isParent('Administrators',xarUser::getVar('uname'));
                     break;
                     case 1:
                         $allow = xarModVars::get('roles', 'admin') == xarUser::getVar('id');
