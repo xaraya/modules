@@ -213,7 +213,7 @@ class Publications_TopitemsBlock extends BasicBlock implements iBlock
                 $article['title'] = xarVarPrepHTMLDisplay($article['title']);
                 if ($article['id'] != $curid) {
                     // Use the filtered category if set, and not including children
-                    $article['link'] = xarModURL(
+                    $article['link'] = xarController::URL(
                         'publications', 'user', 'display',
                         array(
                             'itemid' => $article['id'],

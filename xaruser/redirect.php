@@ -15,7 +15,7 @@
 function publications_user_redirect($args)
 {
     // Get parameters from user
-    if(!xarVar::fetch('id', 'id', $id, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('id', 'id', $id, NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);

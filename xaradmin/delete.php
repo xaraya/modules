@@ -15,11 +15,11 @@ function publications_admin_delete()
 {
     if (!xarSecurityCheck('ManagePublications')) return;
 
-    //$return = xarModURL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
-    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    //$return = xarController::URL('publications', 'admin','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'int', $itemid,     NULL,  xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  xarVar::DONT_SET)) {return;}
 
     if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));
@@ -28,7 +28,7 @@ function publications_admin_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin','view'));
+            xarController::redirect(xarController::URL('publications', 'admin','view'));
         }
     }
 
@@ -54,7 +54,7 @@ function publications_admin_delete()
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarModURL('publications','admin','delete',array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('publications','admin','delete',array('idlist' => $idlist));
         return xarTplModule('publications','admin', 'delete',$data);        
     } else {
         if (!xarSecConfirmAuthKey()) return;
@@ -69,7 +69,7 @@ function publications_admin_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view', $data));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view', $data));
         }
         return true;
     }

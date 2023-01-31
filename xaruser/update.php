@@ -27,15 +27,15 @@ function publications_user_update()
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     // Get parameters
-    if(!xarVar::fetch('itemid',       'isset', $data['itemid'],       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('items',        'str',   $items,       '', XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('ptid',         'isset', $data['ptid'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('modify_cids',  'isset', $cids,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('preview',      'isset', $data['preview'],   NULL, XARVAR_DONT_SET)) {return;}
-	if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], '', XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('quit',         'isset', $data['quit'],      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('front',        'isset', $data['front'],     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('tab',          'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',       'isset', $data['itemid'],       NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('items',        'str',   $items,       '', xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',         'isset', $data['ptid'],      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('modify_cids',  'isset', $cids,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('preview',      'isset', $data['preview'],   NULL, xarVar::DONT_SET)) {return;}
+	if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], '', xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('quit',         'isset', $data['quit'],      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('front',        'isset', $data['front'],     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('tab',          'str:1', $data['tab'], '', xarVar::NOT_REQUIRED)) {return;}
 
     // Confirm authorisation code
     // This has been disabled for now
@@ -123,7 +123,7 @@ function publications_user_update()
 
     if ($data['quit']) {
         // Redirect if needed
-        if (!xarVar::fetch('return_url', 'str',   $return_url, '', XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('return_url', 'str',   $return_url, '', xarVar::NOT_REQUIRED)) {return;}
         if (!empty($return_url)) {
             // FIXME: this is a hack for short URLS
             $delimiter = (strpos($return_url, '&')) ? '&' : '?';
@@ -133,17 +133,17 @@ function publications_user_update()
         // Redirect if we came from somewhere else
         $current_listview = xarSession::getVar('publications_current_listview');
         if (!empty($current_listview)) xarController::redirect($current_listview);
-        xarController::redirect(xarModURL('publications', 'user', 'view',
+        xarController::redirect(xarController::URL('publications', 'user', 'view',
                                       array('ptid' => $data['ptid'])));
         return true;
     } elseif ($data['front']) {
-        xarController::redirect(xarModURL('publications', 'user', 'display',
+        xarController::redirect(xarController::URL('publications', 'user', 'display',
                                       array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
     } else {
     	if (!empty($data['returnurl'])) {
     		xarController::redirect($data['returnurl']);
     	} else {
-    		xarController::redirect(xarModURL('publications', 'user', 'modify',
+    		xarController::redirect(xarController::URL('publications', 'user', 'modify',
                                    array('name' => $pubtypeobject->properties['name']->value, 'itemid' => $data['itemid'])));
     	}
         return true;

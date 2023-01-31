@@ -143,7 +143,7 @@ function publications_userapi_get_menu_pages($args)
     // CHECKME: is there a better way?
     // If there is no translation the base document remains. Is this desired outcome?
     
-    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
+    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUser::getNavigationLocale()) {
         $indexedpages = array();
         foreach ($pages as $v) $indexedpages[$v['id']] = $v;
         $ids = array_keys($indexedpages);
@@ -159,7 +159,7 @@ function publications_userapi_get_menu_pages($args)
         $q->addfield('menu_alias');
         $q->addfield('pubtype_id');
         $q->in('parent_id',$ids);
-        $q->eq('locale',xarUserGetNavigationLocale());
+        $q->eq('locale',xarUser::getNavigationLocale());
 
         // Add any filters we found
         foreach ($filters as $k => $v) $q->eq($k, $v);

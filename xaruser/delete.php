@@ -17,11 +17,11 @@ function publications_user_delete()
 {
     if (!xarSecurityCheck('ModeratePublications')) return;
 
-    $return = xarModURL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
-    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('itemid',     'int', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('returnurl',  'str', $returnurl,  $return,  XARVAR_NOT_REQUIRED)) {return;}
+    $return = xarController::URL('publications', 'user','view',array('ptid' => xarModVars::get('publications', 'defaultpubtype')));
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'int', $itemid,     NULL,  xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  $return,  xarVar::NOT_REQUIRED)) {return;}
 
     if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));
@@ -30,7 +30,7 @@ function publications_user_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'user','view'));
+            xarController::redirect(xarController::URL('publications', 'user','view'));
         }
     }
 
@@ -83,7 +83,7 @@ function publications_user_delete()
                 // If no access, then bail showing a forbidden or the "no permission" page or an empty page
                 if (!$allow) {
                     if ($accessconstraints['delete']['failure']) return xarResponse::Forbidden();
-                    elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                    elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
                     else return xarTplModule('publications', 'user', 'empty');
                 }
             } else {
@@ -94,7 +94,7 @@ function publications_user_delete()
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarModURL('publications','user','delete',array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('publications','user','delete',array('idlist' => $idlist));
         return xarTplModule('publications','user', 'delete',$data);        
     } else {
         if (!xarSecConfirmAuthKey()) return;
@@ -128,7 +128,7 @@ function publications_user_delete()
                 // If no access, then bail showing a forbidden or the "no permission" page or an empty page
                 if (!$allow) {
                     if ($accessconstraints['delete']['failure']) return xarResponse::Forbidden();
-                    elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+                    elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
                     else return xarTplModule('publications', 'user', 'empty');
                 }
             } else {
@@ -148,7 +148,7 @@ function publications_user_delete()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'user', 'view', $data));
+            xarController::redirect(xarController::URL('publications', 'user', 'view', $data));
         }
         return true;
     }

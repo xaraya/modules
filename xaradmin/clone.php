@@ -15,10 +15,10 @@
     {
         if(!xarSecurityCheck('ManagePublications')) return;
 
-        if(!xarVar::fetch('name',     'isset', $objectname,      NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVar::fetch('ptid',     'isset', $ptid,            NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVar::fetch('itemid',   'isset', $data['itemid'],  NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVar::fetch('confirm',  'int',   $confirm,         0, XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch('name',     'isset', $objectname,      NULL, xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch('ptid',     'isset', $ptid,            NULL, xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch('itemid',   'isset', $data['itemid'],  NULL, xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch('confirm',  'int',   $confirm,         0, xarVar::DONT_SET)) {return;}
     
         if (empty($data['itemid'])) return xarResponse::NotFound();
 
@@ -49,7 +49,7 @@
             if (!xarSecConfirmAuthKey()) return;
             
             // Get the name for the clone
-            if(!xarVar::fetch('newname',   'str', $newname,   "", XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVar::fetch('newname',   'str', $newname,   "", xarVar::NOT_REQUIRED)) {return;}
             if (empty($newname)) $newname = $data['name'] . "_copy";
             if ($newname == $data['name']) $newname = $data['name'] . "_copy";
             $newname = strtolower(str_ireplace(" ", "_", $newname));
@@ -60,7 +60,7 @@
             $cloneid = $data['object']->createItem(array('itemid' => 0));
     
             // Create the clone's translations
-            if(!xarVar::fetch('clone_translations',   'int', $clone_translations,   0, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVar::fetch('clone_translations',   'int', $clone_translations,   0, xarVar::NOT_REQUIRED)) {return;}
             if ($clone_translations) {
                 // Get the info on all the objects to be cloned
                 sys::import('xaraya.structures.query');
@@ -91,7 +91,7 @@
             } elseif (!empty($current_listview)) {
                 xarController::redirect($current_listview);
             } else {
-                xarController::redirect(xarModURL('publications', 'user', 'view'));
+                xarController::redirect(xarController::URL('publications', 'user', 'view'));
             }
             return true;
         }

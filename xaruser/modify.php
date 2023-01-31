@@ -27,12 +27,12 @@ function publications_user_modify($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('itemid',     'id',    $data['itemid'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('id',         'id',    $data['id'],    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('ptid',       'isset', $ptid, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('name',       'str:1', $name, '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('tab',        'str:1', $data['tab'], '', XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid',     'id',    $data['itemid'],    NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('id',         'id',    $data['id'],    NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',       'isset', $ptid, NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], 'view', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('name',       'str:1', $name, '', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('tab',        'str:1', $data['tab'], '', xarVar::NOT_REQUIRED)) {return;}
    
     if (empty($data['itemid']) && empty($data['id'])) return xarResponse::NotFound();
     // The itemid var takes precedence if it exiats
@@ -83,7 +83,7 @@ function publications_user_modify($args)
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow) {
         if ($accessconstraints['modify']['failure']) return xarResponse::Forbidden();
-        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+        elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         else return xarTplModule('publications', 'user', 'empty');
     }
     

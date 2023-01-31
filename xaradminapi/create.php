@@ -54,7 +54,7 @@ function publications_adminapi_create($args)
 
     // Default author ID is the current user, or Anonymous (1) otherwise
     if (empty($owner) || !is_numeric($owner)) {
-        $owner = xarUserGetVar('id');
+        $owner = xarUser::getVar('id');
         if (empty($owner)) {
             $owner = _XAR_ID_UNREGISTERED;
         }

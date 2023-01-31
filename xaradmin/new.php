@@ -20,9 +20,9 @@ function publications_admin_new($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('ptid',        'id',    $data['ptid'], NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('catid',       'str',   $catid,        NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('itemtype',    'id',    $itemtype,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',        'id',    $data['ptid'], NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('catid',       'str',   $catid,        NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemtype',    'id',    $itemtype,     NULL, xarVar::NOT_REQUIRED)) {return;}
 
     if (NULL === $data['ptid']) {
         $data['ptid'] = xarSession::getVar('publications_current_pubtype');

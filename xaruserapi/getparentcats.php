@@ -82,7 +82,7 @@ function publications_userapi_getparentcats($args)
 
         $trailitem['parentlinks'] = array();
         $item = array();
-        $item['plink'] = xarModURL('publications','user','view',
+        $item['plink'] = xarController::URL('publications','user','view',
                                   array('ptid' => $ptid,
                                         'sort' => $sort));
         $item['ptitle'] = xarML('All');
@@ -90,7 +90,7 @@ function publications_userapi_getparentcats($args)
         $trailitem['parentlinks'][] = $item;
 // TODO: make sure permissions are taken into account here !
         foreach ($trail as $info) {
-            $item['plink'] = xarModURL('publications',
+            $item['plink'] = xarController::URL('publications',
                                       'user',
                                       'view',
                                        array('ptid' => $ptid,
@@ -110,7 +110,7 @@ function publications_userapi_getparentcats($args)
                     $trailitem['icon'] = array('image' => $info['image'],
                                                'text' => $item['ptitle'],
                                                'link' =>
-                          xarModURL('publications','user','view',
+                          xarController::URL('publications','user','view',
                                    array('ptid' => $ptid,
                                          'catid' => $info['cid'])));
                 }

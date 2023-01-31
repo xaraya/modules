@@ -295,7 +295,7 @@ function publications_init()
     $xartable =& xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
-                             'query'  => xarModURL('publications', 'admin', 'privileges'),
+                             'query'  => xarController::URL('publications', 'admin', 'privileges'),
                              'limit'  => 0
                             )
                     );

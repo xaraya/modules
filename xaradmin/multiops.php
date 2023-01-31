@@ -6,12 +6,12 @@ sys::import('modules.dynamicdata.class.objects.master');
 function publications_admin_multiops()
 {
     // Get parameters
-    if(!xarVar::fetch('idlist',   'isset', $idlist,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('operation',   'isset', $operation,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('redirecttarget',   'isset', $redirecttarget,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('returnurl',   'str', $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('objectname',   'str', $objectname,  'listings_listing', XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('localmodule',   'str', $module,  'listings', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',   'isset', $idlist,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('operation',   'isset', $operation,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('redirecttarget',   'isset', $redirecttarget,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('returnurl',   'str', $returnurl,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('objectname',   'str', $objectname,  'listings_listing', xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('localmodule',   'str', $module,  'listings', xarVar::DONT_SET)) {return;}
 
     // Confirm authorisation code
     //if (!xarSecConfirmAuthKey()) return;

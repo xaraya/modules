@@ -15,10 +15,10 @@ function publications_admin_delete_pubtype()
 {
     if (!xarSecurityCheck('AdminPublications')) return;
 
-    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('itemid',     'str', $itemid,     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'str', $itemid,     NULL,  xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',     'str', $idlist,     NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  xarVar::DONT_SET)) {return;}
 
     if (!empty($itemid)) $idlist = $itemid;
     $ids = explode(',',trim($idlist,','));
@@ -27,7 +27,7 @@ function publications_admin_delete_pubtype()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin','view_pubtypes'));
+            xarController::redirect(xarController::URL('publications', 'admin','view_pubtypes'));
         }
     }
 
@@ -53,7 +53,7 @@ function publications_admin_delete_pubtype()
             $items[] = $item;
         }
         $data['items'] = $items;
-        $data['yes_action'] = xarModURL('publications','admin','delete_pubtype',array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('publications','admin','delete_pubtype',array('idlist' => $idlist));
         return xarTplModule('publications','admin', 'delete_pubtype',$data);        
     } else {
         if (!xarSecConfirmAuthKey()) return;
@@ -64,7 +64,7 @@ function publications_admin_delete_pubtype()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view_pubtypes', $data));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view_pubtypes', $data));
         }
         return true;
     }

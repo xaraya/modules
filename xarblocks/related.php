@@ -64,7 +64,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                 if (xarVarIsCached('Blocks.publications','ptid')) {
                     $ptid = xarCoreCache::getCached('Blocks.publications','ptid');
                     if (!empty($ptid) && isset($pubtypes[$ptid]['description'])) {
-                        $vars['pubtypelink'] = xarModURL('publications','user','view',
+                        $vars['pubtypelink'] = xarController::URL('publications','user','view',
                                                          array('ptid' => $ptid));
                         $vars['pubtypename'] = $pubtypes[$ptid]['description'];
                         $links++;
@@ -85,7 +85,7 @@ class Publications_RelatedBlock extends BasicBlock implements iBlock
                 if (xarVarIsCached('Blocks.publications','author')) {
                     $author = xarCoreCache::getCached('Blocks.publications','author');
                     if (!empty($author)) {
-                        $vars['authorlink'] = xarModURL('publications','user','view',
+                        $vars['authorlink'] = xarController::URL('publications','user','view',
                                                         array('ptid' => (!empty($ptid) ? $ptid : null),
                                                               'owner' => $author));
                         $vars['authorid'] = $author;

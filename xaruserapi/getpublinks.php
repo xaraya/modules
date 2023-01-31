@@ -75,7 +75,7 @@ function publications_userapi_getpublinks($args)
              if (isset($ptid) && $ptid == $id) {
                  $item['publink'] = '';
              } else {
-                 $item['publink'] = xarModURL('publications',$typemod,$func,array('ptid' => $id));
+                 $item['publink'] = xarController::URL('publications',$typemod,$func,array('ptid' => $id));
              }
              if ($count && isset($pubcount[$id])) {
                  $item['pubcount'] = $pubcount[$id];

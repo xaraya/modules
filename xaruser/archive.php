@@ -18,11 +18,11 @@ function publications_user_archive($args)
     if (!xarSecurityCheck('ModeratePublications')) return;
 
     // Get parameters from user
-    if (!xarVar::fetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('sort',  'enum:d:t:1:2', $sort,  'd',  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('month', 'str',          $month, '',   XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('cids',  'array',        $cids,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('catid', 'str',          $catid, '',   XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('ptid',  'id',           $ptid,  xarModVars::get('publications','defaultpubtype'), xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('sort',  'enum:d:t:1:2', $sort,  'd',  xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('month', 'str',          $month, '',   xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('cids',  'array',        $cids,  NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('catid', 'str',          $catid, '',   xarVar::NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);
@@ -130,7 +130,7 @@ function publications_user_archive($args)
         if ($thismonth == $month) {
             $mlink = '';
         } else {
-            $mlink = xarModURL('publications','user','archive',
+            $mlink = xarController::URL('publications','user','archive',
                               array('ptid' => $ptid,
                                     'month' => $thismonth));
         }
@@ -147,7 +147,7 @@ function publications_user_archive($args)
     if ($month == 'all') {
         $mlink = '';
     } else {
-        $mlink = xarModURL('publications','user','archive',
+        $mlink = xarController::URL('publications','user','archive',
                           array('ptid' => $ptid,
                                 'month' => 'all'));
     }
@@ -192,7 +192,7 @@ function publications_user_archive($args)
             if ($sort == $count) {
                 $link = '';
             } else {
-                $link = xarModURL('publications','user','archive',
+                $link = xarController::URL('publications','user','archive',
                                  array('ptid' => $ptid,
                                        'month' => $month,
                                        'sort' => $count));
@@ -242,7 +242,7 @@ function publications_user_archive($args)
 // TODO: add print / recommend_us link for each article ?
 // TODO: add view count to table/query/template someday ?
     foreach ($publications as $key => $article) {
-        $publications[$key]['link'] = xarModURL('publications','user','display',
+        $publications[$key]['link'] = xarController::URL('publications','user','display',
                                array('ptid' => isset($ptid) ? $publications[$key]['pubtype_id'] : null,
                                      'id' => $publications[$key]['id']));
         if (empty($publications[$key]['title'])) {
@@ -312,7 +312,7 @@ function publications_user_archive($args)
     if ($sort == 't') {
         $link = '';
     } else {
-        $link = xarModURL('publications','user','archive',
+        $link = xarController::URL('publications','user','archive',
                          array('ptid' => $ptid,
                                'month' => $month,
                                'sort' => 't'));
@@ -327,7 +327,7 @@ function publications_user_archive($args)
         if ($sort == 'd') {
             $link = '';
         } else {
-            $link = xarModURL('publications','user','archive',
+            $link = xarController::URL('publications','user','archive',
                              array('ptid' => $ptid,
                                    'month' => $month));
         }
@@ -384,7 +384,7 @@ function publications_user_archive($args)
                  'catsel' => $catsel,
                  'ptid' => $ptid,
                  'month' => $month,
-                 'curlink' => xarModURL('publications','user','archive',
+                 'curlink' => xarController::URL('publications','user','archive',
                                         array('ptid' => $ptid,
                                               'month' => $month,
                                                'sort' => $sort)),
@@ -398,10 +398,10 @@ function publications_user_archive($args)
                                                   // override default 'view'
                                                   'func' => 'archive')),
                  'maplabel' => xarML('View Publication Map'),
-                 'maplink' => xarModURL('publications','user','viewmap',
+                 'maplink' => xarController::URL('publications','user','viewmap',
                                        array('ptid' => $ptid)),
                  'viewlabel' => (empty($ptid) ? xarML('Back to Publications') : xarML('Back to') . ' ' . $pubtypes[$ptid]['description']),
-                 'viewlink' => xarModURL('publications','user','view',
+                 'viewlink' => xarController::URL('publications','user','view',
                                         array('ptid' => $ptid)));
 
     if (!empty($ptid)) {

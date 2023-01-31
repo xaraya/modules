@@ -18,9 +18,9 @@ function publications_admin_create()
     if (!xarSecurityCheck('AddPublications')) return;
 
     if (!xarVar::fetch('ptid',       'id',    $data['ptid'])) {return;}
-    if (!xarVar::fetch('new_cids',   'array', $cids,    NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('preview',    'str',   $data['preview'], NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('save',       'str',   $save, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('new_cids',   'array', $cids,    NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('preview',    'str',   $data['preview'], NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('save',       'str',   $save, NULL, xarVar::NOT_REQUIRED)) {return;}
     
     // Confirm authorisation code
     // This has been disabled for now
@@ -58,7 +58,7 @@ function publications_admin_create()
     $current_listview = xarSession::getVar('publications_current_listview');
     if (!empty($cuurent_listview)) xarController::redirect($current_listview);
     
-    xarController::redirect(xarModURL('publications', 'admin', 'view',
+    xarController::redirect(xarController::URL('publications', 'admin', 'view',
                                   array('ptid' => $data['ptid'])));
     return true;
 }

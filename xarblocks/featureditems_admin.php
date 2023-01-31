@@ -93,21 +93,21 @@ class Publications_FeatureditemsBlockAdmin extends Publications_FeatureditemsBlo
     function update(Array $data=array())
     {
         $args = array();
-        xarVar::fetch('pubtype_id',       'int',       $args['pubtype_id'],      0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('catfilter',        'id',        $args['catfilter'],       $this->catfilter, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('nocatlimit',       'checkbox',  $args['nocatlimit'],      $this->nocatlimit, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('pubstate',         'str',       $args['pubstate'],        $this->pubstate, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('itemlimit',        'int:1',     $args['itemlimit'],       $this->itemlimit, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('toptype',  'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('featuredid',       'int',        $args['featuredid'],      $this->featuredid, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('alttitle',         'str',       $args['alttitle'],        $this->alttitle, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('altsummary',       'str',       $args['altsummary'],      $this->altsummary, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('showfeaturedbod',  'checkbox',  $args['showfeaturedbod'], 0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('showfeaturedsum',  'checkbox',  $args['showfeaturedsum'], 0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('showsummary',      'checkbox',  $args['showsummary'],     0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('showvalue',        'checkbox',  $args['showvalue'],       0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('linkpubtype',      'checkbox',  $args['linkpubtype'],     0, XARVAR_NOT_REQUIRED);
-        xarVar::fetch('linkcat',          'checkbox',  $args['linkcat'],         0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('pubtype_id',       'int',       $args['pubtype_id'],      0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('catfilter',        'id',        $args['catfilter'],       $this->catfilter, xarVar::NOT_REQUIRED);
+        xarVar::fetch('nocatlimit',       'checkbox',  $args['nocatlimit'],      $this->nocatlimit, xarVar::NOT_REQUIRED);
+        xarVar::fetch('pubstate',         'str',       $args['pubstate'],        $this->pubstate, xarVar::NOT_REQUIRED);
+        xarVar::fetch('itemlimit',        'int:1',     $args['itemlimit'],       $this->itemlimit, xarVar::NOT_REQUIRED);
+        xarVar::fetch('toptype',  'enum:author:date:hits:rating:title', $args['toptype'], $this->toptype, xarVar::NOT_REQUIRED);
+        xarVar::fetch('featuredid',       'int',        $args['featuredid'],      $this->featuredid, xarVar::NOT_REQUIRED);
+        xarVar::fetch('alttitle',         'str',       $args['alttitle'],        $this->alttitle, xarVar::NOT_REQUIRED);
+        xarVar::fetch('altsummary',       'str',       $args['altsummary'],      $this->altsummary, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showfeaturedbod',  'checkbox',  $args['showfeaturedbod'], 0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showfeaturedsum',  'checkbox',  $args['showfeaturedsum'], 0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showsummary',      'checkbox',  $args['showsummary'],     0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('showvalue',        'checkbox',  $args['showvalue'],       0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('linkpubtype',      'checkbox',  $args['linkpubtype'],     0, xarVar::NOT_REQUIRED);
+        xarVar::fetch('linkcat',          'checkbox',  $args['linkcat'],         0, xarVar::NOT_REQUIRED);
 
         sys::import('modules.dynamicdata.class.properties.master');
         $multiselect = DataPropertyMaster::getProperty(array('name' => 'multiselect'));

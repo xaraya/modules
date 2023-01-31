@@ -80,7 +80,7 @@ function publications_userapi_getrelativepages($args)
     if (!empty($args['itemtype'])) $q->eq('p.pubtype_id', $args['itemtype']);
     
     // We need to grab all the pages if we are looking for translations, because the translation might have a valid state
-    if (xarModVars::get('publications', 'defaultlanguage') == xarUserGetNavigationLocale()) {
+    if (xarModVars::get('publications', 'defaultlanguage') == xarUser::getNavigationLocale()) {
         // Allow filtering on state nonetheless
         if (!empty($args['state'])) {
             if (!is_array($args['state'])) $state = array($args['state']);
@@ -141,7 +141,7 @@ function publications_userapi_getrelativepages($args)
     // CHECKME: is there a better way?
     // If there is no translation the base document remains, unless $args['no_fallback_locale'] is true;
     
-    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUserGetNavigationLocale()) {
+    if (!empty($pages) && xarModVars::get('publications', 'defaultlanguage') != xarUser::getNavigationLocale()) {
         $indexedpages = array();
         foreach ($pages as $v) $indexedpages[$v['id']] = $v;
         $ids = array_keys($indexedpages);
@@ -157,7 +157,7 @@ function publications_userapi_getrelativepages($args)
         $q->addfield('locale');
         $q->addfield('state');
         $q->in('parent_id',$ids);
-        $q->eq('locale',xarUserGetNavigationLocale());
+        $q->eq('locale',xarUser::getNavigationLocale());
 
         // Allow state filter, if there is one
         if (!empty($args['state'])) {
@@ -186,7 +186,7 @@ function publications_userapi_getrelativepages($args)
         foreach ($indexedpages as $key => $page) {
             if ($page['state'] < 3) unset($indexedpages[$key]);
             // Special case: we ignore pages that have no translation in the current locale
-            if (!empty($args['no_fallback_locale']) && ($page['locale'] != xarUserGetNavigationLocale())) {
+            if (!empty($args['no_fallback_locale']) && ($page['locale'] != xarUser::getNavigationLocale())) {
                 unset($indexedpages[$key]);
             }
         }

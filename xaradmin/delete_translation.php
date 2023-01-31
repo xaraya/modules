@@ -15,15 +15,15 @@ function publications_admin_delete_translation()
 {
     if (!xarSecurityCheck('ManagePublications')) return;
 
-    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('itemid',     'str', $data['itemid'],     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirmed',  'int', $confirmed,  NULL,  xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'str', $data['itemid'],     NULL,  xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('returnurl',  'str', $returnurl,  NULL,  xarVar::DONT_SET)) {return;}
 
     if (empty($data['itemid'])) {
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin','view'));
+            xarController::redirect(xarController::URL('publications', 'admin','view'));
         }
     }
 
@@ -38,7 +38,7 @@ function publications_admin_delete_translation()
         $data['authid'] = xarSecGenAuthKey();
         $publication->getItem(array('itemid' => $data['itemid']));
         $data['item'] = $publication->getFieldValues();
-        $data['yes_action'] = xarModURL('publications','admin','delete',array('itemid' => $data['itemid']));
+        $data['yes_action'] = xarController::URL('publications','admin','delete',array('itemid' => $data['itemid']));
         return xarTplModule('publications','admin', 'delete_translation',$data);        
     } else {
         if (!xarSecConfirmAuthKey()) return;
@@ -47,7 +47,7 @@ function publications_admin_delete_translation()
         if (isset($returnurl)) {
             xarController::redirect($returnurl);
         } else {
-            xarController::redirect(xarModURL('publications', 'admin', 'view', $data));
+            xarController::redirect(xarController::URL('publications', 'admin', 'view', $data));
         }
         return true;
     }

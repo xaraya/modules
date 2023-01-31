@@ -20,11 +20,11 @@ function publications_admin_modify_pubtype($args)
     extract($args);
 
     // Get parameters
-    if (!xarVar::fetch('itemid',     'isset', $data['itemid'],    NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], 'view', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('name',       'str:1', $name,              '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('tab',        'str:1', $data['tab'],       '', XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('confirm',    'bool',  $data['confirm'],   false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid',     'isset', $data['itemid'],    NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('returnurl',  'str:1', $data['returnurl'], 'view', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('name',       'str:1', $name,              '', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('tab',        'str:1', $data['tab'],       '', xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('confirm',    'bool',  $data['confirm'],   false, xarVar::NOT_REQUIRED)) return;
     
     if (empty($name) && empty($itemid)) return xarResponse::NotFound();
 
@@ -73,7 +73,7 @@ function publications_admin_modify_pubtype($args)
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('publications','admin','view_pubtypes'));
+            xarController::redirect(xarController::URL('publications','admin','view_pubtypes'));
             return true;
         }
     }

@@ -17,16 +17,16 @@ function publications_admin_view($args=array())
     if (!xarSecurityCheck('EditPublications')) return;
 
     // Get parameters
-    if(!xarVar::fetch('startnum', 'isset', $startnum, 1,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('ptid',     'isset', $ptid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('state',   'isset', $state,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('catid',    'isset', $catid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('sort', 'strlist:,:pre', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('owner', 'isset', $owner, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('lang',     'isset', $lang,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('pubdate',  'str:1', $pubdate,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('object',   'str:1', $object,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('startnum', 'isset', $startnum, 1,    xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('ptid',     'isset', $ptid,     NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('state',   'isset', $state,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemtype', 'isset', $itemtype, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('catid',    'isset', $catid,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('sort', 'strlist:,:pre', $sort, NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('owner', 'isset', $owner, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('lang',     'isset', $lang,     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('pubdate',  'str:1', $pubdate,  NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('object',   'str:1', $object,  NULL, xarVar::NOT_REQUIRED)) {return;}
 
     extract($args);
 
@@ -186,15 +186,15 @@ function publications_admin_view($args=array())
             $input['article'] = $article;
             $input['mask'] = 'ManagePublications';
             if (xarMod::apiFunc('publications','user','checksecurity',$input)) {
-                $item['deleteurl'] = xarModURL('publications',
+                $item['deleteurl'] = xarController::URL('publications',
                                               'admin',
                                               'delete',
                                               array('id' => $article['id']));
-                $item['editurl'] = xarModURL('publications',
+                $item['editurl'] = xarController::URL('publications',
                                             'admin',
                                             'modify',
                                             array('id' => $article['id']));
-                $item['viewurl'] = xarModURL('publications',
+                $item['viewurl'] = xarController::URL('publications',
                                             'user',
                                             'display',
                                             array('id' => $article['id'],
@@ -204,11 +204,11 @@ function publications_admin_view($args=array())
 
                 $input['mask'] = 'EditPublications';
                 if (xarMod::apiFunc('publications','user','checksecurity',$input)) {
-                    $item['editurl'] = xarModURL('publications',
+                    $item['editurl'] = xarController::URL('publications',
                                                 'admin',
                                                 'modify',
                                                 array('id' => $article['id']));
-                    $item['viewurl'] = xarModURL('publications',
+                    $item['viewurl'] = xarController::URL('publications',
                                                 'user',
                                                 'display',
                                                 array('id' => $article['id'],
@@ -218,7 +218,7 @@ function publications_admin_view($args=array())
 
                     $input['mask'] = 'ReadPublications';
                     if (xarMod::apiFunc('publications','user','checksecurity',$input)) {
-                        $item['viewurl'] = xarModURL('publications',
+                        $item['viewurl'] = xarController::URL('publications',
                                                     'user',
                                                     'display',
                                                     array('id' => $article['id'],
@@ -249,7 +249,7 @@ function publications_admin_view($args=array())
                                                 'cids' => $cids,
                                                 'andcids' => $andcids,
                                                 'state' => $state)),
-                            xarModURL('publications', 'admin', 'view',
+                            xarController::URL('publications', 'admin', 'view',
                                       array('startnum' => '%%',
                                             'ptid' => $ptid,
                                             'owner' => $owner,
@@ -271,7 +271,7 @@ function publications_admin_view($args=array())
         if ($id == $ptid) {
             $pubitem['plink'] = '';
         } else {
-            $pubitem['plink'] = xarModURL('publications','admin','view',
+            $pubitem['plink'] = xarController::URL('publications','admin','view',
                                          array('ptid' => $id));
         }
         $pubitem['ptitle'] = $pubtype['description'];
@@ -284,13 +284,13 @@ function publications_admin_view($args=array())
     if (!empty($labels['state'])) {
         $statefilters[] = array('stitle' => xarML('All'),
                                  'slink' => !is_array($state) ? '' :
-                                                xarModURL('publications','admin','view',
+                                                xarController::URL('publications','admin','view',
                                                           array('ptid' => $ptid,
                                                                 'catid' => $catid)));
         foreach ($data['states'] as $id => $name) {
             $statefilters[] = array('stitle' => $name,
                                      'slink' => (is_array($state) && $state[0] == $id) ? '' :
-                                                    xarModURL('publications','admin','view',
+                                                    xarController::URL('publications','admin','view',
                                                               array('ptid' => $ptid,
                                                                     'catid' => $catid,
                                                                     'state' => array($id))));
@@ -300,7 +300,7 @@ function publications_admin_view($args=array())
     $data['changestatelabel'] = xarML('Change Status');
     // Add link to create new article
     if (xarSecurityCheck('SubmitPublications',0,'Publication',"$ptid:All:All:All")) {
-        $newurl = xarModURL('publications',
+        $newurl = xarController::URL('publications',
                            'admin',
                            'new',
                            array('ptid' => $ptid));
@@ -344,7 +344,7 @@ function publications_admin_view($args=array())
     
     // Suppress deleted items if not an admin
     // Remove this once listing property works with dataobject access
-    if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('state',0);
+    if (!xarIsParent('Administrators',xarUser::getVar('uname'))) $q->ne('state',0);
     $data['conditions'] = $q;
 
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));

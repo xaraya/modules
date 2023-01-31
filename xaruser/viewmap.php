@@ -15,11 +15,11 @@
 function publications_user_viewmap($args)
 {
     // Get parameters
-    if(!xarVar::fetch('ptid',  'id',    $ptid,   xarModVars::get('publications', 'defaultpubtype'), XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('by', 'enum:pub:cat:grid',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('go',    'str',   $go,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('catid', 'str',   $catid,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('cids',  'array', $cids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('ptid',  'id',    $ptid,   xarModVars::get('publications', 'defaultpubtype'), xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('by', 'enum:pub:cat:grid',   $by,     NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('go',    'str',   $go,     NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('catid', 'str',   $catid,  NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('cids',  'array', $cids,   NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // Override if needed from argument array
     extract($args);
@@ -70,7 +70,7 @@ function publications_user_viewmap($args)
         } else {
             $catid = NULL;
         }
-        $url = xarModURL('publications','user','view',array('ptid' => $ptid, 'catid' => $catid));
+        $url = xarController::URL('publications','user','view',array('ptid' => $ptid, 'catid' => $catid));
         xarController::redirect($url);
         return;
     }
@@ -84,7 +84,7 @@ function publications_user_viewmap($args)
     $publinks = array();
 
     if ($by == 'cat') {
-        $data['maplink'] = xarModURL('publications','user','viewmap',array('by' => 'cat'));
+        $data['maplink'] = xarController::URL('publications','user','viewmap',array('by' => 'cat'));
 
     // TODO: re-evaluate this after user feedback...
         // *trick* Use the 'default' categories here, instead of all rootcats
@@ -214,13 +214,13 @@ function publications_user_viewmap($args)
             foreach ($pubcatcount as $cids => $counts) {
                 list($ca,$cb) = explode('+',$cids);
                 if (isset($rowcid[$ca]) && isset($colcid[$cb])) {
-                    $link = xarModURL('publications','user','view',
+                    $link = xarController::URL('publications','user','view',
                                       array('ptid' => $ptid,
                                             'catid' => $ca . '+' . $cb));
                     $data['catgrid'][$rowcid[$ca]][$colcid[$cb]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
                 }
                 if (isset($rowcid[$cb]) && isset($colcid[$ca])) {
-                    $link = xarModURL('publications','user','view',
+                    $link = xarController::URL('publications','user','view',
                                       array('ptid' => $ptid,
                                             'catid' => $cb . '+' . $ca));
                     $data['catgrid'][$rowcid[$cb]][$colcid[$ca]] = '<a href="' . $link . '"> ' . $counts[$what] . ' </a>';
@@ -233,7 +233,7 @@ function publications_user_viewmap($args)
         }
 
     } else {
-        $data['maplink'] = xarModURL('publications','user','viewmap',array('by' => 'pub'));
+        $data['maplink'] = xarController::URL('publications','user','viewmap',array('by' => 'pub'));
 
         // get the links and counts for all publication types
         $publinks = xarMod::apiFunc('publications','user','getpublinks',
@@ -320,10 +320,10 @@ function publications_user_viewmap($args)
     $data['publinks'] = $publinks;
     $data['ptid'] = $ptid;
     $data['viewlabel'] = xarML('Back to') . ' ' . $descr;
-    $data['viewlink'] = xarModURL('publications','user','view',
+    $data['viewlink'] = xarController::URL('publications','user','view',
                                   array('ptid' => $ptid));
     $data['archivelabel'] = xarML('View Archives');
-    $data['archivelink'] = xarModURL('publications','user','archive',
+    $data['archivelink'] = xarController::URL('publications','user','archive',
                                      array('ptid' => $ptid));
     $data['dump'] = $dump;
     if (count($data['catfilter']) == 2) {

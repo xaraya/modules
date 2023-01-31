@@ -17,8 +17,8 @@ function publications_admin_manage_versions($args)
 {
     if (!xarSecurityCheck('ManagePublications')) return;
     
-    if (!xarVar::fetch('itemid',  'id',    $data['page_id'],    0,   XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('name',    'str',   $data['objectname'], '',  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('itemid',  'id',    $data['page_id'],    0,   xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('name',    'str',   $data['objectname'], '',  xarVar::NOT_REQUIRED)) {return;}
     if (empty($data['page_id'])) return xarResponse::NotFound();
     
     sys::import('modules.dynamicdata.class.objects.master');
@@ -28,8 +28,8 @@ function publications_admin_manage_versions($args)
     
     if ($data['versions'] < 2) return $data;
     
-    if (!xarVar::fetch('version_1',  'int',    $version_1, $data['versions'],  XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVar::fetch('version_2',  'int',    $version_2, $data['versions']-1,  XARVAR_NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('version_1',  'int',    $version_1, $data['versions'],  xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('version_2',  'int',    $version_2, $data['versions']-1,  xarVar::NOT_REQUIRED)) {return;}
     $data['version_1'] = $version_1;
     $data['version_2'] = $version_2;
         

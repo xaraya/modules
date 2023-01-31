@@ -84,7 +84,7 @@ function publications_userapi_getrootcats($args)
         $item = array();
         $item['catid'] = $info['cid'];
         $item['cattitle'] = xarVarPrepForDisplay($info['name']);
-        $item['catlink'] = xarModURL('publications','user','view',
+        $item['catlink'] = xarController::URL('publications','user','view',
                                     array('ptid' => $ptid,
                                           'catid' => $info['cid']));
         if ($isfirst) {

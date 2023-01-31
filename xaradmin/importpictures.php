@@ -17,19 +17,19 @@ function publications_admin_importpictures()
     if (!xarSecurityCheck('AdminPublications')) return;
 
     // Get parameters
-    if(!xarVar::fetch('basedir',      'isset', $basedir,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('baseurl',      'isset', $baseurl,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('thumbnail',    'isset', $thumbnail,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('filelist',     'isset', $filelist,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('refresh',      'isset', $refresh,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('ptid',         'int',   $data['ptid'], 5,    XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('title',        'isset', $title,        NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('summary',      'isset', $summary,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('content',      'isset', $content,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('usefilemtime', 'isset', $usefilemtime, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('cids',         'isset', $cids,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('test',         'isset', $test,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('import',       'isset', $import,       NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('basedir',      'isset', $basedir,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('baseurl',      'isset', $baseurl,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('thumbnail',    'isset', $thumbnail,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('filelist',     'isset', $filelist,     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('refresh',      'isset', $refresh,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',         'int',   $data['ptid'], 5,    xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('title',        'isset', $title,        NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('summary',      'isset', $summary,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('content',      'isset', $content,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('usefilemtime', 'isset', $usefilemtime, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('cids',         'isset', $cids,         NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('test',         'isset', $test,         NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('import',       'isset', $import,       NULL, xarVar::DONT_SET)) {return;}
 
 # --------------------------------------------------------
 #
@@ -222,7 +222,7 @@ function publications_admin_importpictures()
                              'cids' => $cids,
                           // for preview
                              'pubtype_id' => $data['ptid'],
-                             'owner' => xarUserGetVar('id'),
+                             'owner' => xarUser::getVar('id'),
                              'id' => 0);
             if (!empty($data['title']) && !empty($filename)) {
                 $article[$data['title']] = $filename;

@@ -19,50 +19,50 @@
 function publications_user_search($args)
 {
     // pager stuff
-    if(!xarVar::fetch('startnum', 'int:0', $startnum,  NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('startnum', 'int:0', $startnum,  NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // categories stuff
-    if(!xarVar::fetch('cids',     'array', $cids,      NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('andcids',  'str',   $andcids,   NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('catid',    'str',   $catid,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('cids',     'array', $cids,      NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('andcids',  'str',   $andcids,   NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('catid',    'str',   $catid,     NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // single publication type when called via the pager
-    if(!xarVar::fetch('ptid',     'id',    $ptid,      NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('ptid',     'id',    $ptid,      NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // multiple publication types when called via search hooks
-    if(!xarVar::fetch('ptids',    'array', $ptids,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('ptids',    'array', $ptids,     NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // date stuff via forms
-    if(!xarVar::fetch('publications_startdate','str', $startdate, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('publications_enddate',  'str', $enddate,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('publications_startdate','str', $startdate, NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('publications_enddate',  'str', $enddate,   NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // date stuff via URLs
-    if(!xarVar::fetch('start',    'int:0', $start,     NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('end',      'int:0', $end,       NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('start',    'int:0', $start,     NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('end',      'int:0', $end,       NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // search button was pressed
-    if(!xarVar::fetch('search',   'str',   $search,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('search',   'str',   $search,    NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // select by article state (array or string)
-    if(!xarVar::fetch('state',   'isset', $state,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('state',   'isset', $state,    NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // yes, this is the query
-    if(!xarVar::fetch('q',        'str',   $q,         NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVar::fetch('author',   'str',   $author,    NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('q',        'str',   $q,         NULL, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('author',   'str',   $author,    NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // filter by category
-    if(!xarVar::fetch('by',       'str',   $by,     NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('by',       'str',   $by,     NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // can't use list enum here, because we don't know which sorts might be used
-    if(!xarVar::fetch('sort', 'regexp:/^[\w,]*$/', $sort, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('sort', 'regexp:/^[\w,]*$/', $sort, NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // boolean AND/OR for words (no longer used)
-    //if(!xarVar::fetch('bool',     'str',   $bool,   NULL, XARVAR_NOT_REQUIRED)) {return;}
+    //if(!xarVar::fetch('bool',     'str',   $bool,   NULL, xarVar::NOT_REQUIRED)) {return;}
 
     // search in specific fields
-    if(!xarVar::fetch('publications_fields', 'isset', $fields, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('publications_fields', 'isset', $fields, NULL, xarVar::NOT_REQUIRED)) {return;}
 
-    if(!xarVar::fetch('searchtype', 'isset', $searchtype, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('searchtype', 'isset', $searchtype, NULL, xarVar::NOT_REQUIRED)) {return;}
 
     if (isset($args['objectid'])) {
         $ishooked = 1;
@@ -70,7 +70,7 @@ function publications_user_search($args)
         $ishooked = 0;
         if (empty($fields)) {
             // search in specific fields via URLs
-            if(!xarVar::fetch('fields', 'isset', $fields, NULL, XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVar::fetch('fields', 'isset', $fields, NULL, xarVar::NOT_REQUIRED)) {return;}
         }
     }
 
@@ -301,9 +301,9 @@ function publications_user_search($args)
             $data['categories'][] = array('cattitle' => $title,
                                           'catselect' => $select);
         }
-        $data['searchurl'] = xarModURL('search','user','main');
+        $data['searchurl'] = xarController::URL('search','user','main');
     } else {
-        $data['searchurl'] = xarModURL('search','user','main',
+        $data['searchurl'] = xarController::URL('search','user','main',
                                        array('by' => 'cat'));
     }
 
@@ -394,7 +394,7 @@ function publications_user_search($args)
                     }
                     foreach ($catinfo as $cid => $info) {
                         $catinfo[$cid]['name'] = xarVarPrepForDisplay($info['name']);
-                        $catinfo[$cid]['link'] = xarModURL('publications','user','view',
+                        $catinfo[$cid]['link'] = xarController::URL('publications','user','view',
                                                            array('ptid' => $curptid,
                                                                  'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
                         // only needed when sorting by root category id
@@ -424,7 +424,7 @@ function publications_user_search($args)
                 foreach ($publications as $article) {
                     $count++;
                     $curptid = $article['pubtype_id'];
-                    $link = xarModURL('publications','user','display',
+                    $link = xarController::URL('publications','user','display',
                                      array('ptid' => $article['pubtype_id'],
                                            'itemid' => $article['id']));
                     // publication date of article (if needed)
@@ -497,9 +497,9 @@ function publications_user_search($args)
                                                             'search' => $q)),
 
 /* trick : use *this* publications search instead of global search for pager :-)
-                                        xarModURL('search', 'user', 'main',
+                                        xarController::URL('search', 'user', 'main',
 */
-                                        xarModURL('publications', 'user', 'search',
+                                        xarController::URL('publications', 'user', 'search',
                                                   array('ptid' => $curptid,
                                                         'catid' => $catid,
                                                         'q' => isset($q) ? $q : null,
@@ -519,7 +519,7 @@ function publications_user_search($args)
                     } else {
                         $othersort = 'date';
                     }
-                    $sortlink = xarModURL('publications',
+                    $sortlink = xarController::URL('publications',
                                          'user',
                                          'search',
                                          array('ptid' => $curptid,

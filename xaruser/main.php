@@ -26,8 +26,8 @@ function publications_user_main($args)
 #
 # Get the ID of the translation if required
 #
-        if(!xarVar::fetch('translate', 'int:1', $translate,  1, XARVAR_NOT_REQUIRED)) {return;}
-        return xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
+        if(!xarVar::fetch('translate', 'int:1', $translate,  1, xarVar::NOT_REQUIRED)) {return;}
+        return xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $id,'translate' => $translate)));
     } else {
 # --------------------------------------------------------
 #
@@ -40,7 +40,7 @@ function publications_user_main($args)
             xarController::redirect($urldata['redirecturl']);
             return true;
         } else {
-            xarController::redirect(xarModURL('publications', 'user', 'view'));
+            xarController::redirect(xarController::URL('publications', 'user', 'view'));
         }
         return true;
     }

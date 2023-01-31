@@ -17,10 +17,10 @@ function publications_admin_updatestate()
     if (!xarSecurityCheck('EditPublications')) return;
 
     // Get parameters
-    if(!xarVar::fetch('ids',   'isset', $ids,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('state', 'isset', $state,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('catid',  'isset', $catid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVar::fetch('ptid',   'isset', $ptid,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('ids',   'isset', $ids,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('state', 'isset', $state,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('catid',  'isset', $catid,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('ptid',   'isset', $ptid,    NULL, xarVar::DONT_SET)) {return;}
 
 
     // Confirm authorisation code
@@ -102,7 +102,7 @@ function publications_admin_updatestate()
         $lastviewarray = unserialize($lastview);
         if (!empty($lastviewarray['ptid']) && $lastviewarray['ptid'] == $ptid) {
             extract($lastviewarray);
-            xarController::redirect(xarModURL('publications', 'admin', 'view',
+            xarController::redirect(xarController::URL('publications', 'admin', 'view',
                                           array('ptid' => $ptid,
                                                 'catid' => $catid,
                                                 'state' => $state,
@@ -114,7 +114,7 @@ function publications_admin_updatestate()
     if (empty($catid)) {
         $catid = null;
     }
-    xarController::redirect(xarModURL('publications', 'admin', 'view',
+    xarController::redirect(xarController::URL('publications', 'admin', 'view',
                                   array('ptid' => $ptid, 'catid' => $catid)));
 
     return true;

@@ -33,7 +33,7 @@ sys::import('modules.dynamicdata.class.objects.master');
 
 function publications_user_preview($data)
 {
-    if(!xarVar::fetch('layout',    'str:1', $layout,  'detail', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('layout',    'str:1', $layout,  'detail', xarVar::NOT_REQUIRED)) {return;}
     
     // Override xarVar::fetch
     extract ($data);
@@ -69,7 +69,7 @@ function publications_user_preview($data)
     $nopermissionpage_id = xarModVars::get('publications', 'noprivspage');
     if (!$allow || $nopublish) {
         if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
-        elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+        elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
         else return xarTplModule('publications', 'user', 'empty');
     }
     
@@ -77,7 +77,7 @@ function publications_user_preview($data)
     if (xarModVars::get('publications', 'use_process_states')) {
         if ($data['object']->properties['process_state']->value < 3)
             if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
-            elseif ($nopermissionpage_id) xarController::redirect(xarModURL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
+            elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
             else return xarTplModule('publications', 'user', 'empty');            
     }
     
@@ -109,7 +109,7 @@ function publications_user_preview($data)
                 $tplString = $blCompiler->compilestring($tplString);
                 // We don't allow passing $data to the template for now
                 $tpldata = array();
-                $tplString = xarTplString($tplString, $tpldata);
+                $tplString = xarTpl::string($tplString, $tpldata);
             } catch(Exception $e) {
                 var_dump($tplString);
             }
