@@ -29,7 +29,7 @@
 
         <!-- Description -->
         <div class="xar-publications-download-summary-title ">
-            <b>Description</b>
+            <strong>Description</strong>
         </div>
         <div class="xar-publications-download-summary-text ">
             <xar:data-output property="$properties['summary']" value="$fields['summary']" />

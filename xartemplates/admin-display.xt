@@ -5,7 +5,7 @@
     <div class="xar-mod-body">
         <xar:if condition="$allow">
             <div>
-                The state of this page is <b><xar:data-output property="$properties['state']"/></b>
+                The state of this page is <strong><xar:data-output property="$properties['state']"/></strong>
             </div>
             <xar:data-display object="$object" tplmodule="publications" layout="$layout"/>
         <xar:else/>

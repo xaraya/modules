@@ -53,7 +53,7 @@
                     <xar:if condition = "xarModVars::get('grader','use_module_icons')">
                         <img src="#xarTpl::getImage('icons/'.'document-save.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
                     <xar:else />
-                        <b style="margin-right: 5px">Download</b>
+                        <strong style="margin-right: 5px">Download</strong>
                     </xar:if>
                  </a>
             </div>

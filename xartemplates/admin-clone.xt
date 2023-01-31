@@ -6,7 +6,7 @@
         <form method="post" action="#xarModURL('publications','admin','clone')#">
             <fieldset>
                 <legend>
-                    <b>Clone this publication</b>
+                    <strong>Clone this publication</strong>
                 </legend>
                 Do you want to create a copy of this publication "#$object:properties.name:value#"?
                 <div class="xar-row">
