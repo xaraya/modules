@@ -35,7 +35,7 @@ function otp_admin_delete()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('otp','admin','view'));
+        xarController::redirect(xarController::URL('otp','admin','view'));
         return true;
     }
     return $data;

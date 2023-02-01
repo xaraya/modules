@@ -110,7 +110,7 @@
                         'otp_entries',
                          );
 
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+        if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     # --------------------------------------------------------
     #
@@ -143,7 +143,7 @@
     function otp_delete()
     {
         $this_module = 'otp';
-        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+        return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
     }
 
 ?>

@@ -77,7 +77,7 @@ function otp_admin_modifyconfig_utility()
             }
             foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('otp', $var, $$var, $regid);
 
-            xarController::redirect(xarModURL('otp', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;

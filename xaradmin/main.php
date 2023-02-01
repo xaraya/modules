@@ -25,10 +25,10 @@ function otp_admin_main()
         $redirect = xarModVars::get('otp','backend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('otp', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig'));
         }
     }
     return true;

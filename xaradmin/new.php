@@ -46,7 +46,7 @@ function otp_admin_new()
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('otp','admin','view'));
+            xarController::redirect(xarController::URL('otp','admin','view'));
             return true;
         }
     }

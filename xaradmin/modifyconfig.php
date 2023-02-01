@@ -85,7 +85,7 @@ function otp_admin_modifyconfig()
 
             // If this is an AJAX call, end here
             xarController::$request->exitAjax();
-            xarController::redirect(xarModURL('otp', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('otp', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
             return true;
             break;
 
