@@ -35,7 +35,7 @@ function cacher_admin_delete()
         $item = $data['object']->deleteItem();
             
         // Jump to the next page
-        xarController::redirect(xarModURL('cacher','admin','view'));
+        xarController::redirect(xarController::URL('cacher','admin','view'));
         return true;
     }
     return $data;

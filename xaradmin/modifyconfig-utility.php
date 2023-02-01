@@ -77,7 +77,7 @@ function cacher_admin_modifyconfig_utility()
             }
             foreach ($modvars as $var) if (isset($$var)) xarModItemVars::set('cacher', $var, $$var, $regid);
 
-            xarController::redirect(xarModURL('cacher', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('cacher', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;

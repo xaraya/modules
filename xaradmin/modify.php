@@ -46,7 +46,7 @@ function cacher_admin_modify()
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('cacher','admin','view'));
+            xarController::redirect(xarController::URL('cacher','admin','view'));
             return true;
         }
     }

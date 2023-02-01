@@ -75,7 +75,7 @@ function cacher_admin_modifyconfig()
 
             // If this is an AJAX call, end here
             xarController::$request->exitAjax();
-            xarController::redirect(xarModURL('cacher', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('cacher', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
             return true;
             break;
 

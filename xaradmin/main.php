@@ -25,10 +25,10 @@ function cacher_admin_main()
         $redirect = xarModVars::get('cacher','backend_page');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('cacher', 'admin', 'modifyconfig'));
+            xarController::redirect(xarController::URL('cacher', 'admin', 'modifyconfig'));
         }
     }
     return true;
