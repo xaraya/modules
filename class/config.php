@@ -42,9 +42,7 @@ class CacheConfig extends xarObject
         }
 
         // get the caching config settings from the config file
-        $settings = CacheManager::get_config(
-            ['from' => 'file']
-        );
+        $settings = CacheManager::getConfigFromFile();
 
         // map the settings to the right cache type
         $cachetypes = [];

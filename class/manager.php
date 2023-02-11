@@ -40,7 +40,7 @@ class CacheManager extends xarObject
      * @param boolean $args['tpl_prep'] prep the config for use in templates
      * @param boolean $args['viahook'] config value requested as part of a hook call
      * @return array of caching configuration settings
-     * @throws MODULE_FILE_NOT_EXIST
+     * @throws Exception
      */
     public static function get_config($args)
     {
@@ -61,87 +61,13 @@ class CacheManager extends xarObject
             $tpl_prep = false;
         }
 
-        // Make sure the caching configuration array is initialized
-        // so we don't run into possible errors later.
-        $cachingConfiguration = [];
-
         switch ($from) {
             case 'db':
-
-                //get the modvars from the db
-                if (!empty($keys)) {
-                    foreach ($keys as $key) {
-                        $value = xarModVars::get('xarcachemanager', $key);
-                        if (substr($value, 0, 6) == 'array-') {
-                            $value = substr($value, 6);
-                            $value = unserialize($value);
-                        }
-                        if (is_numeric($value)) {
-                            $value = intval($value);
-                        }
-                        $cachingConfiguration[$key] = $value;
-                    }
-                } else {
-                    $modBaseInfo = xarMod::getBaseInfo('xarcachemanager');
-                    //if (!isset($modBaseInfo)) return; // throw back
-
-                    $dbconn = xarDB::getConn();
-                    $tables = xarDB::getTables();
-
-                    // Takes the right table basing on module mode
-                    if ($modBaseInfo['mode'] == XARMOD_MODE_SHARED) {
-                        $module_varstable = $tables['system/module_vars'];
-                        $module_uservarstable = $tables['system/module_uservars'];
-                    } elseif ($modBaseInfo['mode'] == XARMOD_MODE_PER_SITE) {
-                        $module_varstable = $tables['site/module_vars'];
-                        $module_uservarstable = $tables['site/module_uservars'];
-                    }
-
-                    $sql="SELECT $module_varstable.xar_name, $module_varstable.xar_value FROM $module_varstable WHERE $module_varstable.xar_modid = ?";
-                    $result =& $dbconn->Execute($sql, [$modBaseInfo['systemid']]);
-                    if (!$result) {
-                        return;
-                    }
-
-                    while (!$result->EOF) {
-                        [$name, $value] = $result->fields;
-                        $result->MoveNext();
-                        if (substr($value, 0, 6) == 'array-') {
-                            $value = substr($value, 6);
-                            $value = unserialize($value);
-                        }
-                        $cachingConfiguration[$name] = $value;
-                    }
-                }
-
+                $cachingConfiguration = static::getConfigFromDatabase($args);
                 break;
 
             default:
-
-                if (!isset($cachingConfigFile)) {
-                    $cachingConfigFile = sys::varpath() . '/cache/config.caching.php';
-                }
-
-                if (!file_exists($cachingConfigFile)) {
-                    // try to restore the missing file
-                    if (!self::restore_config()) {
-                        $msg=xarMLS::translate('The #(1) file is missing.  Please restore #(1)
-                                    from backup, or the xarcachemanager/config.caching.php.dist
-                                    file.', $cachingConfigFile);
-                        throw new Exception($msg);
-                        return false;
-                    }
-                }
-
-                include $cachingConfigFile;
-
-                // if we only want specific keys, reduce the array
-                if (!empty($keys)) {
-                    foreach ($keys as $key) {
-                        $filteredConfig[$key] = $cachingConfiguration[$key];
-                    }
-                    $cachingConfiguration = $filteredConfig;
-                }
+                $cachingConfiguration = static::getConfigFromFile($args);
         }
 
         if ($tpl_prep) {
@@ -155,13 +81,98 @@ class CacheManager extends xarObject
         return $settings;
     }
 
+    public static function getConfigFromFile(array $args = [])
+    {
+        extract($args);
+
+        // Make sure the caching configuration array is initialized
+        // so we don't run into possible errors later.
+        $cachingConfiguration = [];
+
+        if (!isset($cachingConfigFile)) {
+            $cachingConfigFile = sys::varpath() . '/cache/config.caching.php';
+        }
+
+        if (!file_exists($cachingConfigFile)) {
+            // try to restore the missing file
+            if (!self::restore_config()) {
+                $msg=xarMLS::translate('The #(1) file is missing.  Please restore #(1)
+                            from backup, or the xarcachemanager/config.caching.php.dist
+                            file.', $cachingConfigFile);
+                throw new Exception($msg);
+            }
+        }
+
+        include $cachingConfigFile;
+
+        // if we only want specific keys, reduce the array
+        if (!empty($keys)) {
+            foreach ($keys as $key) {
+                $filteredConfig[$key] = $cachingConfiguration[$key];
+            }
+            $cachingConfiguration = $filteredConfig;
+        }
+
+        return $cachingConfiguration;
+    }
+
+    public static function getConfigFromDatabase(array $args = [])
+    {
+        extract($args);
+
+        // Make sure the caching configuration array is initialized
+        // so we don't run into possible errors later.
+        $cachingConfiguration = [];
+
+        //get the modvars from the db
+        if (!empty($keys)) {
+            foreach ($keys as $key) {
+                $value = xarModVars::get('xarcachemanager', $key);
+                if (substr($value, 0, 6) == 'array-') {
+                    $value = substr($value, 6);
+                    $value = unserialize($value);
+                }
+                if (is_numeric($value)) {
+                    $value = intval($value);
+                }
+                $cachingConfiguration[$key] = $value;
+            }
+            return $cachingConfiguration;
+        }
+
+        $modBaseInfo = xarMod::getBaseInfo('xarcachemanager');
+        //if (!isset($modBaseInfo)) return; // throw back
+
+        $dbconn = xarDB::getConn();
+        $tables = xarDB::getTables();
+        $module_varstable = $tables['module_vars'];
+
+        $sql="SELECT $module_varstable.xar_name, $module_varstable.xar_value FROM $module_varstable WHERE $module_varstable.xar_modid = ?";
+        $result =& $dbconn->Execute($sql, [$modBaseInfo['systemid']]);
+        if (!$result) {
+            return;
+        }
+
+        while (!$result->EOF) {
+            [$name, $value] = $result->fields;
+            $result->MoveNext();
+            if (substr($value, 0, 6) == 'array-') {
+                $value = substr($value, 6);
+                $value = unserialize($value);
+            }
+            $cachingConfiguration[$name] = $value;
+        }
+
+        return $cachingConfiguration;
+    }
+
     /**
      * Save configuration settings in the config file and modVars
      *
      * @author jsb <jsb@xaraya.com>
      * @access public
      * @param $args['config'] array of config labels and values
-     * @throws FUNCTION_FAILED
+     * @throws Exception
      */
     public static function save_config($args)
     {
@@ -183,7 +194,6 @@ class CacheManager extends xarObject
                    #(1) must be writable by the web server for
                    the output caching to be managed by xarCacheManager.', $cachingConfigFile);
             throw new Exception($msg);
-            return false;
         }
 
         $cachingConfig = join('', file($cachingConfigFile));
@@ -231,7 +241,7 @@ class CacheManager extends xarObject
      *
      * @author jsb <jsb@xaraya.com>
      * @access public
-     * @throws FUNCTION_FAILED
+     * @throws Exception
      * @return boolean
      */
     public static function restore_config()
@@ -240,10 +250,7 @@ class CacheManager extends xarObject
         $defaultConfigFile = sys::code() . 'modules/xarcachemanager/config.caching.php.dist';
         $cachingConfigFile = $varCacheDir . '/config.caching.php';
 
-        $configSettings = self::get_config(
-            ['from' => 'db',
-                                          'cachingConfigFile' => $cachingConfigFile, ]
-        );
+        $configSettings = self::getConfigFromDatabase();
 
         // Confirm the cache directory is writable
         if (!is_writable($varCacheDir)) {
@@ -253,7 +260,6 @@ class CacheManager extends xarObject
                    Please change the permission on the #(1) directory
                    so that the web server can write to it.', $varCacheDir);
             throw new Exception($msg);
-            return false;
         }
 
         // Confirm the config file is writable
@@ -265,7 +271,6 @@ class CacheManager extends xarObject
                    Please change the permission on the #(1) file
                    so that the web server can write to it.', $cachingConfigFile);
             throw new Exception($msg);
-            return false;
         }
 
         if (file_exists($cachingConfigFile)) {

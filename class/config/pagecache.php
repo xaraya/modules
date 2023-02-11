@@ -62,9 +62,7 @@ class PageCache extends CacheConfig
         // Get the output cache directory
         $outputCacheDir = xarCache::getOutputCacheDir();
 
-        $cachingConfiguration = CacheManager::get_config(
-            ['from' => 'file']
-        );
+        $cachingConfiguration = CacheManager::getConfigFromFile();
 
         $data['settings'] = xarMod::apiFunc(
             'xarcachemanager',
