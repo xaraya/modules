@@ -17,6 +17,7 @@ namespace Xaraya\Modules\CacheManager;
 
 use xarObject;
 use xarCache;
+use DataObjectRESTHandler;
 use Throwable;
 use sys;
 
@@ -36,6 +37,9 @@ class CacheInfo extends xarObject
      */
     protected static function getCacheStorage($type)
     {
+        if ($type === 'token') {
+            return DataObjectRESTHandler::getTokenStorage();
+        }
         // get cache type settings
         $cachetypes = CacheConfig::getTypes();
 
@@ -220,6 +224,8 @@ class CacheInfo extends xarObject
                 } else {
                     $item = $value;
                 }
+            } elseif ($type == 'token' && !empty($value)) {
+                $item = @json_decode($value, true);
             } else {
                 // do nothing
                 $item = $value;
