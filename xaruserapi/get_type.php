@@ -32,33 +32,22 @@ function mime_userapi_get_type( $args )
         throw new Exception($msg);
     }
 
-    // Get database setup
-    $dbconn = xarDB::getConn();
-    $xartable     =& xarDB::getTables();
-
-    $where = ' WHERE ';
+    $xartable = xarDB::getTables();
+	$q = new Query('SELECT', $xartable['mime_type']);
 
     if (isset($typeId)) {
-        $where .= ' id = ' . $typeId;
+    	$q->eq('id', $typeId);
     } else {
-        $where .= " name = '".strtolower($typeName)."'";
+    	$q->eq('id', strtolower($typeName));
     }
+	$q->addfield('id');
+	$q->addfield('name');
+    $q->run();
+    $result = $q->output();
 
-    // table and column definitions
-    $type_table =& $xartable['mime_type'];
+    if (empty($result)) return array();
 
-    $sql = "SELECT id,
-                   name
-              FROM $type_table
-            $where";
-
-    $result = $dbconn->Execute($sql);
-
-    if (!$result || $result->EOF)  {
-        return array();
-    }
-
-    $row = $result->GetRowAssoc(false);
+    $row = $q->row();
 
     return array('typeId'   => (int)$row['id'],
                  'typeName' => $row['name']);
