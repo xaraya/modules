@@ -51,20 +51,20 @@ function mime_userapi_get_mime_image( $args )
     // Try the complete mimetype-subtype image.
     foreach($fileSuffixes as $fileSuffix) {
         $imageFile = $mimeType[0] . '-' . $mimeType[1] . $fileSuffix;
-        if ($imageURI = xarTplGetImage($imageFile, 'mime')) {break;}
+        if ($imageURI = xarTpl::getImage($imageFile, 'mime')) {break;}
     }
 
     // Otherwise, try the top level mimetype image.
     if ($imageURI == NULL) {
         foreach($fileSuffixes as $fileSuffix) {
             $imageFile = $mimeType[0] . $fileSuffix;
-            if ($imageURI = xarTplGetImage($imageFile, 'mime')) {break;}
+            if ($imageURI = xarTpl::getImage($imageFile, 'mime')) {break;}
         }
 
         if ($imageURI == NULL) {
             foreach($fileSuffixes as $fileSuffix) {
                 $imageFile = $defaultBase . $fileSuffix;
-                if ($imageURI = xarTplGetImage($imageFile, 'mime')) {break;}
+                if ($imageURI = xarTpl::getImage($imageFile, 'mime')) {break;}
             }
         }
     }

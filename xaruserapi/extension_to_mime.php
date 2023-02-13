@@ -48,10 +48,10 @@ function mime_userapi_extension_to_mime( $args )
         if (count($parts) > 1) {
             
             $extension = $parts[count($parts) - 1];
-            $extensionInfo = xarModAPIFunc('mime', 'user', 'get_extension', 
+            $extensionInfo = xarMod::apiFunc('mime', 'user', 'get_extension', 
                                             array('extensionName' => $extension));
             if (!empty($extensionInfo)) {
-                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', 
+                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', 
                                            array('subtypeId' => $extensionInfo['subtypeId']));
                 if (!empty($mimeType)) {
                     return $mimeType;

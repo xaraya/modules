@@ -118,7 +118,7 @@ function mime_init()
                         'mime_extensions',
                          );
 
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+        if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
 
     # --------------------------------------------------------
     #

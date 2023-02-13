@@ -67,9 +67,9 @@ function mime_userapi_analyze_file( $args )
         $parts = explode('.', $altFileName);
         if (is_array($parts) && count($parts)) {
             $extension = basename(end($parts));
-            $typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
             if (is_array($typeInfo) && count($typeInfo)) {
-                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
                 return $mimeType;
             } else {
                 return 'application/octet-stream';
@@ -83,7 +83,7 @@ function mime_userapi_analyze_file( $args )
         $msg = xarML('Unable to analyze file [#(1)]. Cannot open for reading!', $fileName);
         throw new Exception($msg);
     } else {
-        $mime_list = xarModAPIFunc('mime', 'user', 'getall_magic');
+        $mime_list = xarMod::apiFunc('mime', 'user', 'getall_magic');
 
 
         foreach($mime_list as $mime_type => $mime_info) {
@@ -118,7 +118,7 @@ function mime_userapi_analyze_file( $args )
 
                 if ($magicInfo['value'] == base64_encode($value)) {
                     fclose($fp);
-                       $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype',
+                       $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype',
                                                   array('subtypeId' => $magicInfo['subtypeId']));
                     if (!empty($mimeType)) {
                         return $mimeType;
@@ -130,9 +130,9 @@ function mime_userapi_analyze_file( $args )
         $parts = explode('.', $altFileName);
         if (is_array($parts) && count($parts)) {
             $extension = basename(end($parts));
-            $typeInfo = xarModAPIFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
+            $typeInfo = xarMod::apiFunc('mime', 'user', 'get_extension', array('extensionName' => $extension));
             if (is_array($typeInfo) && count($typeInfo)) {
-                $mimeType = xarModAPIFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
+                $mimeType = xarMod::apiFunc('mime', 'user', 'get_mimetype', array('subtypeId' => $typeInfo['subtypeId']));
                 return $mimeType;
             }
         }

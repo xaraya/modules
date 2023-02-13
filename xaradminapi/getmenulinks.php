@@ -19,7 +19,7 @@
 
     function mime_adminapi_getmenulinks()
     {
-        return xarModAPIFunc('base','admin','menuarray',array('module' => 'mime'));
+        return xarMod::apiFunc('base','admin','menuarray',array('module' => 'mime'));
     }
 
 ?>
