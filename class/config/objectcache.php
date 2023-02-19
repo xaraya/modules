@@ -39,7 +39,7 @@ class ObjectCache extends CacheConfig
 
     /**
      * configure object caching
-     * @return array
+     * @return array|void
      */
     public static function modifyConfig($args)
     {

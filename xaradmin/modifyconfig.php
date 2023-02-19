@@ -20,8 +20,7 @@ use Xaraya\Modules\CacheManager\CacheUtility;
  *
  * @author jsb | mikespub
  * @access public
- * @return array $data (array of values for admin modify template) on success or false on failure
- * @throws MODULE_FILE_NOT_EXIST
+ * @return array|void $data (array of values for admin modify template) on success or false on failure
  */
 function xarcachemanager_admin_modifyconfig()
 {

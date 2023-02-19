@@ -30,6 +30,7 @@ use xarDB;
 use xarMLS;
 use xarTpl;
 use DataObjectDescriptor;
+use BadParameterException;
 use Exception;
 use sys;
 
@@ -105,7 +106,7 @@ class CacheHooks extends xarObject
      * - int   $args['objectid'] ID of the object
      * - array $args['extrainfo'] extra information
      * @return array updated extrainfo array
-     * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+     * @throws BadParameterException
      * @todo - actually raise errors, get intelligent and specific about cache files to remove
      */
     public static function createhook($args)
@@ -120,8 +121,7 @@ class CacheHooks extends xarObject
                 'createhook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
         if (!isset($extrainfo) || !is_array($extrainfo)) {
             $extrainfo = [];
@@ -150,8 +150,7 @@ class CacheHooks extends xarObject
                 'createhook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
 
         if (!isset($itemtype) || !is_numeric($itemtype)) {
@@ -265,7 +264,7 @@ class CacheHooks extends xarObject
      * - int   $args['objectid'] ID of the object
      * - array $args['extrainfo'] extra information
      * @return string hook output in HTML
-     * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+     * @throws BadParameterException
      */
     public static function modifyhook($args)
     {
@@ -293,8 +292,7 @@ class CacheHooks extends xarObject
                 'modifyhook',
                 'changelog'
             );
-            throw new Exception($msg);
-            return $msg;
+            throw new BadParameterException($msg);
         }
 
         if (!isset($objectid) || !is_numeric($objectid)) {
@@ -305,8 +303,7 @@ class CacheHooks extends xarObject
                 'modifyhook',
                 'changelog'
             );
-            throw new Exception($msg);
-            return $msg;
+            throw new BadParameterException($msg);
         }
 
         // When called via hooks, the module name may be empty, so we get it from
@@ -331,8 +328,7 @@ class CacheHooks extends xarObject
                 'modifyhook',
                 'changelog'
             );
-            throw new Exception($msg);
-            return $msg;
+            throw new BadParameterException($msg);
         }
 
         if (!empty($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -412,7 +408,7 @@ class CacheHooks extends xarObject
      * - int   $args['objectid'] ID of the object
      * - array $args['extrainfo'] extra information
      * @return array updated extrainfo array
-     * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+     * @throws BadParameterException
      * @todo - actually raise errors, get intelligent and specific about cache files to remove
      */
     public static function updatehook($args)
@@ -427,8 +423,7 @@ class CacheHooks extends xarObject
                 'updatehook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
         if (!isset($extrainfo) || !is_array($extrainfo)) {
             $extrainfo = [];
@@ -452,8 +447,7 @@ class CacheHooks extends xarObject
                 'updatehook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
 
         if (!isset($itemtype) || !is_numeric($itemtype)) {
@@ -614,7 +608,7 @@ class CacheHooks extends xarObject
      * - int   $args['objectid'] ID of the object
      * - array $args['extrainfo'] extra information
      * @return array updated extrainfo array
-     * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+     * @throws BadParameterException
      * @todo - actually raise errors, get intelligent and specific about cache files to remove
      */
     public static function deletehook($args)
@@ -629,8 +623,7 @@ class CacheHooks extends xarObject
                 'deletehook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
         if (!isset($extrainfo) || !is_array($extrainfo)) {
             $extrainfo = [];
@@ -654,8 +647,7 @@ class CacheHooks extends xarObject
                 'deletehook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
 
         if (!isset($itemtype) || !is_numeric($itemtype)) {
@@ -787,7 +779,7 @@ class CacheHooks extends xarObject
      * @param array $args with mandatory arguments:
      * - array $args['extrainfo'] extra information
      * @return array updated extrainfo array
-     * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
+     * @throws BadParameterException
      * @todo - actually raise errors, get intelligent and specific about cache files to remove
      */
     public static function updateconfighook($args)
@@ -821,8 +813,7 @@ class CacheHooks extends xarObject
                 'updatehook',
                 'xarcachemanager'
             );
-            throw new Exception($msg);
-            return;
+            throw new BadParameterException($msg);
         }
 
         if (!isset($itemtype) || !is_numeric($itemtype)) {

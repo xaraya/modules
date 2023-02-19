@@ -43,7 +43,7 @@ class PageCache extends CacheConfig
 
     /**
      * configure page caching (TODO)
-     * @return array
+     * @return array|bool|void
      */
     public static function modifyConfig($args)
     {

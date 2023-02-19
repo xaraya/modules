@@ -21,7 +21,6 @@ use Xaraya\Modules\CacheManager\CacheHooks;
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information
  * @return string hook output in HTML
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  */
 function xarcachemanager_admin_modifyhook($args)
 {

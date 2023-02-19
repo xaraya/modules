@@ -22,7 +22,6 @@ use Xaraya\Modules\CacheManager\CacheHooks;
  * - int   $args['objectid'] ID of the object
  * - array $args['extrainfo'] extra information
  * @return array updated extrainfo array
- * @throws BAD_PARAM, NO_PERMISSION, DATABASE_ERROR
  * @todo - actually raise errors, get intelligent and specific about cache files to remove
  */
 function xarcachemanager_adminapi_updatehook($args)

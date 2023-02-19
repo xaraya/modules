@@ -22,7 +22,7 @@ use Xaraya\Modules\CacheManager\CacheManager;
  * - string $args['sort']
  * - int    $args['startnum']
  * - int    $args['itemsperpage']
- * @return array
+ * @return array|bool|void
  */
 function xarcachemanager_admin_stats($args)
 {

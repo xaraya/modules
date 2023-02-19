@@ -19,7 +19,6 @@ use Xaraya\Modules\CacheManager\CacheManager;
  * @author jsb <jsb@xaraya.com>
  * @access public
  * @uses CacheManager::restore_config()
- * @throws FUNCTION_FAILED
  * @return boolean
  */
 function xarcachemanager_adminapi_restore_cachingconfig()

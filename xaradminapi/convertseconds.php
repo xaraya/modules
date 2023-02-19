@@ -23,7 +23,6 @@ use Xaraya\Modules\CacheManager\CacheUtility;
  * @param string $args['starttime'] (seconds or hh:mm:ss)
  * @param string $args['direction'] (from or to)
  * @return string $convertedtime (hh:mm:ss or seconds)
- * @throws nothing
  * @todo maybe add support for days?
  */
 function xarcachemanager_adminapi_convertseconds($args)

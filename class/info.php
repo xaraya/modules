@@ -192,7 +192,7 @@ class CacheInfo extends xarObject
      * @param string $type cachetype to get the cache item from
      * @param string $key the cache key
      * @param string $code the cache code (optional)
-     * @return array array of cacheitem
+     * @return array|string array of cacheitem
     */
     public static function getItem($type, $key, $code = '')
     {

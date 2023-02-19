@@ -18,7 +18,7 @@ use Xaraya\Modules\CacheManager\CacheUtility;
 /**
  * Update the configuration parameters of the module based on data from the modification form
  *
- * @return bool true on success of update
+ * @return bool|void true on success of update
  */
 function xarcachemanager_admin_updateconfig()
 {

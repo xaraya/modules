@@ -39,7 +39,7 @@ class ModuleCache extends CacheConfig
 
     /**
      * configure module caching
-     * @return array
+     * @return array|void
      */
     public static function modifyConfig($args)
     {

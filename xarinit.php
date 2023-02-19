@@ -188,7 +188,6 @@ function xarcachemanager_upgrade($oldversion)
                    please make #(2) writable by the web server process and 
                    #(1) will be created for you.', $cachingConfigFile, $varCacheDir);
         throw new Exception($msg);
-        return false;
     }
     $cachingConfiguration = [];
 
@@ -458,9 +457,9 @@ function xarcachemanager_delete()
 /**
  * Setup the config.caching file and the output directories
  *
+ * @param array $args
  * @param string $args['varCacheDir']
  * @return bool Returns true on success, false on failure
- * @throws FUNCTION_FAILED
  * @todo special handling for "repair" during upgrades
  */
 function xarcachemanager_fs_setup($args)
@@ -503,7 +502,6 @@ function xarcachemanager_fs_setup($args)
                 $cachingConfigFile
             );
             throw new Exception($msg);
-            return false;
         }
     }
 
@@ -512,7 +510,6 @@ function xarcachemanager_fs_setup($args)
         $msg=xarMLS::translate('The #(1) file must be writable by the web server for 
                    output caching to work.', $cachingConfigFile);
         throw new Exception($msg);
-        return false;
     }
 
     // set up the directories
@@ -532,7 +529,6 @@ function xarcachemanager_fs_setup($args)
                            Please change the permission on the #(1) directory
                            so that the web server can write to it.', $setupDir);
                 throw new Exception($msg);
-                return false;
             }
         } else {
             $old_umask = umask(0);

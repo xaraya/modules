@@ -27,7 +27,7 @@ class CacheUtility
      * @access public
      * @param int|string $args['starttime'] (seconds or hh:mm:ss)
      * @param string $args['direction'] (from or to)
-     * @return string|int $convertedtime (hh:mm:ss or seconds)
+     * @return string|int|void $convertedtime (hh:mm:ss or seconds)
      * @throws BadParameterException wrong direction
      * @todo maybe add support for days?
      */
@@ -47,7 +47,6 @@ class CacheUtility
                 return static::convertToSeconds((string) $starttime);
             default:
                 throw new BadParameterException($direction, "Unknown direction #(1)");
-                return 0;
         }
     }
 

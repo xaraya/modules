@@ -38,7 +38,7 @@ class VariableCache extends CacheConfig
 
     /**
      * configure variable caching
-     * @return array
+     * @return array|void
      */
     public static function modifyConfig($args)
     {

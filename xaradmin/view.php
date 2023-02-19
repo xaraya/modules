@@ -19,7 +19,7 @@ use Xaraya\Modules\CacheManager\CacheInfo;
  * - string $args['tab']
  * - string $args['key']
  * - string $args['code']
- * @return array
+ * @return array|void
  */
 function xarcachemanager_admin_view($args)
 {

@@ -33,7 +33,7 @@ class QueryCache extends CacheConfig
 
     /**
      * configure query caching (TODO)
-     * @return array
+     * @return array|void
      */
     public static function modifyConfig($args)
     {

@@ -31,7 +31,7 @@ class TemplateCache extends CacheConfig
 
     /**
      * configure template caching (TODO)
-     * @return array
+     * @return array|void
      */
     public static function modifyConfig($args)
     {

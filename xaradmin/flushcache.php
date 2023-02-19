@@ -20,7 +20,7 @@ use Xaraya\Modules\CacheManager\CacheManager;
  * - string $args['flushkey']
  * - string $args['cachecode']
  * - string $args['confirm']
- * @return array
+ * @return array|void
  */
 function xarcachemanager_admin_flushcache($args)
 {

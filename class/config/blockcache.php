@@ -40,7 +40,7 @@ class BlockCache extends CacheConfig
 
     /**
      * configure block caching
-     * @return array
+     * @return array|void
      */
     public static function modifyConfig($args)
     {
@@ -146,7 +146,7 @@ class BlockCache extends CacheConfig
     /**
      * get configuration of block caching for all blocks
      *
-     * @return array Block caching configurations
+     * @return array|void Block caching configurations
      */
     public static function getConfig()
     {

@@ -15,7 +15,7 @@
  *
  * @author jsb | mikespub
  * @access public
- * @return true on success or void on falure
+ * @return true|void on success or void on falure
  */
 function xarcachemanager_admin_main()
 {

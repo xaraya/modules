@@ -35,11 +35,12 @@ class CacheManager extends xarObject
      *
      * @author jsb <jsb@xaraya.com>
      * @access public
+     * @param array $args
      * @param string $args['from'] source of configuration to get - file or db
      * @param array $args['keys'] array of config labels and values
      * @param boolean $args['tpl_prep'] prep the config for use in templates
      * @param boolean $args['viahook'] config value requested as part of a hook call
-     * @return array of caching configuration settings
+     * @return array|void of caching configuration settings
      * @throws Exception
      */
     public static function get_config($args)
@@ -290,7 +291,7 @@ class CacheManager extends xarObject
      * @author jsb <jsb@xaraya.com>
      * @access public
      * @param array $cachingConfiguration cachingConfiguration to be prep for a template
-     * @return array of cachingConfiguration with '.' removed from keys or void
+     * @return array|void of cachingConfiguration with '.' removed from keys or void
      */
     public static function config_tpl_prep($cachingConfiguration)
     {

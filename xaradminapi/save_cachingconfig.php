@@ -19,8 +19,8 @@ use Xaraya\Modules\CacheManager\CacheManager;
  * @author jsb <jsb@xaraya.com>
  * @access public
  * @uses CacheManager::save_config()
+ * @param array $args
  * @param $args['config'] array of config labels and values
- * @throws FUNCTION_FAILED
  */
 function xarcachemanager_adminapi_save_cachingconfig($args)
 {
