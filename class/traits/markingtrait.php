@@ -12,12 +12,23 @@
  * @author Workflow Module Development Team
  */
 
+/**
+* For documentation purposes only - available via xarWorkflowMarkingTrait
+*/
+interface xarWorkflowMarkingInterface
+{
+    public function getId(): string;
+    public function getMarking(): array|string|null;
+    public function setMarking($marking, array $context = []): void;
+    public function getContext(): array|null;
+}
+
 trait xarWorkflowMarkingTrait
 {
     protected $_workflowMarking;  // array for workflow or string for state_machine
     protected $_workflowContext;
 
-    public function getId()
+    public function getId(): string
     {
         //return spl_object_id($this);
         if (empty($this->objectref)) {
@@ -29,18 +40,18 @@ trait xarWorkflowMarkingTrait
     // See https://write.vanoix.com/alexandre/creer-un-workflow-metier-avec-le-composant-symfony-workflow
     //
     // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Tests/Subject.php
-    public function getMarking()
+    public function getMarking(): array|string|null
     {
         return $this->_workflowMarking;
     }
 
-    public function setMarking($marking, array $context = [])
+    public function setMarking($marking, array $context = []): void
     {
         $this->_workflowMarking = $marking;
         $this->_workflowContext = $context;
     }
 
-    public function getContext()
+    public function getContext(): array|null
     {
         return $this->_workflowContext;
     }

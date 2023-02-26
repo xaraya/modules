@@ -19,19 +19,21 @@ use ObjectDescriptor;
 use xarVar;
 use sys;
 // @checkme remove once moved to the same namespace
+use xarWorkflowMarkingInterface;
 use xarWorkflowMarkingTrait;
-use xarWorkflowTransitionTrait;
+use xarWorkflowRegistryInterface;
+use xarWorkflowRegistryTrait;
 
 sys::import('modules.base.xarproperties.textarea');
 sys::import('modules.workflow.class.traits.markingtrait');
-sys::import('modules.workflow.class.traits.transitiontrait');
+sys::import('modules.workflow.class.traits.registrytrait');
 sys::import('modules.workflow.class.config');
 sys::import('modules.workflow.class.tracker');
 
-class WorkflowsProperty extends TextAreaProperty
+class WorkflowsProperty extends TextAreaProperty implements xarWorkflowMarkingInterface, xarWorkflowRegistryInterface
 {
     use xarWorkflowMarkingTrait;
-    use xarWorkflowTransitionTrait;
+    use xarWorkflowRegistryTrait;
 
     public $id         = 18888;
     public $name       = 'workflows';
@@ -101,7 +103,7 @@ class WorkflowsProperty extends TextAreaProperty
         $data['context'] = $this->getContext();
         // from xarWorkflowRegistryTrait
         $data['workflows'] = $this->allWorkflows();
-        // from xarWorkflowTransitionTrait
+        // from xarWorkflowTransitionTrait - handled via workflow-actions tag, showactions user api and test-actionlist template
         //$data['transitions'] = $this->getEnabledTransitions($workflow);
         return parent::showOutput($data);
     }

@@ -293,7 +293,7 @@ class xarWorkflowProcess extends xarObject
     // See https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/Workflow/Workflow.php
     public static function canTransition(string $workflowName, object $subject, string $transitionName)
     {
-        // @checkme the subject has its own method to check a transition
+        // @checkme the subject has its own method to check a transition, cfr. xarWorkflowTransitionTrait
         if (method_exists($subject, 'canTransition')) {
             return $subject->canTransition($workflowName, $transitionName);
         }
@@ -303,7 +303,7 @@ class xarWorkflowProcess extends xarObject
 
     public static function applyTransition(string $workflowName, object $subject, string $transitionName, array $context = [])
     {
-        // @checkme the subject has its own method to apply the transition
+        // @checkme the subject has its own method to apply the transition, cfr. xarWorkflowTransitionTrait
         if (method_exists($subject, 'applyTransition')) {
             return $subject->applyTransition($workflowName, $transitionName, $context);
         }
@@ -313,7 +313,7 @@ class xarWorkflowProcess extends xarObject
 
     public static function getEnabledTransitions(string $workflowName, object $subject)
     {
-        // @checkme the subject has its own method to get enabled transitions
+        // @checkme the subject has its own method to get enabled transitions, cfr. xarWorkflowTransitionTrait
         if (method_exists($subject, 'getEnabledTransitions')) {
             return $subject->getEnabledTransitions($workflowName);
         }

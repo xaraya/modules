@@ -1,6 +1,6 @@
 <?php
 /**
- * Workflow Module Test Subject for Symfony Workflow tests
+ * Workflow Module Test Subject for Symfony Workflow tests - could use xarWorkflowTransitionTrait too
  *
  * @package modules
  * @copyright (C) copyright-placeholder
@@ -13,13 +13,15 @@
  */
 
 sys::import('modules.workflow.class.traits.markingtrait');
+sys::import('modules.workflow.class.traits.transitiontrait');
 
-class xarWorkflowSubject
+class xarWorkflowSubject implements xarWorkflowMarkingInterface
 {
     use xarWorkflowMarkingTrait;
 
     // @checkme create minimal objectref object for use in getId()
     public $objectref;
+    public $name = 'subject';
 
     public function __construct(string $objectName = 'dummy', int $itemId = 0)
     {
@@ -40,5 +42,16 @@ class xarWorkflowSubject
             }
         }
         return $this->objectref;
+    }
+}
+
+class xarWorkflowSubjectWithTransitions extends xarWorkflowSubject implements xarWorkflowTransitionInterface
+{
+    use xarWorkflowTransitionTrait;
+
+    public function getWorkflow(string $workflowName): mixed
+    {
+        // @todo get the actual workflow here instead of the workflowsproperty config
+        return $this->workflows[$workflowName];
     }
 }
