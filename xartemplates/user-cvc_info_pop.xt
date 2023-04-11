@@ -21,7 +21,7 @@
             </div>
             <div style="padding: 10">
                 <a href="#xarModURL('payments','user','amex_info_pop')#" onclick="PropertiesDialog('#xarModURL('payments','user','amex_info_pop')#'); return false;">
-                    <b>Using American Express?</b>
+                    <strong>Using American Express?</strong>
                 </a>
             </div>
             <div style="text-align: center;">

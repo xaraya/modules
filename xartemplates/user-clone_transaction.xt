@@ -9,7 +9,7 @@
         <form method="post" action="#xarServer::getCurrentURL()#">
             <fieldset>
                 <legend>
-                    <b>Clone this transaction</b>
+                    <strong>Clone this transaction</strong>
                 </legend>
                 <div class="xar-row">
                     <div class="xar-col">
