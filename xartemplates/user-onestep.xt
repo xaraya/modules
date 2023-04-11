@@ -10,7 +10,7 @@
         <xar:if condition="xarSession::getVar('error_message')">
             &#160;<span class="xar-error">#xarSession::getVar('error_message')#</span>
        </xar:if>
-        <form method="post" action="#xarModURL('payments','user','phase2')#">
+        <form method="post" action="#xarController::URL('payments','user','phase2')#">
            <!--Added the credit card type[cc_type] in form-->
             <xar:data-form object="$payment_object" fieldlist="name,cc_type,number,expiration_date"/>
             <!--Psspl:Added the code for security code info-->
@@ -20,7 +20,7 @@
                     <xar:data-form object="$payment_object" name="payment" fieldlist="control_number"/>
                 </div>
                 <div style="margin-left: 10px; float: left">
-                    <a href="#xarModURL('payments','user','cvc_info_pop')#" onclick="PropertiesDialog('#xarModURL('payments','user','cvc_info_pop')#'); return false;">
+                    <a href="#xarController::URL('payments','user','cvc_info_pop')#" onclick="PropertiesDialog('#xarController::URL('payments','user','cvc_info_pop')#'); return false;">
                         <span style="font-size: 8pt">Where is my security code?</span>
                     </a>
                 </div>

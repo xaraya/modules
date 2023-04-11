@@ -113,13 +113,13 @@ class SaferPay extends BasicPayment
             $aryParams["AMOUNT"] .="00";
         }
         //Psspl: modified the code for allowEdit_payment.
-        if(!xarVarFetch('allowEdit_Payment', 'int', $allowEdit_Payment,   null,    XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch('allowEdit_Payment', 'int', $allowEdit_Payment,   null,    xarVar::DONT_SET)) {return;}
         
 //        $aryParams["SUCCESSLINK"] = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER['ORIG_PATH_INFO'] . "?module=payments%26func=phase3";
 //        $aryParams["FAILLINK"] = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER['ORIG_PATH_INFO'] . "?module=payments%26func=amount%26MakeChanges=1%26allowEdit_Payment=$allowEdit_Payment";
 //        $aryParams["BACKLINK"] = "http://" . $_SERVER["HTTP_HOST"] . $_ENV['ORIG_PATH_INFO'] . "?module=payments%26func=amount%26MakeChanges=1%26allowEdit_Payment=$allowEdit_Payment"; /* return URL if user cancelled */
         
-//        $aryParams["SUCCESSLINK"] = xarModURL('payments','user','phase3');
+//        $aryParams["SUCCESSLINK"] = xarController::URL('payments','user','phase3');
         // Hardcoded for Icetodo. Return back to subscription.
         /*
         $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));
@@ -127,7 +127,7 @@ class SaferPay extends BasicPayment
         $return_url_property->checkInput('return_url');
         $return_url = unserialize($return_url_property->value);
         */
-        //if(!xarVarFetch('return_url', 'str:1:', $return_url,  "a:0:{}", XARVAR_DONT_SET)) {return;}
+        //if(!xarVar::fetch('return_url', 'str:1:', $return_url,  "a:0:{}", xarVar::DONT_SET)) {return;}
         $return_url = xarSession::getVar('return_url');
         try {
             $return_url = unserialize($return_url);
@@ -139,17 +139,17 @@ class SaferPay extends BasicPayment
             $aryParams["SUCCESSLINK"] = $return_url['success_return_link'];
             $aryParams["SUCCESSLINK"] = str_replace('&amp;','%26',$aryParams["SUCCESSLINK"]);
         } else {
-            $aryParams["SUCCESSLINK"] = xarModURL('subscriptions','user','subscribe', array('phase' => 'subscribe_createcontract'));
+            $aryParams["SUCCESSLINK"] = xarController::URL('subscriptions','user','subscribe', array('phase' => 'subscribe_createcontract'));
             $aryParams["SUCCESSLINK"] = str_replace('&','%26',$aryParams["SUCCESSLINK"]);
         }
         if($return_url['cancel_return']) {
             $aryParams["BACKLINK"] = $return_url['cancel_return'];
             $aryParams["BACKLINK"] = str_replace('&amp;','%26',$aryParams["BACKLINK"]);
         } else {
-            $aryParams["BACKLINK"] = xarModURL('subscriptions','user','subscribe');
+            $aryParams["BACKLINK"] = xarController::URL('subscriptions','user','subscribe');
             $aryParams["BACKLINK"] = str_replace('&','%26',$aryParams["BACKLINK"]);
         }
-        $aryParams["FAILLINK"] = xarModURL('subscriptions','user','subscribe');
+        $aryParams["FAILLINK"] = xarController::URL('subscriptions','user','subscribe');
         $aryParams["FAILLINK"] = str_replace('&','%26',$aryParams["FAILLINK"]);
 
         $aryParams["ORDERID"] = xarSession::getVar('AUTHID');
@@ -327,7 +327,7 @@ class SaferPay extends BasicPayment
     {
         //Modified the code to get the response data from $DATA instead of $_SERVER as $_SERVER creates problem 
         //for some PHP versions.
-        if (!xarVarFetch('DATA', 'str:', $saferpaydata, null, XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('DATA', 'str:', $saferpaydata, null, xarVar::DONT_SET)) {return;}
 
         $status = '<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">';
         $arr1 = array();

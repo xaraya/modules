@@ -24,7 +24,7 @@
                     <xar:button type="cancel" name="cancel" value="$label" />&#160;
                     <!--
                     <xar:var name="label">Delete</xar:var>
-                    <xar:set name="target">xarModURL('payments', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
+                    <xar:set name="target">xarController::URL('payments', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
                     <xar:button type="link" target="$target" value="$label" class="btn-danger"/>
                     -->
                 </div>

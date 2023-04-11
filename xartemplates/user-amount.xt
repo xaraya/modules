@@ -18,7 +18,7 @@
             Sorry! Payments processing is currently not available
         <xar:else />
         <!--Psspl:Added the code for Order object-->
-            <form method="post" action="#xarModURL('payments','user','phase1')#">
+            <form method="post" action="#xarController::URL('payments','user','phase1')#">
                 <!--Psspl:Implemented the code for allowEdit_Payment.-->    
                 <xar:if condition="$allowEdit_Payment">
                     <xar:data-display object="$object" fieldlist="net_amount,currency" />

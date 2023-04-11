@@ -81,7 +81,7 @@
             <td style="width: 10%">
             </td>
             <td style="	vertical-align: text-top;">
-                <xar:if condition="xarIsParent('Administrators', xarUser::getVar('uname'))">
+                <xar:if condition="xarRoles::isParent('Administrators', xarUser::getVar('uname'))">
                     <div class="xar-row">
                         <div class="xar-col-condensed">
                             <xar:var name="label">ID</xar:var>

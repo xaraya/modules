@@ -17,16 +17,16 @@
 
 function payments_user_create_20022_file()
 {
-    if (!xarSecurityCheck('AddPayments')) return;
+    if (!xarSecurity::check('AddPayments')) return;
 
     // Make sure comments in templates are switched off
     if (xarModVars::get('themes', 'ShowTemplates')) {die("Fix Me: HTML comments are on. Please turn them off in the themes module backend.");
         return xarTpl::module('payments','user','errors',array('layout' => 'no_comments'));
     }
 
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,        XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('idlist' ,    'str',    $data['idlist'] , array() ,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,     xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid' ,    'int',    $data['itemid'] , 0 ,        xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('idlist' ,    'str',    $data['idlist'] , array() ,  xarVar::NOT_REQUIRED)) return;
 
     // Cater to both arrays and strings
     if (!empty($data['idlist']) && !is_array($data['idlist'])) $data['idlist'] = explode(',', $data['idlist']);

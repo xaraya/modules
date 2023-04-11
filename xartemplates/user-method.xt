@@ -7,7 +7,7 @@
         <xar:template file="xar-mod-user-page-head" type="module"/>
         
         <xar:if condition="count($items)">
-            <form method="post" action="#xarModURL('payments','user','phase1')#">
+            <form method="post" action="#xarController::URL('payments','user','phase1')#">
                 <xar:set name="options">
                     array()
                 </xar:set>

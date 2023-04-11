@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0) AND $total gt 0">
+    <xar:if condition="xarUser::isLoggedIn() AND xarSecurity::check('ManagePayments',0) AND $total gt 0">
         <div style="text-align:center; padding-top:10px;">
             <input type="hidden" name="idlist" id="idlist"/>
             <input type="hidden" name="redirecttarget" id="redirecttarget"/>
@@ -21,7 +21,7 @@
             <a href="javascript:listings_checkall(document.forms['listingslist'],true)">Check All</a>&#160;|&#160;
             <a href="javascript:listings_checkall(document.forms['listingslist'],false)">Uncheck All</a>
         </div>
-    <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ProcessPayments',0) AND $total gt 0"/>
+    <xar:elseif condition="xarUser::isLoggedIn() AND xarSecurity::check('ProcessPayments',0) AND $total gt 0"/>
         <div style="text-align:center; padding-top:10px;">
             <input type="hidden" name="idlist" id="idlist"/>
             <input type="hidden" name="redirecttarget" id="redirecttarget"/>

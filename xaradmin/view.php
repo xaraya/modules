@@ -17,10 +17,10 @@
     function payments_admin_view($args)
     {
         // Data Managers have access
-        if (!xarSecurityCheck('ManagePayments')) return;
+        if (!xarSecurity::check('ManagePayments')) return;
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) return;
         if (!empty($objectname)) xarModVars::set('payments','defaultmastertable', $objectname);
 
         // Set a return url

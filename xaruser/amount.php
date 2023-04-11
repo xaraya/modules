@@ -16,11 +16,11 @@
  */
     function payments_user_amount()
     {
-        if (!xarSecurityCheck('SubmitPayments')) return;
+        if (!xarSecurity::check('SubmitPayments')) return;
 
         //Psspl:Implemented the code for return url.
-        //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   0,    XARVAR_DONT_SET)) {return;}
+        //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   0,    xarVar::DONT_SET)) {return;}
         
         //Psspl:Implemented the code for return url.
         $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));       
@@ -32,26 +32,26 @@
         $module_id = xarSession::getVar('clientmodule');
         $gateway = xarModVars::get('payments', 'gateway',$module_id);
         if (empty($gateway)) {
-            return xarTplModule('payments','user','errors',array('layout' => 'no_gateway'));
+            return xarTpl::module('payments','user','errors',array('layout' => 'no_gateway'));
         }
         // Check for the anonymous user
         $allowanonpay = xarModVars::get('payments', 'allowanonpay',$module_id);
-        if (!xarUserIsLoggedIn() && !$allowanonpay) {
-            xarController::redirect(xarModURL('roles','user','showloginform'));
+        if (!xarUser::isLoggedIn() && !$allowanonpay) {
+            xarController::redirect(xarController::URL('roles','user','showloginform'));
             return true;
         }
 
         //Psspl:Added the code for saferpay gateway support.
-        if (!xarVarFetch('errorFlag',      'int:0:', $errorFlag,   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('errorFlag',      'int:0:', $errorFlag,   null,    xarVar::DONT_SET)) {return;}
         if(!$errorFlag){
             xarSession::setVar('error_message' , "");
         }
-        if (!xarVarFetch('DATA',      'str:', $saferpaydata,   null,    XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('b',         'str:', $gestpaydata,    null,    XARVAR_DONT_SET)) {return;}
-        $data['authid'] = xarSecGenAuthKey();
+        if (!xarVar::fetch('DATA',      'str:', $saferpaydata,   null,    xarVar::DONT_SET)) {return;}
+        if (!xarVar::fetch('b',         'str:', $gestpaydata,    null,    xarVar::DONT_SET)) {return;}
+        $data['authid'] = xarSec::genAuthKey();
         //Psspl:check if user selects 'MakeChanges'.
         $data['MakeChanges'] = null;
-        if (!xarVarFetch('MakeChanges',      'int:0:', $MakeChanges,   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('MakeChanges',      'int:0:', $MakeChanges,   null,    xarVar::DONT_SET)) {return;}
         $data['MakeChanges'] = $MakeChanges;
         
         // Get the order object 

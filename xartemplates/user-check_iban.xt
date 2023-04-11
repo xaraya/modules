@@ -6,7 +6,7 @@
         <xar:var name="page_title">Check IBAN</xar:var>
         <xar:template file="xar-mod-user-page-head" type="module"/>
 
-        <form name="form" action="#xarModURL('payments','user','check_iban')#" method="post">
+        <form name="form" action="#xarController::URL('payments','user','check_iban')#" method="post">
 
             <div class="xar-row">
                 <div class="xar-col">
@@ -57,7 +57,7 @@
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="confirm" id="confirm" value="true" />
                     <xar:var name="label">Cancel</xar:var>
                     <xar:button type="cancel" name="cancel" value="$label" />&#160;

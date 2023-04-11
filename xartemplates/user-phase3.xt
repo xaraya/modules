@@ -18,11 +18,11 @@
                 
             </xar:if>    
         <xar:else/>
-            <xar:var name="page_title">Payment by&#160;#$paymentmethod['name']#&#160;<img src="#xarTplGetImage($paymentmethod['icon'])#" alt="#$paymentmethod['name']#"/></xar:var>
+            <xar:var name="page_title">Payment by&#160;#$paymentmethod['name']#&#160;<img src="#xarTpl::getImage($paymentmethod['icon'])#" alt="#$paymentmethod['name']#"/></xar:var>
         </xar:if>    
         <xar:template file="xar-mod-user-page-head" type="module"/>
        
-        <form method="post" action="#xarModURL('payments','user','phase3')#">
+        <form method="post" action="#xarController::URL('payments','user','phase3')#">
             <div style="margin-top: 10px">
                 <!--Psspl: Display the response of payment transaction -->
                 <xar:if condition="xarModVars::get('payments','runpayments')">

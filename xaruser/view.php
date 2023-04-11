@@ -17,7 +17,7 @@
     function payments_user_view($args)
     {
         // Data Managers have access
-        if (!xarSecurityCheck('ProcessPayments') || !xarUserIsLoggedIn()) return;
+        if (!xarSecurity::check('ProcessPayments') || !xarUser::isLoggedIn()) return;
 
         // Set a return url
         xarSession::setVar('ddcontext.' . 'payments', array('return_url' => xarServer::getCurrentURL()));

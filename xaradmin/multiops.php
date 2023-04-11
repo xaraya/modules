@@ -17,15 +17,15 @@ sys::import('modules.dynamicdata.class.objects.master');
 function payments_admin_multiops()
 {
     // Get parameters
-    if(!xarVarFetch('idlist',   'isset', $idlist,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('operation',   'isset', $operation,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('redirecttarget',   'isset', $redirecttarget,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('returnurl',   'str', $returnurl,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('object',   'str', $object,  'listings_listing', XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('localmodule',   'str', $module,  'listings', XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',   'isset', $idlist,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('operation',   'isset', $operation,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('redirecttarget',   'isset', $redirecttarget,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('returnurl',   'str', $returnurl,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('object',   'str', $object,  'listings_listing', xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('localmodule',   'str', $module,  'listings', xarVar::DONT_SET)) {return;}
 
     // Confirm authorisation code
-    //if (!xarSecConfirmAuthKey()) return;
+    //if (!xarSec::confirmAuthKey()) return;
 
     if (!isset($idlist) || count($idlist) == 0) {
         $msg = xarML('No items selected');

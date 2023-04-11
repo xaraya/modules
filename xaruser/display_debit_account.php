@@ -17,10 +17,10 @@
     
 function payments_user_display_debit_account()
 {
-    if (!xarSecurityCheck('EditPayments')) return;
+    if (!xarSecurity::check('EditPayments')) return;
 
-    if (!xarVarFetch('name',       'str',      $name,            'payments_debit_account', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',      $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name',       'str',      $name,            'payments_debit_account', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid' ,    'int',      $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));

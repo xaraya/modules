@@ -15,14 +15,14 @@
 
     function payments_user_onestep()
     {
-        if (!xarSecurityCheck('SubmitPayments')) return;
+        if (!xarSecurity::check('SubmitPayments')) return;
         
         //Psspl:Implemented the code for return url.
-        //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-        if (!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    XARVAR_DONT_SET)) {return;}
+        //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
+        if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    xarVar::DONT_SET)) {return;}
         
         // Check if a product id was passed
-        if(!xarVarFetch('product_id', 'int', $data['product_id'],   null,    XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch('product_id', 'int', $data['product_id'],   null,    xarVar::DONT_SET)) {return;}
         //Psspl:Implemented the code for return url.
     	$return_url_property = DataPropertyMaster::getProperty(array('name' => 'array')); 		
     	$return_url_property->initialization_associative_array = 1;         
@@ -33,13 +33,13 @@
         $module_id = xarSession::getVar('clientmodule');
         $gatewayid = xarModVars::get('payments', 'gateway',$module_id);
         if (empty($gatewayid)) {
-            return xarTplModule('payments','user','errors',array('layout' => 'no_gateway'));
+            return xarTpl::module('payments','user','errors',array('layout' => 'no_gateway'));
         }
 
         // Check for the anonymous user
         $allowanonpay = xarModVars::get('payments', 'allowanonpay',$module_id);
-        if (!xarUserIsLoggedIn() && !$allowanonpay) {
-            xarController::redirect(xarModURL('roles','user','showloginform'));
+        if (!xarUser::isLoggedIn() && !$allowanonpay) {
+            xarController::redirect(xarController::URL('roles','user','showloginform'));
             return true;
         }
 
@@ -48,14 +48,14 @@
         $prefix = xarDB::getPrefix();
 
         //Psspl:check if user selected 'MakeChanges'.
-        if (!xarVarFetch('MakeChanges',      'int:0:', $MakeChanges,   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('MakeChanges',      'int:0:', $MakeChanges,   null,    xarVar::DONT_SET)) {return;}
         //Psspl:Checked the condition for Makechanges.
         if($MakeChanges)
         {
-            if (!xarVarFetch('paymentmethod',      'int:0:', $paymentmethod,   null,    XARVAR_DONT_SET)) {return;}
+            if (!xarVar::fetch('paymentmethod',      'int:0:', $paymentmethod,   null,    xarVar::DONT_SET)) {return;}
         }
           
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         
         //Psspl:If the input is not good repropose the previous page.       
         //Psspl: Added code for filling the credit card type

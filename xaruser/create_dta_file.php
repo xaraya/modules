@@ -17,11 +17,11 @@
 
 function payments_user_create_dta_file()
 {
-    if (!xarSecurityCheck('AddPayments')) return;
+    if (!xarSecurity::check('AddPayments')) return;
 
-    if (!xarVarFetch('name',       'str',    $name,            'payments_transactions', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name',       'str',    $name,            'payments_transactions', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,     xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid' ,    'int',    $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
 
     $data['tplmodule'] = 'payments';
     

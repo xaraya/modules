@@ -18,15 +18,15 @@
     function payments_user_main()
     {
         // Security Check
-        if (!xarSecurityCheck('ReadPayments')) return;
-        if (!xarVarFetch('clientmodule','str',      $clientmodule, 'payments', XARVAR_NOT_REQUIRED)) return;
+        if (!xarSecurity::check('ReadPayments')) return;
+        if (!xarVar::fetch('clientmodule','str',      $clientmodule, 'payments', xarVar::NOT_REQUIRED)) return;
         
         //Psspl:Implemented the code for return url.
-        //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    XARVAR_DONT_SET)) {return;}
+        //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    xarVar::DONT_SET)) {return;}
         
         // Check if a product id was passed
-        if(!xarVarFetch('product_id', 'int', $data['product_id'],   null,    XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch('product_id', 'int', $data['product_id'],   null,    xarVar::DONT_SET)) {return;}
         
         //Psspl:Implemented the code for return url.
         $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));       
@@ -56,21 +56,21 @@
         
         switch (xarModItemVars::get('payments', 'process',$module_id)) {
             default:
-                return xarTplModule('payments','user','errors',array('layout' => 'no_process'));                
+                return xarTpl::module('payments','user','errors',array('layout' => 'no_process'));                
             case 1:
-                xarController::redirect(xarModURL('payments', 'user', 'amount'));
+                xarController::redirect(xarController::URL('payments', 'user', 'amount'));
                 break;
             case 2:
                 if(!in_array($gatewayid,$valid_gatewayid))
-                    xarController::redirect(xarModURL('payments', 'user', 'method'));
+                    xarController::redirect(xarController::URL('payments', 'user', 'method'));
                 else 
-                    xarController::redirect(xarModURL('payments', 'user', 'amount'));
+                    xarController::redirect(xarController::URL('payments', 'user', 'amount'));
                 break;
             case 3:
                 if(!in_array($gatewayid,$valid_gatewayid))
-                    xarController::redirect(xarModURL('payments', 'user', 'onestep', $args));
+                    xarController::redirect(xarController::URL('payments', 'user', 'onestep', $args));
                 else 
-                    xarController::redirect(xarModURL('payments', 'user', 'amount'));
+                    xarController::redirect(xarController::URL('payments', 'user', 'amount'));
                 break;   
             default:             
                 $redirect = xarModVars::get('payments','frontend_page');
@@ -79,7 +79,7 @@
                     $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
                     xarController::redirect($urldata['redirecturl']);
                 } else {
-                    xarController::redirect(xarModURL('payments', 'user', 'view_transactions'));
+                    xarController::redirect(xarController::URL('payments', 'user', 'view_transactions'));
                 }
                 break;
         }

@@ -12,10 +12,10 @@
  */
 function payments_user_phase3()
 {
-    if (!xarSecurityCheck('SubmitPayments')) return;
+    if (!xarSecurity::check('SubmitPayments')) return;
     //Psspl:Implemented the code for return url.
-    //if(!xarVarFetch('return_url', 'array', $data['return_url'],  NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    XARVAR_DONT_SET)) {return;}
+    //if(!xarVar::fetch('return_url', 'array', $data['return_url'],  NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('allowEdit_Payment', 'int', $data['allowEdit_Payment'],   null,    xarVar::DONT_SET)) {return;}
     
      //Psspl:Implemented the code for return url.
      $return_url_property = DataPropertyMaster::getProperty(array('name' => 'array'));      
@@ -29,7 +29,7 @@ function payments_user_phase3()
 
     // Check for demo mode 
     $demousers = unserialize(xarModVars::get('payments','demousers'));
-    if (xarModVars::get('payments','enable_demomode') && in_array(xarUserGetVar('uname'),$demousers)) {
+    if (xarModVars::get('payments','enable_demomode') && in_array(xarUser::getVar('uname'),$demousers)) {
         $data['status'] = xarML('A simulated payment has been completed');
         if(!empty($data['return_url']['success_return_link'])){
             xarController::redirect($data['return_url']['success_return_link']);          
@@ -102,7 +102,7 @@ function payments_user_phase3()
             //Psspl:Implemented the code for calling success return API function.
             $success_return = explode("," , $data['return_url']['success_return_link']);
              
-            xarModAPIFunc($success_return[0],$success_return[1],$success_return[2] ,array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
+            xarMod::apiFunc($success_return[0],$success_return[1],$success_return[2] ,array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
             return true;
         }
 */        //Psspl : Added code for success return link.
@@ -146,7 +146,7 @@ function payments_user_phase3()
         } 
         return $data;
     }
-        if (!xarVarFetch('paymentmethod',      'int:0:', $paymentmethod,   0,    XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('paymentmethod',      'int:0:', $paymentmethod,   0,    xarVar::DONT_SET)) {return;}
 
         //Psspl:Get the Item of selected gateway.
         $object = DataObjectMaster::getObject(array('name' => 'payments_gateways'));
@@ -159,7 +159,7 @@ function payments_user_phase3()
         $data['paymentmethod'] = $object->getFieldValues();
         
         //Psspl: Get value of submit button pressed on previous page.
-        if (!xarVarFetch('MakeChanges',      'str', $MakeChanges,  "",    XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('MakeChanges',      'str', $MakeChanges,  "",    xarVar::NOT_REQUIRED)) {return;}
         if($MakeChanges) {
             $module_id = xarSession::getVar('clientmodule');
             $process = xarModVars::get('payments', 'process',$module_id);
@@ -167,13 +167,13 @@ function payments_user_phase3()
             switch ($process) {
                 case 0:
                 default:
-                    return xarTplModule('payments','user','errors',array('layout' => 'no_process'));                
+                    return xarTpl::module('payments','user','errors',array('layout' => 'no_process'));                
                 case 1:
-                    xarController::redirect(xarModURL('payments', 'user', 'phase1',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
+                    xarController::redirect(xarController::URL('payments', 'user', 'phase1',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
                 case 2:
-                    xarController::redirect(xarModURL('payments', 'user', 'phase1',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
+                    xarController::redirect(xarController::URL('payments', 'user', 'phase1',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
                 case 3:
-                    xarController::redirect(xarModURL('payments', 'user', 'onestep',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
+                    xarController::redirect(xarController::URL('payments', 'user', 'onestep',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1 , 'allowEdit_Payment' => $data['allowEdit_Payment'])));
             }
             return true;
         }
@@ -184,7 +184,7 @@ function payments_user_phase3()
         $paymentobject->setFieldValues($fields);
         $data['payment_object'] = $paymentobject;
         $data['payment_properties'] = $paymentobject->getProperties();
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
         // Save the transaction to the db if so configured
         if (xarModVars::get('payments','savetodb')) {
@@ -204,7 +204,7 @@ function payments_user_phase3()
                 if(xarSession::getVar('error_message'))
                 {
                     //Psspl: modified the code for allowEdit_payment.
-                    xarController::redirect(xarModURL('payments', 'user', 'onestep',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1,'errorFlag'=>1,'allowEdit_Payment' => $data['allowEdit_Payment'])));
+                    xarController::redirect(xarController::URL('payments', 'user', 'onestep',array('paymentmethod'=>$paymentmethod,'MakeChanges'=>1,'errorFlag'=>1,'allowEdit_Payment' => $data['allowEdit_Payment'])));
                     return true;
                 }
             } else {
@@ -231,7 +231,7 @@ function payments_user_phase3()
        if(!empty($data['return_url']['success_return'])){ 
             //Psspl:Implemented the code for calling success return API function.
             $success_return = explode("," , $data['return_url']['success_return']);
-            xarModAPIFunc($success_return[0],$success_return[1],$success_return[2] ,array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
+            xarMod::apiFunc($success_return[0],$success_return[1],$success_return[2] ,array('status' => $data['status'] , 'success_return_link' => $data['return_url']['success_return_link']));
             
             return true;
         }

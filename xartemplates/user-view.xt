@@ -6,18 +6,18 @@
         <xar:var name="page_title">View Payments</xar:var>
         <xar:template file="xar-mod-user-page-head" type="module"/>
 
-        <xar:if condition="xarModIsAvailable('export')">
+        <xar:if condition="xarMod::isAvailable('export')">
         <div class="export-button">
-            <a href="#xarmodurl('payments','user','export')#" title="Download / process active transactions">
+            <a href="#xarController::URL('payments','user','export')#" title="Download / process active transactions">
                 Download / Process
             </a>
         </div>
         </xar:if>
 
         <xar:set name="eh">sys::import('xaraya.structures.query')</xar:set>
-        <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManagePayments',0)">
+        <xar:if condition="xarUser::isLoggedIn() AND xarSecurity::check('ManagePayments',0)">
             <xar:set name="dumb">1;$condition=new Query();</xar:set>
-        <xar:elseif condition="xarUserIsLoggedIn() AND xarSecurityCheck('ProcessPayments',0)"/>
+        <xar:elseif condition="xarUser::isLoggedIn() AND xarSecurity::check('ProcessPayments',0)"/>
             <xar:set name="dumb">1;$condition=new Query();$condition->eq('state',3);</xar:set>
         </xar:if>
     

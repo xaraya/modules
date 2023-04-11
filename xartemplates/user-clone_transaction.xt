@@ -31,7 +31,7 @@
                 </div>
                 <div class="xar-col">
                     <input type="hidden" name="confirm" id="confirm" value="1"/>
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                     <input type="hidden" name="tab" id="tab" value="clone"/>
                     <input type="hidden" name="objectid" id="objectid" value="#$object:objectid#"/>
                     <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>                   

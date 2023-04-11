@@ -13,8 +13,8 @@
 //Psspl:Added the function for Americam Express credit card number information.
     function payments_user_amex_info_pop($args)
     {
-        if (!xarSecurityCheck('ReadPayments')) return;
-        echo xarTplModule('payments','user','amex_info_pop');
+        if (!xarSecurity::check('ReadPayments')) return;
+        echo xarTpl::module('payments','user','amex_info_pop');
         exit();
         return array();
     }

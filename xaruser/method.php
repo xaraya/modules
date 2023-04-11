@@ -12,24 +12,24 @@
  */
     function payments_user_method()
     {
-        if (!xarSecurityCheck('SubmitPayments')) return;
+        if (!xarSecurity::check('SubmitPayments')) return;
 
         // Check for gateway
         $module_id = xarSession::getVar('clientmodule');
         $gateway = xarModVars::get('payments', 'gateway',$module_id);
         if (empty($gateway)) {
-            return xarTplModule('payments','user','errors',array('layout' => 'no_gateway'));
+            return xarTpl::module('payments','user','errors',array('layout' => 'no_gateway'));
         }
 
         // Check for the anonymous user
         $allowanonpay = xarModVars::get('payments', 'allowanonpay',$module_id);
-        if (!xarUserIsLoggedIn() && !$allowanonpay) {
-            xarController::redirect(xarModURL('roles','user','showloginform'));
+        if (!xarUser::isLoggedIn() && !$allowanonpay) {
+            xarController::redirect(xarController::URL('roles','user','showloginform'));
             return true;
         }
 
         //Psspl:Check the Paymentmethod previousaly selected or not
-        if (!xarVarFetch('paymentmethod',      'int:0:', $paymentmethod,   null,    XARVAR_DONT_SET)) {return;}
+        if (!xarVar::fetch('paymentmethod',      'int:0:', $paymentmethod,   null,    xarVar::DONT_SET)) {return;}
         //Psspl:make variable for paymetmethod and assign to null.
         $data['paymentmethod']="";
         $data['MakeChanges']="";
@@ -37,12 +37,12 @@
         {
             //store previosaly selcted value to variable
             $data['paymentmethod']=$paymentmethod;
-            if (!xarVarFetch('paymentmethod',      'int:0:', $paymentmethod,   null,    XARVAR_DONT_SET)) {return;}
+            if (!xarVar::fetch('paymentmethod',      'int:0:', $paymentmethod,   null,    xarVar::DONT_SET)) {return;}
             //Psspl: Get value of submit button pressed on previous page.
-            if (!xarVarFetch('MakeChanges',      'str', $MakeChanges,  "",    XARVAR_NOT_REQUIRED)) {return;}
+            if (!xarVar::fetch('MakeChanges',      'str', $MakeChanges,  "",    xarVar::NOT_REQUIRED)) {return;}
             $data['MakeChanges']=$MakeChanges;
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
 // if there is nothing in the customers cart, redirect them to the shopping cart page
 
@@ -59,7 +59,7 @@
         $data['properties'] = $object->getProperties();
         $data['items'] = $object->getItems(array('where' => 'state eq 3'));
 
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         //Psspl: Added dummy data in order object to show on confirmation page.
         //Remove this code when it goes to production.
         $orderobjectname = xarModVars::get('payments','orderobject');

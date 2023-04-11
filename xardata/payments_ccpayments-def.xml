@@ -43,7 +43,7 @@
       <source>ccpayments.cc_type</source>
       <status>33</status>
       <seq>3</seq>
-      <configuration>a:8:{s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:76:"xarModAPIFunc('payments','user','getallpaymenttypes',array('category' => 3))";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
+      <configuration>a:8:{s:14:"display_layout";s:7:"default";s:15:"display_tooltip";s:0:"";s:24:"initialization_firstline";s:0:"";s:23:"initialization_function";s:76:"xarMod::apiFunc('payments','user','getallpaymenttypes',array('category' => 3))";s:19:"initialization_file";s:0:"";s:25:"initialization_collection";s:0:"";s:22:"initialization_options";s:0:"";s:25:"initialization_other_rule";s:0:"";}</configuration>
     </property>
     <property name="number">
       <id>1040</id>

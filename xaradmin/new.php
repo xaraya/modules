@@ -16,9 +16,9 @@
  */
     function payments_admin_new()
     {
-        if (!xarSecurityCheck('AddPayments')) return;
+        if (!xarSecurity::check('AddPayments')) return;
 
-        $data['object'] = xarModApiFunc('dynamicdata','user','getobjectlist', array('name' => 'payments'));
+        $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'payments'));
         $data['tplmodule'] = 'payments';
         return $data;
     }

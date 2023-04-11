@@ -13,23 +13,23 @@
   
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <xar:access level="600">
-                        <li><a href="#xarModURL($module, 'user', 'create_20022_file', array('itemid' => $thisID))#">Create Payment File</a></li>
+                        <li><a href="#xarController::URL($module, 'user', 'create_20022_file', array('itemid' => $thisID))#">Create Payment File</a></li>
                     </xar:access>
                     <xar:access level="200">
-                        <li><a href="#xarModURL($module, 'user', 'display_transaction', array('itemid' => $thisID))#">Display</a></li>
+                        <li><a href="#xarController::URL($module, 'user', 'display_transaction', array('itemid' => $thisID))#">Display</a></li>
                     </xar:access>
                     <!-- Only modify if not yet processed or if I am admin -->
-                    <xar:set name="is_admin">xarIsParent('Administrators', xarUser::getVar('uname'))</xar:set>
+                    <xar:set name="is_admin">xarRoles::isParent('Administrators', xarUser::getVar('uname'))</xar:set>
                     <xar:if condition="empty($loopitem['processed']) OR $is_admin">
                         <xar:access level="500">
-                            <li><a href="#xarModURL($module, 'user', 'modify_transaction', array('itemid' => $thisID))#">Modify</a></li>
+                            <li><a href="#xarController::URL($module, 'user', 'modify_transaction', array('itemid' => $thisID))#">Modify</a></li>
                         </xar:access>
                     </xar:if>
                     <xar:access level="700">
-                        <li><a href="#xarModURL($module, 'user', 'delete_transaction', array('itemid' => $thisID))#">Delete</a></li>
+                        <li><a href="#xarController::URL($module, 'user', 'delete_transaction', array('itemid' => $thisID))#">Delete</a></li>
                     </xar:access>
                     <xar:access level="600">
-                        <li><a href="#xarModURL($module, 'user', 'clone_transaction', array('itemid' => $thisID))#">Clone</a></li>
+                        <li><a href="#xarController::URL($module, 'user', 'clone_transaction', array('itemid' => $thisID))#">Clone</a></li>
                     </xar:access>
               </ul>
             </div>
