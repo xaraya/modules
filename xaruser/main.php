@@ -18,7 +18,7 @@
 function cacher_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadCacher')) return;
+    if (!xarSecurity::check('ReadCacher')) return;
 
     $redirect = xarModVars::get('cacher','frontend_page');
     if (!empty($redirect)) {

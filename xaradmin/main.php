@@ -17,7 +17,7 @@
 
 function cacher_admin_main()
 {
-    if(!xarSecurityCheck('ManageCacher')) return;
+    if(!xarSecurity::check('ManageCacher')) return;
 
     if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();
