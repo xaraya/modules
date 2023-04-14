@@ -15,9 +15,9 @@
 function translations_admin_block_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('extid', 'id', $id)) return;
+    if (!xarVar::fetch('extid', 'id', $id)) return;
 
     $data = xarMod::apiFunc('blocks','types','getitem',array('type_id' => $id, 'type_state' => xarBlock::TYPE_STATE_ACTIVE));
     $data['dnType'] = xarMLS::DNTYPE_BLOCK;

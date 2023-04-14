@@ -11,7 +11,7 @@
       <xar:template type="module" file="druidbar"/>
     </p>
     <p>
-    <form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarModURL('translations', 'admin', 'update_release_locale')#" method="post">
+    <form name="releaseLocaleForm" id="releaseLocaleForm" action="#xarController::URL('translations', 'admin', 'update_release_locale')#" method="post">
       <input type="hidden" name="dnType" value="#$dnType#"/>
       <input type="hidden" name="dnName" value="#$dnName#"/>
       <input type="hidden" name="extid" value="#$extid#"/>
@@ -35,7 +35,7 @@
       <xar:mlvar>#$archiver_path#</xar:mlvar>
     </xar:ml>
     </p>
-    <form method="post" name="post" id="post" action="#xarModURL('translations', 'admin', 'generate_trans_result')#">
+    <form method="post" name="post" id="post" action="#xarController::URL('translations', 'admin', 'generate_trans_result')#">
         <input type="hidden" name="dnType" value="#$dnType#"/>
         <input type="hidden" name="dnName" value="#$dnName#"/>
         <input type="hidden" name="extid" value="#$extid#"/>

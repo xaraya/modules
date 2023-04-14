@@ -25,7 +25,7 @@ function translations_adminapi_generate_object_trans($args)
     extract($args);
 
     // Argument check
-    assert('isset($objectid) && isset($locale)');
+    assert(isset($objectid) && isset($locale));
 
     $object = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('objectid' => $objectid));
     if (!is_object($object)) return;
@@ -33,18 +33,18 @@ function translations_adminapi_generate_object_trans($args)
     $objectname = $object->name;
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     $time = explode(' ', microtime());
     $startTime = $time[1] + $time[0];
 
     if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
-        $l = xarLocaleGetInfo($locale);
+        $l = xarMLS::localeGetInfo($locale);
         if ($l['charset'] == 'utf-8') {
             $ref_locale = $locale;
         } else {
             $l['charset'] = 'utf-8';
-            $ref_locale = xarLocaleGetString($l);
+            $ref_locale = xarMLS::localeGetString($l);
         }
     } else {
         $ref_locale = $locale;
@@ -54,7 +54,7 @@ function translations_adminapi_generate_object_trans($args)
     if (!isset($backend)) return;
     if (!$backend->bindDomain(xarMLS::DNTYPE_THEME, $themename)) {
         $msg = xarML('Before generating translations you must first generate skels.');
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'object')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'object')));
         throw new Exception($msg);
     }
 

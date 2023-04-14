@@ -18,11 +18,11 @@ function translations_adminapi_release_core_trans($args)
     extract($args);
 
     // Argument check
-    assert('isset($locale)');
+    assert(isset($locale));
 
     if (!$bt = xarMod::apiFunc('translations','admin','release_backend_type')) return;;
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     if ($bt != 'php') {
         $msg = xarML('Unsupported backend type \'#(1)\'. Don\'t know how to generate release package for that backend.', $bt);
@@ -32,7 +32,7 @@ function translations_adminapi_release_core_trans($args)
     $dirpath = "var/locales/$locale/php/core/";
     if (!file_exists($dirpath.'core.php')) {
         $msg = xarML('Before releasing translations package you must first generate translations.');
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype' => 'core')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype' => 'core')));
         throw new Exception($msg);
     }
 

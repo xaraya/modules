@@ -15,9 +15,9 @@
 function translations_admin_object_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('extid', 'id', $objectid)) return;
+    if (!xarVar::fetch('extid', 'id', $objectid)) return;
 
     $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobject', array('objectid' => $objectid));
     if (!is_object($tplData['object'])) return;

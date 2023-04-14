@@ -15,11 +15,11 @@
 function translations_admin_delete_fuzzy_result()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVar::fetch('dnType','int',$dnType)) return;
+    if (!xarVar::fetch('dnName','str:1:',$dnName)) return;
+    if (!xarVar::fetch('extid','int',$extid)) return;
 
     $locale = translations_working_locale(); 
     $backend = xarMod::apiFunc('translations', 'admin', 'create_backend_instance',
@@ -34,7 +34,7 @@ function translations_admin_delete_fuzzy_result()
         unlink($fileName);
     }
 
-    xarController::redirect(xarModURL('translations', 'admin', 'translate', 
+    xarController::redirect(xarController::URL('translations', 'admin', 'translate', 
         array('dnType' => $dnType,
               'dnName' => $dnName,
               'extid' => $extid)));

@@ -5,7 +5,7 @@
             Choose which entries you want to translate from the list below.
         </p>
     
-        <form name="trabar" id="trabar" method="post" action="#xarModURL('translations','admin','translate_subtype')#" onchange="this.submit();">
+        <form name="trabar" id="trabar" method="post" action="#xarController::URL('translations','admin','translate_subtype')#" onchange="this.submit();">
             <input type="hidden" name="dnType" value="#$dnType#"/>
             <input type="hidden" name="dnName" value="#$dnName#"/>
             <input type="hidden" name="extid" value="#$extid#"/>

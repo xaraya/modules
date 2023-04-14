@@ -187,7 +187,7 @@ class XMLTranslationsSkelsGenerator
 
     function create($contextType, $contextName)
     {
-        assert('!empty($this->baseDir)');
+        assert(!empty($this->baseDir));
         $this->fileName = $this->baseDir;
 
         // Complete the directory path if the context directory is not empty
@@ -222,7 +222,7 @@ class XMLTranslationsSkelsGenerator
     
     function open($contextType, $contextName)
     {
-        assert('!empty($this->baseDir)');
+        assert(!empty($this->baseDir));
         $this->fileName = $this->baseDir;
 
         // Complete the directory path if the context directory is not empty
@@ -263,7 +263,7 @@ class XMLTranslationsSkelsGenerator
 
     function deleteIfExists($contextType, $contextName)
     {
-        assert('!empty($this->baseDir)');
+        assert(!empty($this->baseDir));
         $this->fileName = $this->baseDir;
 
         // Complete the directory path if the context directory is not empty
@@ -279,8 +279,8 @@ class XMLTranslationsSkelsGenerator
     function addEntry($string, $references, $translation = '')
     {
         // Replace any special characters with entities
-        $string = xarVarPrepForDisplay($string);
-        $translation = xarVarPrepForDisplay($translation);
+        $string = xarVar::prepForDisplay($string);
+        $translation = xarVar::prepForDisplay($translation);
         
         fwrite($this->fp, "<entry>");
         fwrite($this->fp, "\n\t<string>".$string."</string>");
@@ -298,8 +298,8 @@ class XMLTranslationsSkelsGenerator
     function addKeyEntry($key, $references, $translation = '')
     {
         // Replace any special characters with entities
-        $string = xarVarPrepForDisplay($string);
-        $key = xarVarPrepForDisplay($key);
+        $string = xarVar::prepForDisplay($string);
+        $key = xarVar::prepForDisplay($key);
 
         fwrite($this->fp, "<keyEntry>");
         fwrite($this->fp, "\n\t<<key>".$key."</key>");

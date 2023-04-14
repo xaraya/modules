@@ -15,9 +15,9 @@
 function translations_admin_module_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('extid', 'id', $modid)) return;
+    if (!xarVar::fetch('extid', 'id', $modid)) return;
 
     if (!($tplData = xarMod::getInfo($modid))) return;
     $tplData['dnType'] = xarMLS::DNTYPE_MODULE;

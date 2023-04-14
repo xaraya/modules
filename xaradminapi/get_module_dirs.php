@@ -22,7 +22,7 @@ function translations_adminapi_get_module_dirs($args)
     extract($args);
 
     // Argument check
-    assert('isset($moddir)');
+    assert(isset($moddir));
 
     $names = array();
     $dropit = array(

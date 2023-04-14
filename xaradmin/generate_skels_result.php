@@ -18,14 +18,14 @@
 function translations_admin_generate_skels_result()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
-    if (!xarVarFetch('dnTypeAll','bool',$dnTypeAll, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('dnType','int',$dnType)) return;
+    if (!xarVar::fetch('dnName','str:1:',$dnName)) return;
+    if (!xarVar::fetch('extid','int',$extid)) return;
+    if (!xarVar::fetch('dnTypeAll','bool',$dnTypeAll, false, xarVar::NOT_REQUIRED)) return;
     $locale = translations_working_locale();
     $args = array('locale'=>$locale);
     switch ($dnType) {
@@ -37,9 +37,9 @@ function translations_admin_generate_skels_result()
             if ($dnTypeAll) {
 
                 // Get all modules
-                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_INSTALLED)));
+                $installed = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_INSTALLED)));
                 if (!isset($installed)) return;
-                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => XARMOD_STATE_UNINITIALISED)));
+                $uninstalled = xarMod::apiFunc('modules', 'admin', 'getlist', array('filter' => array('State' => xarMod::STATE_UNINITIALISED)));
                 if (!isset($uninstalled)) return;
                 // Add modules to the list
                 $modlist = array();
@@ -81,7 +81,7 @@ function translations_admin_generate_skels_result()
 
     $data = $res;
     if ($data == NULL) {
-        xarController::redirect(xarModURL('translations', 'admin', 'generate_skels_info'));
+        xarController::redirect(xarController::URL('translations', 'admin', 'generate_skels_info'));
     }
 
     $druidbar = translations_create_druidbar(GENSKELS, $dnType, $dnName, $extid);

@@ -14,7 +14,7 @@
 function translations_admin_choose_a_block()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     if (!$blocklist = xarMod::apiFunc('blocks','types','getitems',array('module_id' => 0, 'type_state' => xarBlock::TYPE_STATE_ACTIVE))) return;
 

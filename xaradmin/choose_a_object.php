@@ -16,7 +16,7 @@
 function translations_admin_choose_a_object()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     if (!($objectlist = xarMod::apiFunc('dynamicdata','user','getobjectlist',array('name' => 'objects')))) return;
     $items = $objectlist->getItems();

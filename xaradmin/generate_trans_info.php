@@ -15,11 +15,11 @@
 function translations_admin_generate_trans_info()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVar::fetch('dnType','int',$dnType)) return;
+    if (!xarVar::fetch('dnName','str:1:',$dnName)) return;
+    if (!xarVar::fetch('extid','int',$extid)) return;
 
     $tplData['locales'] = xarConfigVars::get(null,'Site.MLS.AllowedLocales');
     $tplData['release_locale'] = translations_release_locale();

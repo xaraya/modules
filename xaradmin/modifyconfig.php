@@ -14,10 +14,10 @@
 function translations_admin_modifyconfig()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'mailer_general', XARVAR_NOT_REQUIRED)) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'mailer_general', xarVar::NOT_REQUIRED)) return;
 
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'mailer'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, enable_short_urls, use_module_icons, frontend_page, backend_page');
@@ -61,14 +61,14 @@ function translations_admin_modifyconfig()
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSec::confirmAuthKey()) return;
                 $isvalid = $data['module_settings']->checkInput();
                 if (!$isvalid) {
-                    return xarTplModule('mailer','admin','modifyconfig', $data);
+                    return xarTpl::module('mailer','admin','modifyconfig', $data);
                 } else {
                     $itemid = $data['module_settings']->updateItem();
                 }
-                xarController::redirect(xarModURL('translations', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('translations', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;

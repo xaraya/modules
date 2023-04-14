@@ -27,9 +27,9 @@ function translations_adminapi_generate_core_skels($args)
     extract($args);
 
     // Argument check
-    assert('isset($locale)');
+    assert(isset($locale));
 
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
     sys::import('modules.translations.class.PHPParser');
@@ -58,7 +58,7 @@ function translations_adminapi_generate_core_skels($args)
 
     // Generate translations skels
     if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
-       if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
+       if (!$parsedLocale = xarMLS::parseLocaleString($locale)) return false;
        $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {
        $genLocale = $locale;

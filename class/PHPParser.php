@@ -40,7 +40,7 @@ class PHPParser
 
     function __construct()
     {
-        $this->tokenarray = array("xarML('", "xarMLByKey('", 'xarML("', 'xarMLByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', "include_once '", "include '", "require_once '", "require '", 'include_once "', 'include "', 'require_once "', 'require "', 'include_once(', 'include(', 'require_once(', 'require(');
+        $this->tokenarray = array("xarML('", "xarMLS::translateByKey('", 'xarML("', 'xarMLS::translateByKey("', '{ML_dont_parse', '{ML_include', '{ML_add_string', '{ML_add_key', "include_once '", "include '", "require_once '", "require '", 'include_once "', 'include "', 'require_once "', 'require "', 'include_once(', 'include(', 'require_once(', 'require(');
         $this->endtokenarray = array(array("')","',"), array("')","',"), array('")','",'), array('")','",'), array('}'), array('}'), array('}'), array('}'), array("';"), array("';"), array("';"), array("';"), array('";'), array('";'), array('";'), array('";'), array(');'), array(');'), array(');'), array(');'));
         $this->tokenarraytype = array('function', 'function', 'function', 'function', 'ML_dont_parse', 'ML_include', 'ML_add_string', 'ML_add_key', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include', 'include');
         $this->iskeytokenarray = array(0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);

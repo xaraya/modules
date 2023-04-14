@@ -29,7 +29,7 @@ function &count_entries(&$entries)
 function translations_admin_show_status()
 {
     // Security Check
-    if(!xarSecurityCheck('ReadTranslations')) return;
+    if(!xarSecurity::check('ReadTranslations')) return;
    
     $data = array();
 
@@ -39,7 +39,7 @@ function translations_admin_show_status()
     unset($tmp);
 
     // Get the modules
-    if (!($mods = xarMod::apiFunc('modules','admin','getlist', array('filter' => array('State' => XARMOD_STATE_ANY))))) return;
+    if (!($mods = xarMod::apiFunc('modules','admin','getlist', array('filter' => array('State' => xarMod::STATE_ANY))))) return;
     $modentries = array();
     $mod_totalentries = 0; $mod_untranslated = 0; $mod_keytotalentries = 0; $mod_keyuntranslated =0;
     foreach($mods as $mod) {
@@ -131,7 +131,7 @@ function translations_admin_show_status()
     }
 
     // Get the themes
-    if (!($themes = xarMod::apiFunc('themes','admin','getthemelist', array('filter' => array('State' => XARTHEME_STATE_ANY))))) return;
+    if (!($themes = xarMod::apiFunc('themes','admin','getthemelist', array('filter' => array('State' => xarTheme::STATE_ANY))))) return;
 
     $themeentries = array();
     $theme_totalentries = 0; $theme_untranslated =0; $theme_keytotalentries = 0; $theme_keyuntranslated = 0;

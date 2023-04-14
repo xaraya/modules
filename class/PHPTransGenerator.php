@@ -23,7 +23,7 @@ class PHPTranslationsGenerator
     function __construct($locale)
     {
         $this->locale = $locale;
-        $l = xarLocaleGetInfo($locale);
+        $l = xarMLS::localeGetInfo($locale);
         $this->outCharset = $l['charset'];
         $this->isUTF8 = ($l['charset'] == 'utf-8');
     }
@@ -187,7 +187,7 @@ class PHPTranslationsGenerator
 
     function create($ctxType, $ctxName)
     {
-        assert('!empty($this->baseDir)');
+        assert(!empty($this->baseDir));
         $this->fileName = $this->baseDir;
 
         if (!mb_ereg("^[a-z]+:$", $ctxType)) {

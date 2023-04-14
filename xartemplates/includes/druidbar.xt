@@ -8,7 +8,7 @@
       <xar:if condition="$i lt $currentStep">
         <a href="#$stepURLs[$i]#">#$stepLabels[$i]#</a>
       <xar:elseif condition="$i eq $currentStep"/>
-        <b>#$stepLabels[$i]#</b>
+        <strong>#$stepLabels[$i]#</strong>
       <xar:else />
         #$stepLabels[$i]#
       </xar:if>

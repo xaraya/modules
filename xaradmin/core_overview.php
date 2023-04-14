@@ -15,7 +15,7 @@
 function translations_admin_core_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     $tplData = translations_create_opbar(OVERVIEW, xarMLS::DNTYPE_CORE, 'xaraya', 0);
     $tplData['verNum'] = xarConfigVars::get(null,'System.Core.VersionNum');

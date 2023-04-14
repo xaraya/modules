@@ -15,11 +15,11 @@
 function translations_admin_theme_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('extid', 'id', $themeid)) return;
+    if (!xarVar::fetch('extid', 'id', $themeid)) return;
 
-    if (!($tplData = xarThemeGetInfo($themeid))) return;
+    if (!($tplData = xarTheme::getInfo($themeid))) return;
     $tplData['dnType'] = xarMLS::DNTYPE_THEME;
     $tplData['dnName'] = $tplData['directory'];
     $tplData['themeid'] = $themeid;

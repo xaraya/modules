@@ -15,7 +15,7 @@
 function translations_admin_translate_update()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     // FIXME voll context validation
     //$contexts = Load all contexts types;
@@ -27,16 +27,16 @@ function translations_admin_translate_update()
     //    $i++;
     //}
     //$regexstring = 'regexp:/^(' . $regexstring . ')$/';
-    //if (!xarVarFetch('subtype', $regexstring, $subtype)) return;
+    //if (!xarVar::fetch('subtype', $regexstring, $subtype)) return;
 
-    if (!xarVarFetch('subtype', 'str:1:', $subtype)) return;
-    if (!xarVarFetch('subname', 'str:1:', $subname)) return;
-    if (!xarVarFetch('numEntries', 'int:0:', $numEntries)) return;
-    if (!xarVarFetch('numKeyEntries', 'int:0:', $numKeyEntries)) return;
+    if (!xarVar::fetch('subtype', 'str:1:', $subtype)) return;
+    if (!xarVar::fetch('subname', 'str:1:', $subname)) return;
+    if (!xarVar::fetch('numEntries', 'int:0:', $numEntries)) return;
+    if (!xarVar::fetch('numKeyEntries', 'int:0:', $numKeyEntries)) return;
 
-    if (!xarVarFetch('dnType','int',$dnType)) return;
-    if (!xarVarFetch('dnName','str:1:',$dnName)) return;
-    if (!xarVarFetch('extid','int',$extid)) return;
+    if (!xarVar::fetch('dnType','int',$dnType)) return;
+    if (!xarVar::fetch('dnName','str:1:',$dnName)) return;
+    if (!xarVar::fetch('extid','int',$extid)) return;
 
     $ctxType = $subtype;
     $ctxName = $subname;
@@ -59,8 +59,8 @@ function translations_admin_translate_update()
     if (!$gen->bindDomain($dnType, $dnName)) return;
     if (!$gen->create($ctxType, $ctxName)) return;
 
-    if (!$parsedWorkingLocale = xarMLS__parseLocaleString($locale)) return false;
-    if (!$parsedSiteLocale = xarMLS__parseLocaleString(xarMLSGetCurrentLocale())) return false;
+    if (!$parsedWorkingLocale = xarMLS::parseLocaleString($locale)) return false;
+    if (!$parsedSiteLocale = xarMLS::parseLocaleString(xarMLS::getCurrentLocale())) return false;
     $workingCharset = $parsedWorkingLocale['charset'];
     $siteCharset = $parsedSiteLocale['charset'];
     if ($siteCharset != $workingCharset) {
@@ -70,7 +70,7 @@ function translations_admin_translate_update()
 
     for ($i = 0; $i < $numEntries; $i++) {
         unset($translation);
-        if (!xarVarFetch('tid'.$i, 'str::', $translation, '', XARVAR_POST_ONLY)) return;
+        if (!xarVar::fetch('tid'.$i, 'str::', $translation, '', xarVar::POST_ONLY)) return;
         if ($siteCharset != $workingCharset) {
             $translation = $newEncoding->convert($translation, $siteCharset, $workingCharset, 0);
         }
@@ -82,7 +82,7 @@ function translations_admin_translate_update()
     }
     while (list($key, $translation) = $backend->enumKeyTranslations()) {
         unset($translation);
-        if (!xarVarFetch('key'.$key, 'str::', $translation, '', XARVAR_POST_ONLY)) return;
+        if (!xarVar::fetch('key'.$key, 'str::', $translation, '', xarVar::POST_ONLY)) return;
         if ($siteCharset != $workingCharset) {
             $translation = $newEncoding->convert($translation, $siteCharset, $workingCharset, 0);
         }
@@ -96,7 +96,7 @@ function translations_admin_translate_update()
     $gen->close();
 
     // Jump to the next page
-    xarController::redirect(xarModURL('translations', 'admin', 'translate_subtype',
+    xarController::redirect(xarController::URL('translations', 'admin', 'translate_subtype',
        array(
            'dnType' => $dnType,
            'dnName' => $dnName,

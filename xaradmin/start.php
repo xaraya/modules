@@ -21,12 +21,12 @@
 function translations_admin_start()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
         $locales = $GLOBALS['xarMLS_allowedLocales'];
         foreach ($locales as $locale) {
-            $l = xarMLS__parseLocaleString($locale);
+            $l = xarMLS::parseLocaleString($locale);
             if ($l['charset'] != 'utf-8') continue;
             $list[] = $locale;
         }

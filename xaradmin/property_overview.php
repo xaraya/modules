@@ -15,9 +15,9 @@
 function translations_admin_property_overview()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('extid', 'id', $id)) return;
+    if (!xarVar::fetch('extid', 'id', $id)) return;
 
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();

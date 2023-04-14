@@ -17,7 +17,7 @@ function translations_adminapi_get_files($args)
     extract($args);
 
     // Argument check
-    assert('isset($themedir)');
+    assert(isset($themedir));
     $prefix = "themes/$themedir/";
 
     $files = array();

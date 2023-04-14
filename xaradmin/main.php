@@ -23,7 +23,7 @@
 */
 function translations_admin_main()
 {
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();
@@ -31,10 +31,10 @@ function translations_admin_main()
         $redirect = xarModVars::get('translations','defaultbackpage');
         if (!empty($redirect)) {
             $truecurrenturl = xarServer::getCurrentURL(array(), false);
-            $urldata = xarModAPIFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
+            $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('translations', 'admin', 'start'));
+            xarController::redirect(xarController::URL('translations', 'admin', 'start'));
         }
     }
     return true;

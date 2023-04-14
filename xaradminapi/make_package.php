@@ -17,7 +17,7 @@ function translations_adminapi_make_package($args)
     extract($args);
 
     // Argument check
-    assert('isset($basefilename) && isset($version) && isset($dirpath) && isset($locale)');
+    assert(isset($basefilename) && isset($version) && isset($dirpath) && isset($locale));
  
     if (!$archiver_path = xarMod::apiFunc('translations','admin','archiver_path')) return;
     if (!file_exists($archiver_path) || !is_executable($archiver_path)) {

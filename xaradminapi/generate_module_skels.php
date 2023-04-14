@@ -27,14 +27,14 @@ function translations_adminapi_generate_module_skels($args)
     extract($args);
 
     // Argument check
-    assert('isset($modid) && isset($locale)');
+    assert(isset($modid) && isset($locale));
 
     if (!$modinfo = xarMod::getInfo($modid)) return;
     $modname = $modinfo['name'];
     $moddir = $modinfo['osdirectory'];
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/PHPParser.php'}
     sys::import('modules.translations.class.PHPParser');
@@ -49,7 +49,7 @@ function translations_adminapi_generate_module_skels($args)
     if (!isset($core_backend)) return;
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) module, you must first generate skels for the core.', $modname);
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) return;
@@ -138,7 +138,7 @@ function translations_adminapi_generate_module_skels($args)
     // Create skels
     $subnames = array_keys($transEntriesCollection);
     if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
-        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
+        if (!$parsedLocale = xarMLS::parseLocaleString($locale)) return false;
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {
         $genLocale = $locale;

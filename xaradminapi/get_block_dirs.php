@@ -21,7 +21,7 @@ function translations_adminapi_get_block_dirs($args)
     extract($args);
 
     // Argument check
-    assert('isset($blockdir)');
+    assert(isset($blockdir));
 
     $names = array();
     $dropit = array(

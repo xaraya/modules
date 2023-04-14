@@ -46,7 +46,7 @@ function translations_adminapi_get_theme_dirs($args)
     extract($args);
 
     // Argument check
-    assert('isset($themedir)');
+    assert(isset($themedir));
     $prefix = "themes/$themedir/";
 
     if (file_exists("themes/$themedir")) {

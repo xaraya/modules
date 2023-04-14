@@ -18,8 +18,8 @@ function translations_adminapi_create_generator_instance($args)
     extract($args);
 
     // Argument check
-    assert('isset($interface)');
-    assert('isset($locale)');
+    assert(isset($interface));
+    assert(isset($locale));
 
     if ($interface == 'ReferencesGenerator') {
         $bt = xarMod::apiFunc('translations','admin','work_backend_type');

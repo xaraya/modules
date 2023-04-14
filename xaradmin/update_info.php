@@ -15,28 +15,28 @@
 function translations_admin_update_info()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
-    if (!xarVarFetch('dntype', 'regexp:/^(core|module|property|block|theme|object)$/', $type)) return;
+    if (!xarVar::fetch('dntype', 'regexp:/^(core|module|property|block|theme|object)$/', $type)) return;
 
     switch ($type) {
         case 'core':
-        $url = xarModURL('translations', 'admin', 'core_overview');
+        $url = xarController::URL('translations', 'admin', 'core_overview');
         break;
         case 'module':
-        $url = xarModURL('translations', 'admin', 'choose_a_module');
+        $url = xarController::URL('translations', 'admin', 'choose_a_module');
         break;
         case 'property':
-        $url = xarModURL('translations', 'admin', 'choose_a_property');
+        $url = xarController::URL('translations', 'admin', 'choose_a_property');
         break;
         case 'block':
-        $url = xarModURL('translations', 'admin', 'choose_a_block');
+        $url = xarController::URL('translations', 'admin', 'choose_a_block');
         break;
         case 'theme':
-        $url = xarModURL('translations', 'admin', 'choose_a_theme');
+        $url = xarController::URL('translations', 'admin', 'choose_a_theme');
         break;
         case 'object':
-        $url = xarModURL('translations', 'admin', 'choose_a_object');
+        $url = xarController::URL('translations', 'admin', 'choose_a_object');
         break;
     }
     xarController::redirect($url);

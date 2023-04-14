@@ -20,7 +20,7 @@ function translations_adminapi_get_property_phpfiles($args)
     extract($args);
 
     // Argument check
-    assert('isset($propertydir)');
+    assert(isset($propertydir));
 
     $names = array();
     if (file_exists(sys::code() . "properties/$propertydir")) {

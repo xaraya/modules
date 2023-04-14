@@ -21,7 +21,7 @@ function translations_adminapi_get_property_dirs($args)
     extract($args);
 
     // Argument check
-    assert('isset($propertydir)');
+    assert(isset($propertydir));
 
     $names = array();
     $dropit = array(

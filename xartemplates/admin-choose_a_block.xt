@@ -13,7 +13,7 @@
         <ul>
             <xar:loop name="$blocklist">
               <li>
-                  <a href="#xarModURL('translations', 'admin', 'block_overview', array('extid' => $loop:item['type_id']))#">
+                  <a href="#xarController::URL('translations', 'admin', 'block_overview', array('extid' => $loop:item['type_id']))#">
                     #$loop:item['type']#
                   </a>
               </li>

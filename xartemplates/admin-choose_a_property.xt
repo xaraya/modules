@@ -13,7 +13,7 @@
         <ul>
             <xar:loop name="$propertylist">
               <li>
-                  <a href="#xarModURL('translations', 'admin', 'property_overview', array('extid' => $loop:item['id']))#">
+                  <a href="#xarController::URL('translations', 'admin', 'property_overview', array('extid' => $loop:item['id']))#">
                     #$loop:item['name']#
                   </a>
               </li>

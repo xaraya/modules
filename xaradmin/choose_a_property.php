@@ -14,7 +14,7 @@
 function translations_admin_choose_a_property()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
     
     xarMod::apiLoad('dynamicdata');
     $tables =& xarDB::getTables();

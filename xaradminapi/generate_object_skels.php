@@ -29,7 +29,7 @@ function translations_adminapi_generate_object_skels($args)
     extract($args);
 
     // Argument check
-    assert('isset($objectid) && isset($locale)');
+    assert(isset($objectid) && isset($locale));
 
     $tplData['object'] = xarMod::apiFunc('dynamicdata', 'user', 'getobjectlist', array('objectid' => $objectid));
     if (!is_object($tplData['object'])) return;
@@ -37,7 +37,7 @@ function translations_adminapi_generate_object_skels($args)
     $objectname = $tplData['object']->name;
 
     // Security Check
-    if(!xarSecurityCheck('AdminTranslations')) return;
+    if(!xarSecurity::check('AdminTranslations')) return;
 
     // {ML_dont_parse 'modules/translations/class/TPLParser.php'}
     sys::import('modules.translations.class.TPLParser');
@@ -50,7 +50,7 @@ function translations_adminapi_generate_object_skels($args)
     if (!isset($core_backend)) return;
     if (!$core_backend->bindDomain(xarMLS::DNTYPE_CORE, 'xaraya')) {
         $msg = xarML('Before you can generate skels for the #(1) object, you must first generate skels for the core.', $objectname);
-        $link = array(xarML('Click here to proceed.'), xarModURL('translations', 'admin', 'update_info', array('dntype'=>'core')));
+        $link = array(xarML('Click here to proceed.'), xarController::URL('translations', 'admin', 'update_info', array('dntype'=>'core')));
         throw new Exception($msg);
     }
     if (!$core_backend->loadContext('core:', 'core')) return;
@@ -131,7 +131,7 @@ function translations_adminapi_generate_object_skels($args)
     // Create skels
     $subnames = array_keys($transEntriesCollection);
     if (xarConfigVars::get(null,'Site.MLS.TranslationsBackend') == 'xml2php') {
-        if (!$parsedLocale = xarMLS__parseLocaleString($locale)) return false;
+        if (!$parsedLocale = xarMLS::parseLocaleString($locale)) return false;
         $genLocale = $parsedLocale['lang'].'_'.$parsedLocale['country'].'.utf-8';
     } else {
         $genLocale = $locale;

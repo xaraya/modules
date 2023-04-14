@@ -19,13 +19,7 @@ function translations_adminapi_get_block_phpfiles($args)
     extract($args);
 
     // Argument check
-    assert('isset($blockdir)');
-
-    $names = array();
-    if (file_exists(sys::code() . "blocks/$blockdir")) {
-        $dd = opendir(sys::code() . "blocks/$blockdir");
-        while ($filename = readdir($dd)) {
-            if (!preg_match('!^([a-z\-_]+)\.php$!i', $filename, $matches)) continue;
+    assert(preg_match'!^([a-z\-_]+)\.php$!i', $filename, $matches)) continue;
             $phpname = $matches[1];
             $names[] = mb_ereg_replace("^xar","",$phpname);
         }

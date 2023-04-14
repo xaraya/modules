@@ -17,7 +17,7 @@ function translations_adminapi_get_block_files($args)
     extract($args);
 
     // Argument check
-    assert('isset($blockdir) && isset($pattern)');
+    assert(isset($blockdir) && isset($pattern));
 
     $names = array();
     if (file_exists($blockdir)) {
