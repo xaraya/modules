@@ -136,27 +136,27 @@ function reminders_init()
 #
 # Set up masks
 #
-    xarRegisterMask('ViewReminders',    'All','reminders','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadReminders',    'All','reminders','All','All','ACCESS_READ');
-    xarRegisterMask('CommentReminders', 'All','reminders','All','All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateReminders','All','reminders','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditReminders',    'All','reminders','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddReminders',     'All','reminders','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageReminders',  'All','reminders','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminReminders',   'All','reminders','All','All','ACCESS_ADMIN');
+    xarMasks::register('ViewReminders',    'All','reminders','All','All','ACCESS_OVERVIEW');
+    xarMasks::register('ReadReminders',    'All','reminders','All','All','ACCESS_READ');
+    xarMasks::register('CommentReminders', 'All','reminders','All','All','ACCESS_COMMENT');
+    xarMasks::register('ModerateReminders','All','reminders','All','All','ACCESS_MODERATE');
+    xarMasks::register('EditReminders',    'All','reminders','All','All','ACCESS_EDIT');
+    xarMasks::register('AddReminders',     'All','reminders','All','All','ACCESS_ADD');
+    xarMasks::register('ManageReminders',  'All','reminders','All','All','ACCESS_DELETE');
+    xarMasks::register('AdminReminders',   'All','reminders','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('ViewReminders',    'All','reminders','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadReminders',    'All','reminders','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommentReminders', 'All','reminders','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateReminders','All','reminders','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditReminders',    'All','reminders','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddReminders',     'All','reminders','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('ManageReminders',  'All','reminders','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminReminders',   'All','reminders','All','All','ACCESS_ADMIN');
+    xarPrivileges::register('ViewReminders',    'All','reminders','All','All','ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadReminders',    'All','reminders','All','All','ACCESS_READ');
+    xarPrivileges::register('CommentReminders', 'All','reminders','All','All','ACCESS_COMMENT');
+    xarPrivileges::register('ModerateReminders','All','reminders','All','All','ACCESS_MODERATE');
+    xarPrivileges::register('EditReminders',    'All','reminders','All','All','ACCESS_EDIT');
+    xarPrivileges::register('AddReminders',     'All','reminders','All','All','ACCESS_ADD');
+    xarPrivileges::register('ManageReminders',  'All','reminders','All','All','ACCESS_DELETE');
+    xarPrivileges::register('AdminReminders',   'All','reminders','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #

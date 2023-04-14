@@ -17,7 +17,7 @@
 
 function reminders_admin_view_history()
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurity::check('ManageReminders')) return;
 
     $modulename = 'reminders';
 

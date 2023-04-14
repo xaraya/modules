@@ -17,30 +17,30 @@
 
 function reminders_admin_new_email()
 {
-    if (!xarSecurityCheck('AddReminders')) return;
+    if (!xarSecurity::check('AddReminders')) return;
 
-    if (!xarVarFetch('name',       'str',      $name,            'reminders_emails', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'], false,               XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name',       'str',      $name,            'reminders_emails', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'checkbox', $data['confirm'], false,               xarVar::NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['tplmodule'] = 'reminders';
-    $data['authid'] = xarSecGenAuthKey('reminders');
+    $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
     
         // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-        if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch('preview', 'str', $preview,  NULL, xarVar::DONT_SET)) {return;}
 
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if(!xarSec::confirmAuthKey()) return;
         
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('reminders','admin','new_email', $data);        
+            return xarTpl::module('reminders','admin','new_email', $data);        
         } else {
         	// Serialize the message
         	$data['object']->properties['message']->value = serialize($data['object']->properties['message']->value);
@@ -48,7 +48,7 @@ function reminders_admin_new_email()
             $itemid = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('reminders','admin','view_emails'));
+            xarController::redirect(xarController::URL('reminders','admin','view_emails'));
             return true;
         }
     }

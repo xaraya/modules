@@ -16,12 +16,12 @@
  */
 function reminders_admin_view_entries($args)
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurity::check('ManageReminders')) return;
 
     $modulename = 'reminders';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_entries', XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('objectname', 'str', $data['objectname'], 'reminders_entries', xarVar::DONT_SET)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_entries'));

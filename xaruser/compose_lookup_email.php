@@ -14,14 +14,14 @@
 function reminders_user_compose_lookup_email($args)
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurity::check('ManageReminders')) return;
     xarTpl::setPageTitle('Send Lookup Email');
 
-    if (!xarVarFetch('confirm',     'int',   $confirm,             0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('code',        'str',   $code,                '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('subject',     'isset', $subject,             NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('message',     'isset', $message,             NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('copy_emails', 'bool',  $data['copy_emails'], true, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',     'int',   $confirm,             0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('code',        'str',   $code,                '', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('subject',     'isset', $subject,             NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('message',     'isset', $message,             NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('copy_emails', 'bool',  $data['copy_emails'], true, xarVar::NOT_REQUIRED)) return;
 
     $data['copy_emails'] = true;
     
@@ -93,7 +93,7 @@ function reminders_user_compose_lookup_email($args)
         }
             
         // Are we testing?
-        if (!xarVarFetch('test',        'int', $data['test'],                0, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('test',        'int', $data['test'],                0, xarVar::NOT_REQUIRED)) return;
         
         if ($data['test']) {
             // If we are testing, then send to this user

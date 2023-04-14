@@ -16,12 +16,12 @@
  */
 function reminders_admin_view_emails($args)
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurity::check('ManageReminders')) return;
 
     $modulename = 'reminders';
 
     // Define which object will be shown
-    if (!xarVarFetch('objectname', 'str', $data['objectname'], 'reminders_emails', XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('objectname', 'str', $data['objectname'], 'reminders_emails', xarVar::DONT_SET)) return;
 
     return $data;
 }

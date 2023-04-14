@@ -21,8 +21,8 @@
 							<td style="padding: 5px; width: 100px">When</td>
 						</tr>
 						<tr>
-							<td style="padding: 5px; width: 300px"><b>#$item['message']#</b></td>
-							<td style="padding: 5px; width: 100px"><b><xar:data-output type="date" value="$item['due_date']"/></b></td>
+							<td style="padding: 5px; width: 300px"><strong>#$item['message']#</strong></td>
+							<td style="padding: 5px; width: 100px"><strong><xar:data-output type="date" value="$item['due_date']"/></strong></td>
 						</tr>
 					</table>
 				</div>

@@ -16,10 +16,10 @@
  */
 function reminders_user_remove()
 {
-    if (!xarSecurityCheck('ReadReminders')) return;
+    if (!xarSecurity::check('ReadReminders')) return;
 
-    if (!xarVarFetch('code',    'str',      $data['code'],       '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'checkbox', $data['confirm'],    false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('code',    'str',      $data['code'],       '', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm', 'checkbox', $data['confirm'],    false, xarVar::NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $entries = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
@@ -52,11 +52,11 @@ function reminders_user_remove()
 	// By default we also send an email on the due date
 	$data['remaining'] = count($email_dates) + 1;
 	
-    $data['authid'] = xarSecGenAuthKey('reminders');
+    $data['authid'] = xarSec::genAuthKey('reminders');
 
     if ($data['confirm']) {
-    	if (!xarVarFetch('itemid'           , 'int',    $itemid ,    0,    XARVAR_NOT_REQUIRED)) return;
-    	if (!xarVarFetch('remove_recurring' , 'int',    $recurring , 0,    XARVAR_NOT_REQUIRED)) return;
+    	if (!xarVar::fetch('itemid'           , 'int',    $itemid ,    0,    xarVar::NOT_REQUIRED)) return;
+    	if (!xarVar::fetch('remove_recurring' , 'int',    $recurring , 0,    xarVar::NOT_REQUIRED)) return;
     	
     	// Retire the reminder
     	xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $itemid, 'recurring' => $recurring));

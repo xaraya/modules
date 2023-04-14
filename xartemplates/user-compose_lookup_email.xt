@@ -154,7 +154,7 @@
                 </div>
                 <div class="xar-col">
                     <input type="hidden" name="confirm" id="confirm" value="1" />
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <xar:var name="label">Cancel</xar:var>
                     <xar:button type="cancel" value="$label" />
                     <xar:var name="label">Send</xar:var>
@@ -168,7 +168,7 @@
 
         </form>
  		<div class="xar-row" style="margin-top: 20px">
- 			<b>Available variables</b>
+ 			<strong>Available variables</strong>
  		</div>
  		<div class="xar-row">
  			<div class="xar-col-condensed">$first_name</div>

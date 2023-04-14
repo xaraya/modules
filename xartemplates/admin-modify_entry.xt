@@ -37,7 +37,7 @@
                     <xar:var name="label">Update</xar:var>
                     <xar:button type="submit" name="post" value="$label" class="btn-primary"/>&#160;
                     <xar:var name="label">Delete</xar:var>
-                    <xar:set name="target">xarModURL('reminders', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
+                    <xar:set name="target">xarController::URL('reminders', 'admin', 'delete', array('itemid' => $object->properties['id']->value))</xar:set>
                     <xar:button type="link" target="$target" value="$label" class="btn-danger"/>
                 </div>
             </div>

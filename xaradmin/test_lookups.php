@@ -17,14 +17,14 @@
 
 function reminders_admin_test_lookups()
 {
-    if (!xarSecurityCheck('ManageReminders')) return;
+    if (!xarSecurity::check('ManageReminders')) return;
     
-    if (!xarVarFetch('confirm',    'checkbox', $data['confirm'],    false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'checkbox', $data['confirm'],    false, xarVar::NOT_REQUIRED)) return;
     
     if ($data['confirm']) {
         
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if(!xarSec::confirmAuthKey()) return;
 
         // Check if we send a bcc of the email(s)
         $checkbox = DataPropertyMaster::getProperty(array('name' => 'checkbox'));

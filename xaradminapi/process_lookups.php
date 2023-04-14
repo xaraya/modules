@@ -28,7 +28,7 @@ function reminders_adminapi_process_lookups($args)
 	if ($args['test']) {
 
     	// In the test environment, we just look which lookups were checked in the test lookup admin page. We will receive all those emails.
-    	if (!xarVarFetch('entry_list',    'str', $data['entry_list'],    '', XARVAR_NOT_REQUIRED)) return;
+    	if (!xarVar::fetch('entry_list',    'str', $data['entry_list'],    '', xarVar::NOT_REQUIRED)) return;
 		$items = xarMod::apiFunc('reminders', 'user', 'getall_lookups', array('itemids' => $data['entry_list']));
 
 		$data['results'] = array();
