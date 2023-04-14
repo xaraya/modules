@@ -66,7 +66,7 @@ function publications_userapi_getrootcats($args)
         return array();
     }
 
-    if (!xarModAPILoad('categories', 'user')) return;
+    if (!xarMod::apiLoad('categories', 'user')) return;
 
     $isfirst = 1;
     $catlinks = array();
@@ -83,7 +83,7 @@ function publications_userapi_getrootcats($args)
         $info = $catlist[$cid];
         $item = array();
         $item['catid'] = $info['cid'];
-        $item['cattitle'] = xarVarPrepForDisplay($info['name']);
+        $item['cattitle'] = xarVar::prepForDisplay($info['name']);
         $item['catlink'] = xarController::URL('publications','user','view',
                                     array('ptid' => $ptid,
                                           'catid' => $info['cid']));

@@ -90,7 +90,7 @@
             <xar:else/>
                 <a href="#$item['link']#">#$item['title']#</a>
             </xar:if>
-            <xar:if condition="!empty($item['pubdate'])">#xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $item['pubdate'])#</xar:if>
+            <xar:if condition="!empty($item['pubdate'])">#xarLocale::formatDate('%a, %d %B %Y %H:%M:%S %Z', $item['pubdate'])#</xar:if>
             <!-- Show relevance for MySQL full-text search (see $getfields in search.php)
                 <xar:if condition="isset($item['relevance'])">
                   <xar:set name="relevance">sprintf('%.2f',$item['relevance'])</xar:set>

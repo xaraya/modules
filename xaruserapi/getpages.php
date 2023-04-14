@@ -20,7 +20,7 @@ function publications_userapi_getpages($args)
 {
     extract($args);
 
-    if (!xarVarValidate('enum:id:index:name:left:right', $key, true)) {$key = 'index';}
+    if (!xarVar::validate('enum:id:index:name:left:right', $key, true)) {$key = 'index';}
 
     // Define if we are looking for the number of pages or the pages themselves
     $count = (empty($count)) ? false : true;

@@ -26,7 +26,7 @@
         </xar:if>
         <xar:if condition="!empty($showpubdate)">
             <p>
-                #xarLocaleGetFormattedDate('medium',$item['pubdate'])#
+                #xarLocale::getFormattedDate('medium',$item['pubdate'])#
             </p>
         </xar:if>
     </xar:foreach>

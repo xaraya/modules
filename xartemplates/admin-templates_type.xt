@@ -76,7 +76,7 @@
                     </xar:if>
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="confirm" id="confirm" value="1" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="file" id="file" value="#$file#" />

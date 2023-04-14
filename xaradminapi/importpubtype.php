@@ -77,7 +77,7 @@ function publications_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($object[$key])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','object',xarVarPrepForDisplay($key),$count);
+                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','object',xarVar::prepForDisplay($key),$count);
                     throw new DuplicateException(null, $msg);
                 }
                 $object[$key] = $value;
@@ -114,7 +114,7 @@ function publications_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($config[$key])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','config',xarVarPrepForDisplay($key),$count);
+                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','config',xarVar::prepForDisplay($key),$count);
                     throw new DuplicateException(null, $msg);
                 }
                 $config[$key] = $value;
@@ -154,7 +154,7 @@ function publications_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($property[$key])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','property',xarVarPrepForDisplay($key),$count);
+                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','property',xarVar::prepForDisplay($key),$count);
                     throw new DuplicateException(null, $msg);
                 }
                 $property[$key] = $value;
@@ -261,7 +261,7 @@ function publications_adminapi_importpubtype($args)
                     }
 
                     // 7. check if we need to enable DD hooks for this pubtype
-                    if (!xarModIsHooked('dynamicdata','publications')) {
+                    if (!xarModHooks::isHooked('dynamicdata','publications')) {
                         xarMod::apiFunc('modules','admin','enablehooks',
                                       array('callerModName' => 'publications',
                                             'callerItemType' => $ptid,
@@ -291,7 +291,7 @@ function publications_adminapi_importpubtype($args)
                         $objectname2objectid[$objectname] = $objectinfo['objectid'];
                     } else {
                         if (!empty($file)) fclose($fp);
-                        $msg = xarML('Unknown #(1) "#(2)" on line #(3)','object',xarVarPrepForDisplay($objectname),$count);
+                        $msg = xarML('Unknown #(1) "#(2)" on line #(3)','object',xarVar::prepForDisplay($objectname),$count);
                         throw new BadParameterException(null, $msg);
                     }
                 }
@@ -327,7 +327,7 @@ function publications_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($item[$key])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','item',xarVarPrepForDisplay($key),$count);
+                    $msg = xarML('Duplicate definition for #(1) key #(2) on line #(3)','item',xarVar::prepForDisplay($key),$count);
                     throw new DuplicateException(null, $msg);
                 }
                 $item[$key] = $value;
@@ -338,7 +338,7 @@ function publications_adminapi_importpubtype($args)
                 $value = $matches[2];
                 if (isset($item[$key])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Duplicate definition for #(1) key #(2)','item',xarVarPrepForDisplay($key));
+                    $msg = xarML('Duplicate definition for #(1) key #(2)','item',xarVar::prepForDisplay($key));
                     throw new DuplicateException(null, $msg);
                 }
                 $item[$key] = $value;
@@ -348,7 +348,7 @@ function publications_adminapi_importpubtype($args)
                 $value = $matches[1];
                 if (!isset($item[$closetag])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Undefined #(1) key #(2)','item',xarVarPrepForDisplay($closetag));
+                    $msg = xarML('Undefined #(1) key #(2)','item',xarVar::prepForDisplay($closetag));
                     throw new BadParameterException(null, $msg);
                 }
                 $item[$closetag] .= $value;
@@ -357,7 +357,7 @@ function publications_adminapi_importpubtype($args)
                 // multi-line entries *are* relevant here
                 if (!isset($item[$closetag])) {
                     if (!empty($file)) fclose($fp);
-                    $msg = xarML('Undefined #(1) key #(2)','item',xarVarPrepForDisplay($closetag));
+                    $msg = xarML('Undefined #(1) key #(2)','item',xarVar::prepForDisplay($closetag));
                     throw new BadParameterException(null, $msg);
                 }
                 $item[$closetag] .= $line;

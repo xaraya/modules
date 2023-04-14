@@ -240,7 +240,7 @@ function publications_admin_view($args=array())
 
 /*
     // Add pager
-    $data['pager'] = xarTplGetPager($startnum,
+    $data['pager'] = xarTplPager::getPager($startnum,
                             xarMod::apiFunc('publications', 'user', 'countitems',
                                           array('ptid' => $ptid,
                                                 'owner' => $owner,
@@ -354,7 +354,7 @@ function publications_admin_view($args=array())
     // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $ptid)));
     
-    return xarTplModule('publications', 'admin', 'view', $data, $template);
+    return xarTpl::module('publications', 'admin', 'view', $data, $template);
 }
 
 ?>

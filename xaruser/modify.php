@@ -84,7 +84,7 @@ function publications_user_modify($args)
     if (!$allow) {
         if ($accessconstraints['modify']['failure']) return xarResponse::Forbidden();
         elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-        else return xarTplModule('publications', 'user', 'empty');
+        else return xarTpl::module('publications', 'user', 'empty');
     }
     
 # --------------------------------------------------------

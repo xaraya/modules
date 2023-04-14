@@ -87,7 +87,7 @@
 
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                     <input type="hidden" name="ptid" id="ptid" value="#$ptid#" />
                     <input type="hidden" name="returnurl" id="returnurl" value="#$returnurl#" />

@@ -44,7 +44,7 @@ function publications_userapi_getchildcats($args)
         $filter = '';
     }
 
-    if (!xarModAPILoad('categories', 'visual')) return;
+    if (!xarMod::apiLoad('categories', 'visual')) return;
 
 // TODO: make sure permissions are taken into account here !
     $list = xarMod::apiFunc('categories',
@@ -96,7 +96,7 @@ function publications_userapi_getchildcats($args)
         $info['link'] = xarController::URL('publications','user','view',
                                  array('ptid' => $ptid,
                                        'catid' => $catid));
-        $info['name'] = xarVarPrepForDisplay($info['name']);
+        $info['name'] = xarVar::prepForDisplay($info['name']);
         if ($count) {
             if (isset($pubcatcount[$info['id']][$curptid])) {
                 $info['count'] = $pubcatcount[$info['id']][$curptid];

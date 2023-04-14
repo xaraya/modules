@@ -35,7 +35,7 @@ function publications_userapi_getauthors($args)
     $publicationsdef = xarMod::apiFunc('publications','user','leftjoin',$args);
 
     // Load API
-    if (!xarModAPILoad('roles', 'user')) return;
+    if (!xarMod::apiLoad('roles', 'user')) return;
 
     // Get the field names and LEFT JOIN ... ON ... parts from users
     $usersdef = xarMod::apiFunc('roles','user','leftjoin');
@@ -57,10 +57,10 @@ function publications_userapi_getauthors($args)
     }
     if (count($args['cids']) > 0) {
         // Load API
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $args['modid'] = xarModGetIDFromName('publications');
+        $args['modid'] = xarMod::getRegId('publications');
         if (isset($args['ptid']) && !isset($args['itemtype'])) {
             $args['itemtype'] = $args['ptid'];
         }

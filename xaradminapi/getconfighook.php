@@ -19,7 +19,7 @@ function publications_adminapi_getconfighook($args)
             'module'  => $module,
             'configarea'  => 'general',
             'configtitle'  => xarML('Publications'),
-            'configcontent' => xarModFunc($module,'admin','modifyconfig_general'
+            'configcontent' => xarMod::guiFunc($module,'admin','modifyconfig_general'
             )
     );
     $extrainfo['tabs'][] = $tabinfo;

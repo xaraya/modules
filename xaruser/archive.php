@@ -100,7 +100,7 @@ function publications_user_archive($args)
     }
 
     // Load API
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     if (!empty($ptid) && !empty($pubtypes[$ptid]['config']['pubdate']['label'])) {
         $showdate = 1;
@@ -156,7 +156,7 @@ function publications_user_archive($args)
                       'mlink' => $mlink);
 
     // Load API
-    if (!xarModAPILoad('categories', 'user')) return;
+    if (!xarMod::apiLoad('categories', 'user')) return;
 
     // Get the list of root categories for this publication type
     if (!empty($ptid)) {
@@ -250,7 +250,7 @@ function publications_user_archive($args)
         }
 /* TODO: move date formatting to template, delete this code after testing
         if ($showdate && !empty($publications[$key]['pubdate'])) {
-            $publications[$key]['date'] = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",
+            $publications[$key]['date'] = xarLocale::formatDate("%Y-%m-%d %H:%M:%S",
                                                $publications[$key]['pubdate']);
         } else {
             $publications[$key]['date'] = '';
@@ -347,9 +347,9 @@ function publications_user_archive($args)
     xarCoreCache::setCached('Blocks.categories','itemtype',$ptid);
     if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
         xarCoreCache::setCached('Blocks.categories','title',$pubtypes[$ptid]['description']);
-        xarTplSetPageTitle(xarML('Archive'), $pubtypes[$ptid]['description']);
+        xarTpl::setPageTitle(xarML('Archive'), $pubtypes[$ptid]['description']);
     } else {
-        xarTplSetPageTitle(xarML('Archive'));
+        xarTpl::setPageTitle(xarML('Archive'));
     }
 //}
     if (!empty($ptid)) {
@@ -411,7 +411,7 @@ function publications_user_archive($args)
        $template = null;
     }
 
-    return xarTplModule('publications', 'user', 'archive', $data, $template);
+    return xarTpl::module('publications', 'user', 'archive', $data, $template);
 }
 
 /**

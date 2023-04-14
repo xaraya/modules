@@ -59,7 +59,7 @@
         <xar:if condition="empty($fields['fileupload'])">
             <!-- Nothing to display -->
 
-        <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+        <xar:elseif condition="xarModHooks::isHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
             <!-- Hook output -->
             <xar:comment>
                 If you hook the uploads module to publications, then file upload fields will contain

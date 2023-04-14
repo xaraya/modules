@@ -34,7 +34,7 @@ function publications_adminapi_deletepubtype($args)
     if (!xarSecurity::check('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     // Load user API to obtain item information function
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     // Get current publication types
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
@@ -65,7 +65,7 @@ function publications_adminapi_deletepubtype($args)
     if (!$result) return;
 
 // TODO: call some kind of itemtype delete hooks here, once we have those
-    //xarModCallHooks('itemtype', 'delete', $ptid,
+    //xarModHooks::call('itemtype', 'delete', $ptid,
     //                array('module' => 'publications',
     //                      'itemtype' =>'ptid'));
 

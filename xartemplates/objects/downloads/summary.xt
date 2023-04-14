@@ -44,7 +44,7 @@
             
             <xar:if condition="empty($fields['fileupload'])">
                 <!-- Nothing to display -->
-            <xar:elseif condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
+            <xar:elseif condition="xarModHooks::isHooked('uploads','publications',$fields['itemtype']) and substr($fields['fileupload'],0,1) eq ';'" />
                 <!-- If you hook the uploads module to publications, 
                 then file upload fields will contain a comma-separated list of file ids, 
                 and you will need to call an API function to retrieve the file information. 
@@ -75,7 +75,7 @@
             <xar:if condition="!empty($keywords)">
             Keywords:
             <xar:loop name="$keywords">
-                <a href="#xarModUrl('keywords', 'user', 'main', array('keyword' => $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
+                <a href="#xarController::URL('keywords', 'user', 'main', array('keyword' => $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
             </xar:loop></xar:if>
         </div>
     </xar:if>

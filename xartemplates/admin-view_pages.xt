@@ -20,9 +20,9 @@
                     <option value="0"></option>
                     <xar:loop name="$root_pages">
                         <xar:if condition="$loop:item.id eq $root_id">
-                            <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                            <option value="#$loop:item.id#" selected="selected">[#$loop:item.id#] #xarVar::prepForDisplay($loop:item.name)# (#xarVar::prepForDisplay($loop:item.pubtype_name)#)</option>
                         <xar:else />
-                            <option value="#$loop:item.id#">[#$loop:item.id#] #xarVarPrepForDisplay($loop:item.name)# (#xarVarPrepForDisplay($loop:item.pubtype_name)#)</option>
+                            <option value="#$loop:item.id#">[#$loop:item.id#] #xarVar::prepForDisplay($loop:item.name)# (#xarVar::prepForDisplay($loop:item.pubtype_name)#)</option>
                         </xar:if>
                     </xar:loop>
                 </select>
@@ -106,7 +106,7 @@
                             </td>
                             <td class="#$row_class#" style="text-align: left">
                                 #$loop:item.xar_map#
-                                #xarVarPrepForDisplay($loop:item.name)#
+                                #xarVar::prepForDisplay($loop:item.name)#
                             </td>
                             <td class="#$row_class#" style="text-align: center">
                                 <xar:set name="value">$loop->item['menu_flag']</xar:set>
@@ -119,7 +119,7 @@
                             <td class="#$row_class#" title="#xarML('Status: ')# #$stateoptions[$loop->item['status']]['name']#">
                                 <xar:set name="value">$loop->item['status']</xar:set>
                                 <xar:data-output type="icondropdown" icon_directory="set1" icon_options="$state" value="$value"/>&#160;
-                                <span class="xar-publications-status-#$state[$loop->item['status']]['id']#">#xarVarPrepForDisplay($loop:item.pubtype_name)#: #xarVarPrepForDisplay($loop:item.title)#</span>
+                                <span class="xar-publications-status-#$state[$loop->item['status']]['id']#">#xarVar::prepForDisplay($loop:item.pubtype_name)#: #xarVar::prepForDisplay($loop:item.title)#</span>
                             </td>
                             <td style="text-align: left" class="#$row_class#">
                                 <xar:set name="translations">implode(',',$loop->item['translations'])</xar:set>

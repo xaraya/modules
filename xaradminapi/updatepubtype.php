@@ -53,7 +53,7 @@ function publications_adminapi_updatepubtype($args)
     if (!xarSecurity::check('AdminPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     // Load user API to obtain item information function
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     // Get current publication types
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');

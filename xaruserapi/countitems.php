@@ -54,10 +54,10 @@ function publications_userapi_countitems($args)
     }
     if (count($args['cids']) > 0 || !empty($args['catid'])) {
         // Load API
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) return;
 
         // Get the LEFT JOIN ... ON ...  and WHERE (!) parts from categories
-        $args['modid'] = xarModGetIDFromName('publications');
+        $args['modid'] = xarMod::getRegId('publications');
         if (isset($args['ptid']) && !isset($args['itemtype'])) {
             $args['itemtype'] = $args['ptid'];
         }

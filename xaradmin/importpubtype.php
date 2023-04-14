@@ -38,7 +38,7 @@ function publications_admin_importpubtype($args)
     }
 
     if (!empty($import) || !empty($xml)) {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
 
         if (!empty($import)) {
             $found = '';
@@ -70,7 +70,7 @@ function publications_admin_importpubtype($args)
                                     'name' => $file);
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
 

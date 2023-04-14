@@ -20,7 +20,7 @@ function publications_admin_updateconfig()
     if (!xarSecurity::check('AdminPublications')) return;
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
     // Get parameters
     //A lot of these probably are bools, still might there be a need to change the template to return
     //'true' and 'false' to use those...
@@ -106,7 +106,7 @@ function publications_admin_updateconfig()
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls, user_menu_link, use_module_icons, frontend_page, backend_page');
         $isvalid = $data['module_settings']->checkInput();
         if (!$isvalid) {
-            return xarTplModule('base','admin','modifyconfig', $data);
+            return xarTpl::module('base','admin','modifyconfig', $data);
         } else {
             $itemid = $data['module_settings']->updateItem();
         }
@@ -155,9 +155,9 @@ function publications_admin_updateconfig()
 
         $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
         if ($usealias) {
-            xarModSetAlias($pubtypes[$ptid]['name'],'publications');
+            xarModAlias::set($pubtypes[$ptid]['name'],'publications');
         } else {
-            xarModDelAlias($pubtypes[$ptid]['name'],'publications');
+            xarModAlias::delete($pubtypes[$ptid]['name'],'publications');
         }
 
     } elseif ($data['tab'] == 'redirects') {

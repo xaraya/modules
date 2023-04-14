@@ -49,10 +49,10 @@ function publications_admin_importpages()
 
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
 # --------------------------------------------------------
 #
@@ -211,7 +211,7 @@ function publications_admin_importpages()
 
             if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('publications','user','preview',
+                $data['preview'] = xarMod::guiFunc('publications','user','preview',
                                               array('object' => $pageobject));
                 break;
             } else {
@@ -226,15 +226,15 @@ function publications_admin_importpages()
         }
     }
 
-    $data['filterhead'] = xarVarPrepForDisplay($data['filterhead']);
-    $data['filtertail'] = xarVarPrepForDisplay($data['filtertail']);
-    $data['findtitle'] = xarVarPrepForDisplay($data['findtitle']);
+    $data['filterhead'] = xarVar::prepForDisplay($data['filterhead']);
+    $data['filtertail'] = xarVar::prepForDisplay($data['filtertail']);
+    $data['findtitle'] = xarVar::prepForDisplay($data['findtitle']);
     for ($i = 0; $i < $numrules; $i++) {
         if (!empty($data['search'][$i])) {
-            $data['search'][$i] = xarVarPrepForDisplay($data['search'][$i]);
+            $data['search'][$i] = xarVar::prepForDisplay($data['search'][$i]);
         }
         if (!empty($data['replace'][$i])) {
-            $data['replace'][$i] = xarVarPrepForDisplay($data['replace'][$i]);
+            $data['replace'][$i] = xarVar::prepForDisplay($data['replace'][$i]);
         }
     }
 

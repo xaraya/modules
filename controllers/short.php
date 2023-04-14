@@ -42,7 +42,7 @@
 
 sys::import('xaraya.mapper.controllers.short');
 sys::import('xaraya.structures.query');
-xarModLoad('publications');
+xarMod::load('publications');
 
 class PublicationsShortController extends ShortActionController
 {
@@ -361,7 +361,7 @@ class PublicationsShortController extends ShortActionController
                 $pid_follow = $pid;
                 while ($pages[$pid_follow]['parent_key'] <> 0) {
                     // TODO: could do with an API to get all aliases for a given module in one go.
-                    if (!empty($use_shortest_paths) && xarModGetAlias($pages[$pid_follow]['name']) == 'publications') {
+                    if (!empty($use_shortest_paths) && xarModAlias::resolve($pages[$pid_follow]['name']) == 'publications') {
                         break;
                     }
                     array_unshift($path, $pages[$pid_follow]['name']);
@@ -373,7 +373,7 @@ class PublicationsShortController extends ShortActionController
             
                 // If the base path component is not the module alias, then add the
                 // module name to the start of the path.
-                if (xarModGetAlias($pages[$pid_follow]['name']) != 'publications') {
+                if (xarModAlias::resolve($pages[$pid_follow]['name']) != 'publications') {
 //                    array_unshift($path, 'publications');
                 }
 

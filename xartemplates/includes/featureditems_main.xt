@@ -6,7 +6,7 @@
             <xar:if condition="!empty($feature['alttitle'])">
                 <a href="#$feature['link']#">#$feature['alttitle']#</a>
             <xar:else />
-                <a href="#$feature['link']#">#xarVarPrepForDisplay($feature['title'])#</a>
+                <a href="#$feature['link']#">#xarVar::prepForDisplay($feature['title'])#</a>
             </xar:if>
         </h2>
         <xar:if condition="$feature['showfeaturedsum'] eq true">
@@ -15,7 +15,7 @@
                     #$feature['altsummary']#
                 <xar:else />
                     <xar:if condition="!empty($feature['description'])">
-                        #xarVarPrepHTMLDisplay($feature['description'])#
+                        #xarVar::prepHTMLDisplay($feature['description'])#
                     </xar:if>
                 </xar:if>
             </div>

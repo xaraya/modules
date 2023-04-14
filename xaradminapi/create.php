@@ -72,7 +72,7 @@ function publications_adminapi_create($args)
     }
 
     // Security check
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     $args['mask'] = 'SubmitPublications';
     if (!xarMod::apiFunc('publications','user','checksecurity',$args)) {
@@ -93,7 +93,7 @@ function publications_adminapi_create($args)
 
     // Default locale is current locale
     if (empty($locale)) {
-        $locale = xarMLSGetCurrentLocale();
+        $locale = xarMLS::setCurrentLocale();
     }
 
     // Default summary is empty
@@ -173,7 +173,7 @@ function publications_adminapi_create($args)
     $args['itemid'] = $id;
 // TODO: get rid of this
     $args['cids'] = $cids;
-    xarModCallHooks('item', 'create', $id, $args);
+    xarModHooks::call('item', 'create', $id, $args);
 
     return $id;
 }

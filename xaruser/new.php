@@ -43,7 +43,7 @@ function publications_user_new($args)
     if (!$allow) {
         if ($accessconstraints['add']['failure']) return xarResponse::Forbidden();
         elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-        else return xarTplModule('publications', 'user', 'empty');
+        else return xarTpl::module('publications', 'user', 'empty');
     }
     
 # --------------------------------------------------------
@@ -62,7 +62,7 @@ function publications_user_new($args)
     // Get the settings of the publication type we are using
     $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
     
-    return xarTplModule('publications', 'user', 'new', $data, $template);
+    return xarTpl::module('publications', 'user', 'new', $data, $template);
 }
 
 ?>

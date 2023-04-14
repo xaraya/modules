@@ -23,7 +23,7 @@ function publications_admin_overview()
      * else just call the main function that usually displays the overview 
      */
 
-    return xarTplModule('publications', 'admin', 'main', $data,'main');
+    return xarTpl::module('publications', 'admin', 'main', $data,'main');
 }
 
 ?>

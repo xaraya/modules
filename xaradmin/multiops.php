@@ -14,14 +14,14 @@ function publications_admin_multiops()
     if(!xarVar::fetch('localmodule',   'str', $module,  'listings', xarVar::DONT_SET)) {return;}
 
     // Confirm authorisation code
-    //if (!xarSecConfirmAuthKey()) return;
+    //if (!xarSec::confirmAuthKey()) return;
 
     // Catch missing params here, rather than below
     if (empty($idlist)) {
-        return xarTplModule('publications','user','errors',array('layout' => 'no_items'));
+        return xarTpl::module('publications','user','errors',array('layout' => 'no_items'));
     }
     if ($operation === '') {
-        return xarTplModule('publications','user','errors',array('layout' => 'no_operation'));
+        return xarTpl::module('publications','user','errors',array('layout' => 'no_operation'));
     }
 
     $ids = explode(',',$idlist);

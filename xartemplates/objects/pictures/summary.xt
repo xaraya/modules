@@ -15,7 +15,7 @@
 
     <div id="main-content">
         <ul>
-            <xar:if condition="xarModIsHooked('uploads','publications',$fields['itemtype']) and substr($body,0,1) eq ';'">
+            <xar:if condition="xarModHooks::isHooked('uploads','publications',$fields['itemtype']) and substr($body,0,1) eq ';'">
         
                 <xar:template file="editicons"/>
         
@@ -23,7 +23,7 @@
                 <xar:foreach in="$img_output" key="$fileId" value="$fileInfo">
                     <li>
                         <a class="xar-title" href="#xarController::URL('publications','user','display',array('itemid' => $properties['id']->value,'ptid' => $properties['itemtype']->value))#">
-                            <xar:if condition="xarModIsAvailable('images')">
+                            <xar:if condition="xarMod::isAvailable('images')">
                                 <xar:set name="file">$fileInfo</xar:set>
                                 <xar:template file="picture-thumbnail" type="module" />
                             <xar:else />
@@ -62,7 +62,7 @@
         <xar:if condition="!empty($keywords)">            
             Keywords            :
             <xar:loop name="$keywords">
-                <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
+                <a href="#xarController::URL('keywords', 'user', 'main', array('keyword'=> $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
             </xar:loop>
         </xar:if>
     </div>

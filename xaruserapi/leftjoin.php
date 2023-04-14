@@ -152,7 +152,7 @@ function publications_userapi_leftjoin($args)
     */
 /* Example: automatically filter by the current locale - cfr. bug 3454
     if (empty($locale)) {
-        $locale = xarMLSGetCurrentLocale();
+        $locale = xarMLS::setCurrentLocale();
     }
 */
     if (!empty($locale) && is_string($locale)) {

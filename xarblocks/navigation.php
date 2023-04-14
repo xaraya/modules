@@ -75,12 +75,12 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                $modname = xarCoreCache::getCached('Blocks.categories','module');
             }
             if (empty($modname)) {
-                $modname = xarModGetName();
+                $modname = xarMod::getName();
             }
         } else {
             $modname = $module;
         }
-        $modid = xarModGetIDFromName($modname);
+        $modid = xarMod::getRegId($modname);
         if (empty($modid)) {
             return;
         }
@@ -339,7 +339,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                     unset($publications[$k]);
                   }// foreach
     
-                  $label = xarVarPrepForDisplay($info['name']);
+                  $label = xarVar::prepForDisplay($info['name']);
     
                   if (isset($publications[$label])) {
                     $link = xarController::URL($modname,$type,'display',
@@ -389,7 +389,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                 $cat = xarMod::apiFunc('categories','user','getcatinfo',
                                      array('cid' => $cid));
     
-                $blockinfo['title'] = xarVarPrepForDisplay($cat['name']);
+                $blockinfo['title'] = xarVar::prepForDisplay($cat['name']);
                 if (isset($cat['blockimage'])) {
                   $data['catimage'] = $cat['blockimage'];
                 }// if
@@ -414,7 +414,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                   if (strtolower($item['title']) == strtolower($cat['name'])) {
                     unset($items[$k]);
                   } else {
-                    $label = xarVarPrepForDisplay($item['title']);
+                    $label = xarVar::prepForDisplay($item['title']);
                     $class = ($item['id'] == $itemid) ? 'xar-menu-item-current' : 'xar-menu-item';
                     $link = xarController::URL($modname,$type,'display',
                                       array('id'       => $item['id'],
@@ -452,7 +452,7 @@ class Publications_NavigationBlock extends BasicBlock implements iBlock
                         unset($publications[$k]);
                       }// foreach
     
-                      $clabel = xarVarPrepForDisplay($child['name']);
+                      $clabel = xarVar::prepForDisplay($child['name']);
     
                       if (isset($publications[$clabel])) {
                         $clink = xarController::URL($modname,$type,'display',

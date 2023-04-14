@@ -315,7 +315,7 @@ function publications_admin_display($args)
 #
 # Set the theme if needed
 #
-    if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
+    if (!empty($data['object']->properties['theme']->value)) xarTpl::setThemeName($data['object']->properties['theme']->value);
     
 # --------------------------------------------------------
 #
@@ -474,7 +474,7 @@ function publications_admin_display($args)
     $data['topic_names'] = array();
     /*
     if (count($cids) > 0) {
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) return;
         $catlist = xarMod::apiFunc('categories',
                                 'user',
                                 'getcatinfo',
@@ -484,7 +484,7 @@ function publications_admin_display($args)
                              array(//'state' => array(PUBLICATIONS_STATE_FRONTPAGE,PUBLICATIONS_STATE_APPROVED).
                                    'ptid' => $ptid,
                                    'catid' => $cat['cid']));
-            $name = xarVarPrepForDisplay($cat['name']);
+            $name = xarVar::prepForDisplay($cat['name']);
 
             $data['topic_urls'][] = $link;
             $data['topic_names'][] = $name;
@@ -520,7 +520,7 @@ function publications_admin_display($args)
                 $pageBlockSize = 10;
 
                 // Get pager information: one item per page.
-                $pagerinfo = xarTplPagerInfo((empty($page) ? 1 : $page), count($pages), 1, $pageBlockSize);
+                $pagerinfo = xarTplPager::getInfo((empty($page) ? 1 : $page), count($pages), 1, $pageBlockSize);
 
                 // Retrieve current page and total pages from the pager info.
                 // These will have been normalised to ensure they are in range.
@@ -547,18 +547,18 @@ function publications_admin_display($args)
                     'publications','user','display',
                     array('ptid' => $ptid, 'id' => $id, 'page' => '%%')
                 );
-                $data['pager'] = xarTplGetPager(
+                $data['pager'] = xarTplPager::getPager(
                     $page, $numpages, $urlmask,
                     1, $pageBlockSize, 'multipage'
                 );
 
                 // Next two assignments for legacy templates.
                 // TODO: deprecate them?
-                $data['next'] = xarTplGetPager(
+                $data['next'] = xarTplPager::getPager(
                     $page, $numpages, $urlmask,
                     1, $pageBlockSize, 'multipagenext'
                 );
-                $data['previous'] = xarTplGetPager(
+                $data['previous'] = xarTplPager::getPager(
                     $page, $numpages, $urlmask,
                     1, $pageBlockSize, 'multipageprev'
                 );
@@ -577,7 +577,7 @@ function publications_admin_display($args)
     unset($publication);
 
     // temp. fix to include dynamic data fields without changing templates
-    if (xarModIsHooked('dynamicdata','publications',$pubtype_id)) {
+    if (xarModHooks::isHooked('dynamicdata','publications',$pubtype_id)) {
         list($properties) = xarMod::apiFunc('dynamicdata','user','getitemfordisplay',
                                           array('module'   => 'publications',
                                                 'itemtype' => $pubtype_id,
@@ -622,15 +622,15 @@ function publications_admin_display($args)
             $data['transform'][] = 'notes';
         }
     }
-    $data = xarModCallHooks('item', 'transform', $id, $data, 'publications');
+    $data = xarModHooks::call('item', 'transform', $id, $data, 'publications');
 
-    return xarTplModule('publications', 'user', 'display', $data);
+    return xarTpl::module('publications', 'user', 'display', $data);
 
 
     if (!empty($data['title'])) {
         // CHECKME: <rabbit> Strip tags out of the title - the <title> tag shouldn't have any other tags in it.
         $title = strip_tags($data['title']);
-        xarTplSetPageTitle(xarVarPrepForDisplay($title), xarVarPrepForDisplay($pubtypes[$data['itemtype']]['description']));
+        xarTpl::setPageTitle(xarVar::prepForDisplay($title), xarVar::prepForDisplay($pubtypes[$data['itemtype']]['description']));
 
         // Save some variables to (temporary) cache for use in blocks etc.
         xarCoreCache::setCached('Comments.title','title',$data['title']);
@@ -676,7 +676,7 @@ function publications_admin_display($args)
 
     // Tell the hitcount hook not to display the hitcount, but to save it
     // in the variable cache.
-    if (xarModIsHooked('hitcount','publications',$pubtype_id)) {
+    if (xarModHooks::isHooked('hitcount','publications',$pubtype_id)) {
         xarCoreCache::setCached('Hooks.hitcount','save',1);
         $data['dohitcount'] = 1;
     } else {
@@ -684,7 +684,7 @@ function publications_admin_display($args)
     }
 
     // Tell the ratings hook to save the rating in the variable cache.
-    if (xarModIsHooked('ratings','publications',$pubtype_id)) {
+    if (xarModHooks::isHooked('ratings','publications',$pubtype_id)) {
         xarCoreCache::setCached('Hooks.ratings','save',1);
         $data['doratings'] = 1;
     } else {
@@ -760,7 +760,7 @@ function publications_admin_display($args)
     // Page template depending on publication type (optional)
     // Note : this cannot be overridden in templates
     if (empty($preview) && !empty($settings['page_template'])) {
-        xarTplSetPageTemplateName($settings['page_template']);
+        xarTpl::setPageTemplateName($settings['page_template']);
     }
 
     // Specific layout within a template (optional)
@@ -774,7 +774,7 @@ function publications_admin_display($args)
     $id = xarMod::apiFunc('publications','user','getranslationid',array('id' => $id));
     $data['object']->getItem(array('itemid' => $id));
 
-    return xarTplModule('publications', 'user', 'display', $data, $template);
+    return xarTpl::module('publications', 'user', 'display', $data, $template);
 }
 
 ?>

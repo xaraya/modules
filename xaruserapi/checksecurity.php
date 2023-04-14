@@ -114,7 +114,7 @@ function publications_userapi_checksecurity($args)
 
     // Get category information for this article
     if (!isset($publication['cids']) && !empty($id)) {
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) return;
         $info = xarMod::getBaseInfo('publications');
         $sysid = $info['systemid'];
         $publicationcids = xarMod::apiFunc('categories',

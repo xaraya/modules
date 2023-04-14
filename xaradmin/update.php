@@ -39,7 +39,7 @@ function publications_admin_update()
 
     // Confirm authorisation code
     // This has been disabled for now
-//    if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSec::confirmAuthKey()) return;
 
     $items = explode(',',$items);
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -82,12 +82,12 @@ function publications_admin_update()
         // Get the settings of the publication type we are using
         $data['settings'] = xarMod::apiFunc('publications','user','getsettings',array('ptid' => $data['ptid']));
 
-        return xarTplModule('publications','admin','modify', $data);
+        return xarTpl::module('publications','admin','modify', $data);
     }
     
     // call transform input hooks
     $article['transform'] = array('summary','body','notes');
-//    $article = xarModCallHooks('item', 'transform-input', $data['itemid'], $article,
+//    $article = xarModHooks::call('item', 'transform-input', $data['itemid'], $article,
 //                               'publications', $data['ptid']);
 
     // Now talk to the database. Loop through all the translation pages

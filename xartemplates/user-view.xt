@@ -30,7 +30,7 @@
       <xar:select>
         <xar:andconditions>
           <xar:condition operator="in" property="state">array(3,4)</xar:condition>
-          <xar:condition operator="eq" property="locale">xarUserGetNavigationLocale()</xar:condition>
+          <xar:condition operator="eq" property="locale">xarUser::getNavigationLocale()</xar:condition>
           <xar:condition operator="le" property="start_date">$now</xar:condition>
           <xar:orconditions>
             <xar:condition operator="ge" property="end_date">$now</xar:condition>
@@ -48,8 +48,8 @@
 
     <!-- For debugging
     <xar:set name="dummy">var_dump($items)</xar:set>
-    <xar:set name="dummy">var_dump(xarLocaleGetFormattedDate('long',$now))</xar:set>
-    <xar:set name="dummy">var_dump(xarLocaleGetFormattedTime('long',$now))</xar:set>
+    <xar:set name="dummy">var_dump(xarLocale::getFormattedDate('long',$now))</xar:set>
+    <xar:set name="dummy">var_dump(xarLocale::getFormattedTime('long',$now))</xar:set>
     -->
 
     <!-- Display the list of objects -->

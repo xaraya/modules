@@ -319,7 +319,7 @@ function publications_user_view($args)
     if (!empty($ptid) && !empty($pubtypes[$ptid]['description'])) {
         xarCoreCache::setCached('Blocks.categories', 'title', $pubtypes[$ptid]['description']);
         // Note : this gets overriden by the categories navigation if necessary
-        xarTplSetPageTitle(xarVarPrepForDisplay($pubtypes[$ptid]['description']));
+        xarTpl::setPageTitle(xarVar::prepForDisplay($pubtypes[$ptid]['description']));
     }
 
     // optional category count
@@ -403,7 +403,7 @@ function publications_user_view($args)
             );
         }
         foreach ($catinfo as $cid => $info) {
-            $catinfo[$cid]['name'] = xarVarPrepForDisplay($info['name']);
+            $catinfo[$cid]['name'] = xarVar::prepForDisplay($info['name']);
             $catinfo[$cid]['link'] = xarController::URL('publications', 'user', 'view',
                 array('ptid' => $ptid, 'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) )
             );
@@ -479,7 +479,7 @@ function publications_user_view($args)
             $article['rsstitle'] = htmlspecialchars($article['title']);
             //$article['rssdate'] = strtotime($article['date']);
             $article['rsssummary'] = preg_replace('<br />', "\n", $article['summary']);
-            $article['rsssummary'] = xarVarPrepForDisplay(strip_tags($article['rsssummary']));
+            $article['rsssummary'] = xarVar::prepForDisplay(strip_tags($article['rsssummary']));
             $article['rsscomment'] = xarController::URL('comments', 'user', 'display', array('modid' => $c_modid, 'objectid' => $article['id']));
             // $article['rsscname'] = htmlspecialchars($item['cname']);
             // <category>#$rsscname#</category>
@@ -494,7 +494,7 @@ function publications_user_view($args)
             } else {
                 $article['transform'] = array('summary', 'body', 'notes');
             }
-            $article = xarModCallHooks('item', 'transform', $article['id'], $article, 'publications');
+            $article = xarModHooks::call('item', 'transform', $article['id'], $article, 'publications');
         }
 
         $data['titles'][$article['id']] = $article['title'];
@@ -571,7 +571,7 @@ function publications_user_view($args)
 // Flag this as the current list view
     xarSession::setVar('publications_current_listview', xarServer::getCurrentURL(array('ptid' => $data['ptid'])));
     
-    return xarTplModule('publications', 'user', 'view', $data, $data['template']);
+    return xarTpl::module('publications', 'user', 'view', $data, $data['template']);
 }
 
 ?>

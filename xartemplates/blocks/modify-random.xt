@@ -104,7 +104,7 @@
             Show submit link             
         </label> 
     </div>
-    <xar:if condition="xarModIsHooked('dynamicdata','publications',$pubtype_id)">
+    <xar:if condition="xarModHooks::isHooked('dynamicdata','publications',$pubtype_id)">
         <div class="xar-form-input-wrapper-after">
             <xar:data-input type="checkbox" name="showdynamic" checked="$showdynamic"/>
             <label class="help" title="#xarML('Select this if you wish to show the dynamic data that you have included for your publication types.')#" for="showdynamic#$blockid#"> 

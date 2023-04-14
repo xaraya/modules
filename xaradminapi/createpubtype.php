@@ -50,7 +50,7 @@ function publications_adminapi_createpubtype($args)
     // Security check - we require ADMIN rights here
     if (!xarSecurity::check('AdminPublications')) return;
 
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     // Make sure we have all the configuration fields we need
     $pubfields = xarMod::apiFunc('publications','user','getpubfields');
@@ -80,7 +80,7 @@ function publications_adminapi_createpubtype($args)
     $ptid = $dbconn->PO_Insert_ID($pubtypestable, 'pubtype_id');
 
     // Don't call creation hooks here...
-    //xarModCallHooks('item', 'create', $ptid, 'ptid');
+    //xarModHooks::call('item', 'create', $ptid, 'ptid');
 
     return $ptid;
 }

@@ -135,7 +135,7 @@ function publications_admin_privileges($args)
 
     if (!empty($apply)) {
         // create/update the privilege
-        $id = xarReturnPrivilege($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
+        $id = xarPrivileges::external($extpid,$extname,$extrealm,$extmodule,$extcomponent,$newinstance,$extlevel);
         if (empty($id)) return; // throw back
 
         // redirect to the privilege
@@ -164,10 +164,10 @@ function publications_admin_privileges($args)
                   'ptid'         => $ptid,
                   'cid'          => $cid,
                   'uid'          => $uid,
-                  'author'       => xarVarPrepForDisplay($author),
+                  'author'       => xarVar::prepForDisplay($author),
                   'authorlist'   => $authorlist,
                   'id'          => $id,
-                  'title'        => xarVarPrepForDisplay($title),
+                  'title'        => xarVar::prepForDisplay($title),
                   'numitems'     => $numitems,
                   'extpid'       => $extpid,
                   'extname'      => $extname,
@@ -175,7 +175,7 @@ function publications_admin_privileges($args)
                   'extmodule'    => $extmodule,
                   'extcomponent' => $extcomponent,
                   'extlevel'     => $extlevel,
-                  'extinstance'  => xarVarPrepForDisplay(join(':',$newinstance)),
+                  'extinstance'  => xarVar::prepForDisplay(join(':',$newinstance)),
                  );
 
     // Get publication types

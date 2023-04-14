@@ -60,14 +60,14 @@ function publications_admin_modify_pubtype($args)
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if(!xarSec::confirmAuthKey()) return;
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('publications','admin','modify_pubtype', $data);        
+            return xarTpl::module('publications','admin','modify_pubtype', $data);        
         } else {
             // Good data: create the item
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));

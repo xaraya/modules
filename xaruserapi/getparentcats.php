@@ -95,7 +95,7 @@ function publications_userapi_getparentcats($args)
                                       'view',
                                        array('ptid' => $ptid,
                                              'catid' => $info['cid']));
-            $item['ptitle'] = xarVarPrepForDisplay($info['name']);
+            $item['ptitle'] = xarVar::prepForDisplay($info['name']);
             if ($info['cid'] == $cid) {
 // TODO: test for neighbourhood
                 $trailitem['info'] = $info;

@@ -51,7 +51,7 @@ function publications_user_delete()
         } else {
             $data['title'] = xarML("Delete Publication");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $items = array();
         foreach ($ids as $id) {
             $publication->getItem(array('itemid' => $id));
@@ -84,7 +84,7 @@ function publications_user_delete()
                 if (!$allow) {
                     if ($accessconstraints['delete']['failure']) return xarResponse::Forbidden();
                     elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-                    else return xarTplModule('publications', 'user', 'empty');
+                    else return xarTpl::module('publications', 'user', 'empty');
                 }
             } else {
                 // More than one page to delete: just ignore the ones we can't
@@ -95,9 +95,9 @@ function publications_user_delete()
         }
         $data['items'] = $items;
         $data['yes_action'] = xarController::URL('publications','user','delete',array('idlist' => $idlist));
-        return xarTplModule('publications','user', 'delete',$data);        
+        return xarTpl::module('publications','user', 'delete',$data);        
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         
         foreach ($ids as $id) {
             $publication->getItem(array('itemid' => $id));
@@ -129,7 +129,7 @@ function publications_user_delete()
                 if (!$allow) {
                     if ($accessconstraints['delete']['failure']) return xarResponse::Forbidden();
                     elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-                    else return xarTplModule('publications', 'user', 'empty');
+                    else return xarTpl::module('publications', 'user', 'empty');
                 }
             } else {
                 // More than one page to delete: just ignore the ones we can't

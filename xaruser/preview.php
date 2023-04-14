@@ -70,7 +70,7 @@ function publications_user_preview($data)
     if (!$allow || $nopublish) {
         if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
         elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-        else return xarTplModule('publications', 'user', 'empty');
+        else return xarTpl::module('publications', 'user', 'empty');
     }
     
     // If we use process states, then also check that
@@ -78,7 +78,7 @@ function publications_user_preview($data)
         if ($data['object']->properties['process_state']->value < 3)
             if ($accessconstraints['display']['failure']) return xarResponse::Forbidden();
             elseif ($nopermissionpage_id) xarController::redirect(xarController::URL('publications', 'user', 'display', array('itemid' => $nopermissionpage_id)));
-            else return xarTplModule('publications', 'user', 'empty');            
+            else return xarTpl::module('publications', 'user', 'empty');            
     }
     
 # --------------------------------------------------------
@@ -165,7 +165,7 @@ function publications_user_preview($data)
 #
 # Set the theme if needed
 #
-    if (!empty($data['object']->properties['theme']->value)) xarTplSetThemeName($data['object']->properties['theme']->value);
+    if (!empty($data['object']->properties['theme']->value)) xarTpl::setThemeName($data['object']->properties['theme']->value);
 
 # --------------------------------------------------------
 #

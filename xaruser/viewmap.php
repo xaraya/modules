@@ -310,7 +310,7 @@ function publications_user_viewmap($args)
     xarCoreCache::setCached('Blocks.categories','itemtype',$ptid);
     if (!empty($descr)) {
         xarCoreCache::setCached('Blocks.categories','title',$descr);
-        xarTplSetPageTitle( xarML('Map'), xarVarPrepForDisplay($descr));
+        xarTpl::setPageTitle( xarML('Map'), xarVar::prepForDisplay($descr));
     }
 //}
 
@@ -341,7 +341,7 @@ function publications_user_viewmap($args)
     // Pass the type of map to the template, so we can decide what links to show
     $data['by'] = $by;
     
-    return xarTplModule('publications', 'user', 'viewmap', $data, $template);
+    return xarTpl::module('publications', 'user', 'viewmap', $data, $template);
 }
 
 ?>

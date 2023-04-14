@@ -96,10 +96,10 @@ function publications_admin_importpictures()
 
     if (isset($refresh) || isset($test) || isset($import)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     // Get current publication types
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
@@ -235,7 +235,7 @@ function publications_admin_importpictures()
             }
             if (isset($test)) {
                 // preview the first file as a test
-                $data['preview'] = xarModFunc('publications','user','display',
+                $data['preview'] = xarMod::guiFunc('publications','user','display',
                                               array('article' => $article, 'preview' => true));
                 break;
             } else {

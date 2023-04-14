@@ -35,13 +35,13 @@ function publications_admin_delete_translation()
     $publication = DataObjectMaster::getObject(array('name' => 'publications_publications'));
     if (!isset($confirmed)) {
         $data['title'] = xarML("Delete Translation");
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $publication->getItem(array('itemid' => $data['itemid']));
         $data['item'] = $publication->getFieldValues();
         $data['yes_action'] = xarController::URL('publications','admin','delete',array('itemid' => $data['itemid']));
-        return xarTplModule('publications','admin', 'delete_translation',$data);        
+        return xarTpl::module('publications','admin', 'delete_translation',$data);        
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         $itemid = $publication->deleteItem(array('itemid' => $data['itemid']));
         $data['message'] = "Translation deleted [ID $itemid]";
         if (isset($returnurl)) {

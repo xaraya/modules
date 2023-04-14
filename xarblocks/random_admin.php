@@ -26,7 +26,7 @@
                 $cidsarray = array();
             }
 
-            $data['locales'] = xarMLSListSiteLocales();
+            $data['locales'] = xarMLS::listSiteLocales();
             asort($data['locales']);
 
             return $data;

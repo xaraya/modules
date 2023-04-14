@@ -59,7 +59,7 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
             else                                $statearray = $data['pubstate'];
 
             if (empty($data['locale']))             $lang = null;
-            elseif ($data['locale'] == 'current')   $lang = xarMLSGetCurrentLocale();
+            elseif ($data['locale'] == 'current')   $lang = xarMLS::setCurrentLocale();
             else                                    $lang = $data['locale'];
 
             // get cids for security check in getall
@@ -81,7 +81,7 @@ class Publications_RandomBlock extends BasicBlock implements iBlock
             }
 
             // check if dynamicdata is hooked for all pubtypes or the current one (= defaults to 0 anyway here)
-            if (!empty($data['showdynamic']) && xarModIsHooked('dynamicdata', 'publications', $data['pubtype_id'])) {
+            if (!empty($data['showdynamic']) && xarModHooks::isHooked('dynamicdata', 'publications', $data['pubtype_id'])) {
                 array_push($fields, 'dynamicdata');
             }
 

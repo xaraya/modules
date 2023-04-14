@@ -25,7 +25,7 @@ function publications_user_create()
 
     // Confirm authorisation code
     // This has been disabled for now
-    // if (!xarSecConfirmAuthKey()) return;
+    // if (!xarSec::confirmAuthKey()) return;
 
     $data['items'] = array();
     $pubtypeobject = DataObjectMaster::getObject(array('name' => 'publications_types'));
@@ -45,7 +45,7 @@ function publications_user_create()
         // Preview or bad data: redisplay the form
         $data['properties'] = $data['object']->getProperties();
         if ($data['preview']) $data['tab'] = 'preview';
-        return xarTplModule('publications','user','new', $data);    
+        return xarTpl::module('publications','user','new', $data);    
     }
     
     // Create the object

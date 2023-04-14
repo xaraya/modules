@@ -36,7 +36,7 @@
                     (#$counter#&#160;reads)
                 </xar:if>
             </xar:if>
-            <xar:if condition="xarModIsHooked('ratings','publications',6)">
+            <xar:if condition="xarModHooks::isHooked('ratings','publications',6)">
                 | <a href="#$link#">                        
                     Rate / Comment                        
                 </a>
@@ -47,7 +47,7 @@
             <xar:if condition="!empty($keywords)">
                 Keywords:
                 <xar:loop name="$keywords">
-                    <a href="#xarModUrl('keywords', 'user', 'main', array('keyword'=&gt; $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
+                    <a href="#xarController::URL('keywords', 'user', 'main', array('keyword'=&gt; $loop:item['keyword']))#" title="#$loop:item['keyword']#">#$loop:item['keyword']#</a>
                 </xar:loop>
             </xar:if>
         </div>

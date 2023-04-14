@@ -52,7 +52,7 @@ function publications_schedulerapi_makedigest($args)
     }
 
     // create some HTML digest
-    $htmldigest = xarModFunc('publications','user','view',
+    $htmldigest = xarMod::guiFunc('publications','user','view',
                              array('ptid' => $ptid,
                                    'catid' => $catid,
                                    'startdate' => $lastdigest,
@@ -72,7 +72,7 @@ function publications_schedulerapi_makedigest($args)
 
     // ... do something with this digest ...
 
-    $lastdate = xarLocaleFormatDate("%a, %d %b %Y %H:%M:%S %Z", $lastdigest);
+    $lastdate = xarLocale::formatDate("%a, %d %b %Y %H:%M:%S %Z", $lastdigest);
     $subject = xarML('New publications since #(1)', $lastdate);
 
     $textdigest = strip_tags($htmldigest);

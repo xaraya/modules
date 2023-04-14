@@ -131,11 +131,7 @@ function publications_userapi_get($args)
     } else {
         $result = $dbconn->SelectLimit($query,1,0,$bindvars);
     }
-    if (!$result) return;
-
-    if ($result->EOF) {
-        return false;
-    }
+    if (!$result) return false;
 
     list($id, $title, $summary, $body, $owner, $start_date, $pubtype_id, $leftpage_id, $rightpage_id, $notes,
          $state, $locale) = $result->fields;
@@ -155,7 +151,7 @@ function publications_userapi_get($args)
 
     if (!empty($withcids)) {
         $article['cids'] = array();
-        if (!xarModAPILoad('categories', 'user')) return;
+        if (!xarMod::apiLoad('categories', 'user')) return;
 
         $info = xarMod::getBaseInfo('publications');
         $regid = $info['systemid'];
@@ -187,7 +183,7 @@ function publications_userapi_get($args)
     }
 
 /*
-    if (xarModIsHooked('dynamicdata','publications')) {
+    if (xarModHooks::isHooked('dynamicdata','publications')) {
         $values = xarMod::apiFunc('dynamicdata','user','getitem',
                                  array('module'   => 'publications',
                                        'itemtype' => $pubtype_id,

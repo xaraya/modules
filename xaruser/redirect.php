@@ -25,7 +25,7 @@ function publications_user_redirect($args)
     }
 
     // Load API
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     // Get publication
     $publication = xarMod::apiFunc('publications',
@@ -51,7 +51,7 @@ function publications_user_redirect($args)
         }
         if ($value['format'] == 'url' && !empty($publication[$field]) && $publication[$field] != 'http://') {
 // TODO: add some verifications here !
-            $hooks = xarModCallHooks('item', 'display', $id,
+            $hooks = xarModHooks::call('item', 'display', $id,
                                      array('module'    => 'publications',
                                            'itemtype'  => $ptid,
                                           ),
@@ -62,7 +62,7 @@ function publications_user_redirect($args)
         } elseif ($value['format'] == 'urltitle' && !empty($publication[$field]) && substr($publication[$field],0,2) == 'a:') {
             $array = unserialize($publication[$field]);
             if (!empty($array['link']) && $array['link'] != 'http://') {
-                $hooks = xarModCallHooks('item', 'display', $id,
+                $hooks = xarModHooks::call('item', 'display', $id,
                                          array('module'    => 'publications',
                                                'itemtype'  => $ptid,
                                               ),

@@ -24,7 +24,7 @@ function publications_admin_updatestate()
 
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
 
     if (!isset($ids) || count($ids) == 0) {
         $msg = xarML('No publications selected');
@@ -61,7 +61,7 @@ function publications_admin_updatestate()
                                        'withcids' => 1));
         if (!isset($article) || !is_array($article)) {
             $msg = xarML('Unable to find #(1) item #(2)',
-                         $descr, xarVarPrepForDisplay($id));
+                         $descr, xarVar::prepForDisplay($id));
             throw new BadParameterException(null,$msg);
         }
         $article['ptid'] = $article['pubtype_id'];
@@ -75,7 +75,7 @@ function publications_admin_updatestate()
         }
         if (!xarMod::apiFunc('publications','user','checksecurity',$input)) {
             $msg = xarML('You have no permission to modify #(1) item #(2)',
-                         $descr, xarVarPrepForDisplay($id));
+                         $descr, xarVar::prepForDisplay($id));
             throw new ForbiddenOperationException(null, $msg);
         }
 

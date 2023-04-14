@@ -46,7 +46,7 @@ function publications_admin_delete()
         } else {
             $data['title'] = xarML("Delete Publication");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $items = array();
         foreach ($ids as $i) {
             $publication->getItem(array('itemid' => $i));
@@ -55,9 +55,9 @@ function publications_admin_delete()
         }
         $data['items'] = $items;
         $data['yes_action'] = xarController::URL('publications','admin','delete',array('idlist' => $idlist));
-        return xarTplModule('publications','admin', 'delete',$data);        
+        return xarTpl::module('publications','admin', 'delete',$data);        
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         foreach ($ids as $id) {
             $itemid = $publication->deleteItem(array('itemid' => $id));
             $data['message'] = "Publication deleted [ID $id]";

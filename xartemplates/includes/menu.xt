@@ -84,11 +84,11 @@
                                 </xar:if>
                                 &gt; 
                                 <xar:if condition="$source_flag eq 2">
-                                    #xarVarPrepForDisplay($page.title)#
+                                    #xarVar::prepForDisplay($page.title)#
                                 <xar:elseif condition="$source_flag eq 3"/>
-                                    #xarVarPrepForDisplay($page.description)#
+                                    #xarVar::prepForDisplay($page.description)#
                                 <xar:elseif condition="$source_flag eq 4"/>
-                                    #xarVarPrepForDisplay($page.menu_alias)#
+                                    #xarVar::prepForDisplay($page.menu_alias)#
                                 </xar:if>
                             <xar:else />
                                 <xar:set name="gourl">#xarController::URL('publications','user','display',array('id'=&gt;$page.id))#</xar:set>
@@ -98,16 +98,16 @@
                                 </xar:if>
                                 &gt; 
                                 <xar:if condition="$source_flag eq 2">
-                                    <a href="#$gourl#" title="#xarVarPrepForDisplay($page.title)#">
-                                        #xarVarPrepForDisplay($page.title)#
+                                    <a href="#$gourl#" title="#xarVar::prepForDisplay($page.title)#">
+                                        #xarVar::prepForDisplay($page.title)#
                                     </a>
                                 <xar:elseif condition="$source_flag eq 3"/>
-                                    <a href="#$gourl#" title="#xarVarPrepForDisplay($page.description)#">
-                                        #xarVarPrepForDisplay($page.description)#
+                                    <a href="#$gourl#" title="#xarVar::prepForDisplay($page.description)#">
+                                        #xarVar::prepForDisplay($page.description)#
                                     </a>
                                 <xar:elseif condition="$source_flag eq 4"/>
-                                    <a href="#$gourl#" title="#xarVarPrepForDisplay($page.menu_alias)#">
-                                        #xarVarPrepForDisplay($page.menu_alias)#
+                                    <a href="#$gourl#" title="#xarVar::prepForDisplay($page.menu_alias)#">
+                                        #xarVar::prepForDisplay($page.menu_alias)#
                                     </a>
                                 </xar:if>
 

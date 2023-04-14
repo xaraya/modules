@@ -46,7 +46,7 @@ function publications_userapi_getpubfieldformats($args)
 
     // Add  'text' dd properites that are dependent on module availability
     $extrafields=array();
-    if (xarModIsAvailable('tinymce')) {
+    if (xarMod::isAvailable('tinymce')) {
         $extrafields=array('tinymce'=> xarML('TinyMCE GUI'));
         $fieldlist=array_merge($fieldlist,$extrafields);
     }

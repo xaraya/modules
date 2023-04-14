@@ -89,7 +89,7 @@ function publications_user_search($args)
         $numitems = 20;
     }
 
-    if (!xarModAPILoad('publications', 'user')) return;
+    if (!xarMod::apiLoad('publications', 'user')) return;
 
     // Get publication types
     $pubtypes = xarMod::apiFunc('publications','user','get_pubtypes');
@@ -198,7 +198,7 @@ function publications_user_search($args)
     // Find the id of the author we're looking for
     if (!empty($author)) {
         // Load API
-        if (!xarModAPILoad('roles', 'user')) return;
+        if (!xarMod::apiLoad('roles', 'user')) return;
         $user = xarMod::apiFunc('roles','user','get',
                              array('name' => $author));
         if (!empty($user['uid'])) {
@@ -213,10 +213,10 @@ function publications_user_search($args)
     }
 
     if (isset($start) && is_numeric($start)) {
-        $startdate = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$start);
+        $startdate = xarLocale::formatDate("%Y-%m-%d %H:%M:%S",$start);
     }
     if (isset($end) && is_numeric($end)) {
-        $enddate = xarLocaleFormatDate("%Y-%m-%d %H:%M:%S",$end);
+        $enddate = xarLocale::formatDate("%Y-%m-%d %H:%M:%S",$end);
     }
 
     if (empty($fields)) {
@@ -245,8 +245,8 @@ function publications_user_search($args)
     $data['ishooked'] = $ishooked;
     // TODO: MichelV: $ishooked is never empty, but either 0 or 1
     if (empty($ishooked)) {
-        $data['q'] = isset($q) ? xarVarPrepForDisplay($q) : null;
-        $data['author'] = isset($author) ? xarVarPrepForDisplay($author) : null;
+        $data['q'] = isset($q) ? xarVar::prepForDisplay($q) : null;
+        $data['author'] = isset($author) ? xarVar::prepForDisplay($author) : null;
         $data['searchtype'] = $searchtype;
     }
     if ($isadmin) {
@@ -274,7 +274,7 @@ function publications_user_search($args)
             $checked = '';
         }
         $data['publications'][] = array('id' => $pubid,
-                                        'description' => xarVarPrepForDisplay($pubtype['description']),
+                                        'description' => xarVar::prepForDisplay($pubtype['description']),
                                         'checked' => $checked);
     }
 
@@ -317,7 +317,7 @@ function publications_user_search($args)
         }
         $startdate = strtotime($startdate);
         // adjust for the user's timezone offset
-        $startdate -= xarMLS_userOffset() * 3600;
+        $startdate -= xarMLS::userOffset() * 3600;
         if ($startdate > $now && !$isadmin) {
             $startdate = $now;
         }
@@ -332,7 +332,7 @@ function publications_user_search($args)
         }
         $enddate = strtotime($enddate);
         // adjust for the user's timezone offset
-        $enddate -= xarMLS_userOffset() * 3600;
+        $enddate -= xarMLS::userOffset() * 3600;
         if ($enddate > $now && !$isadmin) {
             $enddate = $now;
         }
@@ -393,7 +393,7 @@ function publications_user_search($args)
 
                     }
                     foreach ($catinfo as $cid => $info) {
-                        $catinfo[$cid]['name'] = xarVarPrepForDisplay($info['name']);
+                        $catinfo[$cid]['name'] = xarVar::prepForDisplay($info['name']);
                         $catinfo[$cid]['link'] = xarController::URL('publications','user','view',
                                                            array('ptid' => $curptid,
                                                                  'catid' => (($catid && $andcids) ? $catid . '+' . $cid : $cid) ));
@@ -430,7 +430,7 @@ function publications_user_search($args)
                     // publication date of article (if needed)
                     if (!empty($pubtypes[$curptid]['config']['startdate']['label'])
                         && !empty($article['startdate'])) {
-                        $date = xarLocaleFormatDate('%a, %d %B %Y %H:%M:%S %Z', $article['startdate']);
+                        $date = xarLocale::formatDate('%a, %d %B %Y %H:%M:%S %Z', $article['startdate']);
                         $startdate = $article['startdate'];
                     } else {
                         $date = '';
@@ -469,7 +469,7 @@ function publications_user_search($args)
                         }
                     }
 
-                    $items[] = array('title' => xarVarPrepHTMLDisplay($article['title']),
+                    $items[] = array('title' => xarVar::prepHTMLDisplay($article['title']),
                                      'locale' => $article['locale'],
 
                                      'link' => $link,
@@ -537,7 +537,7 @@ function publications_user_search($args)
                               xarML('sort by') . ' ' . xarML($othersort) . '</a>';
                 }
 
-                $data['results'][] = array('description' => xarVarPrepForDisplay($pubtypes[$curptid]['description']),
+                $data['results'][] = array('description' => xarVar::prepForDisplay($pubtypes[$curptid]['description']),
                                            'items' => $items,
                                            'pager' => $pager);
             }
@@ -548,13 +548,13 @@ function publications_user_search($args)
 
         if ($count > 0) {
             // bail out, we have what we needed
-            return xarTplModule('publications','user','search',$data);
+            return xarTpl::module('publications','user','search',$data);
         }
 
         $data['state'] = xarML('No pages found matching this search');
     }
 
-    return xarTplModule('publications','user','search',$data);
+    return xarTpl::module('publications','user','search',$data);
 }
 
 /**

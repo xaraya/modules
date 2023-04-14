@@ -37,13 +37,13 @@ function publications_user_clone()
 
     $data['object']->getItem(array('itemid' => $data['itemid']));
     
-    $data['authid'] = xarSecGenAuthKey();            
+    $data['authid'] = xarSec::genAuthKey();            
     $data['name'] = $data['object']->properties['name']->value;
     $data['label'] = $data['object']->label;
-    xarTplSetPageTitle(xarML('Clone Publication #(1) in #(2)', $data['itemid'], $data['label']));
+    xarTpl::setPageTitle(xarML('Clone Publication #(1) in #(2)', $data['itemid'], $data['label']));
     
     if ($confirm) {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         
         // Get the name for the clone
         if(!xarVar::fetch('newname',   'str', $newname,   "", xarVar::NOT_REQUIRED)) {return;}

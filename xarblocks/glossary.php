@@ -80,7 +80,7 @@ class Publications_GlossaryBlock extends BasicBlock implements iBlock
         // The title of a block does not go through any further tag stripping
         // because it is normally under admin control (the admin may wish to
         // add working tags to the title).
-        $this->setTitle(str_replace('{term}', xarVarPrepForDisplay($glossaryterm), $this->title));
+        $this->setTitle(str_replace('{term}', xarVar::prepForDisplay($glossaryterm), $this->title));
         
         return $vars;
     }
