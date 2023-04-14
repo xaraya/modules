@@ -20,13 +20,13 @@
 function comments_admin_delete()
 {
 
-    if (!xarSecurityCheck('ManageComments')) return;
+    if (!xarSecurity::check('ManageComments')) return;
 
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('deletebranch',    'bool',   $deletebranch, false,       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('redirect',    'str',   $data['redirect'], '',       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype',    'str',   $data['itemtype'], NULL,       XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('dtype', 'str', $data['dtype'], "",      XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,       xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('deletebranch',    'bool',   $deletebranch, false,       xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('redirect',    'str',   $data['redirect'], '',       xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemtype',    'str',   $data['itemtype'], NULL,       xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('dtype', 'str', $data['dtype'], "",      xarVar::NOT_REQUIRED)) return;
 
     if (empty($data['dtype'])) return xarResponse::NotFound();
 
@@ -34,7 +34,7 @@ function comments_admin_delete()
 
     switch (strtolower($data['dtype'])) {
         case 'item': // delete just one comment
-            if (!xarVarFetch('itemid', 'int', $itemid)) return;
+            if (!xarVar::fetch('itemid', 'int', $itemid)) return;
 
             $object = DataObjectMaster::getObject(array('name' => 'comments_comments'));
             $object->getItem(array('itemid' => $itemid));
@@ -45,9 +45,9 @@ function comments_admin_delete()
 
             break;
         case 'object': // delete all comments for a content item
-            if (!xarVarFetch('itemtype', 'int', $itemtype, 0, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('modid','int:1', $modid)) return;
-            if (!xarVarFetch('objectid','int:1', $objectid)) return;
+            if (!xarVar::fetch('itemtype', 'int', $itemtype, 0, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('modid','int:1', $modid)) return;
+            if (!xarVar::fetch('objectid','int:1', $objectid)) return;
 
             $filters['where'] = 'itemtype eq ' . $itemtype . ' and modid eq ' . $modid . ' and objectid eq ' . $objectid;
 
@@ -57,8 +57,8 @@ function comments_admin_delete()
 
             break;
         case 'itemtype': // delete all comments for an itemtype
-            if (!xarVarFetch('itemtype', 'int', $itemtype)) return;
-            if (!xarVarFetch('modid','int:1',$modid)) return;
+            if (!xarVar::fetch('itemtype', 'int', $itemtype)) return;
+            if (!xarVar::fetch('modid','int:1',$modid)) return;
 
             $filters['where'] = 'itemtype eq ' . $itemtype . ' and modid eq ' . $modid;
 
@@ -67,7 +67,7 @@ function comments_admin_delete()
 
             break;
         case 'module':  // delete all comments for a module
-            if (!xarVarFetch('modid','int:1',$modid)) return;
+            if (!xarVar::fetch('modid','int:1',$modid)) return;
 
             $filters['where'] = 'modid eq ' . $modid;
 
@@ -102,7 +102,7 @@ function comments_admin_delete()
 
         if ($data['confirm'] && is_array($data['items'])) {
 
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSec::confirmAuthKey()) return;
 
             if (!empty($data['items'])) {
                 foreach($data['items'] as $val) {
@@ -118,7 +118,7 @@ function comments_admin_delete()
 
     } else { // $data['dtype'] == 'item'
         if ($data['confirm']) {
-            if (!xarSecConfirmAuthKey()) return;
+            if (!xarSec::confirmAuthKey()) return;
             if ($deletebranch) {
                 xarMod::apiFunc('comments','admin','delete_branch',array('node' => $id));
             } else {
@@ -135,17 +135,17 @@ function comments_admin_delete()
         }
     }
 
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     $data['delete_args'] = $delete_args;
 
     if ($data['confirm'] && !empty($data['redirect'])) {
         if ($data['redirect'] == 'view') {
-            xarController::redirect(xarModURL('comments','admin','view'));
+            xarController::redirect(xarController::URL('comments','admin','view'));
         } elseif ($data['redirect'] == 'stats') {
-            xarController::redirect(xarModURL('comments','admin','stats'));
+            xarController::redirect(xarController::URL('comments','admin','stats'));
         } elseif (is_numeric($data['redirect'])) {
-            xarController::redirect(xarModURL('comments','admin','module_stats', array('modid' => $data['redirect'])));
+            xarController::redirect(xarController::URL('comments','admin','module_stats', array('modid' => $data['redirect'])));
         }
     }
 

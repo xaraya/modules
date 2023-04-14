@@ -26,7 +26,7 @@ function comments_userapi_modcounts($args)
     extract($args);
 
     // Security check
-    if (!xarSecurityCheck('ReadComments')) return;
+    if (!xarSecurity::check('ReadComments')) return;
 
     if (empty($status)) {
         $status = 'all';

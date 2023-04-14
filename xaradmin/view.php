@@ -19,7 +19,7 @@
  */
 function comments_admin_view()
 {
-    if (!xarSecurityCheck('ManageComments')) return;
+    if (!xarSecurity::check('ManageComments')) return;
 
     // Only show top level documents, not translations
     sys::import('xaraya.structures.query');
@@ -28,11 +28,11 @@ function comments_admin_view()
     
     // Suppress deleted items if not an admin
     // Remove this once listing property works with dataobject access
-    if (!xarIsParent('Administrators',xarUserGetVar('uname'))) $q->ne('status',0);
+    if (!xarRoles::isParent('Administrators',xarUser::getVar('uname'))) $q->ne('status',0);
     $data['conditions'] = $q;
     return $data;
 
-    if(!xarVarFetch('startnum', 'int', $startnum, 1, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('startnum', 'int', $startnum, 1, xarVar::NOT_REQUIRED)) {return;}
 
     $sort = xarMod::apiFunc('comments','admin','sort', array(
         //how to sort if the URL or config say otherwise...
@@ -61,7 +61,7 @@ function comments_admin_view()
     $data['makefilters'] = array();
     $data['showfilters'] = false;
 
-    if(xarModIsAvailable('filters') && xarModVars::get('comments','enable_filters') && $data['total'] >= $filters_min_items) {
+    if(xarMod::isAvailable('filters') && xarModVars::get('comments','enable_filters') && $data['total'] >= $filters_min_items) {
         $data['showfilters'] = true;
         $filterfields = $config['filterfields'];
         $get_results = xarMod::apiFunc('filters','user','dd_get_results', array(

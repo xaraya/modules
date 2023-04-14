@@ -19,7 +19,7 @@ function comments_admin_stats()
 {
 
     // Security Check
-    if(!xarSecurityCheck('AdminComments'))
+    if(!xarSecurity::check('AdminComments'))
         return;
 
     $data['gt_items']     = 0;
@@ -51,21 +51,21 @@ function comments_admin_stats()
             }
             if ($itemtype == 0) {
                 $moditem['modname'] = ucwords($modinfo['displayname']) . ': itemtype ' . $itemtype;
-            //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','main');
+            //    $moditem['modlink'] = xarController::URL($modinfo['name'],'user','main');
             } else {
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $moditem['modname'] = ucwords($modinfo['displayname']) . ': itemtype: ' . $itemtype . ' - ' . $mytypes[$itemtype]['label'];
                 //    $moditem['modlink'] = $mytypes[$itemtype]['url'];
                 } else {
                     $moditem['modname'] = ucwords($modinfo['displayname']) . ': itemtype ' . $itemtype;
-                //    $moditem['modlink'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                //    $moditem['modlink'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                 }
             }
-            $moditem['module_url'] = xarModURL('comments','admin','module_stats',
+            $moditem['module_url'] = xarController::URL('comments','admin','module_stats',
                                                array('modid' => $modid,
                                                      'itemtype' => $itemtype));
 
-            $moditem['delete_url'] = xarModURL('comments','admin','delete',
+            $moditem['delete_url'] = xarController::URL('comments','admin','delete',
                                                array('dtype' => 'itemtype',
                                                      'modid' => $modid,
                                                     'redirect' => 'stats',
@@ -77,7 +77,7 @@ function comments_admin_stats()
         }
     }
     $data['moditems']             = $moditems;
-    $data['delete_all_url']   = xarModURL('comments',
+    $data['delete_all_url']   = xarController::URL('comments',
                                             'admin',
                                             'delete',
                                             array('dtype' => 'all', 'redirect' => 'stats'));

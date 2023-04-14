@@ -48,7 +48,7 @@ function comments_userapi_collapse( )
         $header['itemtype'] = 0;
     }
 
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
 
         $branches = unserialize(xarModUserVars::get('comments','CollapsedBranches'));
 
@@ -103,7 +103,7 @@ function comments_userapi_expand( )
         $header['itemtype'] = 0;
     }
 
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
 
         $branches = unserialize(xarModUserVars::get('comments','CollapsedBranches'));
 

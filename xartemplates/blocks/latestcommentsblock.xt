@@ -26,7 +26,7 @@
                       #$fullsubject#
                     </a>
                   <xar:else />
-                    <a href="#xarModURL('comments','user','display',array('id' => $comment['id']))#">
+                    <a href="#xarController::URL('comments','user','display',array('id' => $comment['id']))#">
                     #$fullsubject#</a>
                   </xar:if>
                 </span>
@@ -70,7 +70,7 @@
                   by
                   <xar:if condition="$comment['postanon'] eq 0 or xarModVars::get('comments','AllowPostAsAnon') eq 0">
                     <xar:if condition="$addauthor ge 2">
-                      <a href="#xarModURL('users','user','view')#">
+                      <a href="#xarController::URL('users','user','view')#">
                         #$comment['author']#
                       </a>
                       <xar:else/>
@@ -82,7 +82,7 @@
                 </xar:if>
                 <xar:if condition="$adddate=='on'">
                   <!-- DATE -->
-                  on&#160;#xarLocaleFormatDate("%B %d, %Y %I:%M %p",$comment['date'])#
+                  on&#160;#xarLocale::formatDate("%B %d, %Y %I:%M %p",$comment['date'])#
                 </xar:if>
               </span>
             </li>

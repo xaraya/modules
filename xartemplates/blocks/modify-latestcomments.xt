@@ -2,9 +2,9 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
-    <b>
+    <strong>
       Special Options
-    </b>
+    </strong>
     <p> <xar:ml><xar:mlstring>(please see the <a href="#(1)#notes">notes</a> below)</xar:mlstring><xar:mlvar>#xarServer::getCurrentURL()#</xar:mlvar></xar:ml> </p>
   </span>
 </div>
@@ -256,7 +256,7 @@
 <div style="clear: both; padding-top: 10px;">
   <span style="float: left; width: 100%; text-align: left;">
     <a name="notes">
-      <b>Notes</b>
+      <strong>Notes</strong>
     </a>
   </span>
 </div>

@@ -27,47 +27,47 @@ function comments_userapi_modify($args)
     $error = FALSE;
 
     if (!isset($title)) {
-        $msg .= xarMLbykey('title ');
+        $msg .= xarMLS::translateByKey('title ');
         $error = TRUE;
     }
 
     if (!isset($id)) {
-        $msg .= xarMLbykey('id ');
+        $msg .= xarMLS::translateByKey('id ');
         $error = TRUE;
     }
 
     if (!isset($text)) {
-        $msg .= xarMLbykey('text ');
+        $msg .= xarMLS::translateByKey('text ');
         $error = TRUE;
     }
 
     if (!isset($postanon)) {
-        $msg .= xarMLbykey('postanon ');
+        $msg .= xarMLS::translateByKey('postanon ');
         $error = TRUE;
     }
 
-    if(isset($itemtype) && !xarVarValidate('int:0:', $itemtype)) {
-            $msg .= xarMLbykey('itemtype');
+    if(isset($itemtype) && !xarVar::validate('int:0:', $itemtype)) {
+            $msg .= xarMLS::translateByKey('itemtype');
             $error = TRUE;
     }
 
-    if(isset($objectid) && !xarVarValidate('int:1:', $objectid)) {
-            $msg .= xarMLbykey('objectid');
+    if(isset($objectid) && !xarVar::validate('int:1:', $objectid)) {
+            $msg .= xarMLS::translateByKey('objectid');
             $error = TRUE;
     }
 
-    if(isset($date) && !xarVarValidate('int:1:', $date)) {
-            $msg .= xarMLbykey('date');
+    if(isset($date) && !xarVar::validate('int:1:', $date)) {
+            $msg .= xarMLS::translateByKey('date');
             $error = TRUE;
     }
 
-    if(isset($status) && !xarVarValidate('enum:1:2:3', $status)) {
-            $msg .= xarMLbykey('status');
+    if(isset($status) && !xarVar::validate('enum:1:2:3', $status)) {
+            $msg .= xarMLS::translateByKey('status');
             $error = TRUE;
     }
 
-    if(isset($useeditstamp) && !xarVarValidate('enum:0:1:2', $useeditstamp)) {
-            $msg .= xarMLbykey('useeditstamp');
+    if(isset($useeditstamp) && !xarVar::validate('enum:0:1:2', $useeditstamp)) {
+            $msg .= xarMLS::translateByKey('useeditstamp');
             $error = TRUE;
     }
 
@@ -90,8 +90,8 @@ function comments_userapi_modify($args)
     // Let's leave a link for the changelog module if it is hooked to track comments
     /* jojodee: good idea. I'll move it direct to comments template and then can add it to
                 any others we like as well, like xarbb.
-    if (xarModIsHooked('changelog', 'comments', 0)){
-        $url = xarModUrl('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $id));
+    if (xarModHooks::isHooked('changelog', 'comments', 0)){
+        $url = xarController::URL('changelog', 'admin', 'showlog', array('modid' => '14', 'itemid' => $id));
         $text .= "\n<p>\n";
         $text .= '<a href="' . $url . '" title="' . xarML('See Changes') .'">';
         $text .= '</a>';
@@ -100,10 +100,10 @@ function comments_userapi_modify($args)
     */
 
     if  (($useeditstamp ==1 ) ||
-                     (($useeditstamp == 2 ) && (xarUserGetVar('id')<>$adminid))) {
+                     (($useeditstamp == 2 ) && (xarUser::getVar('id')<>$adminid))) {
         $text .= "\n";
-        $text .= xarTplModule('comments','user','modifiedby', array(
-                              'isauthor' => (xarUserGetVar('id') == $authorid),
+        $text .= xarTpl::module('comments','user','modifiedby', array(
+                              'isauthor' => (xarUser::getVar('id') == $authorid),
                               'postanon'=>$postanon));
         $text .= "\n"; //let's keep the begin and end tags together around the wrapped content
     }
@@ -174,7 +174,7 @@ function comments_userapi_modify($args)
     $args['module'] = 'comments';
     $args['itemtype'] = 0;
     $args['itemid'] = $id;
-    xarModCallHooks('item', 'update', $id, $args);
+    xarModHooks::call('item', 'update', $id, $args);
 
     return true;
 }

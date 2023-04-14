@@ -23,7 +23,7 @@
 
              </fieldset>
            <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                 <input type="hidden" name="id" id="id" value="#$id#" />
                 <input type="hidden" name="confirm" id="confirm" value="true" />
                 &#160;&#160;&#160;

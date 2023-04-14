@@ -25,8 +25,8 @@ function comments_adminapi_sort($args)
 
     extract($args);
 
-    if(!xarVarFetch($url_sortfield,     'isset', $sortfield,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch($url_ascdesc, 'isset', $ascdesc, NULL, XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch($url_sortfield,     'isset', $sortfield,     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch($url_ascdesc, 'isset', $ascdesc, NULL, xarVar::NOT_REQUIRED)) {return;}
 
     if (!isset($sort)) {
         if (!isset($sortfield)) {

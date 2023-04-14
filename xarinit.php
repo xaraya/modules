@@ -51,7 +51,7 @@ function comments_init()
         'status'    => array('type'=>'integer',  'null'=>FALSE,  'size'=>'tiny'),
     );
 
-    $query = xarDBCreateTable($xartable['comments'], $fields);
+    $query = xarTableDDL::createTable($xartable['comments'], $fields);
 
     $result = $dbconn->Execute($query);
     if (!$result)
@@ -61,7 +61,7 @@ function comments_init()
                    'fields'    => array('left_id'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -70,7 +70,7 @@ function comments_init()
                    'fields'    => array('right_id'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -79,7 +79,7 @@ function comments_init()
                    'fields'    => array('parent_id'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -88,7 +88,7 @@ function comments_init()
                    'fields'    => array('module_id'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -97,7 +97,7 @@ function comments_init()
                    'fields'    => array('itemtype'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -106,7 +106,7 @@ function comments_init()
                    'fields'    => array('itemid'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -115,7 +115,7 @@ function comments_init()
                    'fields'    => array('status'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -124,7 +124,7 @@ function comments_init()
                    'fields'    => array('author'),
                    'unique'    => FALSE);
 
-    $query = xarDBCreateIndex($xartable['comments'],$index);
+    $query = xarTableDDL::createIndex($xartable['comments'],$index);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -139,7 +139,7 @@ function comments_init()
         'domain'   => array('type'=>'varchar',  'null'=>FALSE,  'size'=>255)
     );
 
-    $query = xarDBCreateTable($xartable['blacklist'], $fields);
+    $query = xarTableDDL::createTable($xartable['blacklist'], $fields);
 
     $result = $dbconn->Execute($query);
     if (!$result) return;
@@ -191,16 +191,16 @@ function comments_init()
     // TODO: add delete hook
 
     // display hook
-    if (!xarModRegisterHook('item', 'display', 'GUI','comments', 'user', 'display')) return false;
+    if (!xarModHooks::register('item', 'display', 'GUI','comments', 'user', 'display')) return false;
 
     // usermenu hook
-    if (!xarModRegisterHook('item', 'usermenu', 'GUI','comments', 'user', 'usermenu')) return false;
+    if (!xarModHooks::register('item', 'usermenu', 'GUI','comments', 'user', 'usermenu')) return false;
 
     // search hook
-    if (!xarModRegisterHook('item', 'search', 'GUI','comments', 'user', 'search')) return false;
+    if (!xarModHooks::register('item', 'search', 'GUI','comments', 'user', 'search')) return false;
 
     // module delete hook
-    if (!xarModRegisterHook('module', 'remove', 'API','comments', 'admin', 'remove_module')) return false;
+    if (!xarModHooks::register('module', 'remove', 'API','comments', 'admin', 'remove_module')) return false;
 
 # --------------------------------------------------------
 #
@@ -235,29 +235,29 @@ function comments_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('comments','All',$instances);
+    xarPrivileges::defineInstance('comments','All',$instances);
 
 # --------------------------------------------------------
 #
 # Set up masks
 #
-    xarRegisterMask('ReadComments',     'All','comments', 'All','All:All:All','ACCESS_READ',      'See and Read Comments');
-    xarRegisterMask('PostComments',     'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Post a new Comment');
-    xarRegisterMask('ReplyComments',    'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Reply to a Comment');
-    xarRegisterMask('ModerateComments', 'All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
-    xarRegisterMask('EditComments',     'All','comments', 'All','All:All:All','ACCESS_EDIT',      'Edit Comments');
-    xarRegisterMask('AddComments',      'All','comments', 'All','All:All:All','ACCESS_ADD',      'Add Comments');
-    xarRegisterMask('ManageComments',   'All','comments', 'All','All:All:All','ACCESS_DELETE',    'Delete a Comment or Comments');
-    xarRegisterMask('AdminComments',    'All','comments', 'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
+    xarMasks::register('ReadComments',     'All','comments', 'All','All:All:All','ACCESS_READ',      'See and Read Comments');
+    xarMasks::register('PostComments',     'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Post a new Comment');
+    xarMasks::register('ReplyComments',    'All','comments', 'All','All:All:All','ACCESS_COMMENT',   'Reply to a Comment');
+    xarMasks::register('ModerateComments', 'All','comments', 'All','All:All:All','ACCESS_MODERATE',  'Moderate Comments');
+    xarMasks::register('EditComments',     'All','comments', 'All','All:All:All','ACCESS_EDIT',      'Edit Comments');
+    xarMasks::register('AddComments',      'All','comments', 'All','All:All:All','ACCESS_ADD',      'Add Comments');
+    xarMasks::register('ManageComments',   'All','comments', 'All','All:All:All','ACCESS_DELETE',    'Delete a Comment or Comments');
+    xarMasks::register('AdminComments',    'All','comments', 'All','All:All:All','ACCESS_ADMIN',     'Administrate Comments');
 
-    xarRegisterPrivilege('ViewComments','All','comments','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadComments','All','comments','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommmentComments','All','comments','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateComments','All','comments','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditComments','All','comments','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddComments','All','comments','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('ManageComments','All','comments','All','All:All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminComments','All','comments','All','All','ACCESS_ADMIN');
+    xarPrivileges::register('ViewComments','All','comments','All','All','ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadComments','All','comments','All','All','ACCESS_READ');
+    xarPrivileges::register('CommmentComments','All','comments','All','All','ACCESS_COMMENT');
+    xarPrivileges::register('ModerateComments','All','comments','All','All','ACCESS_MODERATE');
+    xarPrivileges::register('EditComments','All','comments','All','All','ACCESS_EDIT');
+    xarPrivileges::register('AddComments','All','comments','All','All','ACCESS_ADD');
+    xarPrivileges::register('ManageComments','All','comments','All','All:All','ACCESS_DELETE');
+    xarPrivileges::register('AdminComments','All','comments','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;

@@ -27,13 +27,13 @@
  */
 function comments_user_modify()
 {
-    if (!xarVarFetch('parent_url', 'str', $parent_url, 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('adminreturn', 'str', $data['adminreturn'], NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('parent_url', 'str', $parent_url, 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('adminreturn', 'str', $data['adminreturn'], NULL, xarVar::NOT_REQUIRED)) return;
 
 # --------------------------------------------------------
 # Bail if the proper args were not passed
 #
-    if (!xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('comment_id', 'int:1:', $data['comment_id'], 0, xarVar::NOT_REQUIRED)) return;
     if (empty($data['comment_id'])) return xarResponse::NotFound();    
         
 # --------------------------------------------------------
@@ -46,8 +46,8 @@ function comments_user_modify()
 # --------------------------------------------------------
 # Check that this user can modify this comment
 #
-    if ($data['object']->properties['author']->value != xarUserGetVar('id')) {
-        if (!xarSecurityCheck('EditComments'))
+    if ($data['object']->properties['author']->value != xarUser::getVar('id')) {
+        if (!xarSecurity::check('EditComments'))
             return;
     }
 
@@ -67,7 +67,7 @@ function comments_user_modify()
         $header['objectlink'] = $itemlinks[$header['itemid']]['url'];
         $header['objecttitle'] = $itemlinks[$header['itemid']]['label'];
     } else {
-        $url = xarModURL($modinfo['name'],'user','main');
+        $url = xarController::URL($modinfo['name'],'user','main');
     }
     /*if (empty($receipt['returnurl'])) {
         $receipt['returnurl'] = array('encoded' => rawurlencode($url),
@@ -79,7 +79,7 @@ function comments_user_modify()
 # --------------------------------------------------------
 # Take appropriate action
 #
-    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'modify', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('comment_action', 'str', $data['comment_action'], 'modify', xarVar::NOT_REQUIRED)) return;
     switch ($data['comment_action']) {
         case 'submit':
 # --------------------------------------------------------
@@ -93,9 +93,9 @@ function comments_user_modify()
 
             if (empty($package['settings']['edittimelimit'])
                or (time() <= ($package['comments'][0]['xar_date'] + ($package['settings']['edittimelimit'] * 60)))
-               or xarSecurityCheck('AdminComments')) {
+               or xarSecurity::check('AdminComments')) {
 
-                $package = xarModCallHooks('item', 'transform-input', 0, $package,
+                $package = xarModHooks::call('item', 'transform-input', 0, $package,
                                        'comments', 0);
 # --------------------------------------------------------
 # If something is wrong, redisplay the form
@@ -111,7 +111,7 @@ function comments_user_modify()
             }
             
             if (isset($data['adminreturn']) && $data['adminreturn'] == 'yes') { // if we got here via the admin side
-                xarController::redirect(xarModURL('comments','admin','view'));
+                xarController::redirect(xarController::URL('comments','admin','view'));
             } else {
                 xarController::redirect($data['object']->properties['parent_url']->value . '#' . $data['comment_id']);
             }
@@ -121,32 +121,32 @@ function comments_user_modify()
             $text  =& $data['object']->properties['text']->value;
             list($transformed_text,
                  $transformed_title) =
-                        xarModCallHooks('item',
+                        xarModHooks::call('item',
                                         'transform',
                                          $data['comment_id'],
                                          array($text,
                                                $title));
 
-            $data['transformed_text']    = xarVarPrepHTMLDisplay($transformed_text);
-            $data['transformed_title']   = xarVarPrepForDisplay($transformed_title);
-            $data['text']                = xarVarPrepHTMLDisplay($text);
-            $data['title']               = xarVarPrepForDisplay($title);
+            $data['transformed_text']    = xarVar::prepHTMLDisplay($transformed_text);
+            $data['transformed_title']   = xarVar::prepForDisplay($transformed_title);
+            $data['text']                = xarVar::prepHTMLDisplay($text);
+            $data['title']               = xarVar::prepForDisplay($title);
             $data['comment_action']      = 'submit';
 
             break;
         case 'preview':
         default:
             list($package['transformed-text'],
-                 $package['transformed-title']) = xarModCallHooks('item',
+                 $package['transformed-title']) = xarModHooks::call('item',
                                                                   'transform',
                                                                   $header['parent_id'],
                                                                   array($package['text'],
                                                                         $package['title']));
 
-            $package['transformed-text']  = xarVarPrepHTMLDisplay($package['transformed-text']);
-            $package['transformed-title'] = xarVarPrepHTMLDisplay($package['transformed-title']);
-            $package['text']              = xarVarPrepForDisplay($package['text']);
-            $package['title']             = xarVarPrepForDisplay($package['title']);
+            $package['transformed-text']  = xarVar::prepHTMLDisplay($package['transformed-text']);
+            $package['transformed-title'] = xarVar::prepHTMLDisplay($package['transformed-title']);
+            $package['text']              = xarVar::prepForDisplay($package['text']);
+            $package['title']             = xarVar::prepForDisplay($package['title']);
 
             $comments[0]['text']     = $package['text'];
             $comments[0]['title']    = $package['title'];
@@ -154,11 +154,11 @@ function comments_user_modify()
             $comments[0]['itemtype'] = $header['itemtype'];
             $comments[0]['itemid'] = $header['itemid'];
             $comments[0]['parent_id']      = $header['parent_id'];
-            $comments[0]['author']   = ((xarUserIsLoggedIn() && !$package['postanon']) ? xarUserGetVar('name') : 'Anonymous');
+            $comments[0]['author']   = ((xarUser::isLoggedIn() && !$package['postanon']) ? xarUser::getVar('name') : 'Anonymous');
             $comments[0]['id']      = 0;
             $comments[0]['postanon'] = $package['postanon'];
             // FIXME Delete after time putput testing
-            // $comments[0]['date']     = xarLocaleFormatDate("%d %b %Y %H:%M:%S %Z",time());
+            // $comments[0]['date']     = xarLocale::formatDate("%d %b %Y %H:%M:%S %Z",time());
             $comments[0]['date']     = time();
 
             $forwarded = xarServer::getVar('HTTP_X_FORWARDED_FOR');
@@ -189,7 +189,7 @@ function comments_user_modify()
     $args['current_module'] = $modinfo['name'];
     $args['current_itemtype'] = $header['itemtype'];
     $args['current_itemid'] = $header['itemid'];
-    $hooks['iteminput'] = xarModCallHooks('item', 'modify', $header['id'], $args);
+    $hooks['iteminput'] = xarModHooks::call('item', 'modify', $header['id'], $args);
 */
 
     $data['hooks']              = $hooks;

@@ -37,7 +37,7 @@
 
 function comments_user_display($args)
 {
-    if (!xarSecurityCheck('ReadComments', 0)) return;
+    if (!xarSecurity::check('ReadComments', 0)) return;
 
     // Check if an object was passed
     if (isset($args['object'])) {
@@ -52,7 +52,7 @@ function comments_user_display($args)
         if (!empty($args['id'])) {
             $comment_id = $args['id'];
         } else {
-            xarVarFetch('comment_id', 'int:1:', $data['comment_id'], 0, XARVAR_NOT_REQUIRED);
+            xarVar::fetch('comment_id', 'int:1:', $data['comment_id'], 0, xarVar::NOT_REQUIRED);
         }
         // and set the selected id to this one
         if (!empty($data['comment_id']) && !isset($data['selected_id'])) {
@@ -70,7 +70,7 @@ function comments_user_display($args)
 # Try and get a selectee ID if we don't have one yet
 #
     if (empty($data['selected_id'])) {
-        xarVarFetch('selected_id', 'int', $data['selected_id'], 0, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('selected_id', 'int', $data['selected_id'], 0, xarVar::NOT_REQUIRED);
     }
 
 # --------------------------------------------------------
@@ -104,10 +104,10 @@ function comments_user_display($args)
     $package['settings'] = xarMod::apiFunc('comments','user','getoptions');
 
     if (!isset($args['thread'])) {
-        xarVarFetch('thread', 'isset', $thread, NULL, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('thread', 'isset', $thread, NULL, xarVar::NOT_REQUIRED);
     }
 
-    if (!xarModLoad('comments','renderer')) {
+    if (!xarMod::load('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)', 'comments', 'renderer');
         throw new BadParameterException($msg);
     }
@@ -143,22 +143,22 @@ function comments_user_display($args)
     // run text and title through transform hooks
     if (!empty($data['comments'])) {
         foreach ($data['comments'] as $key => $comment) {
-            $comment['text'] = xarVarPrepHTMLDisplay($comment['text']);
-            $comment['title'] = xarVarPrepForDisplay($comment['title']);
+            $comment['text'] = xarVar::prepHTMLDisplay($comment['text']);
+            $comment['title'] = xarVar::prepForDisplay($comment['title']);
             // say which pieces of text (array keys) you want to be transformed
             $comment['transform'] = array('text');
             // call the item transform hooks
             // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-            $data['comments'][$key] = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
+            $data['comments'][$key] = xarModHooks::call('item', 'transform', $comment['id'], $comment, 'comments');
         }
     }
 
     $package['settings']['max_depth'] = _COM_MAX_DEPTH;
-    // Bug 6175: removed xarVarPrepForDisplay() from the title, as articles already
+    // Bug 6175: removed xarVar::prepForDisplay() from the title, as articles already
     // does this *but* maybe needs fixing in articles instead?
-    $package['new_title']             = xarVarGetCached('Comments.title', 'title');
+    $package['new_title']             = xarVar::getCached('Comments.title', 'title');
 
-    if (!xarVarFetch('comment_action', 'str', $data['comment_action'], 'submit', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('comment_action', 'str', $data['comment_action'], 'submit', xarVar::NOT_REQUIRED)) return;
 
     $hooks = xarMod::apiFunc('comments','user','formhooks');
 

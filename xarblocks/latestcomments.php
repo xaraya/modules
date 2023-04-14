@@ -99,17 +99,17 @@ class Comments_LatestcommentsBlock extends BasicBlock implements iBlock
     public function update()
     {
         $vars = array();
-        if (!xarVarFetch('howmany', 'int:1:', $vars['howmany'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('modid', 'isset', $vars['modid'],  array(), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('pubtypeid', 'isset', $vars['pubtypeid'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addauthor', 'isset', $vars['addauthor'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addmodule', 'isset', $vars['addmodule'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addcomment', 'isset', $vars['addcomment'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addobject', 'isset', $vars['addobject'], '', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('adddate', 'checkbox', $vars['adddate'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('adddaysep', 'checkbox', $vars['adddaysep'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('truncate', 'int:1:', $vars['truncate'], 0, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('addprevious', 'checkbox', $vars['addprevious'], 0, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('howmany', 'int:1:', $vars['howmany'], 0, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('modid', 'isset', $vars['modid'],  array(), xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('pubtypeid', 'isset', $vars['pubtypeid'], 0, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('addauthor', 'isset', $vars['addauthor'], '', xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('addmodule', 'isset', $vars['addmodule'], '', xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('addcomment', 'isset', $vars['addcomment'], '', xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('addobject', 'isset', $vars['addobject'], '', xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('adddate', 'checkbox', $vars['adddate'], 0, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('adddaysep', 'checkbox', $vars['adddaysep'], 0, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('truncate', 'int:1:', $vars['truncate'], 0, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('addprevious', 'checkbox', $vars['addprevious'], 0, xarVar::NOT_REQUIRED)) return;
 
         $this->setContent($vars);
         return true;

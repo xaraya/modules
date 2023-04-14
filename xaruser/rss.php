@@ -21,7 +21,7 @@
 function comments_user_rss($args)
 {
     extract($args);
-    if (!xarSecurityCheck('ReadComments',0))
+    if (!xarSecurity::check('ReadComments',0))
         return;
 
     // get the list of modules+itemtypes that comments is hooked to
@@ -42,7 +42,7 @@ function comments_user_rss($args)
             if (!isset($modname[$modid])) $modname[$modid] = array();
             if (!isset($modview[$modid])) $modview[$modid] = array();
             $modname[$modid][0] = ucwords($module);
-            $modview[$modid][0] = xarModURL($module,'user','view');
+            $modview[$modid][0] = xarController::URL($module,'user','view');
             // Get the list of all item types for this module (if any)
             $mytypes = xarMod::apiFunc($module,'user','getitemtypes',
                                      // don't throw an exception if this function doesn't exist
@@ -96,11 +96,11 @@ function comments_user_rss($args)
             }
         } else {
             // We'll use the comment link instead
-            $items[$i]['link'] = xarModUrl('comments', 'user', 'display', array('id' => $item['id']));
+            $items[$i]['link'] = xarController::URL('comments', 'user', 'display', array('id' => $item['id']));
         }
 
         $items[$i]['rsssummary'] = preg_replace('<br />',"\n",$item['text']);
-        $items[$i]['rsssummary'] = xarVarPrepForDisplay(strip_tags($item['text']));
+        $items[$i]['rsssummary'] = xarVar::prepForDisplay(strip_tags($item['text']));
     }
 
     //$output = var_export($items, 1); return "<pre>$output</pre>";

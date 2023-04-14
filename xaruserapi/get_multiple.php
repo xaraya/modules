@@ -95,7 +95,7 @@ function comments_userapi_get_multiple($args)
         $row['postanon'] = $row['anonpost'];
         $row['datetime'] = $row['date'];
         $row['role_id'] = $row['author'];
-        $row['author'] = xarUserGetVar('name',$row['author']);
+        $row['author'] = xarUser::getVar('name',$row['author']);
         $arr[] = $row;
     }
 
@@ -176,7 +176,7 @@ function comments_userapi_get_multiple($args)
     // if we have nothing return empty
     if ($result->EOF) return array();
 
-    if (!xarModLoad('comments','renderer')) {
+    if (!xarMod::load('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2)','comments','renderer');
         throw new Exception($msg);
     }*/
@@ -186,9 +186,9 @@ function comments_userapi_get_multiple($args)
     /*while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         // FIXME Delete after date testing
-        // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
+        // $row['date'] = xarLocale::formatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
-        $row['author'] = xarUserGetVar('name',$row['author']);
+        $row['author'] = xarUser::getVar('name',$row['author']);
         comments_renderer_wrap_words($row['text'],80);
         $commentlist[] = $row;
         $result->MoveNext();

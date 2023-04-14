@@ -48,7 +48,7 @@ function comments_userapi_decode_shorturl($params)
         // something that starts with a name might be for the display function
         // Note : make sure your encoding/decoding is consistent ! :-)
         $modname = $matches[1];
-        $alias = xarModGetAlias($modname);
+        $alias = xarModAlias::resolve($modname);
         if ($modname != $alias) {
             $itemtype = 0;
             // try to figure out which itemtype we're dealing with
@@ -66,7 +66,7 @@ function comments_userapi_decode_shorturl($params)
         } else {
             $itemtype = 0;
         }
-        if (xarModIsAvailable($modname)) {
+        if (xarMod::isAvailable($modname)) {
             $modid = xarMod::getRegID($modname);
             if (!empty($modid)) {
                 $args['modid'] = $modid;

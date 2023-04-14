@@ -20,7 +20,7 @@ sys::import('modules.comments.xarincludes.defines');
 function comments_admin_modifyconfig()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminComments')) return;
+    if(!xarSecurity::check('AdminComments')) return;
     //$numstats       = xarModVars::get('comments','numstats');
   //  $rssnumitems    = xarModVars::get('comments','rssnumitems');
 
@@ -31,10 +31,10 @@ function comments_admin_modifyconfig()
         //xarModVars::set('comments', 'numstats', 100);
     }
 
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'comments_general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'comments', XARVAR_NOT_REQUIRED)) return;
-    $hooks = xarModCallHooks('module', 'getconfig', 'comments');
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'comments_general', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('tabmodule', 'str:1:100', $tabmodule, 'comments', xarVar::NOT_REQUIRED)) return;
+    $hooks = xarModHooks::call('module', 'getconfig', 'comments');
     if (!empty($hooks) && isset($hooks['tabs'])) {
         foreach ($hooks['tabs'] as $key => $row) {
             $configarea[$key]  = $row['configarea'];
@@ -52,7 +52,7 @@ function comments_admin_modifyconfig()
                 case 'comments_general':
                 default:
                     //check for comments hook in case it's set independently elsewhere
-                    if (xarModIsHooked('comments', 'roles')) {
+                    if (xarModHooks::isHooked('comments', 'roles')) {
                         xarModVars::set('comments','usersetrendering',true);
                     } else {
                         xarModVars::set('comments','usersetrendering',false);
@@ -64,33 +64,33 @@ function comments_admin_modifyconfig()
 
         case 'update':
             // Confirm authorisation code
-           // if (!xarSecConfirmAuthKey()) return;
-            //if (!xarVarFetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('comments', 'itemsperpage'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            //if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            //if (!xarVarFetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('comments', 'useModuleAlias'), XARVAR_NOT_REQUIRED)) return;
-            //if (!xarVarFetch('aliasname', 'str', $aliasname,  xarModVars::get('comments', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('editstamp','int',$editstamp, xarModVars::get('comments', 'editstamp'),XARVAR_NOT_REQUIRED)) return;
+           // if (!xarSec::confirmAuthKey()) return;
+            //if (!xarVar::fetch('itemsperpage', 'int', $itemsperpage, xarModVars::get('comments', 'itemsperpage'), xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+            //if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, xarVar::NOT_REQUIRED)) return;
+            //if (!xarVar::fetch('modulealias', 'checkbox', $useModuleAlias,  xarModVars::get('comments', 'useModuleAlias'), xarVar::NOT_REQUIRED)) return;
+            //if (!xarVar::fetch('aliasname', 'str', $aliasname,  xarModVars::get('comments', 'aliasname'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('editstamp','int',$editstamp, xarModVars::get('comments', 'editstamp'),xarVar::NOT_REQUIRED)) return;
 
-            if (!xarVarFetch('wrap','checkbox', $wrap, xarModVars::get('comments', 'wrap'),XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('numstats', 'str', $numstats, 20, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('wrap','checkbox', $wrap, xarModVars::get('comments', 'wrap'),xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('numstats', 'str', $numstats, 20, xarVar::NOT_REQUIRED)) return;
 
-            if (!xarVarFetch('rssnumitems', 'int', $rssnumitems, xarModVars::get('comments', 'rssnumitems'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('showtitle', 'checkbox', $showtitle, xarModVars::get('comments', 'showtitle'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('enable_comments', 'checkbox', $showtitle, xarModVars::get('comments', 'enable_comments'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('rssnumitems', 'int', $rssnumitems, xarModVars::get('comments', 'rssnumitems'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('showtitle', 'checkbox', $showtitle, xarModVars::get('comments', 'showtitle'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('enable_comments', 'checkbox', $showtitle, xarModVars::get('comments', 'enable_comments'), xarVar::NOT_REQUIRED)) return;
 
-        if (!xarVarFetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('filters_min_item_count', 'int', $filters_min_item_count, xarModVars::get('comments', 'filters_min_item_count'), xarVar::NOT_REQUIRED)) return;
 
-            if (!xarVarFetch('postanon', 'checkbox', $postanon, xarModVars::get('comments', 'postanon'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, xarModVars::get('comments', 'useblacklist'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('useblacklist', 'checkbox', $useblacklist, 1, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('depth', 'str:1:', $depth, _COM_MAX_DEPTH, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('render', 'str:1:', $render, _COM_VIEW_THREADED, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('sortby', 'str:1:', $sortby, _COM_SORTBY_THREAD, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('order', 'str:1:', $order, _COM_SORT_ASC, XARVAR_NOT_REQUIRED)) return;
-           // if (!xarVarFetch('authorize', 'checkbox', $authorize, xarModVars::get('comments', 'authorize'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('authorize', 'checkbox', $authorize, 1, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('usersetrendering', 'checkbox', $usersetrendering, xarModVars::get('comments', 'usersetrendering'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('postanon', 'checkbox', $postanon, xarModVars::get('comments', 'postanon'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('useblacklist', 'checkbox', $useblacklist, xarModVars::get('comments', 'useblacklist'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('useblacklist', 'checkbox', $useblacklist, 1, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('depth', 'str:1:', $depth, _COM_MAX_DEPTH, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('render', 'str:1:', $render, _COM_VIEW_THREADED, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('sortby', 'str:1:', $sortby, _COM_SORTBY_THREAD, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('order', 'str:1:', $order, _COM_SORT_ASC, xarVar::NOT_REQUIRED)) return;
+           // if (!xarVar::fetch('authorize', 'checkbox', $authorize, xarModVars::get('comments', 'authorize'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('authorize', 'checkbox', $authorize, 1, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('usersetrendering', 'checkbox', $usersetrendering, xarModVars::get('comments', 'usersetrendering'), xarVar::NOT_REQUIRED)) return;
 
 
             if ($data['tab'] == 'comments_general') {
@@ -135,14 +135,14 @@ function comments_admin_modifyconfig()
             */
              if ($usersetrendering == true) {
              //check and hook Comments to roles if not already hooked
-                 if (!xarModIsHooked('comments', 'roles')) {
+                 if (!xarModHooks::isHooked('comments', 'roles')) {
                      xarMod::apiFunc('modules','admin','enablehooks',
                                          array('callerModName' => 'roles',
                                                'hookModName' => 'comments'));
                  }
 
              } else {
-               if (xarModIsHooked('comments', 'roles')) {
+               if (xarModHooks::isHooked('comments', 'roles')) {
                 //unhook Comments from roles
                      xarMod::apiFunc('modules','admin','disablehooks',
                                          array('callerModName' => 'roles',
@@ -150,7 +150,7 @@ function comments_admin_modifyconfig()
                   }
              }
 
-            xarController::redirect(xarModURL('comments', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('comments', 'admin', 'modifyconfig',array('tabmodule' => $tabmodule, 'tab' => $data['tab'])));
             // Return
             return true;
             break;
@@ -158,7 +158,7 @@ function comments_admin_modifyconfig()
     }
     $data['hooks'] = $hooks;
     $data['tabmodule'] = $tabmodule;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
 ?>

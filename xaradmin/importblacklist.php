@@ -17,7 +17,7 @@
  */
 function comments_admin_importblacklist()
 {
-    if (!xarSecurityCheck('AdminComments')) return;
+    if (!xarSecurity::check('AdminComments')) return;
     if (!xarMod::apiFunc('comments', 'admin', 'import_blacklist')) return;
     return array();
 }

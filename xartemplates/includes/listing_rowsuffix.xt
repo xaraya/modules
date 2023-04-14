@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
-    <xar:if condition="xarUserIsLoggedIn() AND xarSecurityCheck('ManageComments',0)">
+    <xar:if condition="xarUser::isLoggedIn() AND xarSecurity::check('ManageComments',0)">
         <td class="#$item_class#" style="text-align: center;" nowrap="nowrap">
             <xar:set name="objectname">$object->name</xar:set>
             <xar:if condition="$objectname eq 'comments_comments' AND $layout eq 'admin'">
                 <xar:access level="200">
-                    <a href="#xarModURL('comments','admin','display',array('id' => $loopitem[$primaryalias]))#"
+                    <a href="#xarController::URL('comments','admin','display',array('id' => $loopitem[$primaryalias]))#"
                     title="Display this comment">
                         <xar:if condition = "xarModVars::get('comments','use_module_icons')">
-                            <img src="#xarTplGetImage('icons/'.'display.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                            <img src="#xarTpl::getImage('icons/'.'display.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
                         <xar:else />
-                            <b style="margin-right: 5px">H</b>
+                            <strong style="margin-right: 5px">H</strong>
                         </xar:if>
                     </a>
                 </xar:access>
                 <xar:access level="500">
-                    <a href="#xarModURL('comments','admin','modify',array('itemid' => $loopitem[$primaryalias]))#"
+                    <a href="#xarController::URL('comments','admin','modify',array('itemid' => $loopitem[$primaryalias]))#"
                     title="Modify this comment">
                         <xar:if condition = "xarModVars::get('ledgerar','use_module_icons')">
-                            <img src="#xarTplGetImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                            <img src="#xarTpl::getImage('icons/'.'modify.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
                         <xar:else />
-                            <b style="margin-right: 5px">M</b>
+                            <strong style="margin-right: 5px">M</strong>
                         </xar:if>
                     </a>
                 </xar:access>
                 <xar:access level="700">
-                    <a href="#xarModURL('comments','admin','delete',array('itemid' => $loopitem[$primaryalias], 'dtype' => 'item'))#"
+                    <a href="#xarController::URL('comments','admin','delete',array('itemid' => $loopitem[$primaryalias], 'dtype' => 'item'))#"
                     title="Delete this comment">
                         <xar:if condition = "xarModVars::get('comments','use_module_icons')">
-                            <img src="#xarTplGetImage('icons/'.'delete.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
+                            <img src="#xarTpl::getImage('icons/'.'delete.png', 'base')#" style="margin-right: 5px; vertical-align: top;" />
                         <xar:else />
-                            <b style="margin-right: 5px">D</b>
+                            <strong style="margin-right: 5px">D</strong>
                         </xar:if>
                     </a>
                 </xar:access>

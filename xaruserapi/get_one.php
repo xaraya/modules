@@ -49,7 +49,7 @@ function comments_userapi_get_one( $args )
     $values['datetime'] = $values['date'];
     $values['role_id'] = $values['author'];
     //comments_renderer_wrap_words($values['text'],80);
-//    $values['author'] = xarUserGetVar('name',$values['author']);
+//    $values['author'] = xarUser::getVar('name',$values['author']);
 
     $arr[0] = $values;
     $values = $arr;
@@ -84,7 +84,7 @@ function comments_userapi_get_one( $args )
         return array();
     }*/
 
-    if (!xarModLoad('comments','renderer')) {
+    if (!xarMod::load('comments','renderer')) {
         $msg = xarML('Unable to load #(1) #(2) - unable to trim excess depth','comments','renderer');
         throw new Exception($msg);
     }
@@ -94,9 +94,9 @@ function comments_userapi_get_one( $args )
     /*while (!$result->EOF) {
         $row = $result->GetRowAssoc(false);
         // FIXME delete after date output testing
-        // $row['date'] = xarLocaleFormatDate("%B %d, %Y %I:%M %p",$row['datetime']);
+        // $row['date'] = xarLocale::formatDate("%B %d, %Y %I:%M %p",$row['datetime']);
         $row['date'] = $row['datetime'];
-        $row['author'] = xarUserGetVar('name',$row['author']);
+        $row['author'] = xarUser::getVar('name',$row['author']);
         comments_renderer_wrap_words($row['text'],80);
         $commentlist[] = $row;
         $result->MoveNext();

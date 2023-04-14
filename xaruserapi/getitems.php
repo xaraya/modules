@@ -60,7 +60,7 @@ function comments_userapi_getitems($args)
     if (!isset($mask)){
         $mask = 'ReadComments';
     }
-    if (!xarSecurityCheck($mask)) return;
+    if (!xarSecurity::check($mask)) return;
 
     // Database information
     $dbconn = xarDB::getConn();

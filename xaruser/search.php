@@ -20,12 +20,12 @@
  */
 function comments_user_search( $args )
 {
-    if(!xarVarFetch('startnum', 'isset', $startnum,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('header',   'isset', $header,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('q',        'isset', $q,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bool',     'isset', $bool,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('author',   'isset', $author,    NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('startnum', 'isset', $startnum,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('header',   'isset', $header,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('q',        'isset', $q,         NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('bool',     'isset', $bool,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('sort',     'isset', $sort,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('author',   'isset', $author,    NULL, xarVar::DONT_SET)) {return;}
 
     $postinfo   = array('q' => $q, 'author' => $author);
     $data       = array();
@@ -94,12 +94,12 @@ function comments_user_search( $args )
                 $comment['transform'] = array('text');
                 // call the item transform hooks
                 // Note : we need to tell Xaraya explicitly that we want to invoke the hooks for 'comments' here (last argument)
-                $comment = xarModCallHooks('item', 'transform', $comment['id'], $comment, 'comments');
+                $comment = xarModHooks::call('item', 'transform', $comment['id'], $comment, 'comments');
                 // Index appears to be empty on the transform.  Is this line needed?
-                //$package['comments'][$key]['text'] = xarVarPrepHTMLDisplay($comment['text']);
+                //$package['comments'][$key]['text'] = xarVar::prepHTMLDisplay($comment['text']);
             }
             if ($header['title']) {
-                $package['comments'][$key]['title'] = xarVarPrepForDisplay($comment['title']);
+                $package['comments'][$key]['title'] = xarVar::prepForDisplay($comment['title']);
             }
         }
 

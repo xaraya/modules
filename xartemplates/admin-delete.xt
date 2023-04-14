@@ -8,7 +8,7 @@
             Delete Comments
         </h2>
 
-        <form method="post" action="#xarModURL('comments','admin','delete')#">
+        <form method="post" action="#xarController::URL('comments','admin','delete')#">
 
             <fieldset>
                 <legend>Delete Confirmation</legend>

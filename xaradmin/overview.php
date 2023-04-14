@@ -14,14 +14,14 @@
 /**
  * Overview displays standard Overview page
  *
- * @returns array xarTplModule with $data containing template data
+ * @returns array xarTpl::module with $data containing template data
  * @return array containing the menulinks for the overview item on the main manu
  * @since 14 Oct 2005
  */
 function comments_admin_overview()
 {
    /* Security Check */
-    if (!xarSecurityCheck('AdminComments',0)) return;
+    if (!xarSecurity::check('AdminComments',0)) return;
 
     $data = array();
 
@@ -29,7 +29,7 @@ function comments_admin_overview()
      * else just call the main function that usually displays the overview
      */
 
-    return xarTplModule('comments', 'admin', 'main', $data, 'main');
+    return xarTpl::module('comments', 'admin', 'main', $data, 'main');
 }
 
 ?>

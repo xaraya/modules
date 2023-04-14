@@ -22,7 +22,7 @@
         <!--<div>
             <xar:template file="headerconfig" type="module"/>
         </div> -->
-        <form method="post" action="#xarModURL('comments', 'admin', 'modifyconfig')#" enctype="application/x-www-form-urlencoded">
+        <form method="post" action="#xarController::URL('comments', 'admin', 'modifyconfig')#" enctype="application/x-www-form-urlencoded">
             <fieldset>
                 <legend>
                     <strong>
@@ -32,7 +32,7 @@
                     </strong>
                 </legend>
 
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#"/>
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#"/>
                 <div class="xar-form-input-wrapper">
                     <label for="depth" class="xar-form-label" title="#xarML('The rendering depth to be used as default')#">
 
@@ -185,7 +185,7 @@
                 -->
             </fieldset>
 
-            <xar:if condition="xarModIsAvailable('filters')">
+            <xar:if condition="xarMod::isAvailable('filters')">
         <fieldset class="mod_settings">
 
         <h4>Filters Module:</h4>

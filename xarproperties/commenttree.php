@@ -79,8 +79,8 @@ class CommentTreeProperty extends DataProperty
         $data['trees'] = $trees;
 
         // Pager stuff, perhaps not good to have here
-        if(!xarVarFetch('pagerstart',   'isset', $pagerstart,   NULL, XARVAR_DONT_SET)) {return;}
-        if(!xarVarFetch('catsperpage',  'isset', $catsperpage,  NULL, XARVAR_DONT_SET)) {return;}
+        if(!xarVar::fetch('pagerstart',   'isset', $pagerstart,   NULL, xarVar::DONT_SET)) {return;}
+        if(!xarVar::fetch('catsperpage',  'isset', $catsperpage,  NULL, xarVar::DONT_SET)) {return;}
         if (empty($pagerstart)) {
             $data['pagerstart'] = 1;
         } else {

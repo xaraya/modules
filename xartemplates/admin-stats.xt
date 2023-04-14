@@ -11,19 +11,19 @@
             <table border="0" cellpadding="2" cellspacing="1">
                 <tr>
                     <th class="xar-valign-middle">
-                        <b>Module<br />Name</b>
+                        <strong>Module<br />Name</strong>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <b>Module<br />Items</b>
+                        <strong>Module<br />Items</strong>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <b>Total<br />Comments</b>
+                        <strong>Total<br />Comments</strong>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <b>Inactive<br />Comments</b>
+                        <strong>Inactive<br />Comments</strong>
                     </th>
                     <th class="xar-valign-middle xar-align-center">
-                        <b>Action</b>
+                        <strong>Action</strong>
                     </th>
                 </tr>
 
@@ -53,23 +53,23 @@
                                 #$loop:item['inactive']#
                             </td>
                             <td class="xar-valign-middle xar-align-center">
-                                <a href="#$loop:item['delete_url']#"><b>Delete</b></a>
+                                <a href="#$loop:item['delete_url']#"><strong>Delete</strong></a>
                             </td>
                         </tr>
 
                     </xar:loop>
                     <tr>
                         <td class="xar-valign-middle">
-                            <b>Totals</b>
+                            <strong>Totals</strong>
                         </td>
                         <td class="xar-valign-middle xar-align-center" valign="center">
-                            <b>#$gt_items#</b>
+                            <strong>#$gt_items#</strong>
                         </td>
                         <td class="xar-valign-middle xar-align-center">
-                            <b>#$gt_total#</b>
+                            <strong>#$gt_total#</strong>
                         </td>
                         <td class="xar-valign-middle xar-align-center">
-                            <b>#$gt_inactive#</b>
+                            <strong>#$gt_inactive#</strong>
                         </td>
                         <td class="xar-valign-middle xar-align-center">
                             <a href="#$delete_all_url#">Delete All</a>
@@ -79,7 +79,7 @@
                 </xar:if>
                </table>
                 <p class="xar-accent xar-norm-outline">
-                    By clicking on <b>Delete</b> you can delete all comments associated with a particular
+                    By clicking on <strong>Delete</strong> you can delete all comments associated with a particular
                     module. Clicking on a module will take you to that module's statistics page containing
                     the figures for each of that module's items that have comments associated with them.
                     From there you can delete all comments associated with a particular item.

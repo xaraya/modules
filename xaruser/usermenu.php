@@ -19,21 +19,21 @@ function comments_user_usermenu($args)
     extract($args);
 
     // Security Check
-    if (xarSecurityCheck('ReadComments',0)) {
+    if (xarSecurity::check('ReadComments',0)) {
 
-    if(!xarVarFetch('phase','str', $phase, 'menu', XARVAR_NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('phase','str', $phase, 'menu', xarVar::NOT_REQUIRED)) {return;}
 
-        xarTplSetPageTitle(xarModVars::get('themes', 'SiteName').' :: '.
-                           xarVarPrepForDisplay(xarML('Comments'))
-                           .' :: '.xarVarPrepForDisplay(xarML('Your Account Preferences')));
+        xarTpl::setPageTitle(xarModVars::get('themes', 'SiteName').' :: '.
+                           xarVar::prepForDisplay(xarML('Comments'))
+                           .' :: '.xarVar::prepForDisplay(xarML('Your Account Preferences')));
 
         switch(strtolower($phase)) {
         case 'menu':
 
-            $icon = xarTplGetImage('comments.gif', 'comments');
-            $data = xarTplModule('comments','user', 'usermenu_icon',
+            $icon = xarTpl::getImage('comments.gif', 'comments');
+            $data = xarTpl::module('comments','user', 'usermenu_icon',
                 array('icon' => $icon,
-                      'usermenu_form_url' => xarModURL('comments', 'user', 'usermenu', array('phase' => 'form'))
+                      'usermenu_form_url' => xarController::URL('comments', 'user', 'usermenu', array('phase' => 'form'))
                      ));
             break;
 
@@ -41,14 +41,14 @@ function comments_user_usermenu($args)
 
             $settings = xarMod::apiFunc('comments','user','getoptions');
             $settings['max_depth'] = _COM_MAX_DEPTH - 1;
-            $authid = xarSecGenAuthKey('comments');
-            $data = xarTplModule('comments','user', 'usermenu_form', array('authid'   => $authid,
+            $authid = xarSec::genAuthKey('comments');
+            $data = xarTpl::module('comments','user', 'usermenu_form', array('authid'   => $authid,
                                                                            'settings' => $settings));
             break;
 
         case 'update':
 
-            if(!xarVarFetch('settings','array', $settings, array(), XARVAR_NOT_REQUIRED)) {return;}
+            if(!xarVar::fetch('settings','array', $settings, array(), xarVar::NOT_REQUIRED)) {return;}
 
             if (count($settings) <= 0) {
                 $msg = xarML('Settings passed from form are empty!');
@@ -56,13 +56,13 @@ function comments_user_usermenu($args)
             }
 
             // Confirm authorisation code.
-            if (!xarSecConfirmAuthKey())
+            if (!xarSec::confirmAuthKey())
                 return;
 
             xarMod::apiFunc('comments','user','setoptions',$settings);
 
             // Redirect
-            xarController::redirect(xarModURL('roles', 'user', 'account'));
+            xarController::redirect(xarController::URL('roles', 'user', 'account'));
 
             break;
         }

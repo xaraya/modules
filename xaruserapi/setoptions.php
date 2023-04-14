@@ -46,7 +46,7 @@ function comments_userapi_setoptions($args)
         $sortby = xarModVars::get('comments','sortby');
     }
 
-    if (xarUserIsLoggedIn()) {
+    if (xarUser::isLoggedIn()) {
             // Grab user's depth setting.
             xarModUserVars::set('comments','depth',$depth);
             xarModUserVars::set('comments','render',$render);
