@@ -72,7 +72,14 @@ function reminders_adminapi_process_reminders($args)
 		$params['message_id']   = $templates[$this_template_id]['message_id'];
 		$params['message_body'] = $templates[$this_template_id]['message_body'];
 		$params['subject']      = $templates[$this_template_id]['subject'];
-    	
+
+		// Debug display
+		if (xarModVars::get('reminders','debugmode') && 
+		in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+			echo '-------------------------------------------<br/>';
+			echo xarML('Reminder: #(1) <br/>', $row['message']);
+		}
+
     	// If this is a test, just send the mail
 		if ($args['test']) {
 			// Send the email
@@ -81,6 +88,12 @@ function reminders_adminapi_process_reminders($args)
 
 			// We are done with this reminder
 			break;
+		} else {
+			// Debug display
+			if (xarModVars::get('reminders','debugmode') && 
+			in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+				echo "This is not a test run <br/>";
+			}
 		}
 
     	// If we are past the due date, then make this reminder inactive and spawn a new one if need be
@@ -89,8 +102,20 @@ function reminders_adminapi_process_reminders($args)
 			// Retire the reminder
 			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $row['id'], 'recurring' => $row['recurring']));
 	    	
+			// Debug display
+			if (xarModVars::get('reminders','debugmode') && 
+			in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+				echo "We are past the due date. This reminder was retired <br/>";
+			}
+
 			// We are done with this reminder
 			break;
+		} else {
+			// Debug display
+			if (xarModVars::get('reminders','debugmode') && 
+			in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+				echo "The due date of this reminder has not yet passed <br/>";
+			}
     	}
 
     	// If today is the due date, send the email in any case
@@ -102,6 +127,12 @@ function reminders_adminapi_process_reminders($args)
 			// Retire the reminder
 			xarMod::apiFunc('reminders', 'admin', 'retire', array('itemid' => $row['id'], 'recurring' => $row['recurring']));
 	    	
+			// Debug display
+			if (xarModVars::get('reminders','debugmode') && 
+			in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+				echo "We are at the due date. An email was sent and this reminder was retired <br/>";
+			}
+
 			// We are done with this reminder
 			break;
     	}
@@ -112,7 +143,13 @@ function reminders_adminapi_process_reminders($args)
     */
     	// Get the array of all the reminder dates of this reminder
     	$dates = xarMod::apiFunc('reminders', 'user', 'get_date_array', array('array' => $row));
-    	
+
+		// Debug display
+		if (xarModVars::get('reminders','debugmode') && 
+		in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+			echo "Checking the reminder step dates for the due date<br/>";
+		}
+
     	// Run through each of the 10 possible steps
     	$done = false;
     	$sent_ids = array();
@@ -129,7 +166,13 @@ function reminders_adminapi_process_reminders($args)
 				// Send the email
 				$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 				$data['results'] = array_merge($data['results'], array($data['result']));
-               
+			   
+				// Debug display
+				if (xarModVars::get('reminders','debugmode') && 
+				in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+					echo xarML('Found the due date at step #(1). An email was sent and this reminder was retired <br/>', $step['index']);
+				}
+
     			// This is not a test, so set this period reminder as done
     			if (!$args['test']) {
 	    			$sent_ids[] = $step['index'];
@@ -156,6 +199,12 @@ function reminders_adminapi_process_reminders($args)
 			$q->run();
     	}
     	
+		// Debug display
+		if (xarModVars::get('reminders','debugmode') && 
+		in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+			echo "Did not find the due date among the reminder step dates <br/>";
+		}
+
 /*        $current_id = $row['id'];
         $found = false;
         if ($current_id != $previous_id) {

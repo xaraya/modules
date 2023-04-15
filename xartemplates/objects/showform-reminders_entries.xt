@@ -5,6 +5,15 @@
     <xar:data-input property="$properties['code']" hidden="hidden"/>
     <div class="xar-row">
         <div class="xar-col-condensed">
+            <xar:var name="value">ID</xar:var>
+            <xar:data-label property="$properties['id']" label="$value"/>                    
+        </div>
+        <div class="xar-col">
+            <xar:data-input property="$properties['id']"/>                    
+        </div>        
+    </div>
+    <div class="xar-row">
+        <div class="xar-col-condensed">
             <xar:var name="value">Message</xar:var>
             <xar:data-label property="$properties['message']" label="$value"/>                    
         </div>

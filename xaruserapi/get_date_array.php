@@ -51,6 +51,7 @@ function reminders_userapi_get_date_array($args)
 	in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
     	$datetime = new XarDateTime();
 		$datetime->setTimestamp($fields['due_date']);
+
 		echo "Due date: " . $datetime->display() . "<br/>";
 		echo "Reminder steps array: " . "<br/>";
 		foreach($steps as $step) {
