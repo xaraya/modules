@@ -19,6 +19,7 @@ function reminders_admin_test()
 {
     if (!xarSecurity::check('ManageReminders')) return;
     
+    if (!xarVar::fetch('tab',        'str:1:100', $data['tab'],       'active', xarVar::NOT_REQUIRED)) return;
     if (!xarVar::fetch('confirm',    'checkbox', $data['confirm'],    false, xarVar::NOT_REQUIRED)) return;
     
     if ($data['confirm']) {
@@ -35,10 +36,28 @@ function reminders_admin_test()
         $data['test'] = true;
     }
     
+    // Define which object will be shown
     sys::import('modules.dynamicdata.class.objects.master');
-    $data['object'] = DataObjectMaster::getObject(array('name' => 'reminders_entries'));
-    $data['object']->dataquery->eq('state', 3);
+    $data['object'] = DataObjectMaster::getObjectList(array('name' => 'reminders_entries'));
+    
+    // Add filters
+    if ($data['tab'] == 'active') {
+        $data['object']->dataquery->gt($data['object']->properties['due_date']->source, time());
+    }
 
+    // Create the listing object itself
+    $data['listing'] = DatapropertyMaster::getProperty(array(
+                                                'name'          => 'listing',
+                                                'object'        => $data['object'],
+                                                'fieldlist'     => 'message,email_1,email_2,template,due_date,recurring,recur_period,state',
+                                                'tplmodule'     => "reminders",
+                                                'show_alphabet' => 0,
+                                                ));
+    // If this is an AJAX call, run it (and exit)
+    $data['listing']->ajaxRefresh(array(
+                                'tab' => $data['tab'],
+                                ));
+    
     return $data;
 }
 ?>

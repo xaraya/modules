@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
+    <xar:set name="restricted_groups">'Administrators, SiteManagers'</xar:set>
+
+    <div class="dropdown ">
+      <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">
+        Go to...
+        <span class="caret"></span>
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <xar:access level="200">
+            <xar:var name="title">
+                Display the reminders currently ongoing
+            </xar:var>
+            <li>
+                <a class="dropdown-item" href="#xarController::URL('reminders', 'admin', 'view_entries', array('tab' => 'active'))#" title="#$title#">
+                    Current Reminders
+                </a>
+            </li>
+            <xar:var name="title">
+                Display the reminders that are current or have been archived
+            </xar:var>
+            <li>
+                <a class="dropdown-item" href="#xarController::URL('reminders', 'admin', 'view_entries', array('tab' => 'archived'))#" title="#$title#">
+                    All Reminders
+                </a>
+            </li>
+        </xar:access>
+      </ul>
+    </div> 
+</xar:template>
