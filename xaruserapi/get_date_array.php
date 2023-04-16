@@ -46,19 +46,35 @@ function reminders_userapi_get_date_array($args)
 	// Add the array as the last parameter, to sort by the common key
 	array_multisort($date, SORT_ASC, $steps);
 	
+	$datetime = new XarDateTime();
+	$datetime->setTimestamp($fields['due_date']);
+	$msg1 = xarML('Due date: #(1)', $datetime->display());
+	$msg2 = xarML('Reminder steps array:');
+	xarLog::message($msg1, xarLog::LEVEL_INFO);
+	xarLog::message($msg2, xarLog::LEVEL_INFO);
+	foreach($steps as $step) {
+		// Ignore slots with no chosen date
+		if ($step['date'] == 0) continue;
+		$datetime->setTimestamp($step['date']);
+		$msg3 = xarML('#(1) #(2)', $step['index'], $datetime->display());
+		xarLog::message($msg3, xarLog::LEVEL_INFO);
+	}
+
 	// Debug display
 	if (xarModVars::get('reminders','debugmode') && 
 	in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
-    	$datetime = new XarDateTime();
-		$datetime->setTimestamp($fields['due_date']);
-
-		echo "Due date: " . $datetime->display() . "<br/>";
-		echo "Reminder steps array: " . "<br/>";
+		echo $msg1;
+		echo "<br/>";
+		echo $msg2;
+		echo "<br/>";
 		foreach($steps as $step) {
 			// Ignore slots with no chosen date
 			if ($step['date'] == 0) continue;
 			$datetime->setTimestamp($step['date']);
-			echo $step['index'] . " " . $datetime->display() . "<br/>";
+			$msg = xarML('#(1) #(2)', $step['index'], $datetime->display());
+			echo $msg;
+			echo "<br/>";
+        	xarLog::message($msg, xarLog::LEVEL_INFO);
 		}
 	}
 	
