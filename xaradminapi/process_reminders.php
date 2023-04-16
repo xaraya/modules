@@ -82,12 +82,20 @@ function reminders_adminapi_process_reminders($args)
 			echo "<br/>";
 		}
         xarLog::message($msg, xarLog::LEVEL_INFO);
-
     	// If this is a test, just send the mail
 		if ($args['test']) {
 			// Send the email
 			$data['result'] = xarMod::apiFunc('reminders', 'admin', 'send_email', array('info' => $row, 'params' => $params, 'copy_emails' => $args['copy_emails'], 'test' => $args['test']));        	
 			$data['results'] = array_merge($data['results'], array($data['result']));
+
+			$msg = xarML('This is a test run');
+			// Debug display
+			if (xarModVars::get('reminders','debugmode') && 
+			in_array(xarUser::getVar('id'),xarConfigVars::get(null, 'Site.User.DebugAdmins'))) {
+				echo $msg;
+				echo "<br/>";
+			}
+        	xarLog::message($msg, xarLog::LEVEL_INFO);
 
 			// We are done with this reminder
 			break;
