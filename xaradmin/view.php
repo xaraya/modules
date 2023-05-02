@@ -96,12 +96,11 @@ function publications_admin_view($args=array())
     } elseif (!xarSecurity::check('EditPublications',1,'Publication',"$ptid:All:All:All")) return;
 
     if (!empty($ptid)) {
-        $settings = unserialize(xarModVars::get('publications', 'settings.'.$ptid));
+        $string = xarModVars::get('publications', 'settings.'.$ptid) ?? serialize(array());
+        $settings = unserialize($string);
     } else {
-        $string = xarModVars::get('publications', 'settings');
-        if (!empty($string)) {
-            $settings = unserialize($string);
-        }
+        $string = xarModVars::get('publications', 'settings') ?? serialize(array());
+        $settings = unserialize($string);
     }
     if (isset($settings['admin_items_per_page'])) {
         $numitems = $settings['admin_items_per_page'];
