@@ -19,28 +19,28 @@
     
     function realms_admin_delete()
     {
-        if (!xarSecurityCheck('ManageRealms')) return;
+        if (!xarSecurity::check('ManageRealms')) return;
 
-        if (!xarVarFetch('name',       'str:1',  $name,    '',     XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('name',       'str:1',  $name,    '',     xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('itemid' ,     'int',    $data['itemid'] , '' ,          xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,       xarVar::NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['object']->getItem(array('itemid' => $data['itemid']));
 
         $data['tplmodule'] = 'realms';
-        $data['authid'] = xarSecGenAuthKey('realms');
+        $data['authid'] = xarSec::genAuthKey('realms');
 
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if(!xarSec::confirmAuthKey()) return;
 
             // Delete the item
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarController::redirect(xarModURL('realms','admin','view'));
+            xarController::redirect(xarController::URL('realms','admin','view'));
             return true;
         }
         return $data;

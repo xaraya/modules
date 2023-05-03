@@ -78,27 +78,27 @@
     #
     # Set up masks
     #
-        xarRegisterMask('ViewRealms','All','realms','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadRealms','All','realms','All','All','ACCESS_READ');
-        xarRegisterMask('CommentRealms','All','realms','All','All','ACCESS_COMMENT');
-        xarRegisterMask('ModerateRealms','All','realms','All','All','ACCESS_MODERATE');
-        xarRegisterMask('EditRealms','All','realms','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddRealms','All','realms','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageRealms','All','realms','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminRealms','All','realms','All','All','ACCESS_ADMIN');
+        xarMasks::register('ViewRealms','All','realms','All','All','ACCESS_OVERVIEW');
+        xarMasks::register('ReadRealms','All','realms','All','All','ACCESS_READ');
+        xarMasks::register('CommentRealms','All','realms','All','All','ACCESS_COMMENT');
+        xarMasks::register('ModerateRealms','All','realms','All','All','ACCESS_MODERATE');
+        xarMasks::register('EditRealms','All','realms','All','All','ACCESS_EDIT');
+        xarMasks::register('AddRealms','All','realms','All','All','ACCESS_ADD');
+        xarMasks::register('ManageRealms','All','realms','All','All','ACCESS_DELETE');
+        xarMasks::register('AdminRealms','All','realms','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
-        xarRegisterPrivilege('ViewRealms','All','realms','All','All','ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadRealms','All','realms','All','All','ACCESS_READ');
-        xarRegisterPrivilege('CommentRealms','All','realms','All','All','ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateRealms','All','realms','All','All','ACCESS_MODERATE');
-        xarRegisterPrivilege('EditRealms','All','realms','All','All','ACCESS_EDIT');
-        xarRegisterPrivilege('AddRealms','All','realms','All','All','ACCESS_ADD');
-        xarRegisterPrivilege('ManageRealms','All','realms','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminRealms','All','realms','All','All','ACCESS_ADMIN');
+        xarPrivileges::register('ViewRealms','All','realms','All','All','ACCESS_OVERVIEW');
+        xarPrivileges::register('ReadRealms','All','realms','All','All','ACCESS_READ');
+        xarPrivileges::register('CommentRealms','All','realms','All','All','ACCESS_COMMENT');
+        xarPrivileges::register('ModerateRealms','All','realms','All','All','ACCESS_MODERATE');
+        xarPrivileges::register('EditRealms','All','realms','All','All','ACCESS_EDIT');
+        xarPrivileges::register('AddRealms','All','realms','All','All','ACCESS_ADD');
+        xarPrivileges::register('ManageRealms','All','realms','All','All','ACCESS_DELETE');
+        xarPrivileges::register('AdminRealms','All','realms','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
@@ -110,7 +110,7 @@
                     'realms_members',
                          );
 
-        if(!xarModAPIFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
+        if(!xarMod::apiFunc('modules','admin','standardinstall',array('module' => $module, 'objects' => $objects))) return;
     # --------------------------------------------------------
     #
     # Set up modvars
@@ -163,7 +163,7 @@
         foreach ($items as $item) $groupobject->deleteItem(array('itemid' =>$item['id']));
 
         $this_module = 'realms';
-        return xarModAPIFunc('modules','admin','standarddeinstall',array('module' => $this_module));
+        return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => $this_module));
     }
 
 ?>

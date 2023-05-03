@@ -16,7 +16,7 @@
                 <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
             </xar:if>
             <li class="#$tabclass#">
-                <a class="#$linkclass#" href="#xarModURL('realms', 'admin', 'modifyconfig', array('tab' => 'general'))#">
+                <a class="#$linkclass#" href="#xarController::URL('realms', 'admin', 'modifyconfig', array('tab' => 'general'))#">
                     General
                 </a>
             </li>
@@ -30,7 +30,7 @@
             </xar:if>
 
             <li class="#$tabclass#">
-                <a class="#$linkclass#" href="#xarModURL('realms', 'admin', 'modifyconfig', array('tab' => 'tab2'))#">
+                <a class="#$linkclass#" href="#xarController::URL('realms', 'admin', 'modifyconfig', array('tab' => 'tab2'))#">
                     Tab2
                 </a>
             </li>
@@ -44,7 +44,7 @@
             </xar:if>
 
             <li class="#$tabclass#">
-                <a class="#$linkclass#" href="#xarModURL('realms', 'admin', 'modifyconfig', array('tab' => 'tab3'))#">
+                <a class="#$linkclass#" href="#xarController::URL('realms', 'admin', 'modifyconfig', array('tab' => 'tab3'))#">
                     Tab3
                 </a>
             </li>

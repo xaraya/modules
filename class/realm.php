@@ -47,10 +47,10 @@ class Realm extends DataObject
 
 /*
         // Remove it from the default users' group
-        xarRemoveRoleMemberByID($args['usergroup'], xarModVars::get('roles', 'defaultgroup'));
+        xarRoles::removeMemberByID($args['usergroup'], xarModVars::get('roles', 'defaultgroup'));
 
         // Add it to the Everybody group
-        xarMakeRoleMemberByName($name, 'Everybody');     
+        xarRoles::makeMemberByName($name, 'Everybody');     
 */            
         return $itemid;
     }

@@ -17,10 +17,10 @@
  */
     function realms_admin_view_members($args)
     {
-        if (!xarSecurityCheck('ManageRealms')) return;
+        if (!xarSecurity::check('ManageRealms')) return;
 
         // Define which object will be shown
-        if (!xarVarFetch('realm_id', 'int', $data['realm_id'], 0, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('realm_id', 'int', $data['realm_id'], 0, xarVar::DONT_SET)) return;
 
         // Get the available dropdown options
         $realms = DataObjectMaster::getObjectList(array('name' => 'realms_realms'));

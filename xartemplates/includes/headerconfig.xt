@@ -12,7 +12,7 @@
             <xar:set name="class">""</xar:set>
         </xar:if>
         <dd class="#$class#">
-            <a href="#xarModURL('realms', 'admin', 'modifyconfig', array('tabmodule' => 'realms', 'tab' => 'realms_general'))#">
+            <a href="#xarController::URL('realms', 'admin', 'modifyconfig', array('tabmodule' => 'realms', 'tab' => 'realms_general'))#">
                 General
             </a>
         </dd>
@@ -25,7 +25,7 @@
                 <xar:set name="class">""</xar:set>
             </xar:if>
             <dd class="#$class#">
-                <a href="#xarModURL('realms', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
+                <a href="#xarController::URL('realms', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
                     #$thistab['configtitle']#
                 </a>
             </dd>

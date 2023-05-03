@@ -39,7 +39,7 @@ class RealmProperty extends ObjectRefProperty
     public function showInput(Array $data = array())
     {
         if (!isset($data['value'])) $data['value'] = $this->value;
-        $cacheKey ='Roles.User.' . xarSessionGetVar('role_id');
+        $cacheKey ='Roles.User.' . xarSession::getVar('role_id');
         $infoid = 'realm';
         if (!empty($data['firstline'])) $this->initialization_firstline = $data['firstline'];
         if (!empty($data['refobject'])) $this->initialization_refobject = $data['refobject'];
@@ -52,7 +52,7 @@ class RealmProperty extends ObjectRefProperty
     public function showOutput(Array $args = array())
     {
         if (!isset($data['value'])) $data['value'] = $this->value;
-        $cacheKey ='Roles.User.' . xarSessionGetVar('role_id');
+        $cacheKey ='Roles.User.' . xarSession::getVar('role_id');
         $infoid = 'realm';
         if (!empty($data['firstline'])) $this->initialization_firstline = $data['firstline'];
         if (!empty($data['refobject'])) $this->initialization_refobject = $data['refobject'];

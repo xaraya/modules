@@ -17,7 +17,7 @@
  */
     function realms_admin_view_realms($args)
     {
-        if (!xarSecurityCheck('ManageRealms')) return;
+        if (!xarSecurity::check('ManageRealms')) return;
 
         // Get the object containing the members
         $data['realms'] = DataObjectMaster::getObjectList(array('name' => 'realms_realms'));
