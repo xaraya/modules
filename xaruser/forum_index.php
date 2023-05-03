@@ -18,10 +18,10 @@
  */
 function crispbb_user_forum_index()
 {
-    if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('action', 'enum:read', $action, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('catid', 'id', $catid, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('action', 'enum:read', $action, '', xarVar::NOT_REQUIRED)) return;
     if ($action == 'read') {
-        if (!xarVarFetch('fid', 'id', $readfid, NULL, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('fid', 'id', $readfid, NULL, xarVar::DONT_SET)) return;
     }
 
     $data = array();
@@ -39,14 +39,14 @@ function crispbb_user_forum_index()
             ));
     // if the error was no privs, we should have an error message
     if (!empty($forums['error']) && $forums['error'] == 'NO_PRIVILEGES') {
-        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
     }
 
     // Logged in user
     if (xarUser::isLoggedIn()) {
         // Start Tracking
         $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
-        $data['readurl'] = xarModURL('crispbb', 'user', 'forum_index', array('action' => 'read'));
+        $data['readurl'] = xarController::URL('crispbb', 'user', 'forum_index', array('action' => 'read'));
     } else {
         $data['readurl'] = '';
     }
@@ -84,7 +84,7 @@ function crispbb_user_forum_index()
             $catinfo = $category;
             $numforums = isset($forums[$cid]) ? count($forums[$cid]) : 0;
             $catinfo['numforums'] = $numforums;
-            $catinfo['viewurl'] = xarModURL('crispbb', 'user', 'forum_index', array('catid' => $cid));
+            $catinfo['viewurl'] = xarController::URL('crispbb', 'user', 'forum_index', array('catid' => $cid));
             $categories[$cid] = $catinfo;
             if (!empty($numforums)) {
                 foreach ($forums[$cid] as $fid => $forum) {
@@ -126,7 +126,7 @@ function crispbb_user_forum_index()
                     if (!empty($finfo['privs']['approvetopics'])) {
                         $unnapproved = xarMod::apiFunc('crispbb', 'user', 'counttopics', array('tstatus' => 2, 'fid' => $fid));
                         if (!empty($unnapproved)) {
-                            $finfo['modtopicsurl'] = xarModURL('crispbb', 'user', 'moderate',
+                            $finfo['modtopicsurl'] = xarController::URL('crispbb', 'user', 'moderate',
                                 array(
                                     'component' => 'topics',
                                     'fid' => $finfo['fid'],
@@ -168,11 +168,11 @@ function crispbb_user_forum_index()
         $data['userpanel'] = $tracker->getUserPanelInfo();
     }
 
-    $data['viewstatsurl'] = !empty($seenLevels[$minLevel]['readforum']) ? xarModURL('crispbb', 'user', 'stats') : '';
-    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
-    if (!xarVarFetch('theme', 'enum:rss:atom:xml:json', $theme, '', XARVAR_NOT_REQUIRED)) return;
+    $data['viewstatsurl'] = !empty($seenLevels[$minLevel]['readforum']) ? xarController::URL('crispbb', 'user', 'stats') : '';
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
+    if (!xarVar::fetch('theme', 'enum:rss:atom:xml:json', $theme, '', xarVar::NOT_REQUIRED)) return;
     if (!empty($theme)) {
-        return xarTPLModule('crispbb', 'user', 'forum_index-' . $theme, $data);
+        return xarTpl::module('crispbb', 'user', 'forum_index-' . $theme, $data);
     }
     return $data;
 }

@@ -3,16 +3,16 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+        <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">#$statusmsg#</p>
         </xar:if>
         <h3>#$pageTitle#</h3>
-        <form method="post" action="#xarModURL('crispbb', 'admin','delete')#">
+        <form method="post" action="#xarController::URL('crispbb', 'admin','delete')#">
             <fieldset>
                 <xar:data-display object="$forum" />
                 <div class="xar-form-input-wrapper-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="fid" id="fid" value="#$fid#" />
                     <input type="hidden" name="phase" id="phase" value="update" />
                     <input type="submit" id="confirm" value="#xarML('')#" />
@@ -22,5 +22,5 @@
             </fieldset>
         </form>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

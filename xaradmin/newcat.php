@@ -25,16 +25,16 @@
  */
 function crispbb_admin_newcat($args)
 {
-    if (!xarSecurityCheck('AdminCrispBB') || !xarSecurityCheck('ManageCategories'))
-        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+    if (!xarSecurity::check('AdminCrispBB') || !xarSecurity::check('ManageCategories'))
+        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
 
     extract($args);
 
     $data = array();
-    if (!xarVarFetch('phase', 'pre:trim:lower:str:1', $phase, 'form', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url',  'isset',  $data['return_url'], NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('repeat','int:1:', $data['repeat'], 1, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('reassign', 'checkbox',  $reassign, false, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'pre:trim:lower:str:1', $phase, 'form', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('return_url',  'isset',  $data['return_url'], NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('repeat','int:1:', $data['repeat'], 1, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('reassign', 'checkbox',  $reassign, false, xarVar::NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     for ($i=1;$i<=$data['repeat'];$i++) {
@@ -48,14 +48,14 @@ function crispbb_admin_newcat($args)
             }
         }
         if (empty($invalid)) {
-            if (!xarSecConfirmAuthKey()) {
-                return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+            if (!xarSec::confirmAuthKey()) {
+                return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
             }
             for ($i=1;$i<=$data['repeat'];$i++) {
                 $data['objects'][$i]->createItem();
             }
             if (empty($data['return_url'])) {
-                $data['return_url'] = xarModURL('crispbb', 'admin', 'categories');
+                $data['return_url'] = xarController::URL('crispbb', 'admin', 'categories');
             }
             xarController::redirect($data['return_url']);
             return true;
@@ -74,7 +74,7 @@ function crispbb_admin_newcat($args)
 
     $data['basecid'] = $basecid;
     $data['basecatinfo'] = !empty($basecid) ? $basecats[0] : array();
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     return $data;
 

@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>Delete Forum Category</h2>
-        <form action="#xarModURL('crispbb', 'admin', 'deletecat')#" method="post">
+        <form action="#xarController::URL('crispbb', 'admin', 'deletecat')#" method="post">
         <fieldset>
             <legend>Delete Category</legend>
             <xar:if condition="$basecid eq $itemid">
@@ -13,7 +13,7 @@
             <xar:data-display object="$object" />
             <div class="xar-form-input-wrapper">
                 <div class="xar-form-container-after">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                     <input type="hidden" name="itemid" id="itemid" value="#$itemid#" />
                     <input type="submit" id="confirm" value="#xarML('')#" />
                     <xar:var name="label">Confirm Delete</xar:var>

@@ -33,7 +33,7 @@
 function crispbb_userapi_gethooklist($args)
 {
     // Security Check
-    //if(!xarSecurityCheck('AdminModules')) return;
+    //if(!xarSecurity::check('AdminModules')) return;
 
     // Get arguments from argument array
     extract($args);
@@ -43,7 +43,7 @@ function crispbb_userapi_gethooklist($args)
         $smodId = null;
         $modName = '';
     } else {
-        $smodInfo = xarMod_GetBaseInfo($modName);
+        $smodInfo = xarMod::getBaseInfo($modName);
         $smodId = $smodInfo['systemid'];
     }
 

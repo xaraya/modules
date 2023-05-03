@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <xar:style scope="module" module="crispbb" />
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+        <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">#$statusmsg#</p>
         </xar:if>
@@ -76,16 +76,16 @@
                     </xar:foreach>
                     <tr class="#$rowclass#">
                         <td valign="center" width="40%">
-                            <b>Grand Total</b>
+                            <strong>Grand Total</strong>
                         </td>
                         <td align="center" valign="center" width="15%">
-                            <b>#$numitems#</b>
+                            <strong>#$numitems#</strong>
                         </td>
                         <td align="center" valign="center" width="15%">
-                            <b>-</b>
+                            <strong>-</strong>
                         </td>
                         <td align="center" valign="center" width="15%">
-                            <b>#$numlinks#</b>
+                            <strong>#$numlinks#</strong>
                         </td>
                         <td class="xar-align-right" width="15%">
                             <a href="#$delete#"><img src="#xarTpl::getImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations')#" /></a>
@@ -99,7 +99,7 @@
             </div>
         <xar:else/>
             <xar:comment>
-            <a href="#xarModURL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
+            <a href="#xarController::URL('crispbb','admin','checkhooks',array('modid' => $modid, 'itemtype' => $itemtype))#">Check Orphaned Associations</a>
             </xar:comment>
             <div class="xar-form-input-wrapper-before xar-padding-thick">
 
@@ -168,10 +168,10 @@
                     </xar:foreach>
                     <tr class="#$rowclass#">
                         <td valign="center" width="40%">
-                            <b>Grand Total</b>:
+                            <strong>Grand Total</strong>:
                         </td>
                         <td align="center" valign="center" width="40%">
-                            <b>#$numlinks#</b>
+                            <strong>#$numlinks#</strong>
                         </td>
                         <td class="xar-align-right" width="20%">
                             <a href="#$unlinkhooksurl#"><img src="#xarTpl::getImage('icons/delete.png', 'base')#" alt="#xarML('Delete')#" title="#xarML('Delete all associations for this module/itemtype')#" /></a>
@@ -201,5 +201,5 @@
             </span>
         </div>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

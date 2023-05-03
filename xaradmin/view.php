@@ -19,11 +19,11 @@
 function crispbb_admin_view($args)
 {
     extract($args);
-    if (!xarVarFetch('sublink', 'str:1:', $sublink, '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('catid', 'id', $catid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('sublink', 'str:1:', $sublink, '', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('catid', 'id', $catid, NULL, xarVar::NOT_REQUIRED)) return;
     $data = array();
-    if (!xarSecurityCheck('AddCrispBB', 0)) {
-        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+    if (!xarSecurity::check('AddCrispBB', 0)) {
+        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
     }
     $now = time();
 
@@ -46,7 +46,7 @@ function crispbb_admin_view($args)
     // add links for cats and forums
     $numcats = count($categories);
     $ci = 1;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $userLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel');
     $minLevel = 800;
     $secLevels = array();
@@ -75,7 +75,7 @@ function crispbb_admin_view($args)
             $catinfo['numforums'] = count($catinfo['forums']->items);
             $catinfo['newforum'] = LinkCache::getCachedURL('crispbb', 'admin', 'new', array('catid' => $cid));
             $catinfo['view'] = LinkCache::getCachedURL('crispbb', 'admin', 'view', array('catid' => $cid));
-            if ($userLevel == 800 && xarSecurityCheck('ManageCategories', 0)) {
+            if ($userLevel == 800 && xarSecurity::check('ManageCategories', 0)) {
                if ($ci > 1) {
                     $catinfo['moveup'] = LinkCache::getCachedURL('crispbb', 'admin', 'ordercats', array('itemid' => $cid, 'direction' => 'up', 'authid' => $data['authid']));
                }
@@ -101,13 +101,13 @@ function crispbb_admin_view($args)
             'secLevels' => $secLevels
         ));
 
-    if (empty($categories) && ($userLevel == 800 && xarSecurityCheck('ManageCategories', 0)))
+    if (empty($categories) && ($userLevel == 800 && xarSecurity::check('ManageCategories', 0)))
         $data['newcat'] = LinkCache::getCachedURL('crispbb', 'admin', 'newcat');
 
     $pageTitle = xarML('Manage Forums');
     // store function name for use by admin-main as an entry point
-    xarSessionSetVar('crispbb_adminstartpage', 'view');
-    xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
+    xarSession::setVar('crispbb_adminstartpage', 'view');
+    xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
 
     return $data;
 

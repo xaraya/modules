@@ -21,30 +21,30 @@
  */
 function crispbb_admin_deletecat($args)
 {
-    if (!xarSecurityCheck('AdminCrispBB'))
-        return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+    if (!xarSecurity::check('AdminCrispBB'))
+        return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
 
     extract($args);
 
     $data = array();
-    if (!xarVarFetch('itemid', 'int:1', $data['itemid'], 0, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'checkbox', $confirm, false, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('return_url',  'pre:trim:lower:str:1',  $data['return_url'], '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid', 'int:1', $data['itemid'], 0, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm', 'checkbox', $confirm, false, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('return_url',  'pre:trim:lower:str:1',  $data['return_url'], '', xarVar::NOT_REQUIRED)) return;
     // secondary sec check on categories module
-    if(!xarSecurityCheck('ManageCategories', 0, "All:$data[itemid]")) {
-         return xarTplModule('privileges','user','errors',array('layout' => 'no_privileges'));
+    if(!xarSecurity::check('ManageCategories', 0, "All:$data[itemid]")) {
+         return xarTpl::module('privileges','user','errors',array('layout' => 'no_privileges'));
     }
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => xarModVars::get('categories','categoriesobject')));
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     if ($confirm) {
-        if (!xarSecConfirmAuthKey()) {
-            return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+        if (!xarSec::confirmAuthKey()) {
+            return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
         }
         $data['object']->deleteItem(array('itemid' => $data['itemid']));
         if (empty($data['return_url'])) {
-            $data['return_url'] = xarModURL('crispbb', 'admin', 'categories');
+            $data['return_url'] = xarController::URL('crispbb', 'admin', 'categories');
         }
         xarController::redirect($data['return_url']);
         return true;

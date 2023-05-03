@@ -69,7 +69,7 @@
     <xar:if condition="!empty($showforum)">
         <p>
         <span class="xar-sub">In:</span>
-        <a href="#xarModURL('crispbb', 'user', 'view', array('fid' => $topic['fid']))#" title="#xarML('View forum')#">#$topic['fname']#</a>
+        <a href="#xarController::URL('crispbb', 'user', 'view', array('fid' => $topic['fid']))#" title="#xarML('View forum')#">#$topic['fname']#</a>
         </p>
     </xar:if>
 </td>
@@ -86,7 +86,7 @@
     </span>
     <p>
     <span class="xar-sub">By:</span>
-    <a href="#xarModURL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">
+    <a href="#xarController::URL('roles', 'user', 'display', array('uid' => $topic['powner']))#" title="#xarML('View profile')#">
         <xar:data-output type="username" value="$posterlist[$topic['powner']]['name']"/>
     </a>
     </p>

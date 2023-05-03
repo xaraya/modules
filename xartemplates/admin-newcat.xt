@@ -9,7 +9,7 @@
         <xar:if condition="empty($basecid)">
             <p>You must select a base category for crispBB before you can add forum categories</p>
         <xar:else />
-        <form action="#xarModURL('crispbb','admin','newcat')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="#xarController::URL('crispbb','admin','newcat')#" method="post" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="authid" id="authid" value="#$authid#" />
             <xar:for iter="$i++" start="$i=1" test="$i le $repeat">
                 <fieldset class="xar-norm">

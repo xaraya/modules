@@ -27,7 +27,7 @@ function crispbb_userapi_deletehook($args)
 
     if (empty($modname)) {
         if (empty($extrainfo['module'])) {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         } else {
             $modname = $extrainfo['module'];
         }

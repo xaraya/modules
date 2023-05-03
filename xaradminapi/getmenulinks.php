@@ -70,7 +70,7 @@ function crispbb_adminapi_getmenulinks($args)
     }
 
     // minimum privilege
-    if (!xarSecurityCheck('AddCrispBB', 0, 'Forum', 'All:All')) return array();
+    if (!xarSecurity::check('AddCrispBB', 0, 'Forum', 'All:All')) return array();
 
     $userLevel = xarMod::apiFunc('crispbb', 'user', 'getseclevel',
         array('catid' => $catid, 'fid' => $fid));
@@ -307,7 +307,7 @@ function crispbb_adminapi_getmenulinks($args)
                 /*
                 $activelinks = array('trashcan');
                 $sublinks['trashcan'] = array(
-                    'url' => xarModURL('crispbb', 'admin', 'trashcan'),
+                    'url' => xarController::URL('crispbb', 'admin', 'trashcan'),
                     'title' => xarML('Overview of deleted items'),
                     'label' => xarML('Trashcan'),
                     'active' => in_array($modfunc, $activelinks) ? true : false
@@ -317,7 +317,7 @@ function crispbb_adminapi_getmenulinks($args)
             /*
             $activelinks = array('topics', 'deletetopic');
             $sublinks['topics'] = array(
-                'url' => xarModURL('crispbb', 'admin', 'topics'),
+                'url' => xarController::URL('crispbb', 'admin', 'topics'),
                 'title' => xarML('Manage forum topics'),
                 'label' => xarML('Topics'),
                 'active' => in_array($modfunc, $activelinks) ? true : false

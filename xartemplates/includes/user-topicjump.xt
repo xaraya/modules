@@ -2,7 +2,7 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:if condition="xarModVars::get('crispbb', 'showtopicjump')">
-        <form method="post" action="#xarModURL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
+        <form method="post" action="#xarController::URL('crispbb', 'user', 'redirect')#" class="xar-margin-none xar-displayinline">
             <xar:if condition="empty($formid)"><xar:set name="$formid">'1'</xar:set></xar:if>
             <div class="xar-nowrap xar-displayinline">
             <label for="topicjump#$formid#" class="xar-margin-nonebottom xar-padding-nonebottom">Topics</label>
@@ -16,7 +16,7 @@
                     <xar:if condition="!empty($totalunanswered)">
                     <option value="unanswered">Unanswered topics</option>
                     </xar:if>
-                    <xar:if condition="xarUserIsLoggedIn()">
+                    <xar:if condition="xarUser::isLoggedIn()">
                     <xar:comment>
                         <option value="unread">Unread topics</option>
                     </xar:comment>
@@ -32,7 +32,7 @@
                     <xar:if condition="!empty($unanswered)">
                     <option value="unanswered#$fid#">Unanswered topics</option>
                     </xar:if>
-                    <xar:if condition="xarUserIsLoggedIn()">
+                    <xar:if condition="xarUser::isLoggedIn()">
                     <xar:comment>
                        <option value="unread#$fid#">Unread topics</option>
                     </xar:comment>

@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <xar:set name="statusmsg">#xarSessionGetVar('crispbb_statusmsg')#</xar:set>
+        <xar:set name="statusmsg">#xarSession::getVar('crispbb_statusmsg')#</xar:set>
         <xar:if condition="!empty($statusmsg)">
             <p class="xar-align-center xar-error">#$statusmsg#</p>
         </xar:if>
@@ -22,7 +22,7 @@
                     'application/x-www-form-urlencoded'
                 </xar:set>
             </xar:if>
-            <form method="post" id="crispbb_admin_new" action="#xarModURL('crispbb', 'admin', 'new')#" enctype="#$enctype#">
+            <form method="post" id="crispbb_admin_new" action="#xarController::URL('crispbb', 'admin', 'new')#" enctype="#$enctype#">
                 <fieldset>
                     <xar:data-form object="$forum" />
                     <xar:if condition="!empty($hookoutput)">
@@ -32,7 +32,7 @@
                     </xar:if>
                     <xar:data-form object="$settings" values="$values" />
                     <div class="xar-form-input-wrapper-after">
-                        <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthkey()#" />
+                        <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                         <input type="hidden" name="phase" id="phase" value="update" />
                         <xar:var name="label">Add Forum</xar:var>
                         <xar:button type="submit" name="confirm" label="$label" />
@@ -41,5 +41,5 @@
             </form>
         </xar:if>
     </div>
-    <xar:if condition="xarSessionSetVar('crispbb_statusmsg', '')"></xar:if>
+    <xar:if condition="xarSession::setVar('crispbb_statusmsg', '')"></xar:if>
 </xar:template>

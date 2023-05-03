@@ -42,7 +42,7 @@
              <tbody>
                 <tr>
                     <td class="xar-valign-top">
-                        <a href="#xarModURL('roles', 'user', 'account')#" title="#xarML('View your profile')#">#xarUserGetVar('name')#</a>
+                        <a href="#xarController::URL('roles', 'user', 'account')#" title="#xarML('View your profile')#">#xarUser::getVar('name')#</a>
                     </td>
                     <td>
 
@@ -61,7 +61,7 @@
             </tbody>
         </table>
     </xar:if>
-    <form method="post" id="post" name="post" action="#xarModURL('crispbb', 'user', 'newreply')#" enctype="#$enctype#">
+    <form method="post" id="post" name="post" action="#xarController::URL('crispbb', 'user', 'newreply')#" enctype="#$enctype#">
         <fieldset>
             <div class="xar-form-input-wrapper">
                 <label class="xar-form-label help">Topic Title:</label>
@@ -152,7 +152,7 @@
                 </xar:foreach>
             </xar:if>
             <div class="xar-form-input-wrapper-after">
-                <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey()#" />
+                <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey()#" />
                 <input type="hidden" name="return_url" id="return_url" value="#$return_url#" />
                 <input type="hidden" name="tid" id="tid" value="#$tid#" />
                 <input type="hidden" name="phase" id="phase" value="update" />

@@ -51,7 +51,7 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $sorts = array();
         $sorts['ptime'] = array('id' => 'ptime', 'name' => xarML('Last post time'));
         $sorts['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of hits'));
-        if (xarModIsAvailable('ratings')) {
+        if (xarMod::isAvailable('ratings')) {
             //$sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
 
@@ -87,7 +87,7 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $sorts = array();
         $sorts['ptime'] = array('id' => 'ptime', 'name' => xarML('Last post time'));
         $sorts['numhits'] = array('id' => 'numhits', 'name' => xarML('Number of hits'));
-        if (xarModIsAvailable('ratings')) {
+        if (xarMod::isAvailable('ratings')) {
             //sorts['numratings'] = array('id' => 'numratings', 'name' => xarML('Rating'));
         }
 
@@ -116,10 +116,10 @@ class Crispbb_TopitemsBlock extends BasicBlock implements iBlock
         $forums = xarMod::apiFunc('crispbb', 'user', 'getitemlinks');
         $this->fids = !empty($forums) && is_array($forums) ? array_keys($forums) : array();
 
-        if (!xarVarFetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, XARVAR_NOT_REQUIRED)) {return;}
-        if (!xarVarFetch('fids', 'list', $vars['fids'], $this->fids, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('numitems', 'int:1:50', $vars['numitems'], $this->numitems, xarVar::NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('fids', 'list', $vars['fids'], $this->fids, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('sort', 'pre:trim:lower:enum:ptime:numhits:numratings', $vars['sort'], $this->sort, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('order', 'pre:trim:upper:enum:ASC:DESC', $vars['order'], $this->order, xarVar::NOT_REQUIRED)) return;
         $this->setContent($vars);
         return true;
 

@@ -22,7 +22,7 @@ function crispbb_admin_modifyconfighook($args)
 {
     // only forum admins see the modifyconfighook
     // don't throw an error here, life in hooks goes on...
-    if (!xarSecurityCheck('AdminCrispBB', 0)) return;
+    if (!xarSecurity::check('AdminCrispBB', 0)) return;
 
     extract($args);
 
@@ -32,7 +32,7 @@ function crispbb_admin_modifyconfighook($args)
 
     if (empty($modname)) {
         if (empty($extrainfo['module'])) {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         } else {
             $modname = $extrainfo['module'];
         }
@@ -80,6 +80,6 @@ function crispbb_admin_modifyconfighook($args)
         $foptions[$forum['fid']] = array('id' => $forum['fid'], 'name' => $forum['transformed_fname']);
     }
     $data['foptions'] = $foptions;
-    return xarTPLModule('crispbb', 'admin', 'modifyconfighook', $data);
+    return xarTpl::module('crispbb', 'admin', 'modifyconfighook', $data);
 }
 ?>

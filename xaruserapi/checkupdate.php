@@ -46,7 +46,7 @@ function crispbb_userapi_checkupdate($args)
   $superrors = !isset($superrors) ? true : $superrors;
   // check if this file is already cached
   if ($cached) {
-      $vardir = xarCoreGetVarDirPath();
+      $vardir = sys::varpath();
       $file = $vardir . '/' . $cachedir . '/' . md5($url) . $extension;
       $expire = time() - $refresh;
       if (file_exists($file) && filemtime($file) > $expire) {

@@ -92,22 +92,22 @@ function crispbb_userapi_getitemtypes($args)
         if ($item['fid'] == 0) {
             if ($item['component'] == 'forum') {
                 $label = xarML('All Forums in crispBB');
-                $url = xarModURL('crispbb', 'user', 'forum_index');
+                $url = xarController::URL('crispbb', 'user', 'forum_index');
             } else {
                 $label = xarML('All #(1) in crispBB', ucfirst($item['component']));
-                $url = xarModURL('crispbb', 'user', 'search');
+                $url = xarController::URL('crispbb', 'user', 'search');
             }
         } else {
             if ($item['component'] == 'forum') {
                 $label = $item['fname'];
-                $url = xarModURL('crispbb', 'user', 'view', array('id' => $item['fid']));
+                $url = xarController::URL('crispbb', 'user', 'view', array('id' => $item['fid']));
             } else {
                 $label = xarML('All #(1) in #(2)', ucfirst($item['component']), $item['fname']);
-                $url = xarModURL('crispbb', 'user', 'view', array('id' => $item['fid']));
+                $url = xarController::URL('crispbb', 'user', 'view', array('id' => $item['fid']));
             }
         }
-        $item['label'] = xarVarPrepForDisplay($label);
-        $item['title'] = xarVarPrepForDisplay(xarML('View #(1)', $item['fname']));
+        $item['label'] = xarVar::prepForDisplay($label);
+        $item['title'] = xarVar::prepForDisplay(xarML('View #(1)', $item['fname']));
         $item['url']   = $url;
         $itemtypes[$item['id']] = $item;
     }
@@ -120,13 +120,13 @@ function crispbb_userapi_getitemtypes($args)
     if (empty($args)) {
         $hooklist = xarHooks::getObserverModules();
         //$hooklist = xarMod::apiFunc('crispbb', 'user', 'gethooklist');
-        $cachedhooks = xarSessionGetVar('crispbb_cachedhooks');
+        $cachedhooks = xarSession::getVar('crispbb_cachedhooks');
         $cachedhooks = !empty($cachedhooks) ? unserialize($cachedhooks) : array();
-        xarSessionDelVar('crispbb_cachedhooks');
+        xarSession::delVar('crispbb_cachedhooks');
         $hookcache = array();
         foreach ($hooklist as $hookmod => $hookdata) {
             // module hooked to all items in crispbb?
-            $hookcache[$hookmod][0] = xarModIsHooked($hookmod,'crispbb', 0);
+            $hookcache[$hookmod][0] = xarModHooks::isHooked($hookmod,'crispbb', 0);
             // if module is hooked to all items, modules module hook functions did the work
             // we also check on cats and hitcount, they should not be hooked to all items
             if ($hookcache[$hookmod][0]) {
@@ -147,7 +147,7 @@ function crispbb_userapi_getitemtypes($args)
             // loop through each of our itemtypes
             foreach ($itemtypes as $k => $v) {
                 // module hooked to this itemtype?
-                $hookcache[$hookmod][$k] = xarModIsHooked($hookmod,'crispbb', $k);
+                $hookcache[$hookmod][$k] = xarModHooks::isHooked($hookmod,'crispbb', $k);
                 // handle the components
                 foreach ($components as $component) {
                     if ($v['component'] == $component) {
@@ -280,22 +280,22 @@ function crispbb_userapi_getitemtypes($args)
             } // end itemtypes loop
         } // end hooklist loop
         // cache the hooks
-        xarSessionSetVar('crispbb_cachedhooks', serialize($hookcache));
+        xarSession::setVar('crispbb_cachedhooks', serialize($hookcache));
         // we need to check if the hooks are currently being updated by the modules module
         // if any changes were made, the admin hooks display will be out of synch
         // first we check if the current request module, type and func is modules admin hooks
         list ($modname, $modtype, $modfunc) = xarController::$request->getInfo();
         if ($modtype == 'admin' && $modfunc == 'hooks') {
             // we tag a flag onto the redirected url, so we can keep track on redirects
-            if (!xarVarFetch('hookupdate', 'isset', $hookupdate, 0, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('hookupdate', 'isset', $hookupdate, 0, xarVar::NOT_REQUIRED)) return;
             // 2 is the maximum redirects it should take to get back in synch
             // we also only redirect if something actually changed
             if ($hookupdate < 2 && $isupdated) {
                 // modules admin hooks function expects a hook param
                 // indicating the hook module to list, so we fetch that for the return url
-                if (!xarVarFetch('hook', 'isset', $hookarg, NULL, XARVAR_NOT_REQUIRED)) return;
+                if (!xarVar::fetch('hook', 'isset', $hookarg, NULL, xarVar::NOT_REQUIRED)) return;
                 // and finally we redirect to the function
-                xarController::redirect(xarModURL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
+                xarController::redirect(xarController::URL($modname, 'admin', 'hooks', array('hook' => $hookarg, 'hookupdate' => $hookupdate++)));
                 return;
             }
         }

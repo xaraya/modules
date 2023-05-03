@@ -33,7 +33,7 @@ function crispbb_user_displayhook($args)
 
     if (empty($modname)) {
         if (empty($extrainfo['module'])) {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         } else {
             $modname = $extrainfo['module'];
         }
@@ -127,14 +127,14 @@ function crispbb_user_displayhook($args)
         $forum = xarMod::apiFunc('crispbb', 'user', 'getforum', array('fid' => $data['fid'], 'privcheck' => true));
         if ($forum == 'NO_PRIVILEGES' || $forum == 'BAD_DATA') return;
         if (!empty($forum['newtopicurl'])) {
-            $data['newtopicurl'] = xarModURL('crispbb', 'user', 'newtopic',
+            $data['newtopicurl'] = xarController::URL('crispbb', 'user', 'newtopic',
                 array(
                     'fid' => $data['fid'],
                     'modname' => $modname,
                     'itemtype' => $itemtype,
                     'itemid' => $itemid,
                     //'return_url' => xarServer::getCurrentURL(),
-                    'authid' => xarSecGenAuthKey('crispbb')
+                    'authid' => xarSec::genAuthKey('crispbb')
                 ));
         }
     }
@@ -146,6 +146,6 @@ function crispbb_user_displayhook($args)
     if (!empty($data['quickreply'])) {
         $data['return_url'] = xarServer::getCurrentURL();
     }
-    return xarTPLModule('crispbb', 'user', 'displayhook', $data);
+    return xarTpl::module('crispbb', 'user', 'displayhook', $data);
 }
 ?>

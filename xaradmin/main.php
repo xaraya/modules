@@ -24,7 +24,7 @@ function crispbb_admin_main()
     // no need for sec checks, the function we redirect to can take care of it
 
     // try for current users last view
-    $defaultfunc = xarSessionGetVar('crispbb_adminstartpage');
+    $defaultfunc = xarSession::getVar('crispbb_adminstartpage');
 
     // fall back to module config
     if (empty($defaultfunc)) {
@@ -38,7 +38,7 @@ function crispbb_admin_main()
         $defaultfunc = 'overview';
     }
 
-    xarController::redirect(xarModURL('crispbb', 'admin', $defaultfunc));
+    xarController::redirect(xarController::URL('crispbb', 'admin', $defaultfunc));
     return true;
 }
 ?>

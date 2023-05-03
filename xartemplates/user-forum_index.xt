@@ -28,9 +28,9 @@
         <table class="xar-fullwidth xar-alt-outline xar-margin-nonetop">
             <caption class="xar-padding-thick xar-alt-outline xar-align-left">
                 <xar:if condition="!empty($catinfo['viewurl'])">
-                    <a href="#$catinfo['viewurl']#" title="#xarVarPrepForDisplay($catinfo['description'])#">#xarVarPrepForDisplay($catinfo['name'])#</a>
+                    <a href="#$catinfo['viewurl']#" title="#xarVar::prepForDisplay($catinfo['description'])#">#xarVar::prepForDisplay($catinfo['name'])#</a>
                 <xar:else />
-                    <strong>#xarVarPrepForDisplay($catinfo['name'])#</strong>
+                    <strong>#xarVar::prepForDisplay($catinfo['name'])#</strong>
                 </xar:if>
             </caption>
             <thead>
@@ -46,7 +46,7 @@
                     <td colspan="4" class="xar-align-center">
                         <span class="xar-sub">
                             <xar:set name="grammar">$catinfo['numforums'] == 1 ? 'forum' : 'forums'</xar:set>
-                                Showing #$catinfo['numforums']# #$grammar# in category #xarVarPrepForDisplay($catinfo['name'])#
+                                Showing #$catinfo['numforums']# #$grammar# in category #xarVar::prepForDisplay($catinfo['name'])#
                         </span>
                     </td>
                 </tr>
@@ -59,7 +59,7 @@
                 <tr class="#$rowclass#">
                     <td class="timeimage xar-align-center xar-valign-middle">
                         <xar:if condition="!empty($forum['forumreadurl'])">
-                            <a href="#xarModURL('crispbb', 'user','forum_index', array('fid' => $forum['fid'], 'action' => 'read'))#" title="#xarML('Mark this forum read')#"><xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" /></a>
+                            <a href="#xarController::URL('crispbb', 'user','forum_index', array('fid' => $forum['fid'], 'action' => 'read'))#" title="#xarML('Mark this forum read')#"><xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" /></a>
                         <xar:else />
                             <xar:template type="module" module="crispbb" file="forum-timeimage" subdata="array('forum' =&gt; $forum)" />
                         </xar:if>

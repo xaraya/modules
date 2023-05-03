@@ -20,7 +20,7 @@
             <h2>Base Forum Category</h2>
             <p>The base forum category is never actually displayed within forum listings.
             The categories you add to this category will be used as your forum categories.</p>
-            <form action="#xarModURL('crispbb', 'admin', 'categories')#" method="post">
+            <form action="#xarController::URL('crispbb', 'admin', 'categories')#" method="post">
                 <xar:data-input type="categorypicker" module="crispbb" column_configuration="$column_configuration" tplmodule="crispbb" name="basecid" />
                 <p>NOTE: If you change this, any existing forums belonging to categories which are not children
                 of the new base category will no longer be displayed in forum listings.</p>

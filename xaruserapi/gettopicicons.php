@@ -33,7 +33,7 @@ function crispbb_userapi_gettopicicons($args)
                 'basedir' => 'code/modules/crispbb/xarimages/'.$iconfolder,
                 'match_re' => '/(gif|png|jpg)$/'));
         $themeicons = xarMod::apiFunc('crispbb', 'user', 'browse_files',
-            array('basedir' => xarTPLGetThemeDir() . '/modules/crispbb/images/'.$iconfolder,
+            array('basedir' => xarTpl::getThemeDir() . '/modules/crispbb/images/'.$iconfolder,
                 'match_re' => '/(gif|png|jpg)$/'));
         if (!empty($moduleicons)) {
             foreach ($moduleicons as $modicon) {

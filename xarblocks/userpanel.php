@@ -53,8 +53,8 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
 
         $now = time();
         sys::import('modules.crispbb.class.tracker');
-        if (xarVarIsCached('Blocks.crispbb', 'tracker')) {
-            $tracker = xarVarGetCached('Blocks.crispbb', 'tracker_object');
+        if (xarVar::isCached('Blocks.crispbb', 'tracker')) {
+            $tracker = xarVar::getCached('Blocks.crispbb', 'tracker_object');
         } else {
             $tracker = unserialize(xarModUserVars::get('crispbb', 'tracker_object'));
         }
@@ -100,14 +100,14 @@ class Crispbb_UserPanelBlock extends BasicBlock implements iBlock
     public function update(Array $data=array())
     {
         $vars = array();
-        if (!xarVarFetch('showusername', 'checkbox', $vars['showusername'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showaccount', 'checkbox', $vars['showaccount'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showtimenow', 'checkbox', $vars['showtimenow'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showwaiting', 'checkbox', $vars['showwaiting'], false, XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('showlogout', 'checkbox', $vars['showlogout'], false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showusername', 'checkbox', $vars['showusername'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showaccount', 'checkbox', $vars['showaccount'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showtimenow', 'checkbox', $vars['showtimenow'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showlastvisit', 'checkbox', $vars['showlastvisit'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showthisvisit', 'checkbox', $vars['showthisvisit'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showtotalvisit', 'checkbox', $vars['showtotalvisit'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showwaiting', 'checkbox', $vars['showwaiting'], false, xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('showlogout', 'checkbox', $vars['showlogout'], false, xarVar::NOT_REQUIRED)) return;
         $this->setContent($vars);
         return true;
     }

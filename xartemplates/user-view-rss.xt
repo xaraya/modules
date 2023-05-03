@@ -17,10 +17,10 @@
             <title>#$announcement['ttitle']#</title>
             <link>#$announcement['viewtopicurl']#</link>
             <author>#$posterlist[$announcement['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$announcement['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$announcement['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($announcement['tdesc'])# ]]></content:encoded>
-            <description>#xarVarPrepForDisplay($announcement['tdesc'])#</description>
+            <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($announcement['tdesc'])# ]]></content:encoded>
+            <description>#xarVar::prepForDisplay($announcement['tdesc'])#</description>
             <guid isPermaLink="true">#$announcement['viewtopicurl']#</guid>
         </item>
     </xar:foreach>
@@ -31,10 +31,10 @@
             <title>#$sticky['ttitle']#</title>
             <link>#$sticky['viewtopicurl']#</link>
             <author>#$posterlist[$sticky['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$sticky['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$sticky['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($sticky['tdesc'])# ]]></content:encoded>
-            <description>#xarVarPrepForDisplay($sticky['tdesc'])#</description>
+            <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($sticky['tdesc'])# ]]></content:encoded>
+            <description>#xarVar::prepForDisplay($sticky['tdesc'])#</description>
             <guid isPermaLink="true">#$sticky['viewtopicurl']#</guid>
         </item>
     </xar:foreach>
@@ -45,10 +45,10 @@
             <title>#$faq['ttitle']#</title>
             <link>#$faq['viewtopicurl']#</link>
             <author>#$posterlist[$faq['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$faq['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$faq['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($faq['tdesc'])# ]]></content:encoded>
-            <description>#xarVarPrepForDisplay($faq['tdesc'])#</description>
+            <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($faq['tdesc'])# ]]></content:encoded>
+            <description>#xarVar::prepForDisplay($faq['tdesc'])#</description>
             <guid isPermaLink="true">#$faq['viewtopicurl']#</guid>
         </item>
     </xar:foreach>
@@ -59,10 +59,10 @@
             <title>#$topic['ttitle']#</title>
             <link>#$topic['viewtopicurl']#</link>
             <author>#$posterlist[$topic['towner']]['name']#</author>
-            <pubDate>#xarLocaleFormatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
+            <pubDate>#xarLocale::formatUTCDate("%a, %d %b %Y %H:%M:%S GMT",$topic['ptime'])#</pubDate>
             <content:format rdf:resource="http://www.w3.org/1999/xhtml" />
-            <content:encoded><![CDATA[ #xarVarPrepHTMLDisplay($topic['tdesc'])# ]]></content:encoded>
-            <description>#xarVarPrepForDisplay($topic['tdesc'])#</description>
+            <content:encoded><![CDATA[ #xarVar::prepHTMLDisplay($topic['tdesc'])# ]]></content:encoded>
+            <description>#xarVar::prepForDisplay($topic['tdesc'])#</description>
             <guid isPermaLink="true">#$topic['viewtopicurl']#</guid>
         </item>
     </xar:foreach>

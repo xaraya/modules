@@ -22,12 +22,12 @@
 function crispbb_admin_unlinkhooks()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminCrispBB')) return;
+    if(!xarSecurity::check('AdminCrispBB')) return;
 
-    if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm', 'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if(!xarVar::fetch('modid',    'isset', $modid,     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemtype', 'isset', $itemtype,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',   'isset', $itemid,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('confirm', 'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) return;
 
     $now = time();
 
@@ -58,7 +58,7 @@ function crispbb_admin_unlinkhooks()
             }
         }
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $data['menulinks'] = xarMod::apiFunc('crispbb', 'admin', 'getmenulinks',
             array(
                 'current_module' => 'crispbb',
@@ -66,12 +66,12 @@ function crispbb_admin_unlinkhooks()
                 'current_func' => 'unlinkhooks',
                 'current_sublink' => '',
             ));
-        xarTpl::setPageTitle(xarVarPrepForDisplay($pageTitle));
+        xarTpl::setPageTitle(xarVar::prepForDisplay($pageTitle));
         // Return the template variables defined in this function
         return $data;
     }
 
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
     if (!xarMod::apiFunc('crispbb','admin','unlinkhooks',
                        array('modid' => $modid,
                              'itemtype' => $itemtype,
@@ -79,7 +79,7 @@ function crispbb_admin_unlinkhooks()
                              'confirm' => $confirm))) {
         return;
     }
-    xarController::redirect(xarModURL('crispbb', 'admin', 'modifyhooks',
+    xarController::redirect(xarController::URL('crispbb', 'admin', 'modifyhooks',
         array('modid' => $modid, 'itemtype' => $itemtype)));
     return true;
 }
