@@ -17,19 +17,19 @@ function calendar_userapi_getitemtypes($args)
 
     $itemtypes[1] = array('label' => xarML('Event'),
                           'title' => xarML('View Event'),
-                          'url'   => xarModURL('calendar','user','view')
+                          'url'   => xarController::URL('calendar','user','view')
                          );
     $itemtypes[2] = array('label' => xarML('ToDo'),
                           'title' => xarML('View ToDo'),
-                          'url'   => xarModURL('calendar','user','view')
+                          'url'   => xarController::URL('calendar','user','view')
                          );
     $itemtypes[3] = array('label' => xarML('Alarm'),
                           'title' => xarML('View Alarm'),
-                          'url'   => xarModURL('calendar','user','view')
+                          'url'   => xarController::URL('calendar','user','view')
                          );
     $itemtypes[4] = array('label' => xarML('FreeBusy'),
                           'title' => xarML('View FreeBusy'),
-                          'url'   => xarModURL('calendar','user','view')
+                          'url'   => xarController::URL('calendar','user','view')
                          );
     // @todo let's use DataObjectMaster::getModuleItemType here, but not until roles brings in dd automatically
     $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 7, 'native' =>false));

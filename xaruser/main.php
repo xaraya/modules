@@ -14,7 +14,7 @@
 function calendar_user_main()
 {
     // Xaraya security
-    if(!xarSecurityCheck('ReadCalendar')) return;
+    if(!xarSecurity::check('ReadCalendar')) return;
 
     $redirect = xarModVars::get('calendar','frontend_page');
     if (!empty($redirect)) {
@@ -22,7 +22,7 @@ function calendar_user_main()
         $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
         xarController::redirect($urldata['redirecturl']);
     } else {
-        xarController::redirect(xarModURL('calendar', 'user', 'week'));
+        xarController::redirect(xarController::URL('calendar', 'user', 'week'));
     }
     return true;
 }

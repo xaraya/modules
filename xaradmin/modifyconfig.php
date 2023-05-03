@@ -15,10 +15,10 @@ function calendar_admin_modifyconfig()
 {
     $data = xarMod::apiFunc('calendar', 'admin', 'menu');
     $data = array_merge($data,xarMod::apiFunc('calendar', 'admin', 'get_calendars'));
-    if (!xarSecurityCheck('AdminCalendar')) return;
+    if (!xarSecurity::check('AdminCalendar')) return;
     
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) return;
 
     $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'calendar'));
     $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls','use_module_icons, frontend_page, backend_page');
@@ -38,17 +38,17 @@ function calendar_admin_modifyconfig()
 
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
-            if (!xarVarFetch('windowwidth', 'int:1', $windowwidth, xarModVars::get('calendar', 'aliasname'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('minutesperunit', 'int:1', $minutesperunit, xarModVars::get('calendar', 'minutesperunit'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('unitheight', 'int:1', $unitheight, xarModVars::get('calendar', 'unitheight'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarSec::confirmAuthKey()) return;
+            if (!xarVar::fetch('windowwidth', 'int:1', $windowwidth, xarModVars::get('calendar', 'aliasname'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('minutesperunit', 'int:1', $minutesperunit, xarModVars::get('calendar', 'minutesperunit'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('unitheight', 'int:1', $unitheight, xarModVars::get('calendar', 'unitheight'), xarVar::NOT_REQUIRED)) return;
 
-            if (!xarVarFetch('default_view', 'str:1', $default_view, xarModVars::get('calendar', 'default_view'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('cal_sdow', 'str:1', $cal_sdow, xarModVars::get('calendar', 'cal_sdow'), XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('default_view', 'str:1', $default_view, xarModVars::get('calendar', 'default_view'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('cal_sdow', 'str:1', $cal_sdow, xarModVars::get('calendar', 'cal_sdow'), xarVar::NOT_REQUIRED)) return;
 
             $isvalid = $data['module_settings']->checkInput();
             if (!$isvalid) {
-                return xarTplModule('calendar','admin','modifyconfig', $data);        
+                return xarTpl::module('calendar','admin','modifyconfig', $data);        
             } else {
                 $itemid = $data['module_settings']->updateItem();
             }
@@ -82,7 +82,7 @@ function calendar_admin_modifyconfig()
             xarModItemVars::set('calendar', 'day_start', $day_start, $regid);
             xarModItemVars::set('calendar', 'day_end', $day_end, $regid);
 
-            xarController::redirect(xarModURL('calendar', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+            xarController::redirect(xarController::URL('calendar', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
             return true;
             break;
     }
@@ -149,7 +149,7 @@ function calendar_admin_modifyconfig()
     $save_parsed_cals       = 'yes';            // Recommended 'yes'. Saves a copy of the cal in /tmp after it's been parsed. Improves performence.
     */
 
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Update Configuration'));
+    $data['updatebutton'] = xarVar::prepForDisplay(xarML('Update Configuration'));
     // Note : if you don't plan on providing encode/decode functions for
     // short URLs (see xaruserapi.php), you should remove these from your
     // admin-modifyconfig.xard template !
@@ -159,7 +159,7 @@ function calendar_admin_modifyconfig()
 
 
 /*    //TODO: should I include this stuff? --amoro
-    $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
+    $hooks = xarModHooks::call('module', 'modifyconfig', 'calendar',
         array('module' => 'calendar'));
     if (empty($hooks)) {
         $data['hooks'] = '';
@@ -169,7 +169,7 @@ function calendar_admin_modifyconfig()
         $data['hooks'] = $hooks;
     }
 */
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
 ?>

@@ -12,11 +12,11 @@
 
 
     <!--
-        // Start form - note the use of xarModURL() to create the recipient URL of
-        // this form.  All URLs should be generated through xarModURL() to ensure
+        // Start form - note the use of xarController::URL() to create the recipient URL of
+        // this form.  All URLs should be generated through xarController::URL() to ensure
         // compatibility with future versions of Xaraya
     -->
-    <form method="post" action="#xarModURL('calendar','admin','add_event')#">
+    <form method="post" action="#xarController::URL('calendar','admin','add_event')#">
     <!--
         // Add an authorisation ID - this adds a hidden field in the form that
         // contains an authorisation ID.  The authorisation ID is very important in

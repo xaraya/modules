@@ -14,13 +14,13 @@
 function calendar_adminapi_getmenulinks()
 {
     $menulinks = array();
-    if (xarSecurityCheck('AdminCalendar',0)) {
-        $menulinks[] = array('url'   => xarModURL('calendar',
+    if (xarSecurity::check('AdminCalendar',0)) {
+        $menulinks[] = array('url'   => xarController::URL('calendar',
                                                   'admin',
                                                   'view'),
                               'title' => xarML('Manage the Master Tables  of this module'),
                               'label' => xarML('Master Tables'));
-        $menulinks[] = array('url'   => xarModURL('calendar',
+        $menulinks[] = array('url'   => xarController::URL('calendar',
                                                   'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the configuration settings'),
@@ -28,12 +28,12 @@ function calendar_adminapi_getmenulinks()
 
     /*
         $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','add_event'),
+            'url'=>xarController::URL('calendar','admin','add_event'),
             'title'=>xarML('Add a new calendar event'),
             'label'=>xarML('Add event')
             );
         $menulinks[] = Array(
-            'url'=>xarModURL('calendar','admin','view'),
+            'url'=>xarController::URL('calendar','admin','view'),
             'title'=>xarML('View queued events'),
             'label'=>xarML('View Queue')
             );

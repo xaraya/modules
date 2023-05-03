@@ -18,7 +18,7 @@
     <xar:if condition="empty($total)">
               <p class="xar-align-center">There are no listings selected</p>
     </xar:if>
-    <form  action="#xarModURL('listings','admin','multiops')#" method="post" onsubmit = "listings_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
+    <form  action="#xarController::URL('listings','admin','multiops')#" method="post" onsubmit = "listings_getchecked('idlist');document.getElementById('redirecttarget').value = this.value;" style="clear: both">
         <xar:template file="listing_footerline" module="$module" property="listing"/>
         <input type="hidden" name="returnurl" id="returnurl" value="#xarServer::getCurrentURL()#"/>
         <input type="hidden" name="object" id="object" value="#$objectname#"/>

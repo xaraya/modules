@@ -16,7 +16,7 @@
                 <xar:button type="link" target="$prevYearURL" label="$label"/>
                 <xar:var name="label">Previous Month</xar:var>
                 <xar:button type="link" target="$prevMonthURL" label="$label"/>
-                #xarLocaleFormatDate('%B %Y',$Month->getTimeStamp())#
+                #xarLocale::formatDate('%B %Y',$Month->getTimeStamp())#
                 <xar:var name="label">Next Month</xar:var>
                 <xar:button type="link" target="$nextMonthURL" label="$label"/>
                 <xar:var name="label">Next Year</xar:var>
@@ -46,17 +46,17 @@
                     Week URLs are more difficult to set up than regular URLs for the Calendar.
                     Below is currently the best way to set up a Week URL for the Calendar
                 -->
-                <xar:set name="WeekDate">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
-                <xar:set name="WeekUrl">xarModURL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
+                <xar:set name="WeekDate">xarLocale::formatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+                <xar:set name="WeekUrl">xarController::URL('calendar','user','week',array('cal_date'=>$WeekDate))</xar:set>
                 <xar:set name="WeekNum">xarMod::apiFunc('calendar','user','getWeekNumber',array('cal_date'=>$WeekDate))</xar:set>
                 <tr>
                     <th class="cal-week">
-                        <a href="#$WeekUrl#">#xarLocaleFormatDate('%U',$Day->getTimeStamp())#</a>
+                        <a href="#$WeekUrl#">#xarLocale::formatDate('%U',$Day->getTimeStamp())#</a>
                     </th>
                     <xar:while condition="1">                        
                         <!-- populate the day -->
-                        <xar:set name="today">xarLocaleFormatDate('%Y%m%d')</xar:set>
-                        <xar:set name="thisday">xarLocaleFormatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
+                        <xar:set name="today">xarLocale::formatDate('%Y%m%d')</xar:set>
+                        <xar:set name="thisday">xarLocale::formatDate('%Y%m%d',$Day->getTimeStamp())</xar:set>
                         <xar:if condition="$today eq $thisday">
                             <xar:set name="accentclass">'xar-accent'</xar:set>
                         <xar:else />

@@ -28,9 +28,9 @@ function calendar_userapi_encode_shorturl(&$params)
         $month = substr($params['cal_date'],4,2);
         $day = substr($params['cal_date'],6,2);
     }
-    if(empty($year))  $year  = xarLocaleFormatDate('%Y');
-    if(empty($month)) $month = xarLocaleFormatDate('%m');
-    if(empty($day))   $day   = xarLocaleFormatDate('%d');
+    if(empty($year))  $year  = xarLocale::formatDate('%Y');
+    if(empty($month)) $month = xarLocale::formatDate('%m');
+    if(empty($day))   $day   = xarLocale::formatDate('%d');
 
 
     // specify some short URLs relevant to your module
@@ -67,14 +67,14 @@ function calendar_userapi_encode_shorturl(&$params)
         case 'edit':
             $path = "/$module/edit/";
             if(isset($params['cal_eid']) && !empty($params['cal_eid'])) {
-                $path .= xarVarPrepForDisplay($params['cal_eid']).'.html/';
+                $path .= xarVar::prepForDisplay($params['cal_eid']).'.html/';
             }
             break;
 
         case 'publish':
             $path = "/$module/publish/";
             if(isset($params['calname']) && !empty($params['calname'])) {
-                $path .= xarVarPrepForDisplay($params['calname']).'.ics';
+                $path .= xarVar::prepForDisplay($params['calname']).'.ics';
             }
             break;
         */

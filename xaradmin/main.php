@@ -14,7 +14,7 @@
 function calendar_admin_main()
 {
     // Xaraya security
-    if(!xarSecurityCheck('ManageCalendar')) return;
+    if(!xarSecurity::check('ManageCalendar')) return;
 
     if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();
@@ -25,7 +25,7 @@ function calendar_admin_main()
             $urldata = xarMod::apiFunc('roles','user','parseuserhome',array('url'=> $redirect,'truecurrenturl'=>$truecurrenturl));
             xarController::redirect($urldata['redirecturl']);
         } else {
-            xarController::redirect(xarModURL('calendar', 'admin', 'view'));
+            xarController::redirect(xarController::URL('calendar', 'admin', 'view'));
         }
     }
     return true;

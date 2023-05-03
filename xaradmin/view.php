@@ -13,12 +13,12 @@
 
     function calendar_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageCalendar')) return;
+        if (!xarSecurity::check('ManageCalendar')) return;
 
         $modulename = 'calendar';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, 'calendar_calendar', XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('objectname', 'str', $objectname, 'calendar_calendar', xarVar::DONT_SET)) return;
         if (!empty($objectname)) xarModVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url

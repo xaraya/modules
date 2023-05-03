@@ -3,18 +3,18 @@ function calendar_admin_add_event()
 {
 
     // Security check
-    if (!xarSecurityCheck('Admincalendar')) return;
+    if (!xarSecurity::check('Admincalendar')) return;
 
     // Generate a one-time authorisation code for this operation
     $data = xarMod::apiFunc('calendar', 'admin', 'get_calendars');
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['default_cal'] = unserialize(xarModVars::get('calendar', 'default_cal'));
 
     // Variables from phpIcalendar config.inc.php
-    $data['updatebutton'] = xarVarPrepForDisplay(xarML('Create event'));
+    $data['updatebutton'] = xarVar::prepForDisplay(xarML('Create event'));
 
     //TODO: should I include this stuff? --amoro
-/*    $hooks = xarModCallHooks('module', 'modifyconfig', 'calendar',
+/*    $hooks = xarModHooks::call('module', 'modifyconfig', 'calendar',
         array('module' => 'calendar'));
     if (empty($hooks)) {
         $data['hooks'] = '';

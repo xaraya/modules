@@ -17,8 +17,8 @@
 function calendar_user_publish($args)
 {
     extract($args);
-    xarVarFetch('calid','id',$calid,0,XARVAR_NOT_REQUIRED);
-    xarVarFetch('calname','str:1:',$calname,'',XARVAR_NOT_REQUIRED);
+    xarVar::fetch('calid','id',$calid,0,xarVar::NOT_REQUIRED);
+    xarVar::fetch('calname','str:1:',$calname,'',xarVar::NOT_REQUIRED);
 
 // test
     xarModVars::set('calendar', 'SupportShortURLs', 1);
@@ -31,9 +31,9 @@ function calendar_user_publish($args)
     // cfr. notes at http://www.php.net/features.http-auth for IIS or CGI support
         if (empty($_SERVER['PHP_AUTH_USER']) || empty($_SERVER['PHP_AUTH_PW']) ||
             // is this a valid user/password ?
-            !xarUserLogIn($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) ||
+            !xarUser::logIn($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) ||
             // does this user have access to this calendar ?
-            !xarSecurityCheck('ViewCalendar',0,'All',$calname)) {
+            !xarSecurity::check('ViewCalendar',0,'All',$calname)) {
 
             $realm = xarModVars::get('themes','SiteName');
             header('WWW-Authenticate: Basic realm="'.$realm.'"');

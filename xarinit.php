@@ -87,27 +87,27 @@ function calendar_init()
 #
 # Set up masks
 #
-    xarRegisterMask('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadCalendar','All','calendar','All','All','ACCESS_READ');
-    xarRegisterMask('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
-    xarRegisterMask('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
-    xarRegisterMask('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
-    xarRegisterMask('AddCalendar','All','calendar','All','All','ACCESS_ADD');
-    xarRegisterMask('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
+    xarMasks::register('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
+    xarMasks::register('ReadCalendar','All','calendar','All','All','ACCESS_READ');
+    xarMasks::register('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
+    xarMasks::register('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
+    xarMasks::register('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
+    xarMasks::register('AddCalendar','All','calendar','All','All','ACCESS_ADD');
+    xarMasks::register('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
+    xarMasks::register('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
 # Set up privileges
 #
-    xarRegisterPrivilege('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadCalendar','All','calendar','All','All','ACCESS_READ');
-    xarRegisterPrivilege('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
-    xarRegisterPrivilege('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
-    xarRegisterPrivilege('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
-    xarRegisterPrivilege('AddCalendar','All','calendar','All','All','ACCESS_ADD');
-    xarRegisterPrivilege('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
+    xarPrivileges::register('ViewCalendar','All','calendar','All','All','ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadCalendar','All','calendar','All','All','ACCESS_READ');
+    xarPrivileges::register('CommentCalendar','All','calendar','All','All','ACCESS_COMMENT');
+    xarPrivileges::register('ModerateCalendar','All','calendar','All','All','ACCESS_MODERATE');
+    xarPrivileges::register('EditCalendar','All','calendar','All','All','ACCESS_EDIT');
+    xarPrivileges::register('AddCalendar','All','calendar','All','All','ACCESS_ADD');
+    xarPrivileges::register('ManageCalendar','All','calendar','All','All','ACCESS_DELETE');
+    xarPrivileges::register('AdminCalendar','All','calendar','All','All','ACCESS_ADMIN');
 
 # --------------------------------------------------------
 #
@@ -190,9 +190,9 @@ function calendar_init()
 # Set up hooks
 #
 
-    xarModRegisterHook('item', 'create', 'API','calendar', 'admin', 'hookcreate');
-    xarModRegisterHook('item', 'update', 'API','calendar', 'admin', 'hookupdate');
-//    xarModRegisterHook('item', 'delete', 'API','calendar', 'admin', 'hookdelete');
+    xarModHooks::register('item', 'create', 'API','calendar', 'admin', 'hookcreate');
+    xarModHooks::register('item', 'update', 'API','calendar', 'admin', 'hookupdate');
+//    xarModHooks::register('item', 'delete', 'API','calendar', 'admin', 'hookdelete');
 
 # --------------------------------------------------------
 #
@@ -227,7 +227,7 @@ function calendar_upgrade($oldversion)
                 'xar_calendars_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true),
                 'xar_files_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'primary_key' => true)
                 );
-            $query = xarDBCreateTable($calfilestable, $fields);
+            $query = xarTableDDL::createTable($calfilestable, $fields);
             if (empty($query)) return;
             $result = &$dbconn->Execute($query);
             if (!$result) return;
@@ -238,7 +238,7 @@ function calendar_upgrade($oldversion)
                 'xar_id' => array('type' => 'integer', 'unsigned' => true, 'null' => false, 'increment' => true, 'primary_key' => true),
                 'xar_path' => array('type' => 'varchar', 'size' => '255', 'null' => true)
                 );
-            $query = xarDBCreateTable($filestable, $fields);
+            $query = xarTableDDL::createTable($filestable, $fields);
             if (empty($query)) return;
             $result = &$dbconn->Execute($query);
             if (!$result) return;
@@ -248,7 +248,7 @@ function calendar_upgrade($oldversion)
                 'fields'    => array('xar_calendars_id'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($calfilestable,$index);
+            $query = xarTableDDL::createIndex($calfilestable,$index);
             $result = $dbconn->Execute($query);
             if (!$result) return;
 
@@ -257,7 +257,7 @@ function calendar_upgrade($oldversion)
                 'fields'    => array('xar_files_id'),
                 'unique'    => false
             );
-            $query = xarDBCreateIndex($calfilestable,$index);
+            $query = xarTableDDL::createIndex($calfilestable,$index);
             $result = $dbconn->Execute($query);
             if (!$result) return;
 

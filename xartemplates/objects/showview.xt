@@ -9,7 +9,7 @@
     tplmodule="..." argument in the xar:data-list BL tag or showList() method call.
 -->
 <xar:style scope="module" module="dynamicdata" file="dd"/>
-<xar:if condition="!empty($isprimary) and xarModIsHooked('categories',$modname,$itemtype)">
+<xar:if condition="!empty($isprimary) and xarModHooks::isHooked('categories',$modname,$itemtype)">
     <xar:template file="catnavigation"/>
 </xar:if>
 

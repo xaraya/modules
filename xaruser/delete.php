@@ -34,16 +34,16 @@ function calendar_user_delete($args)
 {
    extract($args);
 
-    if(!xarVarFetch('objectid',   'isset', $objectid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('name',       'isset', $name,       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',     'id',    $itemid                          )) {return;}
-    if(!xarVarFetch('confirm',    'isset', $confirm,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('noconfirm',  'isset', $noconfirm,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('join',       'isset', $join,       NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('table',      'isset', $table,      NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('tplmodule',  'isset', $tplmodule,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('template',   'isset', $template,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('return_url', 'isset', $return_url, NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('objectid',   'isset', $objectid,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('name',       'isset', $name,       NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',     'id',    $itemid                          )) {return;}
+    if(!xarVar::fetch('confirm',    'isset', $confirm,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('noconfirm',  'isset', $noconfirm,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('join',       'isset', $join,       NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('table',      'isset', $table,      NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('tplmodule',  'isset', $tplmodule,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('template',   'isset', $template,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('return_url', 'isset', $return_url, NULL, xarVar::DONT_SET)) {return;}
 
     $myobject = DataObjectMaster::getObject(array('objectid' => $objectid,
                                          'name'       => $name,
@@ -57,7 +57,7 @@ function calendar_user_delete($args)
     $data = $myobject->toArray();
 
     // Security check
-    if(!xarSecurityCheck('DeleteDynamicDataItem',1,'Item',$data['moduleid'].":".$data['itemtype'].":".$data['itemid'])) return;
+    if(!xarSecurity::check('DeleteDynamicDataItem',1,'Item',$data['moduleid'].":".$data['itemtype'].":".$data['itemid'])) return;
 
     // recover any session var information and remove it from the var
     $data = array_merge($data,xarMod::apiFunc('dynamicdata','user','getcontext',array('module' => $tplmodule)));
@@ -67,27 +67,27 @@ function calendar_user_delete($args)
     $myobject->getItem();
 
     if (empty($confirm)) {
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         $data['object'] = $myobject;
 
         if (file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/user-delete.xd') ||
             file_exists('code/modules/' . $data['tplmodule'] . '/xartemplates/admin-delete-' . $data['template'] . '.xd')) {
-            return xarTplModule($data['tplmodule'],'user','delete',$data,$data['template']);
+            return xarTpl::module($data['tplmodule'],'user','delete',$data,$data['template']);
         } else {
-            return xarTplModule('calendar','user','delete',$data,$data['template']);
+            return xarTpl::module('calendar','user','delete',$data,$data['template']);
         }
     }
 
     // If we get here it means that the user has confirmed the action
 
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
 
     $itemid = $myobject->deleteItem();
     if (!empty($return_url)) {
         xarController::redirect($return_url);
     } else {
         $default = xarModVars::get('calendar','default_view');
-        xarController::redirect(xarModURL('calendar', 'user', $default,
+        xarController::redirect(xarController::URL('calendar', 'user', $default,
                                       array(
                                       'page' => $default
                                       )));

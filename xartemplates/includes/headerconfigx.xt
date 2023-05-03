@@ -13,7 +13,7 @@
             <xar:set name="class">""</xar:set>
         </xar:if>
         <dd class="#$class#">
-            <a href="#xarModURL('dataserve', 'admin', 'modifyconfig', array('tabmodule' => 'dataserve', 'tab' => 'dataserve_general'))#">
+            <a href="#xarController::URL('dataserve', 'admin', 'modifyconfig', array('tabmodule' => 'dataserve', 'tab' => 'dataserve_general'))#">
             General</a>
         </dd>
         <xar:set name="tabs">$hooks['tabs']</xar:set>
@@ -25,7 +25,7 @@
                 <xar:set name="class">""</xar:set>
             </xar:if>
             <dd class="#$class#">
-                <a href="#xarModURL('dataserve', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
+                <a href="#xarController::URL('dataserve', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
                     #$thistab['configtitle']#
                 </a>
             </dd>

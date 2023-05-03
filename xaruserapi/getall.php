@@ -33,7 +33,7 @@ function calendar_userapi_getall($args)
     $calendars = array();
 
     // Security check
-//    if (!xarSecurityCheck('ViewCalendars')) return;
+//    if (!xarSecurity::check('ViewCalendars')) return;
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();

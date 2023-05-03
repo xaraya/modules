@@ -7,7 +7,7 @@
     <!--
         Define our navigation elements.
         TODO: Make a nice API Function for creating the valid URLS
-        <xar:set name="prevYearURL">xarModURL('calendar','user','day',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))</xar:set>
+        <xar:set name="prevYearURL">xarController::URL('calendar','user','day',array('cal_sdow'=>$cal_sdow,'cal_date'=>$prevYear))</xar:set>
     -->
     <xar:calendar-decorator object="$Day" decorator="Xaraya" name="DayURI"/>
 
@@ -40,7 +40,7 @@
                 <xar:button type="link" target="$prevMonthURL" label="$label"/>
                 <xar:var name="label">Previous Day</xar:var>
                 <xar:button type="link" target="$prevDayURL" label="$label"/>
-                #xarLocaleFormatDate('%B %d %Y',$Day->getTimeStamp())#
+                #xarLocale::formatDate('%B %d %Y',$Day->getTimeStamp())#
                 <xar:var name="label">Next Day</xar:var>
                 <xar:button type="link" target="$nextDayURL" label="$label"/>
                 <xar:var name="label">Next Month</xar:var>
@@ -81,7 +81,7 @@
                                 <div style="z-index: 1000; padding: 1px; color: white; position: absolute; left: #$widthoffset#px; top: #$heightoffset#px; width: #$width#px; height: #$height#px; background-color: #ACCDAC">
                                     &#160;
                                     <xar:if condition="$entry.recurring_code">
-                                        <img src="#xarTplGetImage('recurring.gif')#"/>
+                                        <img src="#xarTpl::getImage('recurring.gif')#"/>
                                         &#160;
                                     </xar:if>
                                     #$entry.name#

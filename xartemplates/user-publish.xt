@@ -4,7 +4,7 @@
     <xar:if condition="!empty($calendars)">
         <ul>
         <xar:foreach in="$calendars" value="$calendar">
-            <li> <a href="#xarModURL('calendar','user','publish',array('calid' => $calendar['cid'],'calname' => $calendar['cname']))#">#$calendar['cname']#</a></li>
+            <li> <a href="#xarController::URL('calendar','user','publish',array('calid' => $calendar['cid'],'calname' => $calendar['cname']))#">#$calendar['cname']#</a></li>
         </xar:foreach>
         </ul>
     <xar:else/>
