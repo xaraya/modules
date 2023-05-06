@@ -14,12 +14,12 @@
  */
     function wurfl_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageWurfl')) return;
+        if (!xarSecurity::check('ManageWurfl')) return;
 
         $modulename = 'wurfl';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) return;
         if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url

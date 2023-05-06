@@ -17,21 +17,21 @@ class WurflPostDispatchObserver extends EventObserver implements ixarEventObserv
         
         $set = true;
         $request = xarController::getRequest();
-        if (!xarUserIsLoggedIn() && $request->getType() == 'user') {
+        if (!xarUser::isLoggedIn() && $request->getType() == 'user') {
             // For the anonymous user, see if a module specific page exists
-            if (!xarTplSetPageTemplateName('user-'.$request->getModule())) {
-                xarTplSetPageTemplateName($request->getModule());
+            if (!xarTpl::setPageTemplateName('user-'.$request->getModule())) {
+                xarTpl::setPageTemplateName($request->getModule());
             }
             return $set;
         }
 
-        if (xarUserIsLoggedIn()) {
-            if (xarUserIsLoggedIn() && $request->getType() == 'user') {
+        if (xarUser::isLoggedIn()) {
+            if (xarUser::isLoggedIn() && $request->getType() == 'user') {
                 // Same thing for user side where user is logged in
                 if (!xarTpl::setPageTemplateName('user-'.$request->getModule())) {
                     xarTpl::setPageTemplateName('user');
                 }
-            } elseif (xarUserIsLoggedIn() && $request->getType() == 'admin') {
+            } elseif (xarUser::isLoggedIn() && $request->getType() == 'admin') {
                  // Use the admin-$modName.xt page if available when $modType is admin
                 // falling back on admin.xt if the former isn't available
                 if (!xarTpl::setPageTemplateName('admin-'.$request->getModule())) {

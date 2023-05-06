@@ -14,14 +14,14 @@
  */
 function wurfl_admin_test()
 {
-    if (!xarSecurityCheck('ManageWurfl')) return;
+    if (!xarSecurity::check('ManageWurfl')) return;
     
     sys::import('modules.wurfl.wurfl_init');
     $wurflManager = wurfl_init();
     $data['wurflInfo'] = $wurflManager->getWURFLInfo();
 
-    if (!xarVarFetch('ua',      'str', $data['ua'], '', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('mode',    'str', $data['mode'], 'performance', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('ua',      'str', $data['ua'], '', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('mode',    'str', $data['mode'], 'performance', xarVar::NOT_REQUIRED)) return;
     $data['requestingDevice'] = xarMod::apiFunc('wurfl','user','get_device',array('ua' => $data['ua'], 'mode' => $data['mode']));
     if (empty($data['ua'])) $data['ua'] = $_SERVER['HTTP_USER_AGENT'];
     return $data;

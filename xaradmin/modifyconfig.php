@@ -18,9 +18,9 @@
     function wurfl_admin_modifyconfig()
     {
         // Security Check
-        if (!xarSecurityCheck('AdminWurfl')) return;
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarSecurity::check('AdminWurfl')) return;
+        if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+        if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) return;
 
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'wurfl'));
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
@@ -44,12 +44,12 @@
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSec::confirmAuthKey()) return;
                 switch ($data['tab']) {
                     case 'general':
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {
-                            return xarTplModule('wurfl','admin','modifyconfig', $data);        
+                            return xarTpl::module('wurfl','admin','modifyconfig', $data);        
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
@@ -62,13 +62,13 @@
                         break;
                 }
 
-                xarController::redirect(xarModURL('wurfl', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarController::redirect(xarController::URL('wurfl', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
 
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         return $data;
     }
 ?>

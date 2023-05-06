@@ -3,7 +3,7 @@
     <!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
-        <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
+        <img src="#xarTpl::getImage('module-generic.png', 'base')#" alt="official icon" width="96" height="96" class="xar-module-icon"/>
 
         <h3>
             Overview
@@ -20,7 +20,7 @@
             This module lets you use WURFL from within Xaraya. It has two API functions, wurfl_userapi_get_device and wurfl_userapi_check_device. The former returns an object modeling the requesting device (browser, iPad etc.), while the latter checks that device against a device ID entered (for instance generic_web_browser).
         </p>
         <p>
-            The module has no user interface, and a single admin page for testing WURFL <a href="#xarModURL('wurfl','admin','test')#">here</a>.
+            The module has no user interface, and a single admin page for testing WURFL <a href="#xarController::URL('wurfl','admin','test')#">here</a>.
         </p>
         <p>
             WURFL can be run in two modes: accuracy and perfomrance. The latter is the default, allowing for faster checks. Its output for any PC browser for instance will be a generic device descrioption. The accuracy mode can be used when speed is not as crucial, and an exact identification of the calling device (e.g. firefox_11_0) is required.

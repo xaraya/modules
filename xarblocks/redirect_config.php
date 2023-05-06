@@ -36,7 +36,7 @@ class Wurfl_RedirectBlockConfig extends Wurfl_RedirectBlock
         $vars = array();
         
         // fetch the array of redirects from input
-        if (!xarVarFetch('redirects', 'array', $redirects, array(), XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('redirects', 'array', $redirects, array(), xarVar::NOT_REQUIRED)) return;
         $newredirects = array();
         foreach ($redirects as $redirect) {
             // delete if flag is set not empty
@@ -45,11 +45,11 @@ class Wurfl_RedirectBlockConfig extends Wurfl_RedirectBlock
         }
 
         // fetch the value of the new redirect
-        if (!xarVarFetch('redirectua', 'pre:trim:str:1:', $redirectua, '', XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('redirectua', 'pre:trim:str:1:', $redirectua, '', xarVar::NOT_REQUIRED)) return;
         // only fetch other params if user agent isn't empty
         if (!empty($redirectua)) {
-            if (!xarVarFetch('redirecttheme', 'pre:trim:str:1:', $redirecttheme, '', XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('redirecttemplate', 'pre:trim:str:1:', $redirecttemplate, '', XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('redirecttheme', 'pre:trim:str:1:', $redirecttheme, '', xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('redirecttemplate', 'pre:trim:str:1:', $redirecttemplate, '', xarVar::NOT_REQUIRED)) return;
             $newredirects[] = array(
                 'ua' => $redirectua,
                 'theme' => $redirecttheme,

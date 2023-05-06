@@ -12,7 +12,7 @@
         </ul>
         <div id="content">
             <xar:set name="ua">htmlspecialchars($ua)</xar:set>
-            User Agent: <b> #$ua#</b>
+            User Agent: <strong> #$ua#</strong>
             <ul>
                 <li>ID: #$requestingDevice:id#</li>
                 <li>Brand Name: #$requestingDevice:getCapability('brand_name')#</li>
@@ -22,7 +22,7 @@
                 <li>Resolution Width: #$requestingDevice:getCapability('resolution_width')#</li>
                 <li>Resolution Height: #$requestingDevice:getCapability('resolution_height')#</li>
             </ul>
-            <p><b>Query WURFL by providing the user agent:</b></p>
+            <p><strong>Query WURFL by providing the user agent:</strong></p>
             <form method="post" action="#xarServer::getCurrentURL()#">
                 <xar:set name="options">
                     array(
