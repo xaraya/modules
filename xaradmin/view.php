@@ -15,12 +15,12 @@
  */
     function sitemapper_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageSitemapper')) return;
+        if (!xarSecurity::check('ManageSitemapper')) return;
 
         $modulename = 'sitemapper';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) return;
         if (!empty($objectname)) xarModVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url

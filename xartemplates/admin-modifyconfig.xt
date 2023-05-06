@@ -30,7 +30,7 @@
                     <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                 </xar:if>
                 <li class="#$tabclass#">
-                    <a href="#xarModURL('logconfig','admin','modifyconfig',array('tab'=>'general'))#" class="#$linkclass#">
+                    <a href="#xarController::URL('logconfig','admin','modifyconfig',array('tab'=>'general'))#" class="#$linkclass#">
                         General
                     </a>
                 </li>

@@ -15,7 +15,7 @@
     function sitemapper_admin_create_files()
     {
         // Security Check
-        if (!xarSecurityCheck('ManageSitemapper')) return;
+        if (!xarSecurity::check('ManageSitemapper')) return;
         
         // Get the link data
         $object = DataObjectMaster::getObjectList(array('name' => 'sitemapper_links'));
@@ -35,7 +35,7 @@
             // Run the template and its data through the compiler
             try{        
                 $tplString = $blCompiler->compilestring($tplInputString);
-                $tplString = xarTplString($tplString,$data);   
+                $tplString = xarTpl::string($tplString,$data);   
             } catch(Exception $e) {
                 var_dump($e->getMessage());exit;
             }
