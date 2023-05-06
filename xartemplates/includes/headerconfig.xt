@@ -14,7 +14,7 @@
             <xar:set name="class">""</xar:set>
         </xar:if>
         <dd class="#$class#">
-            <a href="#xarModURL('xarayatesting', 'admin', 'modifyconfig', array('tabmodule' => 'xarayatesting', 'tab' => 'xarayatesting_general'))#">
+            <a href="#xarController::URL('xarayatesting', 'admin', 'modifyconfig', array('tabmodule' => 'xarayatesting', 'tab' => 'xarayatesting_general'))#">
             <xar:mlstring>General</xar:mlstring></a>
         </dd>
         <xar:set name="tabs">$hooks['tabs']</xar:set>
@@ -26,7 +26,7 @@
                 <xar:set name="class">""</xar:set>
             </xar:if>
             <dd class="#$class#">
-                <a href="#xarModURL('xarayatesting', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
+                <a href="#xarController::URL('xarayatesting', 'admin', 'modifyconfig', array('tabmodule' => $thistab['module'],'tab' => $configtab))#">
                     #$thistab['configtitle']#
                 </a>
             </dd>

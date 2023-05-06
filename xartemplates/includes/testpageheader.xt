@@ -36,7 +36,7 @@
                         <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                     </xar:if>
                     <li class="#$tabclass#">
-                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
+                        <a href="#xarController::URL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$value#
                         </a>
                     </li>
@@ -65,7 +65,7 @@
                         <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                     </xar:if>
                     <li class="#$tabclass#">
-                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
+                        <a href="#xarController::URL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$value#
                         </a>
                     </li>
@@ -90,7 +90,7 @@
                         <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                     </xar:if>
                     <li class="#$tabclass#">
-                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
+                        <a href="#xarController::URL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$ucmodulename#
                         </a>
                     </li>
@@ -115,7 +115,7 @@
                         <xar:set name="linkclass">'xar-norm xar-norm-outline'</xar:set>
                     </xar:if>
                     <li class="#$tabclass#">
-                        <a href="#xarModURL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
+                        <a href="#xarController::URL('xarayatesting','admin','testpage',array('tab'=>$key))#" class="#$linkclass#">
                             #$ucmodulename#
                         </a>
                     </li>

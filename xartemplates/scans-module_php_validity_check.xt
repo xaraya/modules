@@ -30,7 +30,7 @@
                 </xar:if>
             </fieldset>
             <fieldset>
-                <a href="#xarModURL('xarayatesting','admin','othertests')#">Back to Scans</a>
+                <a href="#xarController::URL('xarayatesting','admin','othertests')#">Back to Scans</a>
             </fieldset>
         </xar:if>
     </div>

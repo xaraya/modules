@@ -71,7 +71,7 @@
                                     </td>
                                 <xar:else />
                                     <td width="10%">
-                                        <b style="color: red">Failed</b>
+                                        <strong style="color: red">Failed</strong>
                                     </td>
                                 </xar:if>
                             </tr>

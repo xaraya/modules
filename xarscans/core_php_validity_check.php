@@ -2,7 +2,7 @@
 
     function xarayatesting_scans_core_php_validity_check()
     {
-        if (!xarVarFetch('confirm','int',$data['confirm'],0,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('confirm','int',$data['confirm'],0,xarVar::NOT_REQUIRED)) return;
 
         if (!$data['confirm']) {
             $data = array();

@@ -5,7 +5,7 @@
  */
     function xarayatesting_admin_new()
     {
-        if (!xarSecurityCheck('AddXarayatesting')) return;
+        if (!xarSecurity::check('AddXarayatesting')) return;
 
         $data['object'] = xarMod::apiFunc('dynamicdata','user','getobjectlist', array('name' => 'xarayatesting'));
         $data['tplmodule'] = 'xarayatesting';

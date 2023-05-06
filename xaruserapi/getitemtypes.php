@@ -9,7 +9,7 @@
 
         $itemtypes[1] = array('label' => xarML('Native Xarayatesting'),
                               'title' => xarML('View Xarayatesting'),
-                              'url'   => xarModURL('xarayatesting','user','view')
+                              'url'   => xarController::URL('xarayatesting','user','view')
                              );
 
         $extensionitemtypes = xarMod::apiFunc('dynamicdata','user','getmoduleitemtypes',array('moduleid' => 30073, 'native' => false));
