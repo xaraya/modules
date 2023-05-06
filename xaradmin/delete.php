@@ -19,28 +19,28 @@
     
     function mime_admin_delete()
     {
-        if (!xarSecurityCheck('ManageMime')) return;
+        if (!xarSecurity::check('ManageMime')) return;
 
-        if (!xarVarFetch('name',       'str:1',  $name,    'mime_types',     XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('itemid' ,     'int',    $data['itemid'] , '' ,          XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'str:1',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('name',       'str:1',  $name,    'mime_types',     xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('itemid' ,     'int',    $data['itemid'] , '' ,          xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('confirm',    'str:1',   $data['confirm'], false,       xarVar::NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['object']->getItem(array('itemid' => $data['itemid']));
 
         $data['tplmodule'] = 'mime';
-        $data['authid'] = xarSecGenAuthKey('mime');
+        $data['authid'] = xarSec::genAuthKey('mime');
 
         if ($data['confirm']) {
         
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if(!xarSec::confirmAuthKey()) return;
 
             // Delete the item
             $item = $data['object']->deleteItem();
                 
             // Jump to the next page
-            xarController::redirect(xarModURL('mime','admin','view'));
+            xarController::redirect(xarController::URL('mime','admin','view'));
             return true;
         }
         return $data;

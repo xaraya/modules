@@ -18,14 +18,14 @@
 
     function mime_admin_main()
     {
-        xarController::redirect(xarModURL('mime', 'admin', 'view'));
+        xarController::redirect(xarController::URL('mime', 'admin', 'view'));
         
-        if(!xarSecurityCheck('ManageMime')) return;
+        if(!xarSecurity::check('ManageMime')) return;
 
         if (xarModVars::get('modules', 'disableoverview') == 0) {
             return array();
         } else {
-            xarController::redirect(xarModURL('mime', 'admin', 'view'));
+            xarController::redirect(xarController::URL('mime', 'admin', 'view'));
         }
         // success
         return true;

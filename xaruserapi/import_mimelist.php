@@ -21,7 +21,7 @@
  *  @returns boolean    true if successful importing into database, false otherwise.
  */
 
-xarModAPILoad('mime','user');
+xarMod::apiLoad('mime','user');
  
 function mime_userapi_import_mimelist( $args ) 
 {

@@ -60,9 +60,9 @@ function mime_init()
     // to return right away otherwise we could have
     // some tables created and some not.
     foreach ($fields as $table => $data) {
-        $query = xarDBDropTable($xartable[$table]);
+        $query = xarTableDDL::dropTable($xartable[$table]);
         $result = $dbconn->Execute($query);
-        $query = xarDBCreateTable($xartable[$table], $data);
+        $query = xarTableDDL::createTable($xartable[$table], $data);
         $result = $dbconn->Execute($query);
         if (!$result) {
             $tables[$table] = FALSE;
@@ -78,7 +78,7 @@ function mime_init()
     // that might have been created
     if ($error) {
         foreach ($tables as $table) {
-            $query = xarDBDropTable($xartable[$table]);
+            $query = xarTableDDL::dropTable($xartable[$table]);
             $result = $dbconn->Execute($query);
 
             if(!$result)
@@ -92,19 +92,19 @@ function mime_init()
     #
     # Set up masks
     #
-        xarRegisterMask('EditMime','All','mime','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddMime','All','mime','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageMime','All','mime','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminMime','All','mime','All','All','ACCESS_ADMIN');
+        xarMasks::register('EditMime','All','mime','All','All','ACCESS_EDIT');
+        xarMasks::register('AddMime','All','mime','All','All','ACCESS_ADD');
+        xarMasks::register('ManageMime','All','mime','All','All','ACCESS_DELETE');
+        xarMasks::register('AdminMime','All','mime','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
-        xarRegisterPrivilege('EditMime','All','mime','All','All','ACCESS_EDIT');
-        xarRegisterPrivilege('AddMime','All','mime','All','All','ACCESS_ADD');
-        xarRegisterPrivilege('ManageMime','All','mime','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminMime','All','mime','All','All','ACCESS_ADMIN');
+        xarPrivileges::register('EditMime','All','mime','All','All','ACCESS_EDIT');
+        xarPrivileges::register('AddMime','All','mime','All','All','ACCESS_ADD');
+        xarPrivileges::register('ManageMime','All','mime','All','All','ACCESS_DELETE');
+        xarPrivileges::register('AdminMime','All','mime','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
@@ -141,7 +141,7 @@ function mime_upgrade($oldversion)
     // Set up database objects
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
-    $datadict = xarDBNewDataDict($dbconn, 'ALTERTABLE');
+    $datadict = xarTableDDL::init($dbconn, 'ALTERTABLE');
 
     // Upgrade dependent on old version number
     switch($oldversion) {

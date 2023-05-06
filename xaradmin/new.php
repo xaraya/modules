@@ -19,35 +19,35 @@
     
     function mime_admin_new()
     {
-        if (!xarSecurityCheck('AddMime')) return;
+        if (!xarSecurity::check('AddMime')) return;
 
-        if (!xarVarFetch('name',       'str',    $name,            'mime_types', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('name',       'str',    $name,            'mime_types', xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,     xarVar::NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['tplmodule'] = 'mime';
-        $data['authid'] = xarSecGenAuthKey('mime');
+        $data['authid'] = xarSec::genAuthKey('mime');
 
         if ($data['confirm']) {
         
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
+            if(!xarVar::fetch('preview', 'str', $preview,  NULL, xarVar::DONT_SET)) {return;}
 
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if(!xarSec::confirmAuthKey()) return;
             
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
             
             if (!$isvalid) {
                 // Bad data: redisplay the form with error messages
-                return xarTplModule('mime','admin','new', $data);        
+                return xarTpl::module('mime','admin','new', $data);        
             } else {
                 // Good data: create the item
                 $itemid = $data['object']->createItem();
                 
                 // Jump to the next page
-                xarController::redirect(xarModURL('mime','admin','view'));
+                xarController::redirect(xarController::URL('mime','admin','view'));
                 return true;
             }
         }
