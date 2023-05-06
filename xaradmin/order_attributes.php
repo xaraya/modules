@@ -22,13 +22,13 @@
 function eav_admin_order_attributes()
 {
     // Security
-    if(!xarSecurityCheck('EditEAV')) return;
+    if(!xarSecurity::check('EditEAV')) return;
 
     // Get parameters from whatever input we need.  All arguments to this
-    // function should be obtained from xarVarFetch()
-    if(!xarVarFetch('objectid',          'isset', $object_id,          NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',        'isset', $itemid,         NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('direction',     'isset', $direction,      NULL, XARVAR_DONT_SET)) {return;}
+    // function should be obtained from xarVar::fetch()
+    if(!xarVar::fetch('objectid',          'isset', $object_id,          NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',        'isset', $itemid,         NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('direction',     'isset', $direction,      NULL, xarVar::DONT_SET)) {return;}
 
     if (empty($direction)) {
         $msg = 'Invalid #(1) for #(2) function #(3)() in module #(4)';
@@ -81,7 +81,7 @@ function eav_admin_order_attributes()
     $q->eq('id', (int)$fields[$swapwith]['seq']);
     if(!$q->run()) return;
 
-    xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
+    xarController::redirect(xarController::URL('eav', 'admin', 'add_attribute',
                         array('objectid'    => $object_id,
         )));
     return true;

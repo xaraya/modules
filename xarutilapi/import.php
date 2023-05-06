@@ -91,7 +91,7 @@ function eav_utilapi_import(Array $args=array())
 		}
  		if ($dupexists && !$overwrite) {
             $msg = 'Duplicate definition for #(1) #(2)';
-            $vars = array('object',xarVarPrepForDisplay($args['name']));
+            $vars = array('object',xarVar::prepForDisplay($args['name']));
             throw new DuplicateException(null,$args['name']);
         }
         //Add entities after import

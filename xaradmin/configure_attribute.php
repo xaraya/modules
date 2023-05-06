@@ -16,19 +16,19 @@
 function eav_admin_configure_attribute(Array $args=array())
 {
     // Security
-    if(!xarSecurityCheck('ManageEAV')) return;
+    if(!xarSecurity::check('ManageEAV')) return;
 
     extract($args);
 
     // get the property id
-    if (!xarVarFetch('itemid',  'id',    $itemid, NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarVarFetch('exit', 'isset', $exit, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('preview', 'isset', $preview, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('itemid',  'id',    $itemid, NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarVar::fetch('exit', 'isset', $exit, NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('confirm', 'isset', $confirm, NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('preview', 'isset', $preview, NULL, xarVar::DONT_SET)) {return;}
 
     if (empty($itemid)) {
         // Get the property type for sample configuration
-        if (!xarVarFetch('proptype', 'isset', $proptype, NULL, XARVAR_NOT_REQUIRED)) {return;}
+        if (!xarVar::fetch('proptype', 'isset', $proptype, NULL, xarVar::NOT_REQUIRED)) {return;}
 
         // Show sample configuration for some property type
         return eav_config_propval($proptype);
@@ -71,7 +71,7 @@ function eav_admin_configure_attribute(Array $args=array())
     if (empty($property)) return;
 
     if (!empty($preview) || !empty($confirm) || !empty($exit)) {
-        if (!xarVarFetch($data['name'],'isset',$configuration,NULL,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch($data['name'],'isset',$configuration,NULL,xarVar::NOT_REQUIRED)) return;
 
         // Pass the current value as configuration rule
         $data['configuration'] = isset($configuration) ? $configuration : '';
@@ -82,7 +82,7 @@ function eav_admin_configure_attribute(Array $args=array())
             if (!empty($confirm) || !empty($exit)) {
                 // store the updated configuration rule back in the value
                 $attribute->properties['configuration']->value = $property->configuration;
-                if (!xarSecConfirmAuthKey()) {
+                if (!xarSec::confirmAuthKey()) {
                     return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
                 }
 
@@ -90,16 +90,16 @@ function eav_admin_configure_attribute(Array $args=array())
                 if (empty($newid)) return;
 
                 if (empty($exit)) {
-                    $return_url = xarModURL('eav', 'admin', 'configure_attribute', array('itemid' => $itemid));
+                    $return_url = xarController::URL('eav', 'admin', 'configure_attribute', array('itemid' => $itemid));
                     xarController::redirect($return_url);
                     return true;
                 }
             }
             if (!empty($exit)) {
-                if (!xarVarFetch('return_url', 'isset', $return_url,  NULL, XARVAR_DONT_SET)) {return;}
+                if (!xarVar::fetch('return_url', 'isset', $return_url,  NULL, xarVar::DONT_SET)) {return;}
                 if (empty($return_url)) {
                     // return to modifyprop
-                    $return_url = xarModURL('eav', 'admin', 'add_attribute',
+                    $return_url = xarController::URL('eav', 'admin', 'add_attribute',
                                             array('objectid' => $parentobjectid));
                 }
                 xarController::redirect($return_url);
@@ -157,10 +157,10 @@ function eav_config_propval($proptype)
         return $data;
     }
 
-    if (!xarVarFetch('preview', 'isset', $preview, NULL, XARVAR_DONT_SET)) {return;}
-    if (!xarVarFetch('confirm', 'isset', $confirm, NULL, XARVAR_DONT_SET)) {return;}
+    if (!xarVar::fetch('preview', 'isset', $preview, NULL, xarVar::DONT_SET)) {return;}
+    if (!xarVar::fetch('confirm', 'isset', $confirm, NULL, xarVar::DONT_SET)) {return;}
     if (!empty($preview) || !empty($confirm)) {
-        if (!xarVarFetch($data['name'],'isset',$configuration,NULL,XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch($data['name'],'isset',$configuration,NULL,xarVar::NOT_REQUIRED)) return;
 
         // pass the current value as configuration rule
         $data['configuration'] = isset($configuration) ? $configuration : '';

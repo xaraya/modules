@@ -20,17 +20,17 @@ sys::import('modules.dynamicdata.class.objects.master');
 function eav_admin_export(Array $args=array())
 {
     // Security
-    if (!xarSecurityCheck('ManageEAV')) return;
+    if (!xarSecurity::check('ManageEAV')) return;
 
     extract($args);
 
-    if(!xarVarFetch('objectid', 'isset', $objectid, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('name',     'isset', $name    , NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('module_id','isset', $moduleid, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('tofile',   'isset', $tofile,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('convert',  'isset', $convert,  NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('objectid', 'isset', $objectid, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('name',     'isset', $name    , NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('module_id','isset', $moduleid, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemtype', 'isset', $itemtype, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',   'isset', $itemid,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('tofile',   'isset', $tofile,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('convert',  'isset', $convert,  NULL, xarVar::DONT_SET)) {return;}
 
     $modulename = 'eav';
     $data = array();
@@ -87,16 +87,16 @@ function eav_admin_export(Array $args=array())
     	 						array('objectref' => &$myobject, "objectid" => $objectid));
 	    
 
-        $data['formlink'] = xarModURL('eav','admin','export',
+        $data['formlink'] = xarController::URL('eav','admin','export',
                                       array('objectid' => $myobject->objectid,
                                             'itemid'   => 'all'));
-        $data['filelink'] = xarModURL('eav','admin','export',
+        $data['filelink'] = xarController::URL('eav','admin','export',
                                       array('objectid' => $myobject->objectid,
                                             'itemid'   => 'all',
                                             'tofile'   => 1));
 
         if (!empty($myobject->datastores) && count($myobject->datastores) == 1 && !empty($myobject->datastores['_dynamic_data_'])) {
-            $data['convertlink'] = xarModURL('eav','admin','export',
+            $data['convertlink'] = xarController::URL('eav','admin','export',
                                              array('objectid' => $myobject->objectid,
                                                    'convert'  => 1));
             if (!empty($convert)) {
@@ -114,7 +114,7 @@ function eav_admin_export(Array $args=array())
 
         $xml .= '<'.$myobject->name.' itemid="'.$itemid.'">'."\n";
         foreach (array_keys($myobject->properties) as $name) {
-            $xml .= "  <$name>" . xarVarPrepForDisplay($myobject->properties[$name]->value) . "</$name>\n";
+            $xml .= "  <$name>" . xarVar::prepForDisplay($myobject->properties[$name]->value) . "</$name>\n";
         }
         $xml .= '</'.$myobject->name.">\n";
 
@@ -152,7 +152,7 @@ function eav_admin_export(Array $args=array())
 
         } else {
             $varDir = sys::varpath();
-            $outfile = $varDir . '/uploads/' . xarVarPrepForOS($mylist->name) . '.data.' . xarLocaleFormatDate('%Y%m%d%H%M%S',time()) . '.xml';
+            $outfile = $varDir . '/uploads/' . xarVar::prepForOS($mylist->name) . '.data.' . xarLocale::formatDate('%Y%m%d%H%M%S',time()) . '.xml';
             $fp = @fopen($outfile,'w');
             if (!$fp) {
                 $data['xml'] = xarML('Unable to open file #(1)',$outfile);
@@ -163,7 +163,7 @@ function eav_admin_export(Array $args=array())
                 fputs($fp, "  <".$mylist->name." itemid=\"$itemid\">\n");
                 foreach (array_keys($mylist->properties) as $name) {
                     if (isset($item[$name])) {
-                        fputs($fp, "    <$name>" . xarVarPrepForDisplay($item[$name]) . "</$name>\n");
+                        fputs($fp, "    <$name>" . xarVar::prepForDisplay($item[$name]) . "</$name>\n");
                     } else {
                         fputs($fp, "    <$name></$name>\n");
                     }
@@ -181,7 +181,7 @@ function eav_admin_export(Array $args=array())
     }
 
     $data['objectid'] = $objectid;
-    $data['xml'] = xarVarPrepForDisplay($xml);
+    $data['xml'] = xarVar::prepForDisplay($xml);
 
     xarTpl::setPageTemplateName('admin');
 

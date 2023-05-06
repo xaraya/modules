@@ -18,16 +18,16 @@
     
     function eav_user_display()
     {
-        if (!xarSecurityCheck('ReadEAV')) return;
+        if (!xarSecurity::check('ReadEAV')) return;
 
-        if (!xarVarFetch('name',       'str',    $name,            'eav_eav', XARVAR_NOT_REQUIRED)) return;
-        if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('name',       'str',    $name,            'eav_eav', xarVar::NOT_REQUIRED)) return;
+        if (!xarVar::fetch('itemid' ,    'int',    $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => $name));
         $data['object']->getItem(array('itemid' => $data['itemid']));
 
         $data['tplmodule'] = 'eav';
-        $data['authid'] = xarSecGenAuthKey('eav');
+        $data['authid'] = xarSec::genAuthKey('eav');
 
         return $data;
     }

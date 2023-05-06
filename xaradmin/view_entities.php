@@ -16,7 +16,7 @@
  */
     function eav_admin_view_entities($args)
     {
-        if (!xarSecurityCheck('ManageEAV')) return;
+        if (!xarSecurity::check('ManageEAV')) return;
 
         $data['object'] = DataObjectMaster::getObjectList(array('name' => 'eav_entities'));
 

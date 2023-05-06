@@ -16,12 +16,12 @@
  */
     function eav_admin_view($args)
     {
-        if (!xarSecurityCheck('ManageEAV')) return;
+        if (!xarSecurity::check('ManageEAV')) return;
 
         $modulename = 'eav';
 
         // Define which object will be shown
-        if (!xarVarFetch('objectname', 'str', $objectname, null, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('objectname', 'str', $objectname, null, xarVar::DONT_SET)) return;
         if (!empty($objectname)) xarModUserVars::set($modulename,'defaultmastertable', $objectname);
 
         // Set a return url

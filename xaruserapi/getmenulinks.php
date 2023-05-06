@@ -19,8 +19,8 @@ function eav_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewEAV',0)) {
-        $menulinks[] = array('url'   => xarModURL('eav',
+    if (xarSecurity::check('ViewEAV',0)) {
+        $menulinks[] = array('url'   => xarController::URL('eav',
                                                   'user',
                                                   'main'),
                               'title' => xarML(''),

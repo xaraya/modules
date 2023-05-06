@@ -15,21 +15,21 @@
  */
 function eav_admin_update_attributes()
 {
-    if(!xarVarFetch('objectid',             'isset', $objectid,          1, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_name',             'isset', $eav_name,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_label',            'isset', $eav_label,          NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_type',             'isset', $eav_type,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_default',          'isset', $eav_defaultvalue,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_seq',              'isset', $eav_seq,            NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('display_eav_status',   'isset', $display_eav_status, NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('input_eav_status',     'isset', $input_eav_status,   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('eav_configuration',    'isset', $eav_configuration,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('attribute_definition', 'int', $attribute_definition,  0, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('objectid',             'isset', $objectid,          1, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('eav_name',             'isset', $eav_name,           NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('eav_label',            'isset', $eav_label,          NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('eav_type',             'isset', $eav_type,           NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('eav_default',          'isset', $eav_defaultvalue,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('eav_seq',              'isset', $eav_seq,            NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('display_eav_status',   'isset', $display_eav_status, NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('input_eav_status',     'isset', $input_eav_status,   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('eav_configuration',    'isset', $eav_configuration,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('attribute_definition', 'int', $attribute_definition,  0, xarVar::DONT_SET)) {return;}
 
     // Security
-    if(!xarSecurityCheck('AdminEAV')) return;
+    if(!xarSecurity::check('AdminEAV')) return;
 
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
     }        
 
@@ -161,7 +161,7 @@ function eav_admin_update_attributes()
         }
     }
 
-    xarController::redirect(xarModURL('eav', 'admin', 'add_attribute',
+    xarController::redirect(xarController::URL('eav', 'admin', 'add_attribute',
                         array('objectid'    => $objectid)));
     return true;
 }

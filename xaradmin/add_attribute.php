@@ -15,12 +15,12 @@
  */
 function eav_admin_add_attribute(Array $args=array())
 {
-    if (!xarSecurityCheck('ManageEAV')) return;
+    if (!xarSecurity::check('ManageEAV')) return;
 
-	if(!xarVarFetch('objectname', 'isset', $data['objectname'],   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('objectid',   'isset', $data['objectid'],   NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('details',    'isset', $details,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('layout',     'str:1', $data['layout'],   'default', XARVAR_NOT_REQUIRED)) {return;}
+	if(!xarVar::fetch('objectname', 'isset', $data['objectname'],   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('objectid',   'isset', $data['objectid'],   NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('details',    'isset', $details,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('layout',     'str:1', $data['layout'],   'default', xarVar::NOT_REQUIRED)) {return;}
 
     //if (empty($data['objectid'])) return xarResponse::NotFound();
     sys::import('modules.dynamicdata.class.objects.master');
@@ -34,7 +34,7 @@ function eav_admin_add_attribute(Array $args=array())
     $data['object'] = DataObjectMaster::getObject(array('objectid' => $data['objectid']));
 
     // Generate a one-time authorisation code for this operation
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     xarTpl::setPageTitle(xarML('Modify DataProperties #(1)', $data['object']->label));
 
@@ -54,7 +54,7 @@ function eav_admin_add_attribute(Array $args=array())
     $data['fieldstatusprop'] =& DataPropertyMaster::getProperty(array('type' => 'fieldstatus'));
 
     // We have to specify this here, the js expects non xml urls and the => makes the template invalied
-    $data['urlform'] = xarModURL('dynamicdata','admin','form',array('objectid' => $data['objectid'], 'theme' => 'print'),false);
+    $data['urlform'] = xarController::URL('dynamicdata','admin','form',array('objectid' => $data['objectid'], 'theme' => 'print'),false);
 
     return $data;
 }

@@ -18,18 +18,18 @@
     
     function eav_admin_new_attribute()
     {
-        if (!xarSecurityCheck('AddEAV')) return;
+        if (!xarSecurity::check('AddEAV')) return;
 
-        if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,     XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,     xarVar::NOT_REQUIRED)) return;
 
         $data['object'] = DataObjectMaster::getObject(array('name' => 'eav_attributes_def'));
         if ($data['confirm']) {
     
             // we only retrieve 'preview' from the input here - the rest is handled by checkInput()
-            if(!xarVarFetch('preview', 'str', $preview,  NULL, XARVAR_DONT_SET)) {return;}
+            if(!xarVar::fetch('preview', 'str', $preview,  NULL, xarVar::DONT_SET)) {return;}
 
             // Check for a valid confirmation key
-            if(!xarSecConfirmAuthKey()) return;
+            if(!xarSec::confirmAuthKey()) return;
         
             // Get the data from the form
             $isvalid = $data['object']->checkInput();
@@ -42,7 +42,7 @@
                 $itemid = $data['object']->createItem();
             
                 // Jump to the next page
-                xarController::redirect(xarModURL('eav','admin','view_attributes'));
+                xarController::redirect(xarController::URL('eav','admin','view_attributes'));
                 return true;
             }
         }
