@@ -37,21 +37,21 @@ function logconfig_admin_modify($args)
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if(!xarSec::confirmAuthKey()) return;
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
         
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('logconfig','admin','modify', $data);        
+            return xarTpl::module('logconfig','admin','modify', $data);        
         } else {
             // Good data: save the data
             xarMod::apiFunc('logconfig', 'admin', 'discharge_loggerobject', array('logger' => $data['object']));
 
             if ($data['exit']) {
 				// Jump to the next page
-				xarController::redirect(xarModURL('logconfig','admin','view'));
+				xarController::redirect(xarController::URL('logconfig','admin','view'));
 				return true;
             }
         }

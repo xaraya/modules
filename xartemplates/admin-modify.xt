@@ -16,7 +16,7 @@
                 <div class="xar-col">
                 </div>
                 <div class="xar-col">
-                    <input type="hidden" name="authid" id="authid" value="#xarSecGenAuthKey('logconfig')#"/>
+                    <input type="hidden" name="authid" id="authid" value="#xarSec::genAuthKey('logconfig')#"/>
                     <input type="hidden" name="name" id="name" value="#$object:name#"/>
                     <input type="hidden" name="itemid" id="itemid" value="#$object:itemid#"/>
                     <input type="hidden" name="tplmodule" id="tplmodule" value="#$tplmodule#"/>

@@ -19,7 +19,7 @@ function logconfig_admin_view()
 {
     // Security check - important to do this as early as possible to avoid
     // potential security holes or just too much wasted processing
-    if (!xarSecurityCheck('AdminLogConfig')) return;
+    if (!xarSecurity::check('AdminLogConfig')) return;
 
     // Whether or not the fallback logger is running
     if (xarMod::apiFunc('logconfig','admin','islogon') && xarLog::fallbackPossible() && empty(xarLog::availables())) {

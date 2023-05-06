@@ -18,9 +18,9 @@
     function logconfig_admin_modifyconfig()
     {
         // Security Check
-        if (!xarSecurityCheck('AdminLogconfig')) return;
-        if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-        if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'general', XARVAR_NOT_REQUIRED)) return;
+        if (!xarSecurity::check('AdminLogconfig')) return;
+        if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+        if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'general', xarVar::NOT_REQUIRED)) return;
 
         $data['module_settings'] = xarMod::apiFunc('base','admin','getmodulesettings',array('module' => 'logconfig'));
         $data['module_settings']->setFieldList('items_per_page, use_module_alias, module_alias_name, enable_short_urls');
@@ -44,13 +44,13 @@
 
             case 'update':
                 // Confirm authorisation code
-                if (!xarSecConfirmAuthKey()) return;
+                if (!xarSec::confirmAuthKey()) return;
                 switch ($data['tab']) {
                     case 'general':
                     /* Remove this for now
                         $isvalid = $data['module_settings']->checkInput();
                         if (!$isvalid) {
-                            return xarTplModule('logconfig','admin','modifyconfig', $data);        
+                            return xarTpl::module('logconfig','admin','modifyconfig', $data);        
                         } else {
                             $itemid = $data['module_settings']->updateItem();
                         }
@@ -62,7 +62,7 @@
 						$variables = array('Log.Enabled' => $logenabled);
 						xarMod::apiFunc('installer','admin','modifysystemvars', array('variables' => $variables));
                                                 
-                        xarController::redirect(xarModURL('logconfig', 'admin', 'modifyconfig', array('tab' => 'general')));
+                        xarController::redirect(xarController::URL('logconfig', 'admin', 'modifyconfig', array('tab' => 'general')));
                         break;
                     case 'tab2':
                         break;
@@ -72,13 +72,13 @@
                         break;
                 }
 
-                xarResponse::redirect(xarModURL('logconfig', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
+                xarResponse::redirect(xarController::URL('logconfig', 'admin', 'modifyconfig',array('tab' => $data['tab'])));
                 // Return
                 return true;
                 break;
 
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         return $data;
     }
 ?>

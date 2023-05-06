@@ -29,7 +29,7 @@
 							<xar:data-output property="$properties['state']"/>
 						</td>
 						<td style="text-align: center">
-							<a href="#xarModURL('logconfig','admin','modify',array('logger' => $properties['type']->value))#">Configure</a>
+							<a href="#xarController::URL('logconfig','admin','modify',array('logger' => $properties['type']->value))#">Configure</a>
 						</td>
 
 					</tr>

@@ -20,10 +20,10 @@
  */
 function logconfig_admin_overview()
 {
-    if (!xarSecurityCheck('AdminLogConfig')) return;
+    if (!xarSecurity::check('AdminLogConfig')) return;
 
 
-    return xarTplModule('logconfig', 'admin', 'main', $data,'main');
+    return xarTpl::module('logconfig', 'admin', 'main', $data,'main');
 
     // Return the template variables defined in this function
     return $data;

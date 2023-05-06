@@ -6,7 +6,7 @@
 
     <div class="xar-mod-body">
       <xar:var name="label">Official Icon</xar:var>
-      <img src="#xarTplGetImage('module-generic.png','base')#" class="xar-module-icon" alt="#$label#" width="96" height="96"/>
+      <img src="#xarTpl::getImage('module-generic.png','base')#" class="xar-module-icon" alt="#$label#" width="96" height="96"/>
         <h2>Overview</h2>
             <h3>What is it?</h3>
     
@@ -30,18 +30,18 @@
                 	List the loggers that are currently configured. From here you can then edit the settings for each logger, including whether or not it is active. Note that an active logger will not do anything until you enable loggind in the modifyconfig page (see below).
                 </li>
                 <li>
-                	Turn Xaraya logging on/off globally. This makes Xaraya log (or not) according to the loggers configured. This setting in the modifyconfig page is identical to the setting found under the logging tab in the modifyconfig page of the base module. The latter can be found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
+                	Turn Xaraya logging on/off globally. This makes Xaraya log (or not) according to the loggers configured. This setting in the modifyconfig page is identical to the setting found under the logging tab in the modifyconfig page of the base module. The latter can be found <a href="#xarController::URL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
                 </li>
             </ul>
             <p>
                 The loggers are shipped with the Xaraya core and are located in lib/xaraya/log/loggers. You can, of course, run several loggers simultaneously, but be aware that this many degrade performance, not to mention using up disk space faster for loggers that write to disk or database.
             </p>
             <p>
-                The logging system depends on the timezone settings found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'other'))#" target="_blank">here</a>. You should set the Host Timezone to the timezone you want the timestamps of the logged messages to show.
+                The logging system depends on the timezone settings found <a href="#xarController::URL('base','admin','modifyconfig',array('tab'=>'other'))#" target="_blank">here</a>. You should set the Host Timezone to the timezone you want the timestamps of the logged messages to show.
             </p>
     
             <h3>Fallback System:</h3>
-            <p>If logging is set to on in this module and none of the loggers are active, then there is a fallback system that will log to a text file. This fallback can be configured under the logging tab in the modifyconfig page of the base module, found <a href="#xarModURL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
+            <p>If logging is set to on in this module and none of the loggers are active, then there is a fallback system that will log to a text file. This fallback can be configured under the logging tab in the modifyconfig page of the base module, found <a href="#xarController::URL('base','admin','modifyconfig',array('tab'=>'logging'))#" target="_blank">here</a>.
             </p>
             <h3>
                 Message levels
@@ -134,7 +134,7 @@
                 The mail logger will send you an email with the error message and some additional information. You cannot edit the lay-out and content of the message via the mail templates as the message is created by PHP code.
             </p>
             <p>
-                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful information can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarModURL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
+                Because of the vagaries and continuously changing (improving) standards for email and the major email providers, it is recommended that you first test Xaraya's email functionality in your environment and make sure everything works. You can do this by sending test messages from the mail module. Helpful information can also be had by setting the mail module's debug functionality, which is found on the mail module's modifyconfig page <a href="#xarController::URL('mail','admin','modifyconfig',array('tab'=>'general'))#" target="_blank">here</a>.
             </p>
             <h3>
                 Notes on the SQL logger
