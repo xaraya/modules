@@ -79,27 +79,27 @@
     #
     # Set up masks
     #
-        xarRegisterMask('ViewOtp','All','otp','All','All','ACCESS_OVERVIEW');
-        xarRegisterMask('ReadOtp','All','otp','All','All','ACCESS_READ');
-        xarRegisterMask('CommentOtp','All','otp','All','All','ACCESS_COMMENT');
-        xarRegisterMask('ModerateOtp','All','otp','All','All','ACCESS_MODERATE');
-        xarRegisterMask('EditOtp','All','otp','All','All','ACCESS_EDIT');
-        xarRegisterMask('AddOtp','All','otp','All','All','ACCESS_ADD');
-        xarRegisterMask('ManageOtp','All','otp','All','All','ACCESS_DELETE');
-        xarRegisterMask('AdminOtp','All','otp','All','All','ACCESS_ADMIN');
+        xarMasks::register('ViewOtp','All','otp','All','All','ACCESS_OVERVIEW');
+        xarMasks::register('ReadOtp','All','otp','All','All','ACCESS_READ');
+        xarMasks::register('CommentOtp','All','otp','All','All','ACCESS_COMMENT');
+        xarMasks::register('ModerateOtp','All','otp','All','All','ACCESS_MODERATE');
+        xarMasks::register('EditOtp','All','otp','All','All','ACCESS_EDIT');
+        xarMasks::register('AddOtp','All','otp','All','All','ACCESS_ADD');
+        xarMasks::register('ManageOtp','All','otp','All','All','ACCESS_DELETE');
+        xarMasks::register('AdminOtp','All','otp','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #
     # Set up privileges
     #
-        xarRegisterPrivilege('ViewOtp','All','otp','All','All','ACCESS_OVERVIEW');
-        xarRegisterPrivilege('ReadOtp','All','otp','All','All','ACCESS_READ');
-        xarRegisterPrivilege('CommentOtp','All','otp','All','All','ACCESS_COMMENT');
-        xarRegisterPrivilege('ModerateOtp','All','otp','All','All','ACCESS_MODERATE');
-        xarRegisterPrivilege('EditOtp','All','otp','All','All','ACCESS_EDIT');
-        xarRegisterPrivilege('AddOtp','All','otp','All','All','ACCESS_ADD');
-        xarRegisterPrivilege('ManageOtp','All','otp','All','All','ACCESS_DELETE');
-        xarRegisterPrivilege('AdminOtp','All','otp','All','All','ACCESS_ADMIN');
+        xarPrivileges::register('ViewOtp','All','otp','All','All','ACCESS_OVERVIEW');
+        xarPrivileges::register('ReadOtp','All','otp','All','All','ACCESS_READ');
+        xarPrivileges::register('CommentOtp','All','otp','All','All','ACCESS_COMMENT');
+        xarPrivileges::register('ModerateOtp','All','otp','All','All','ACCESS_MODERATE');
+        xarPrivileges::register('EditOtp','All','otp','All','All','ACCESS_EDIT');
+        xarPrivileges::register('AddOtp','All','otp','All','All','ACCESS_ADD');
+        xarPrivileges::register('ManageOtp','All','otp','All','All','ACCESS_DELETE');
+        xarPrivileges::register('AdminOtp','All','otp','All','All','ACCESS_ADMIN');
 
     # --------------------------------------------------------
     #

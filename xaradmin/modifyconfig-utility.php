@@ -20,11 +20,11 @@
 function otp_admin_modifyconfig_utility()
 {
     // Security Check
-    if (!xarSecurityCheck('AdminOtp')) return;
-    if (!xarVarFetch('phase', 'str:1:100', $phase, 'modify', XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-    if (!xarVarFetch('tab', 'str:1:100', $data['tab'], 'otp_general', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('tabmodule', 'str:1:100', $tabmodule, 'otp', XARVAR_NOT_REQUIRED)) return;
-    $hooks = xarModCallHooks('module', 'getconfig', 'otp');
+    if (!xarSecurity::check('AdminOtp')) return;
+    if (!xarVar::fetch('phase', 'str:1:100', $phase, 'modify', xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+    if (!xarVar::fetch('tab', 'str:1:100', $data['tab'], 'otp_general', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('tabmodule', 'str:1:100', $tabmodule, 'otp', xarVar::NOT_REQUIRED)) return;
+    $hooks = xarModHooks::call('module', 'getconfig', 'otp');
     if (!empty($hooks) && isset($hooks['tabs'])) {
         foreach ($hooks['tabs'] as $key => $row) {
             $configarea[$key]  = $row['configarea'];
@@ -55,13 +55,13 @@ function otp_admin_modifyconfig_utility()
 
         case 'update':
             // Confirm authorisation code
-            if (!xarSecConfirmAuthKey()) return;
-            if (!xarVarFetch('items_per_page', 'int', $items_per_page, xarModVars::get('otp', 'items_per_page'), XARVAR_NOT_REQUIRED, XARVAR_PREP_FOR_DISPLAY)) return;
-            if (!xarVarFetch('shorturls', 'checkbox', $shorturls, false, XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('modulealias', 'checkbox', $use_module_alias,  xarModVars::get('otp', 'use_module_alias'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('module_alias_name', 'str', $module_alias_name,  xarModVars::get('otp', 'module_alias_name'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('defaultmastertable',    'str',      $defaultmastertable, xarModVars::get('otp', 'defaultmastertable'), XARVAR_NOT_REQUIRED)) return;
-            if (!xarVarFetch('bar', 'str:1', $bar, 'Bar', XARVAR_NOT_REQUIRED)) return;
+            if (!xarSec::confirmAuthKey()) return;
+            if (!xarVar::fetch('items_per_page', 'int', $items_per_page, xarModVars::get('otp', 'items_per_page'), xarVar::NOT_REQUIRED, xarVar::PREP_FOR_DISPLAY)) return;
+            if (!xarVar::fetch('shorturls', 'checkbox', $shorturls, false, xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('modulealias', 'checkbox', $use_module_alias,  xarModVars::get('otp', 'use_module_alias'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('module_alias_name', 'str', $module_alias_name,  xarModVars::get('otp', 'module_alias_name'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('defaultmastertable',    'str',      $defaultmastertable, xarModVars::get('otp', 'defaultmastertable'), xarVar::NOT_REQUIRED)) return;
+            if (!xarVar::fetch('bar', 'str:1', $bar, 'Bar', xarVar::NOT_REQUIRED)) return;
 
             $modvars = array(
                             'defaultmastertable',
@@ -85,7 +85,7 @@ function otp_admin_modifyconfig_utility()
     }
     $data['hooks'] = $hooks;
     $data['tabmodule'] = $tabmodule;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     return $data;
 }
 ?>

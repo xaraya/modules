@@ -19,7 +19,7 @@ function otp_userapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('ViewOtp',0)) {
+    if (xarSecurity::check('ViewOtp',0)) {
         $menulinks[] = array('url'   => xarController::URL('otp',
                                                   'user',
                                                   'main'),

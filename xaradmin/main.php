@@ -17,7 +17,7 @@
 
 function otp_admin_main()
 {
-    if(!xarSecurityCheck('ManageOtp')) return;
+    if(!xarSecurity::check('ManageOtp')) return;
 
     if (xarModVars::get('modules', 'disableoverview') == 0){
         return array();

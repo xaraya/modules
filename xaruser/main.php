@@ -18,7 +18,7 @@
 function otp_user_main()
 {
     // Security Check
-    if (!xarSecurityCheck('ReadOtp')) return;
+    if (!xarSecurity::check('ReadOtp')) return;
 
     $redirect = xarModVars::get('otp','frontend_page');
     if (!empty($redirect)) {
