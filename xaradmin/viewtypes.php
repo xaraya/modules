@@ -24,13 +24,13 @@ function html_admin_viewtypes()
 
     // Specify some labels for display
     $data['submitlabel'] = xarML('Submit');
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     // Security Check
-    if(!xarSecurityCheck('AdminHTML')) return;
+    if(!xarSecurity::check('AdminHTML')) return;
 
     // The user API function is called.
-    $tagtypes = xarModAPIFunc('html',
+    $tagtypes = xarMod::apiFunc('html',
                               'user',
                               'getalltypes');
 
@@ -39,8 +39,8 @@ function html_admin_viewtypes()
 
     // Add the edit and delete urls
     for ($idx = 0; $idx < count($tagtypes); $idx++) {
-        if (xarSecurityCheck('EditHTML')) { 
-            $tagtypes[$idx]['editurl'] = xarModURL('html',
+        if (xarSecurity::check('EditHTML')) { 
+            $tagtypes[$idx]['editurl'] = xarController::URL('html',
                                                    'admin',
                                                    'edittype',
                                                    array('id' => $tagtypes[$idx]['id']));
@@ -48,8 +48,8 @@ function html_admin_viewtypes()
             $tagtypes[$idx]['editurl'] = '';
         }
 
-        if (xarSecurityCheck('ManageHTML')) { 
-            $tagtypes[$idx]['deleteurl'] = xarModURL('html',
+        if (xarSecurity::check('ManageHTML')) { 
+            $tagtypes[$idx]['deleteurl'] = xarController::URL('html',
                                                      'admin',
                                                      'deletetype',
                                                      array('id' => $tagtypes[$idx]['id']));

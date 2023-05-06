@@ -41,7 +41,7 @@ function html_adminapi_edit($args)
     }
 
     // The user API function is called
-    $html = xarModAPIFunc('html',
+    $html = xarMod::apiFunc('html',
                           'user',
                           'gettag',
                           array('id' => $id));
@@ -52,7 +52,7 @@ function html_adminapi_edit($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurity::check('EditHTML')) return;
 
     // Get datbase setup
     $dbconn = xarDB::getConn();
@@ -71,7 +71,7 @@ function html_adminapi_edit($args)
 
     // If this is an html tag, then
     // also edit the item in the config vars
-    $tagtype = xarModAPIFunc('html',
+    $tagtype = xarMod::apiFunc('html',
                              'user',
                              'gettype',
                              array('id' => $html['tid']));
@@ -91,7 +91,7 @@ function html_adminapi_edit($args)
         xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
     }
     // Let any hooks know that we have deleted a html
-    xarModCallHooks('item', 'edit', $id, '');
+    xarModHooks::call('item', 'edit', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

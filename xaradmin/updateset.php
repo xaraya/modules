@@ -23,13 +23,13 @@
 function html_admin_updateset()
 {
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
 
     // Security Check
-    if(!xarSecurityCheck('AdminHTML')) return;
+    if(!xarSecurity::check('AdminHTML')) return;
 
     // Get parameters from the input
-    if (!xarVarFetch('tags', 'array:1:', $tags)) {
+    if (!xarVar::fetch('tags', 'array:1:', $tags)) {
         $msg = xarML('No HTML tags were selected.');
         throw new BadParameterException(null,$msg);
     }
@@ -40,7 +40,7 @@ function html_admin_updateset()
     // Update HTML tags
     foreach ($tags as $id=>$allowed) {
         // Get the id of the htmltag
-        $thistag = xarModAPIFunc('html',
+        $thistag = xarMod::apiFunc('html',
                                  'user',
                                  'gettag',
                                  array('id' => $id));
@@ -51,7 +51,7 @@ function html_admin_updateset()
             // Check if update is necessary
             if ($thistag['allowed'] != $allowed) {
                 // Update
-                if (!xarModAPIFunc('html',
+                if (!xarMod::apiFunc('html',
                                    'admin',
                                    'update',
                                    array('id' => $id,
@@ -71,7 +71,7 @@ function html_admin_updateset()
     xarConfigVars::set(null,'Site.Core.AllowableHTML', $allowedhtml);
 
     // Redirect back to set
-    xarController::redirect(xarModURL('html', 'admin', 'set'));
+    xarController::redirect(xarController::URL('html', 'admin', 'set'));
 
     return true;
 }

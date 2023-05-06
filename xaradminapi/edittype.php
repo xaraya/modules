@@ -40,7 +40,7 @@ function html_adminapi_edittype($args)
     }
 
     // The user API function is called
-    $type = xarModAPIFunc('html',
+    $type = xarMod::apiFunc('html',
                           'user',
                           'gettype',
                           array('id' => $id));
@@ -51,7 +51,7 @@ function html_adminapi_edittype($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurity::check('EditHTML')) return;
 
     // Get datbase setup
     $dbconn = xarDB::getConn();
@@ -68,7 +68,7 @@ function html_adminapi_edittype($args)
     $result =& $dbconn->Execute($query,array($tagtype, $id));
     if (!$result) return;
     // Let any hooks know that we have deleted a html
-    xarModCallHooks('item', 'edittype', $id, '');
+    xarModHooks::call('item', 'edittype', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }

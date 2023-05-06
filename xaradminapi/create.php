@@ -47,7 +47,7 @@ function html_adminapi_create($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurity::check('AddHTML')) return;
 
     // Trim input
     $type = trim($type);
@@ -56,7 +56,7 @@ function html_adminapi_create($args)
     $type = strtolower($type);
 
     // Get ID of type
-    $tagtype = xarModAPIFunc('html',
+    $tagtype = xarMod::apiFunc('html',
                              'user',
                              'gettype',
                              array('type' => $type));
@@ -105,7 +105,7 @@ function html_adminapi_create($args)
     // Let any hooks know that we have created a new tag
     $item['module'] = 'html';
     $item['itemid'] = $itemid;
-    xarModCallHooks('item', 'create', $itemid, $item);
+    xarModHooks::call('item', 'create', $itemid, $item);
     // Return the id of the newly created tag to the calling process
     return $itemid;
 }

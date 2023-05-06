@@ -21,13 +21,13 @@
 function html_admin_new()
 {
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurity::check('AddHTML')) return;
     
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['createbutton'] = xarML('Create Tag');
 
     // Get tag types
-    $types = xarModAPIFunc('html',
+    $types = xarMod::apiFunc('html',
                            'user',
                            'getalltypes');
 
@@ -38,7 +38,7 @@ function html_admin_new()
 
     // Include 'formcheck' JavaScript.
     // TODO: move this to a template widget when available.
-    xarModAPIfunc(
+    xarMod::apiFunc(
         'base', 'javascript', 'modulefile',
         array('module'=>'base', 'filename'=>'formcheck.js')
     );
