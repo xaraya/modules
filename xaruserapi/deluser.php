@@ -38,7 +38,7 @@ function pubsub_userapi_deluser($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('ReadPubSub', 1, 'item', 'All::$pubsubid')) return;
+    if (!xarSecurity::check('ReadPubSub', 1, 'item', 'All::$pubsubid')) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();

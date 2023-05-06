@@ -25,13 +25,13 @@
  */
 function pubsub_user_modifysubscription()
 {
-    if (!xarVarFetch('modid',     'int',$modid,FALSE)) return;
-    if (!xarVarFetch('cid',       'int',$cid,FALSE)) return;
-    if (!xarVarFetch('itemtype',  'int',$itemtype,FALSE)) return;
-    if (!xarVarFetch('returnurl', 'str',$returnurl,FALSE)) return;
-    if (!xarVarFetch('subaction', 'int',$subaction,FALSE)) return;
-    if (!xarVarFetch('extra',     'str',$extra,'',XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('groupdescr','str',$groupdescr,'Subscribe',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('modid',     'int',$modid,FALSE)) return;
+    if (!xarVar::fetch('cid',       'int',$cid,FALSE)) return;
+    if (!xarVar::fetch('itemtype',  'int',$itemtype,FALSE)) return;
+    if (!xarVar::fetch('returnurl', 'str',$returnurl,FALSE)) return;
+    if (!xarVar::fetch('subaction', 'int',$subaction,FALSE)) return;
+    if (!xarVar::fetch('extra',     'str',$extra,'',xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('groupdescr','str',$groupdescr,'Subscribe',xarVar::NOT_REQUIRED)) return;
 
     $returnurl = rawurldecode($returnurl);
 

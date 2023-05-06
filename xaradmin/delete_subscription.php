@@ -21,12 +21,12 @@
 function pubsub_admin_delete_subscription()
 {
     // Xaraya security
-   if (!xarSecurityCheck('ManagePubSub')) return;
-    xarTplSetPageTitle('Delete subscription');
+   if (!xarSecurity::check('ManagePubSub')) return;
+    xarTpl::setPageTitle('Delete subscription');
 
-    if(!xarVarFetch('confirm',  'bool', $data['confirm'],  false, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',     'str',  $data['itemid'],     NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',     'str',  $idlist,     NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirm',  'bool', $data['confirm'],  false, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',     'str',  $data['itemid'],     NULL,  xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',     'str',  $idlist,     NULL,  xarVar::DONT_SET)) {return;}
 
     //print_r($data['confirm']);
     if (!empty($data['itemid'])) $idlist = $data['itemid'];
@@ -48,7 +48,7 @@ function pubsub_admin_delete_subscription()
             $ids = array($ids);
             $data['lang_title'] = xarML("Delete Subscription");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         if (count($ids) == 1) {
             $subscription->getItem(array('itemid' => current($ids)));
             $data['object'] = $subscription;
@@ -62,11 +62,11 @@ function pubsub_admin_delete_subscription()
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarModURL('pubsub','admin','delete_subscription',array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('pubsub','admin','delete_subscription',array('idlist' => $idlist));
 
         return $data;        
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         $script = implode('_', xarController::$request->getInfo());
         foreach ($ids as $id) {
         	
@@ -75,7 +75,7 @@ function pubsub_admin_delete_subscription()
         }
 
         // Jump to the next page
-        xarController::redirect(xarModURL('pubsub', 'admin','view_subscriptions'));
+        xarController::redirect(xarController::URL('pubsub', 'admin','view_subscriptions'));
         return true;
     }
 }

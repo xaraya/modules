@@ -221,7 +221,7 @@ function pubsub_adminapi_runjob($args)
             $tplData['link'] =  $itemlinks[$objectid]['url'];
         } else {
             $tplData['title'] = xarML('Item #(1)', $objectid);
-            $tplData['link'] =  xarModURL($modname,'user','main');
+            $tplData['link'] =  xarController::URL($modname,'user','main');
         }
 
         // *** TODO  ***
@@ -240,7 +240,7 @@ function pubsub_adminapi_runjob($args)
          $fname = xarModVars::get('role', 'adminmail');
 
         // call BL with the (compiled) template to parse it and generate the HTML free plaintext version
-        $html = xarTplString($compiled, $tplData);
+        $html = xarTpl::string($compiled, $tplData);
         $tplData['htmlcontent'] = $html;
         $tplData['textcontent'] = strip_tags($html);
 
@@ -253,21 +253,21 @@ function pubsub_adminapi_runjob($args)
              $texttemplate = 'text';
         }
 
-        $htmlmessage= xarTplModule('pubsub','user','mail',$tplData,$htmltemplate);
+        $htmlmessage= xarTpl::module('pubsub','user','mail',$tplData,$htmltemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
             // Default to the module template
-            $htmlmessage= xarTplModule('pubsub', 'user', 'mail',$tplData,'html');
+            $htmlmessage= xarTpl::module('pubsub', 'user', 'mail',$tplData,'html');
         }
-        $textmessage= xarTplModule('pubsub','user','mail', $tplData,$texttemplate);
+        $textmessage= xarTpl::module('pubsub','user','mail', $tplData,$texttemplate);
         if (xarCurrentErrorID() == 'TEMPLATE_NOT_EXIST') {
             xarErrorHandled();
-            $textmessage= xarTplModule('pubsub', 'user', 'mail',$tplData,'text');
+            $textmessage= xarTpl::module('pubsub', 'user', 'mail',$tplData,'text');
         }
 
             /*
             $boundary = "b" . md5(uniqid(time()));
-            $message = "From: xarConfigGetVar('adminmail')\r\nReply-to: xarConfigGetVar('adminmail')\r\n";
+            $message = "From: xarConfigVars::get('adminmail')\r\nReply-to: xarConfigVars::get('adminmail')\r\n";
             $message .= "Content-type: multipart/mixed; ";
             $message .= "boundary = $boundary\r\n\r\n";
             $message .= "This is a MIME encoded message.\r\n\r\n";

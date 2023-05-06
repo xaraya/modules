@@ -2,17 +2,17 @@
 <xar:template xmlns:xar="http://xaraya.com/2004/blocklayout">
     <xar:if condition="empty($action)">
     <xar:comment> License: GPL http://www.gnu.org/copyleft/gpl.html </xar:comment>
-    <xar:set name="compare">xarServerGetCurrentURL()</xar:set>
-    <xar:set name="current">xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))</xar:set>
+    <xar:set name="compare">xarServer::getCurrentURL()</xar:set>
+    <xar:set name="current">xarController::URL('roles', 'user', 'account', array('moduleload' => 'pubsub'))</xar:set>
     <xar:if condition="$compare eq $current">
         <dd class="active">
-            <a href="#xarServerGetCurrentURL()#">
+            <a href="#xarServer::getCurrentURL()#">
                 Subscriptions
             </a>
         </dd>    
     <xar:else />
         <dd>
-            <a href="#xarModURL('roles', 'user', 'account', array('moduleload' => 'pubsub'))#">
+            <a href="#xarController::URL('roles', 'user', 'account', array('moduleload' => 'pubsub'))#">
                 Subscriptions
             </a>
         </dd>    
@@ -51,14 +51,14 @@
           <xar:else/>
             <td>#$item['actionid']#</td>
           </xar:if>
-            <td><a href="#xarModURL('pubsub','user','usermenu',array('action' => 'unsub', 'pubsubid' => $item['pubsubid']))#">Unsubscribe</a></td>
+            <td><a href="#xarController::URL('pubsub','user','usermenu',array('action' => 'unsub', 'pubsubid' => $item['pubsubid']))#">Unsubscribe</a></td>
           </tr>
         </xar:foreach>
         </table>
     <xar:else/>
-        <p><b>You have no subscriptions</b></p>
+        <p><strong>You have no subscriptions</strong></p>
     </xar:if>
-    <br/><a href="#xarModURL('roles','user','account')#">Back to Your Account</a>
+    <br/><a href="#xarController::URL('roles','user','account')#">Back to Your Account</a>
     </div>
     <xar:else/>
         Unknown Action

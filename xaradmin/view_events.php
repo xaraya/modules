@@ -19,13 +19,13 @@
  */
 function pubsub_admin_view_events()
 {
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurity::check('ManagePubSub')) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_events'));
     
     $data['items'] = array();
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
 
     // The user API function is called

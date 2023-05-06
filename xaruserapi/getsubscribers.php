@@ -75,7 +75,7 @@ function pubsub_userapi_getsubscribers($args)
             ,$email
             ,$userid
            ) = $result->fields;
-        if (xarSecurityCheck('AdminPubSub', 0))
+        if (xarSecurity::check('AdminPubSub', 0))
         {
             if( $userid == -1 )
             {

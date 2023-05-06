@@ -72,7 +72,7 @@ function pubsub_user_subscribed($args)
         throw new Exception($msg);
     }
 
-    $data['eventid'] = xarVarPrepForDisplay($eventid);
+    $data['eventid'] = xarVar::prepForDisplay($eventid);
 
     return $data;
 }

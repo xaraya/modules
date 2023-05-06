@@ -45,10 +45,10 @@
                 </xar:if>
             </td>
             <td>
-                #xarLocaleFormatDate("%a, %d-%B-%Y", $item['subdate'])#
+                #xarLocale::formatDate("%a, %d-%B-%Y", $item['subdate'])#
             </td>
             <td>
-                <a href="#xarModURL('pubsub','admin','view_subscriptions',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
+                <a href="#xarController::URL('pubsub','admin','view_subscriptions',array('eventid'=>$eventid,'pubsubid'=>$item['pubsubid'],'unsub'=>1))#">Remove</a>
             </td>
          </tr>
          </xar:foreach>

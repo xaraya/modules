@@ -19,12 +19,12 @@
  */
 function pubsub_admin_view_subscriptions()
 {
-    if (!xarSecurityCheck('ManagePubSub')) return;
-    xarTplSetPageTitle('View Subscribers');
+    if (!xarSecurity::check('ManagePubSub')) return;
+    xarTpl::setPageTitle('View Subscribers');
 
-    if (!xarVarFetch('eventid', 'int::', $eventid,  0,     XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('pubsubid','int::', $pubsubid, FALSE, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('unsub',   'int::', $unsub,    FALSE, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('eventid', 'int::', $eventid,  0,     xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('pubsubid','int::', $pubsubid, FALSE, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('unsub',   'int::', $unsub,    FALSE, xarVar::NOT_REQUIRED)) return;
 /*
     if (empty($eventid)) {
         $msg = xarML('Invalid #(1) for function #(2)() in module #(3)',
@@ -45,7 +45,7 @@ function pubsub_admin_view_subscriptions()
     return $data;
 
     $data['items'] = array();
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
 
     if ($unsub && $pubsubid) {
         if (!xarMod::apiFunc('pubsub', 'user', 'deluser', array('pubsubid' => $pubsubid))) {
@@ -63,8 +63,8 @@ function pubsub_admin_view_subscriptions()
     }
 
     $data['items'] = array();
-    $data['namelabel'] = xarVarPrepForDisplay(xarML('Publish / Subscribe Administration'));
-    $data['catname'] = xarVarPrepForDisplay($info['catname']);
+    $data['namelabel'] = xarVar::prepForDisplay(xarML('Publish / Subscribe Administration'));
+    $data['catname'] = xarVar::prepForDisplay($info['catname']);
     $data['cid'] = $info['cid'];
     $data['modname'] = $info['modname'];
     if (!empty($info['itemtype'])) {
@@ -72,17 +72,17 @@ function pubsub_admin_view_subscriptions()
     }
     $data['itemtype'] = $info['itemtype'];
     $data['eventid'] = $eventid;
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['pager'] = '';
 
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    if (!xarSecurity::check('AdminPubSub')) return;
 
     // The user API function is called
     $subscriptions = xarMod::apiFunc('pubsub', 'user', 'getsubscribers', array('eventid'=>$eventid));
 
     $data['items'] = $subscriptions;
 
-    $data['returnurl'] = xarModURL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
+    $data['returnurl'] = xarController::URL('pubsub', 'user', 'view_subscriptions', array('eventid'=>$eventid));
 
     // TODO: add a pager (once it exists in BL)
     $data['pager'] = '';

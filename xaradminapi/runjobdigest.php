@@ -149,7 +149,7 @@ function pubsub_adminapi_runjobdigest($args)
             $tplData['link'] =  $itemlinks[$objectid]['url'];
         } else {
             $tplData['title'] = xarML('Item #(1)', $objectid);
-            $tplData['link'] =  xarModURL($modname,'user','main');
+            $tplData['link'] =  xarController::URL($modname,'user','main');
         }
 
         // *** TODO  ***
@@ -160,7 +160,7 @@ function pubsub_adminapi_runjobdigest($args)
         // But you can use $userid to get the relevant user, as above...
 
         // call BL with the (compiled) template to parse it and generate the HTML
-        $html = xarTplString($compiled, $tplData);
+        $html = xarTpl::string($compiled, $tplData);
         $plaintext = strip_tags($html);
 
         if ($action == "htmlmail") {

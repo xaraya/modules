@@ -38,7 +38,7 @@ function pubsub_adminapi_addtemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('AddPubSub')) return;
+    if (!xarSecurity::check('AddPubSub')) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();
@@ -60,7 +60,7 @@ function pubsub_adminapi_addtemplate($args)
     }
 
     // compile the template now
-    $compiled = xarTplCompileString($template);
+    $compiled = xarTpl::compileString($template);
 
     // Get next ID in table
     $nextId = $dbconn->GenId($pubsubtemplatestable);

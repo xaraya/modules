@@ -35,7 +35,7 @@ function pubsub_userapi_getq($args)
     $rolestable = $xartable['roles'];
 
     // Load categories API
-    if (!xarModAPILoad('categories', 'user')) {
+    if (!xarMod::apiLoad('categories', 'user')) {
         $msg = xarML('Unable to load #(1) #(2) API','categories','user');
         throw new Exception($msg);
     }

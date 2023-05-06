@@ -21,12 +21,12 @@
 function pubsub_admin_delete_job()
 {
     // Xaraya security
-   if (!xarSecurityCheck('ManagePubSub')) return;
-    xarTplSetPageTitle('Delete job');
+   if (!xarSecurity::check('ManagePubSub')) return;
+    xarTpl::setPageTitle('Delete job');
 
-    if(!xarVarFetch('confirm',  'bool', $data['confirm'],  false, XARVAR_NOT_REQUIRED)) {return;}
-    if(!xarVarFetch('itemid',   'str',  $data['itemid'],   NULL,  XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('idlist',   'str',  $idlist,           NULL,  XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('confirm',  'bool', $data['confirm'],  false, xarVar::NOT_REQUIRED)) {return;}
+    if(!xarVar::fetch('itemid',   'str',  $data['itemid'],   NULL,  xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('idlist',   'str',  $idlist,           NULL,  xarVar::DONT_SET)) {return;}
 
     //print_r($data['confirm']);
     if (!empty($data['itemid'])) $idlist = $data['itemid'];
@@ -48,7 +48,7 @@ function pubsub_admin_delete_job()
             $ids = array($ids);
             $data['lang_title'] = xarML("Delete Job");
         }
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         if (count($ids) == 1) {
             $event->getItem(array('itemid' => current($ids)));
             $data['object'] = $event;
@@ -62,11 +62,11 @@ function pubsub_admin_delete_job()
             }
             $data['items'] = $items;
         }
-        $data['yes_action'] = xarModURL('pubsub','admin','delete_job',array('idlist' => $idlist));
+        $data['yes_action'] = xarController::URL('pubsub','admin','delete_job',array('idlist' => $idlist));
 
         return $data;        
     } else {
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         $script = implode('_', xarController::$request->getInfo());
         foreach ($ids as $id) {
         	
@@ -76,7 +76,7 @@ function pubsub_admin_delete_job()
         }
 
         // Jump to the next page
-        xarController::redirect(xarModURL('pubsub', 'admin','view_queue'));
+        xarController::redirect(xarController::URL('pubsub', 'admin','view_queue'));
         return true;
     }
 }

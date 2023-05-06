@@ -22,23 +22,23 @@ sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_admin_modify_subscription()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurity::check('ManagePubSub')) return;
     xarTpl::setPageTitle('Modify Subscription');
     
-    if (!xarVarFetch('name',       'str',    $name,            'pubsub_subscriptions', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name',       'str',    $name,            'pubsub_subscriptions', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid' ,    'int',    $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,       xarVar::NOT_REQUIRED)) return;
 
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
     $data['object']->getItem(array('itemid' => $data['itemid']));
 
     $data['tplmodule'] = 'pubsub';
-    $data['authid'] = xarSecGenAuthKey('pubsub');
+    $data['authid'] = xarSec::genAuthKey('pubsub');
 
     if ($data['confirm']) {
     
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if(!xarSec::confirmAuthKey()) return;
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
@@ -51,7 +51,7 @@ function pubsub_admin_modify_subscription()
             $itemid = $data['object']->updateItem(array('itemid' => $data['itemid']));
             
             // Jump to the next page
-            xarController::redirect(xarModURL('pubsub','admin','view_subscriptions'));
+            xarController::redirect(xarController::URL('pubsub','admin','view_subscriptions'));
             return true;
         }
     }

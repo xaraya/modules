@@ -37,7 +37,7 @@ function pubsub_userapi_gettemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('EditPubSub', 1, 'item', "All:All:All:$id")) return;
+    if (!xarSecurity::check('EditPubSub', 1, 'item', "All:All:All:$id")) return;
 
     // Get database setup
     $dbconn =& xarDB::getConn();

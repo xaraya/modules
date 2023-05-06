@@ -36,7 +36,7 @@ function pubsub_adminapi_deltemplate($args)
     }
 
     // Security check
-    if (!xarSecurityCheck('DeletePubSub')) return;
+    if (!xarSecurity::check('DeletePubSub')) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();

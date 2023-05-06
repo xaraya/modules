@@ -16,10 +16,10 @@
  */
 function pubsub_admin_new_template()
 {
-    if (!xarSecurityCheck('AddPubsub')) return;
+    if (!xarSecurity::check('AddPubsub')) return;
 
-    if (!xarVarFetch('name',    'str',  $name, 'pubsub_templates', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm', 'bool', $data['confirm'], false,  XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name',    'str',  $name, 'pubsub_templates', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm', 'bool', $data['confirm'], false,  xarVar::NOT_REQUIRED)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));
@@ -29,20 +29,20 @@ function pubsub_admin_new_template()
     if ($data['confirm']) {
 
         // Check for a valid confirmation key
-        if(!xarSecConfirmAuthKey()) return;
+        if(!xarSec::confirmAuthKey()) return;
 
         // Get the data from the form
         $isvalid = $data['object']->checkInput();
 
         if (!$isvalid) {
             // Bad data: redisplay the form with error messages
-            return xarTplModule('pubsub','admin','new_template', $data);
+            return xarTpl::module('pubsub','admin','new_template', $data);
         } else {
             // Good data: create the item
             $item = $data['object']->createItem();
             
             // Jump to the next page
-            xarController::redirect(xarModURL('pubsub','admin','view_templates'));
+            xarController::redirect(xarController::URL('pubsub','admin','view_templates'));
             return true;
         }
     }

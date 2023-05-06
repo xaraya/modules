@@ -17,22 +17,22 @@ function pubsub_user_usermenu($args)
 {
     extract($args);
     // old usermenu approach
-    xarVarFetch('action','str:1:',$action,'menu',XARVAR_NOT_REQUIRED);
+    xarVar::fetch('action','str:1:',$action,'menu',xarVar::NOT_REQUIRED);
 
     // set by user-account template in roles
-    xarVarFetch('phase','notempty', $phase, '', XARVAR_NOT_REQUIRED);
+    xarVar::fetch('phase','notempty', $phase, '', xarVar::NOT_REQUIRED);
     if (!empty($phase)) {
         $action = $phase;
     }
 
     switch($action) {
         case 'menu':
-            return xarTplModule('pubsub','user','usermenu');
+            return xarTpl::module('pubsub','user','usermenu');
             break;
 
         case 'form':
         case 'list':
-            xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Your Subscriptions')));
+            xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Your Subscriptions')));
             $items = xarMod::apiFunc('pubsub','user','getsubscriptions',
                                    array('userid' => xarUser::getVar('id')));
             if (!isset($items)) return;
@@ -62,13 +62,13 @@ function pubsub_user_usermenu($args)
                     }
                 }
             }
-            return xarTplModule('pubsub','user','usermenu',
+            return xarTpl::module('pubsub','user','usermenu',
                                 array('action' => 'list',
                                       'items' => $items));
             break;
 
         case 'unsub':
-            if (!xarVarFetch('pubsubid','int:1:',$pubsubid)) return;
+            if (!xarVar::fetch('pubsubid','int:1:',$pubsubid)) return;
             $items = xarMod::apiFunc('pubsub','user','getsubscriptions',
                                    array('userid' => xarUser::getVar('id')));
             if (!isset($items)) return;
@@ -85,7 +85,7 @@ function pubsub_user_usermenu($args)
                               'deluser', 'usermenu', 'Pubsub');
                  throw new Exception($msg);
              }
-             xarController::redirect(xarModURL('pubsub','user','usermenu',
+             xarController::redirect(xarController::URL('pubsub','user','usermenu',
                                            array('action' => 'list')));
              return true;
 

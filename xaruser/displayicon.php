@@ -82,20 +82,20 @@ function pubsub_user_displayicon($args)
     // When called via hooks, the module name may be empty, so we get it from
     // the current module
     if (empty($modname)) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     }
 
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
 
     if (empty($itemtype)) {
         $itemtype = 0;
     }
     if (empty($returnurl)) {
-        $returnurl = rawurlencode(xarServerGetCurrentURL());
+        $returnurl = rawurlencode(xarServer::getCurrentURL());
     }
 
     // if pubsub isn't hooked to this module & itemtype, don't show subscription either
-    if (!xarModIsHooked('pubsub',$modname,$itemtype)) return array('donotdisplay'=>TRUE);
+    if (!xarModHooks::isHooked('pubsub',$modname,$itemtype)) return array('donotdisplay'=>TRUE);
 
 /// check for unsubscribe
     /**
@@ -141,10 +141,10 @@ function pubsub_user_displayicon($args)
                              ,'subaction' => $data['subscribe']
                              );
 
-    $data['subURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);
+    $data['subURL'] = xarController::URL('pubsub','user','modifysubscription',$data['subdata']);
     $data['subTEXT'] = xarML ('Subscribe');
 
-    $data['unsubURL'] = xarModURL('pubsub','user','modifysubscription',$data['subdata']);
+    $data['unsubURL'] = xarController::URL('pubsub','user','modifysubscription',$data['subdata']);
     $data['unsubTEXT'] = xarML ('Unsubscribe');
 
     if (!empty($layout)) {

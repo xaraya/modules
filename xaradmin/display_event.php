@@ -22,12 +22,12 @@ sys::import('modules.dynamicdata.class.objects.master');
 function pubsub_admin_display_event()
 {
     // Xaraya security
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurity::check('ManagePubSub')) return;
     xarTpl::setPageTitle('Display Event');
 
-    if (!xarVarFetch('name',       'str',    $name,            'pubsub_events', XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid' ,    'int',    $data['itemid'] , 0 ,          XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('confirm',    'bool',   $data['confirm'], false,       XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('name',       'str',    $name,            'pubsub_events', xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid' ,    'int',    $data['itemid'] , 0 ,          xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('confirm',    'bool',   $data['confirm'], false,       xarVar::NOT_REQUIRED)) return;
 
     
     $data['object'] = DataObjectMaster::getObject(array('name' => $name));

@@ -31,7 +31,7 @@ function pubsub_userapi_getevent($args)
         throw new Exception($msg);
     }
 
-    if (!xarModAPILoad('categories','user')) return;
+    if (!xarMod::apiLoad('categories','user')) return;
 
     // Get datbase setup
     $dbconn =& xarDB::getConn();

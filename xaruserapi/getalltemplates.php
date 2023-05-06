@@ -21,7 +21,7 @@
 function pubsub_userapi_getalltemplates($args)
 {
     $templates = array();
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    if (!xarSecurity::check('AdminPubSub')) return;
 
     $dbconn =& xarDB::getConn();
     $xartable =& xarDB::getTables();

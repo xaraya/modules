@@ -18,18 +18,18 @@
  */
 function pubsub_admin_view_queue($args)
 {
-    if (!xarSecurityCheck('ManagePubSub')) return;
+    if (!xarSecurity::check('ManagePubSub')) return;
     
     extract($args);
-    if (!xarVarFetch('action','str', $action, '')) return;
-    if (!xarVarFetch('id','int', $id, 0)) return;
+    if (!xarVar::fetch('action','str', $action, '')) return;
+    if (!xarVar::fetch('id','int', $id, 0)) return;
 
     sys::import('modules.dynamicdata.class.objects.master');
     $data['object'] = DataObjectMaster::getObjectList(array('name' => 'pubsub_process'));
 
     if (!empty($action) && ($action == 'process')) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         
         $result = xarMod::apiFunc('pubsub','admin','process_queue');
         
@@ -58,7 +58,7 @@ function pubsub_admin_view_queue($args)
             $data['result'] = xarMod::apiFunc('mailer','user','send', $mailargs);
         }
 
-        xarController::redirect(xarModURL('pubsub', 'admin', 'view_queue'));
+        xarController::redirect(xarController::URL('pubsub', 'admin', 'view_queue'));
         return true;
     }
     return $data;

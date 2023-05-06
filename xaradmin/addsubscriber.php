@@ -25,15 +25,15 @@
 function pubsub_admin_addsubscriber()
 {
     // Get parameters
-    xarVarFetch('sub_module','isset',$sub_module,'', XARVAR_DONT_SET);
-    xarVarFetch('sub_itemtype','isset',$sub_itemtype,'', XARVAR_DONT_SET);
-    xarVarFetch('sub_category','isset',$sub_category,'', XARVAR_DONT_SET);
-    xarVarFetch('sub_email','isset',$sub_email,'', XARVAR_DONT_SET);
-    xarVarFetch('sub_htmlmail','checkbox',$sub_htmlmail,true, XARVAR_DONT_SET);
+    xarVar::fetch('sub_module','isset',$sub_module,'', xarVar::DONT_SET);
+    xarVar::fetch('sub_itemtype','isset',$sub_itemtype,'', xarVar::DONT_SET);
+    xarVar::fetch('sub_category','isset',$sub_category,'', xarVar::DONT_SET);
+    xarVar::fetch('sub_email','isset',$sub_email,'', xarVar::DONT_SET);
+    xarVar::fetch('sub_htmlmail','checkbox',$sub_htmlmail,true, xarVar::DONT_SET);
     // Confirm authorisation code
-//    if (!xarSecConfirmAuthKey()) return;
+//    if (!xarSec::confirmAuthKey()) return;
     // Security Check
-    if (!xarSecurityCheck('AdminPubSub')) return;
+    if (!xarSecurity::check('AdminPubSub')) return;
 
     $sub_args = array();
     $sub_args['modid']    = $sub_module;
@@ -55,7 +55,7 @@ function pubsub_admin_addsubscriber()
     }
 
 
-    xarController::redirect(xarModURL('pubsub', 'admin', 'viewall'));
+    xarController::redirect(xarController::URL('pubsub', 'admin', 'viewall'));
 
     return true;
 }

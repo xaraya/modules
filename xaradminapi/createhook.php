@@ -44,9 +44,9 @@ function pubsub_adminapi_createhook($args)
     if (isset($extrainfo['module']) && is_string($extrainfo['module'])) {
         $modname = $extrainfo['module'];
     } else {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     }
-    $modid = xarModGetIDFromName($modname);
+    $modid = xarMod::getRegId($modname);
     if (!$modid) return $extrainfo; // throw back
 
     if (isset($extrainfo['itemtype']) && is_numeric($extrainfo['itemtype'])) {
@@ -96,7 +96,7 @@ function pubsub_adminapi_createhook($args)
     if ($modname == 'comments') {
         $extra = '';
         if (isset($extrainfo['current_module']) && is_string($extrainfo['current_module'])) {
-            $extra = xarModGetIDFromName($extrainfo['current_module']);
+            $extra = xarMod::getRegId($extrainfo['current_module']);
         }
         if(isset($extrainfo['current_itemtype']) && is_numeric($extrainfo['current_itemtype'])) {
             $extra .= '-' . $extrainfo['current_itemtype'];

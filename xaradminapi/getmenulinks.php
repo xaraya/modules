@@ -23,23 +23,23 @@ function pubsub_adminapi_getmenulinks()
 {
     $menulinks = array();
 
-    if (xarSecurityCheck('AdminPubSub', 0)) {
-        $menulinks[] = Array('url'   => xarModURL('pubsub',
+    if (xarSecurity::check('AdminPubSub', 0)) {
+        $menulinks[] = Array('url'   => xarController::URL('pubsub',
                                                   'admin',
                                                   'viewall'),
                              'title' => xarML('View all Pubsub Subscriptions'),
                              'label' => xarML('View Subscriptions'));
-        $menulinks[] = Array('url'   => xarModURL('pubsub',
+        $menulinks[] = Array('url'   => xarController::URL('pubsub',
                                                   'admin',
                                                   'viewq'),
                              'title' => xarML('View all events waiting to be processed'),
                              'label' => xarML('View Event Queue'));
-        $menulinks[] = Array('url'   => xarModURL('pubsub',
+        $menulinks[] = Array('url'   => xarController::URL('pubsub',
                                                   'admin',
                                                   'view_templates'),
                               'title' => xarML('Modify the Pubsub Templates'),
                               'label' => xarML('Modify Templates'));
-        $menulinks[] = Array('url'   => xarModURL('pubsub',
+        $menulinks[] = Array('url'   => xarController::URL('pubsub',
                                                   'admin',
                                                   'modifyconfig'),
                               'title' => xarML('Modify the Pubsub Configuration'),
