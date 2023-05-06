@@ -17,13 +17,13 @@
  * The template contains overview and help texts
  *
  * @author the Hitcount module development team
- * @return array xarTplModule with $data containing template data
+ * @return array xarTpl::module with $data containing template data
  * @since 4 March 2006
  */
 function hitcount_admin_overview()
 {
     /* Security Check */
-    if(!xarSecurityCheck('AdminHitcount',0)) return;
+    if(!xarSecurity::check('AdminHitcount',0)) return;
 
     $data=array();
 
@@ -31,7 +31,7 @@ function hitcount_admin_overview()
      * else just call the main function that displays the overview
      */
 
-    return xarTplModule('hitcount', 'admin', 'main', $data,'main');
+    return xarTpl::module('hitcount', 'admin', 'main', $data,'main');
 }
 
 ?>

@@ -44,7 +44,7 @@ function hitcount_adminapi_delete($args)
                 isset($extrainfo['module']) && is_string($extrainfo['module'])) {
                 $modname = $extrainfo['module'];
             } else {
-                $modname = xarModGetName();
+                $modname = xarMod::getName();
             }
         }
         $modid = xarMod::getRegId($modname);
@@ -65,7 +65,7 @@ function hitcount_adminapi_delete($args)
 // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-        if(!xarSecurityCheck('DeleteHitcountItem',1,'Item',"$modname:$itemtype:$itemid")) return;
+        if(!xarSecurity::check('DeleteHitcountItem',1,'Item',"$modname:$itemtype:$itemid")) return;
 
         $dbconn = xarDB::getConn();
         $xartable =& xarDB::getTables();
@@ -91,7 +91,7 @@ function hitcount_adminapi_delete($args)
     // if we're coming from the delete GUI (or elsewhere)
     } elseif (!empty($confirm)) {
 
-        if (!xarSecurityCheck('AdminHitcount')) return;
+        if (!xarSecurity::check('AdminHitcount')) return;
 
         // Database information
         $dbconn = xarDB::getConn();

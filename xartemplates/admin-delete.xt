@@ -4,7 +4,7 @@
     <xar:template file="admin-mod-head"/>
     <div class="xar-mod-body">
         <h2>Delete Hit Counts</h2>
-        <form name="post" id="post" action="#xarModURL('hitcount', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
+        <form name="post" id="post" action="#xarController::URL('hitcount', 'admin', 'delete')#" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>
                 Confirm Hitcount Deletion

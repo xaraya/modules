@@ -42,7 +42,7 @@
                                 #$moditem['numhits']#
                             </td>
                             <td class="xar-align-center">
-                                <a href="#$moditem['delete']#"><b>Delete</b></a>
+                                <a href="#$moditem['delete']#"><strong>Delete</strong></a>
                             </td>
                         </tr>
                         <tr>
@@ -52,13 +52,13 @@
                     </xar:foreach>
                     <tr>
                         <td class="xar-align-center">
-                            <b>Grand Total</b>
+                            <strong>Grand Total</strong>
                         </td>
                         <td class="xar-align-right">
-                            <b>#$numitems#</b>
+                            <strong>#$numitems#</strong>
                         </td>
                         <td class="xar-align-right">
-                            <b>#$numhits#</b>
+                            <strong>#$numhits#</strong>
                         </td>
                         <td class="xar-align-center">
                             <a href="#$delete#">Delete All</a>
@@ -69,7 +69,7 @@
                     <td colspan="4">
                         <div class="xar-accent xar-norm-outline xar-padding-thick">
 
-                                By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
+                                By clicking on <strong>Delete</strong> you can delete all hit counts associated with a particular
                                 module. Clicking on a module will take you to that module's statistics page containing
                                 the figures for each of that module's items that have hit counts associated with them.
                                 From there you can delete all hit counts associated with a particular item.
@@ -118,7 +118,7 @@
                                 #$moditem['numhits']#
                             </td>
                                 <td class="xar-align-center">
-                                <a href="#$moditem['delete']#"><b>Delete</b></a>
+                                <a href="#$moditem['delete']#"><strong>Delete</strong></a>
                             </td>
                         </tr>
                     </xar:foreach>
@@ -131,10 +131,10 @@
                 </xar:if>
                     <tr>
                             <td class="xar-align-center">
-                            <b>Grand Total</b>:
+                            <strong>Grand Total</strong>:
                         </td>
                             <td class="xar-align-right">
-                            <b>#$numhits#</b>
+                            <strong>#$numhits#</strong>
                         </td>
                             <td class="xar-align-center">
                             <a href="#$delete#">Delete All</a>
@@ -145,7 +145,7 @@
                     <td colspan="3">
                             <div class="xar-accent xar-norm-outline xar-padding-thick">
 
-                                By clicking on <b>Delete</b> you can delete all hit counts associated with a particular
+                                By clicking on <strong>Delete</strong> you can delete all hit counts associated with a particular
                                 module's item.
 
                         </div>

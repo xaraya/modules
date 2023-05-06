@@ -39,7 +39,7 @@ function hitcount_adminapi_create($args)
             isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $modname = $extrainfo['module'];
         } else {
-            $modname = xarModGetName();
+            $modname = xarMod::getName();
         }
     }
     $modid = xarMod::getRegId($modname);
@@ -60,7 +60,7 @@ function hitcount_adminapi_create($args)
 // TODO: re-evaluate this for hook calls !!
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if(!xarSecurityCheck('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
+    if(!xarSecurity::check('ReadHitcountItem',1,'Item',"$modname:$itemtype:$objectid")) return;
 
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -91,7 +91,7 @@ function hitcount_adminapi_create($args)
     $hcid = $dbconn->PO_Insert_ID($hitcounttable, 'id');
 
     // hmmm, I think we'll skip calling more hooks here... :-)
-    //xarModCallHooks('item', 'create', $hcid, 'id');
+    //xarModHooks::call('item', 'create', $hcid, 'id');
 
     // Return the extra info with the id of the newly created item
     // (not that this will be of any used when called via hooks, but

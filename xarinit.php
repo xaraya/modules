@@ -30,7 +30,7 @@ function hitcount_init()
     sys::import('xaraya.tableddl');
 
     // Create tables
-    $query = xarDBCreateTable($xartable['hitcount'],
+    $query = xarTableDDL::createTable($xartable['hitcount'],
                              array('id'         => array('type'        => 'integer',
                                                             'unsigned'    => true,
                                                             'null'        => false,
@@ -65,7 +65,7 @@ function hitcount_init()
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBCreateIndex($xartable['hitcount'],
+    $query = xarTableDDL::createIndex($xartable['hitcount'],
                              array('name'   => 'i_' . xarDB::getPrefix() . '_hitcombo',
                                    'fields' => array('module_id','itemtype', 'itemid'),
                                    'unique' => false));
@@ -73,7 +73,7 @@ function hitcount_init()
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBCreateIndex($xartable['hitcount'],
+    $query = xarTableDDL::createIndex($xartable['hitcount'],
                              array('name'   => 'i_' . xarDB::getPrefix() . '_hititem',
                                    'fields' => array('itemid'),
                                    'unique' => false));
@@ -81,7 +81,7 @@ function hitcount_init()
     $result = $dbconn->Execute($query);
     if (!$result) return;
 
-    $query = xarDBCreateIndex($xartable['hitcount'],
+    $query = xarTableDDL::createIndex($xartable['hitcount'],
                              array('name'   => 'i_' . xarDB::getPrefix() . '_hits',
                                    'fields' => array('hits'),
                                    'unique' => false));
@@ -100,7 +100,7 @@ function hitcount_init()
     //xarHooks::registerObserver('ItemtypeView', 'hitcount');
     xarHooks::registerObserver('ModuleRemove', 'hitcount');
     // when a module item is displayed, created or deleted
-    // (use xarVarSetCached('Hooks.hitcount','save', 1) to tell hitcount *not*
+    // (use xarVar::setCached('Hooks.hitcount','save', 1) to tell hitcount *not*
     // to display the hit count, but to save it in 'Hooks.hitcount', 'value')
     // <chris> - why is this necessary? 
 
@@ -127,25 +127,25 @@ function hitcount_init()
                                 'limit' => 20
                             )
                     );
-    xarDefineInstance('hitcount','Item',$instances);
+    xarPrivileges::defineInstance('hitcount','Item',$instances);
 
     /*********************************************************************
     * Register the module components that are privileges objects
     * Format is
-    * xarregisterMask(Name,Realm,Module,Component,Instance,Level,Description)
+    * xarMasks::register(Name,Realm,Module,Component,Instance,Level,Description)
     *********************************************************************/
 
 
-    xarRegisterMask('ViewHitcountItems','All','hitcount','Item','All:All:All','ACCESS_OVERVIEW');
-    xarRegisterMask('ReadHitcountItem','All','hitcount','Item','All:All:All','ACCESS_READ');
-    xarRegisterMask('DeleteHitcountItem','All','hitcount','Item','All:All:All','ACCESS_DELETE');
-    xarRegisterMask('ManageHitcount','All','hitcount','All','All','ACCESS_DELETE');
-    xarRegisterMask('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
+    xarMasks::register('ViewHitcountItems','All','hitcount','Item','All:All:All','ACCESS_OVERVIEW');
+    xarMasks::register('ReadHitcountItem','All','hitcount','Item','All:All:All','ACCESS_READ');
+    xarMasks::register('DeleteHitcountItem','All','hitcount','Item','All:All:All','ACCESS_DELETE');
+    xarMasks::register('ManageHitcount','All','hitcount','All','All','ACCESS_DELETE');
+    xarMasks::register('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
 
-    xarRegisterPrivilege('ViewHitcount','All','hitcount','All','All','ACCESS_OVERVIEW');
-    xarRegisterPrivilege('ReadHitcount','All','hitcount','All','All','ACCESS_READ');
-    xarRegisterPrivilege('ManageHitcount','All','hitcount','All','All:All','ACCESS_DELETE');
-    xarRegisterPrivilege('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
+    xarPrivileges::register('ViewHitcount','All','hitcount','All','All','ACCESS_OVERVIEW');
+    xarPrivileges::register('ReadHitcount','All','hitcount','All','All','ACCESS_READ');
+    xarPrivileges::register('ManageHitcount','All','hitcount','All','All:All','ACCESS_DELETE');
+    xarPrivileges::register('AdminHitcount','All','hitcount','All','All','ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -172,7 +172,7 @@ function hitcount_upgrade($oldversion)
             $dbconn = xarDB::getConn();
             $xartable =& xarDB::getTables();
 
-            $tmodInfo = xarMod_GetBaseInfo('hitcount');
+            $tmodInfo = xarMod::getBaseInfo('hitcount');
             $tmodId = $tmodInfo['systemid'];
 
             $sql = "UPDATE $xartable[hooks]

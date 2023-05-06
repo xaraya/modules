@@ -40,7 +40,7 @@ function hitcount_userapi_topitems($args)
     }
 
     // Security check
-    if(!xarSecurityCheck('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
+    if(!xarSecurity::check('ViewHitcountItems',1,'Item',"$modname:$itemtype:All")) return;
 
     // Database information
     $dbconn = xarDB::getConn();

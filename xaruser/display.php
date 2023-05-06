@@ -14,7 +14,7 @@
 /**
  * add a hit for a specific item, and display the hitcount (= display hook)
  *
- * (use xarVarSetCached('Hooks.hitcount','save', 1) to tell hitcount *not*
+ * (use xarVar::setCached('Hooks.hitcount','save', 1) to tell hitcount *not*
  * to display the hit count, but to save it in 'Hooks.hitcount', 'value')
  *
  * @param $args['objectid'] ID of the item this hitcount is for
@@ -27,7 +27,7 @@ function hitcount_user_display($args)
     extract($args);
 
     // Load API
-    if (!xarModAPILoad('hitcount', 'admin')) return;
+    if (!xarMod::apiLoad('hitcount', 'admin')) return;
 
     // When called via hooks, modname will be empty, but we get it from the
     // extrainfo or from the current module
@@ -36,7 +36,7 @@ function hitcount_user_display($args)
             isset($extrainfo['module']) && is_string($extrainfo['module'])) {
             $args['modname'] = $extrainfo['module'];
         } else {
-            $args['modname'] = xarModGetName();
+            $args['modname'] = xarMod::getName();
         }
     }
     if (!isset($args['itemtype']) || !is_numeric($args['itemtype'])) {
@@ -47,8 +47,8 @@ function hitcount_user_display($args)
              $args['itemtype'] = 0;
          }
     }
-    if (xarVarIsCached('Hooks.hitcount','nocount') ||
-        (xarSecurityCheck('AdminHitcount', 0) && xarModVars::get('hitcount', 'countadmin') == FALSE) ) {
+    if (xarVar::isCached('Hooks.hitcount','nocount') ||
+        (xarSecurity::check('AdminHitcount', 0) && xarModVars::get('hitcount', 'countadmin') == FALSE) ) {
         $hitcount = xarMod::apiFunc('hitcount', 'user', 'get', $args);
     } else {
         $hitcount = xarMod::apiFunc('hitcount', 'admin', 'update', $args);
@@ -57,11 +57,11 @@ function hitcount_user_display($args)
     // @fixme: this function should return output to a template, not directly as a string!
     if (isset($hitcount)) {
         // Display current hitcount or set the cached variable
-        if (!xarVarIsCached('Hooks.hitcount','save') ||
-            xarVarGetCached('Hooks.hitcount','save') == false ) {
+        if (!xarVar::isCached('Hooks.hitcount','save') ||
+            xarVar::getCached('Hooks.hitcount','save') == false ) {
             return '(' . $hitcount . ' ' . xarML('Reads') . ')';
         } else {
-            xarVarSetCached('Hooks.hitcount','value',$hitcount);
+            xarVar::setCached('Hooks.hitcount','value',$hitcount);
         }
     }
 

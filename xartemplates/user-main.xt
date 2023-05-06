@@ -8,7 +8,7 @@
     </div>
     <div class="xar-mod-body">
       <h2>Top Viewed Items</h2>
-      <xar:if condition="!xarSecurityCheck('AdminHitcount',0)">
+      <xar:if condition="!xarSecurity::check('AdminHitcount',0)">
         <xar:set name="isadmin">0</xar:set>
       <xar:else/>
         <strong>Note: as administrator, you may also see unapproved items here</strong>

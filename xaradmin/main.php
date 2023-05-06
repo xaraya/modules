@@ -16,12 +16,12 @@
  */
 function hitcount_admin_main()
 {
-    if(!xarSecurityCheck('ManageHitcount')) return;
+    if(!xarSecurity::check('ManageHitcount')) return;
 
     if (xarModVars::get('modules', 'disableoverview') == 0) {
         return array();
     } else {
-        xarController::redirect(xarModURL('hitcount', 'admin', 'view'));
+        xarController::redirect(xarController::URL('hitcount', 'admin', 'view'));
     }
     return true;
 }

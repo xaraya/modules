@@ -17,10 +17,10 @@
 function hitcount_user_main()
 {
 // Security Check
-    if(!xarSecurityCheck('ViewHitcountItems')) return;
+    if(!xarSecurity::check('ViewHitcountItems')) return;
 
     // Load API
-    if (!xarModAPILoad('hitcount', 'user')) return;
+    if (!xarMod::apiLoad('hitcount', 'user')) return;
 
     $data['title'] = xarML('Modules we are currently counting display hits for : (test)');
     $data['moditems'] = array();
@@ -53,14 +53,14 @@ function hitcount_user_main()
             $mod['numhits'] += $moditem['numhits'] = $stats['hits'];
             if ($itemtype == 0) {
                 $moditem['name'] = ucwords($modinfo['displayname']);
-                $moditem['link'] = xarModURL($modinfo['name'],'user','main');
+                $moditem['link'] = xarController::URL($modinfo['name'],'user','main');
             } else {
                 if (isset($mytypes) && !empty($mytypes[$itemtype])) {
                     $moditem['name'] = $mytypes[$itemtype]['label'];
                     $moditem['link'] = $mytypes[$itemtype]['url'];
                 } else {
                     $moditem['name'] = ucwords($modinfo['displayname']) . ' ' . $itemtype;
-                    $moditem['link'] = xarModURL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
+                    $moditem['link'] = xarController::URL($modinfo['name'],'user','view',array('itemtype' => $itemtype));
                 }
             }
             $moditem['tophits'] = xarMod::apiFunc('hitcount','user','topitems',
@@ -120,7 +120,7 @@ function hitcount_user_main()
 
     $data['moduleList'] = $moduleList;
 
-    xarTplSetPageTitle(xarVarPrepForDisplay(xarML('Top Items')));
+    xarTpl::setPageTitle(xarVar::prepForDisplay(xarML('Top Items')));
 
     // Return output
     return $data;

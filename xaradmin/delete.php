@@ -22,12 +22,12 @@
 function hitcount_admin_delete()
 {
     // Security Check
-    if(!xarSecurityCheck('AdminHitcount')) return;
+    if(!xarSecurity::check('AdminHitcount')) return;
 
-    if(!xarVarFetch('modid',    'isset', $modid,     NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemtype', 'isset', $itemtype,  NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('itemid',   'isset', $itemid,    NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('confirm',  'str:1:', $confirm, '', XARVAR_NOT_REQUIRED)) return;
+    if(!xarVar::fetch('modid',    'isset', $modid,     NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemtype', 'isset', $itemtype,  NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('itemid',   'isset', $itemid,    NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('confirm',  'str:1:', $confirm, '', xarVar::NOT_REQUIRED)) return;
 
     // Check for confirmation.
     if (empty($confirm)) {
@@ -54,13 +54,13 @@ function hitcount_admin_delete()
             }
         }
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
         // Return the template variables defined in this function
         return $data;
     }
 
-    if (!xarSecConfirmAuthKey()) {
-        return xarTplModule('privileges','user','errors',array('layout' => 'bad_author'));
+    if (!xarSec::confirmAuthKey()) {
+        return xarTpl::module('privileges','user','errors',array('layout' => 'bad_author'));
     }        
     if (!xarMod::apiFunc('hitcount','admin','delete',
                        array('modid' => $modid,
@@ -69,7 +69,7 @@ function hitcount_admin_delete()
                              'confirm' => $confirm))) {
         return;
     }
-    xarController::redirect(xarModURL('hitcount', 'admin', 'view'));
+    xarController::redirect(xarController::URL('hitcount', 'admin', 'view'));
     return true;
 }
 
