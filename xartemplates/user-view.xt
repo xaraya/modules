@@ -50,7 +50,7 @@
                         <xar:button type="cancel" label="$label"/>
                     <xar:else/>
                         <xar:var name="label">View keywords</xar:var>
-                        <xar:set name="target">xarModURL('keywords', 'user', 'view')</xar:set>
+                        <xar:set name="target">xarController::URL('keywords', 'user', 'view')</xar:set>
                         <xar:button type="link" label="$label" target="$target"/>
                     </xar:if>
                 </div>
@@ -73,7 +73,7 @@
                                     <ul>
                                         <xar:for start="$k=$nextindex" test="$j lt $itemspercol and isset($items[$k])" iter="$k++">
                                             <li>
-                                                <a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $items[$k]['keyword']))#">#$items[$k]['keyword']#</a>
+                                                <a href="#xarController::URL('keywords', 'user', 'view', array('keyword' => $items[$k]['keyword']))#">#$items[$k]['keyword']#</a>
                                             </li>
                                             <xar:set name="j">$j+1</xar:set>
                                         </xar:for>
@@ -94,7 +94,7 @@
                     <xar:if condition="!empty($items)">
                         <div class="keywords-cloud">
                             <xar:foreach in="$items" value="$item">
-                                <a href="#xarModURL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#" style="font-size: #$item['weight']##$unit#;">#$item['keyword']#</a>&#160;
+                                <a href="#xarController::URL('keywords', 'user', 'view', array('keyword' => $item['keyword']))#" style="font-size: #$item['weight']##$unit#;">#$item['keyword']#</a>&#160;
                             </xar:foreach>
                         </div>
                     <xar:else/>

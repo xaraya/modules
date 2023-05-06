@@ -17,19 +17,19 @@
  */
 function keywords_admin_view($args)
 {
-    if (!xarSecurityCheck('ManageKeywords')) return;
+    if (!xarSecurity::check('ManageKeywords')) return;
 
-    if (!xarVarFetch('module_id', 'id',
-        $module_id, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('itemtype', 'int:0:',
-        $itemtype, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('keyword', 'pre:trim:str:1:',
-        $keyword, null, XARVAR_DONT_SET)) return;
+    if (!xarVar::fetch('module_id', 'id',
+        $module_id, null, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('itemtype', 'int:0:',
+        $itemtype, null, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('keyword', 'pre:trim:str:1:',
+        $keyword, null, xarVar::DONT_SET)) return;
 
-    if (!xarVarFetch('sort', 'pre:trim:str:1',
-        $sort, null, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('startnum', 'int:1',
-        $startnum, null, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('sort', 'pre:trim:str:1',
+        $sort, null, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('startnum', 'int:1',
+        $startnum, null, xarVar::NOT_REQUIRED)) return;
     $items_per_page = xarModVars::get('keywords', 'stats_per_page', 100);
 
     if (empty($module_id)) {
@@ -62,7 +62,7 @@ function keywords_admin_view($args)
                 $modtypes[$module][$typeid] = array(
                     'label' => xarML('Itemtype #(1)', $typeid),
                     'title' => xarML('View itemtype #(1) items', $typeid),
-                    'url' => xarModURL($module, 'user', 'view', array('itemtype' => $typeid)),
+                    'url' => xarController::URL($module, 'user', 'view', array('itemtype' => $typeid)),
                 );
             }
             $modules[$module]['itemtypes'][$typeid] += $modtypes[$module][$typeid];
@@ -113,7 +113,7 @@ function keywords_admin_view($args)
                     $itemlinks[$id] = array(
                         'label' => xarML('Item #(1)', $id),
                         'title' => xarML('Display Item #(1)', $id),
-                        'url' => xarModURL($module, 'user', 'display',
+                        'url' => xarController::URL($module, 'user', 'display',
                             array('itemtype' => !empty($itemtype) ? $itemtype : null, 'itemid' => $id)),
                     );
                 }
@@ -183,15 +183,15 @@ function keywords_admin_view($args)
 
     $data = array();
 
-    if (!xarVarFetch('modname', 'pre:trim:lower:str:1:',
-        $modname, null, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemtype', 'int:1:',
-        $itemtype, NULL, XARVAR_NOT_REQUIRED)) return;
-    if (!xarVarFetch('itemid',   'int:1:',
-        $itemid, NULL, XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('modname', 'pre:trim:lower:str:1:',
+        $modname, null, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemtype', 'int:1:',
+        $itemtype, NULL, xarVar::NOT_REQUIRED)) return;
+    if (!xarVar::fetch('itemid',   'int:1:',
+        $itemid, NULL, xarVar::NOT_REQUIRED)) return;
 
-    if (!xarVarFetch('tab', 'pre:trim:lower:str:1:',
-        $data['tab'], 'list', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('tab', 'pre:trim:lower:str:1:',
+        $data['tab'], 'list', xarVar::NOT_REQUIRED)) return;
 
     $subjects = xarHooks::getObserverSubjects('keywords');
     if (!empty($subjects)) {
@@ -213,8 +213,8 @@ function keywords_admin_view($args)
 
     switch ($data['tab']) {
         case 'list':
-            if (!xarVarFetch('keyword', 'pre:trim:str:1:',
-                $data['keyword'], null, XARVAR_NOT_REQUIRED)) return;
+            if (!xarVar::fetch('keyword', 'pre:trim:str:1:',
+                $data['keyword'], null, xarVar::NOT_REQUIRED)) return;
             if (!empty($data['keyword'])) {
                 // list items by keyword
                 // get a list of items associated with this keyword

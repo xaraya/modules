@@ -20,9 +20,9 @@
  */
 function keywords_user_display($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurity::check('ReadKeywords')) return;
 
-    xarVarFetch('itemid','id',$itemid,'', XARVAR_DONT_SET);
+    xarVar::fetch('itemid','id',$itemid,'', xarVar::DONT_SET);
     extract($args);
 
     if (empty($itemid)) {
@@ -36,7 +36,7 @@ function keywords_user_display($args)
     $item = $items[$itemid];
     if (count($item) == 0 || empty($item['moduleid'])) return array();
 
-    $modinfo = xarModGetInfo($item['moduleid']);
+    $modinfo = xarMod::getInfo($item['moduleid']);
     if (!isset($modinfo) || empty($modinfo['name'])) return array();
 
     if (!empty($item['itemtype'])) {
@@ -64,7 +64,7 @@ function keywords_user_display($args)
             $item[$field] = $value;
         }
     } else {
-        $item['url'] = xarModURL($modinfo['name'],'user','display',
+        $item['url'] = xarController::URL($modinfo['name'],'user','display',
                                  array('itemtype' => $item['itemtype'],
                                        'itemid' => $item['itemid']));
     }

@@ -35,7 +35,7 @@ class Keyword_Association extends Object
         if (empty($moduleid) || empty($itemid)) return;
 
         // (try to) check if we're previewing or not
-        xarVarFetch('preview', 'isset', $preview, false, XARVAR_NOT_REQUIRED);
+        xarVar::fetch('preview', 'isset', $preview, false, xarVar::NOT_REQUIRED);
         if (!empty($preview)) return;
 
         // get the current keyword associations for this module item

@@ -18,7 +18,7 @@
 function keywords_adminapi_limited($args)
 {
     extract($args);
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurity::check('AdminKeywords')) return;
     $invalid = array();
     if (!isset($moduleid) || !is_numeric($moduleid)) {
         $invalid[] = 'moduleid';

@@ -35,7 +35,7 @@ function keywords_admin_modifyhook($args)
 
     // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     } else {
         $modname = $extrainfo['module'];
     }
@@ -60,7 +60,7 @@ function keywords_admin_modifyhook($args)
     }
 
     // no permission, no worries, just don't display the form 
-    if (!xarSecurityCheck('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
+    if (!xarSecurity::check('AddKeywords',0,'Item', "$modid:$itemtype:$itemid")) return '';
 
     // get settings currently in force for this module/itemtype
     $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
@@ -82,8 +82,8 @@ function keywords_admin_modifyhook($args)
         $keywords = $extrainfo['keywords'];
     } else {
         // could be an item preview, try fetch from form input
-        if (!xarVarFetch('keywords', 'isset',
-            $keywords, null, XARVAR_DONT_SET)) return;
+        if (!xarVar::fetch('keywords', 'isset',
+            $keywords, null, xarVar::DONT_SET)) return;
     }
     // keywords not supplied
     if (!isset($keywords)) {
@@ -95,7 +95,7 @@ function keywords_admin_modifyhook($args)
     }
     // we may have been given a string list
     if (!empty($keywords) && !is_array($keywords)) {
-        $keywords = xarModAPIFunc('keywords','admin','separekeywords',
+        $keywords = xarMod::apiFunc('keywords','admin','separekeywords',
             array(
                 'keywords' => $keywords,
             ));
@@ -129,19 +129,19 @@ function keywords_admin_modifyhook($args)
         // see if managers are allowed to add to restricted list
         if (!empty($data['allow_manager_add'])) {
             // see if current user is a manager
-            $data['is_manager'] = xarSecurityCheck('ManageKeywords',0,'Item', "$modid:$itemtype:$itemid");
+            $data['is_manager'] = xarSecurity::check('ManageKeywords',0,'Item', "$modid:$itemtype:$itemid");
             if (!empty($data['is_manager'])) {
                 // see if keywords were passed to hook call
                 if (!empty($extrainfo['restricted_extra'])) {
                     $toadd = $extrainfo['restricted_extra'];
                 } else {
                     // could be an item preview, try fetch from form input
-                    if (!xarVarFetch('restricted_extra', 'isset',
-                        $toadd, array(), XARVAR_NOT_REQUIRED)) return;
+                    if (!xarVar::fetch('restricted_extra', 'isset',
+                        $toadd, array(), xarVar::NOT_REQUIRED)) return;
                 }
                 // we may have been given a string list
                 if (!empty($toadd) && !is_array($toadd)) {
-                    $toadd = xarModAPIFunc('keywords','admin','separekeywords',
+                    $toadd = xarMod::apiFunc('keywords','admin','separekeywords',
                         array(
                             'keywords' => $toadd,
                         ));

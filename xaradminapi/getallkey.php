@@ -29,7 +29,7 @@ function keywords_adminapi_getallkey($args)
         return;
     }
 
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarSecurity::check('AdminKeywords')) return;
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
     $keywordstable = $xartable['keywords_restr'];

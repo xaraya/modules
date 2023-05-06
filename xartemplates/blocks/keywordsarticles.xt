@@ -11,10 +11,10 @@ $item['title'],$item['summary'],$item['authorid'],$item['pubdate'],$item['pubtyp
 
     <div class="xar-block-title">Keywords related articles:</div>
     <xar:foreach in="$items" value="$item">
-        &#149;#xarVarPrepForDisplay($item['title'])#&#160;
-        <xar:if condition="!empty($item['pubdate'])">(#xarLocaleGetFormattedDate('medium',$item['pubdate'])#)</xar:if><br />
+        &#149;#xarVar::prepForDisplay($item['title'])#&#160;
+        <xar:if condition="!empty($item['pubdate'])">(#xarLocale::getFormattedDate('medium',$item['pubdate'])#)</xar:if><br />
         <xar:if condition="!empty($item['summary'])">
-            #xarVarPrepForDisplay($item['summary'])#<br />
+            #xarVar::prepForDisplay($item['summary'])#<br />
         </xar:if>
     <a href="#$item['link']#">Read More</a>
     <br /><br />

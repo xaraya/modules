@@ -115,11 +115,11 @@ function keywords_init()
     // Defined Instances are: module_id, itemtype and itemid
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
-                             'query'  => xarModURL($module, 'admin', 'privileges'),
+                             'query'  => xarController::URL($module, 'admin', 'privileges'),
                              'limit'  => 0
                             )
                     );
-    xarDefineInstance($module, 'Item', $instances);
+    xarPrivileges::defineInstance($module, 'Item', $instances);
 
 
 /*********************************************************************
@@ -128,11 +128,11 @@ function keywords_init()
 
 // TODO: tweak this - allow viewing keywords of "your own items" someday ?
 // MichelV: Why not have an add privilege in here? Admin to add keywords seems way overdone
-    xarRegisterMask('ReadKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_READ');
-    xarRegisterMask('EditKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_EDIT');
-    xarRegisterMask('AddKeywords',    'All', $module, 'Item', 'All:All:All', 'ACCESS_COMMENT');
-    xarRegisterMask('ManageKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_DELETE');
-    xarRegisterMask('AdminKeywords',  'All', $module, 'Item', 'All:All:All', 'ACCESS_ADMIN');
+    xarMasks::register('ReadKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_READ');
+    xarMasks::register('EditKeywords',   'All', $module, 'Item', 'All:All:All', 'ACCESS_EDIT');
+    xarMasks::register('AddKeywords',    'All', $module, 'Item', 'All:All:All', 'ACCESS_COMMENT');
+    xarMasks::register('ManageKeywords', 'All', $module, 'Item', 'All:All:All', 'ACCESS_DELETE');
+    xarMasks::register('AdminKeywords',  'All', $module, 'Item', 'All:All:All', 'ACCESS_ADMIN');
 
     // Initialisation successful
     return true;
@@ -159,7 +159,7 @@ function keywords_upgrade($oldversion)
 
                 $dbconn = xarDB::getConn();
                 $xartable =& xarDB::getTables();
-                $query = xarDBCreateTable($xartable['keywords_restr'],
+                $query = xarTableDDL::createTable($xartable['keywords_restr'],
                              array('id'         => array('type'        => 'integer',
                                                             'null'       => false,
                                                             'increment'  => true,
@@ -180,7 +180,7 @@ function keywords_upgrade($oldversion)
                 $result = $dbconn->Execute($query);
                 if (!$result) return;
 
-                if (!xarModRegisterHook('item', 'search', 'GUI',
+                if (!xarModHooks::register('item', 'search', 'GUI',
                         'keywords', 'user', 'search')) {
                     return;
                 }
@@ -192,7 +192,7 @@ function keywords_upgrade($oldversion)
             $xartable =& xarDB::getTables();
 
             // Add column 'itemtype' to table
-             $query = xarDBAlterTable($xartable['keywords_restr'],
+             $query = xarTableDDL::alterTable($xartable['keywords_restr'],
                                      array('command' => 'add',
                                            'field' => 'itemtype',
                                            'type' => 'integer',
@@ -217,7 +217,7 @@ function keywords_upgrade($oldversion)
             xarModVars::set('keywords', 'useitemtype', 0);
 
         case '1.0.4':
-            xarRegisterMask('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
+            xarMasks::register('AddKeywords', 'All', 'keywords', 'Item', 'All:All:All', 'ACCESS_COMMENT');
 
         case '1.0.5':
             // upgrade to v2.0.0
@@ -254,8 +254,8 @@ function keywords_delete()
     if (!$q->run($query)) return;
 
     // Remove Masks and Instances
-    xarRemoveMasks('keywords');
-    xarRemoveInstances('keywords');
+    xarMasks::removemasks('keywords');
+    xarPrivileges::removeInstances('keywords');
 
     return xarMod::apiFunc('modules','admin','standarddeinstall',array('module' => 'keywords'));
 }
@@ -295,7 +295,7 @@ function keywords_upgrade_200()
             'itemid' => array('type' => 'integer', 'size' => 11, 'unsigned' => true, 'null' => false, 'default' => '0'),
         );
         // Create the index table
-        $query = xarDBCreateTable($indextable, $fields);
+        $query = xarTableDDL::createTable($indextable, $fields);
         $dbconn->Execute($query);
 
         // Create indices
@@ -305,7 +305,7 @@ function keywords_upgrade_200()
             'fields' => array('module_id', 'itemtype', 'itemid'),
             'unique' => true
         );
-        $query = xarDBCreateIndex($indextable,$index);
+        $query = xarTableDDL::createIndex($indextable,$index);
         $dbconn->Execute($query);
         // Let's commit this, since we're gonna do some other stuff
         $dbconn->commit();
@@ -412,7 +412,7 @@ function keywords_upgrade_200()
              'keyword' => array('type' => 'varchar', 'size' => 254,'null' => false,'default' => ''),
         );
         // Create the keywords table
-        $query = xarDBCreateTable($keywordstable, $fields);
+        $query = xarTableDDL::createTable($keywordstable, $fields);
         $dbconn->Execute($query);
 
         // Create indices
@@ -421,14 +421,14 @@ function keywords_upgrade_200()
             'fields' => array('keyword'),
             'unique' => false
         );
-        $query = xarDBCreateIndex($keywordstable,$index);
+        $query = xarTableDDL::createIndex($keywordstable,$index);
         $dbconn->Execute($query);
         $index = array(
             'name'   => 'i_'.$prefix.'_keywords_index_id',
             'fields' => array('index_id'),
             'unique' => false
         );
-        $query = xarDBCreateIndex($keywordstable,$index);
+        $query = xarTableDDL::createIndex($keywordstable,$index);
         $dbconn->Execute($query);
         // Let's commit this, since we're gonna do some other stuff
         $dbconn->commit();

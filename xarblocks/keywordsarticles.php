@@ -47,11 +47,11 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
         $vars = $this->getContent();
     // Allow refresh by setting refreshrandom variable
 
-     if (!xarVarFetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, XARVAR_DONT_SET)) return;
+     if (!xarVar::fetch('refreshrandom', 'int:1:1', $vars['refreshtime'], 0, xarVar::DONT_SET)) return;
 
     // Check cache
     $refresh = (time() - ($vars['refreshtime'] * 60));
-    $varDir = xarCoreGetVarDirPath();
+    $varDir = sys::varpath();
     $cacheKey = md5($blockinfo['bid']);
     $cachedFileName = $varDir . '/cache/templates/' . $cacheKey;
     if ((file_exists($cachedFileName)) &&
@@ -63,9 +63,9 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
         fclose($fp);
     } else {
         //Get the keywords related articles
-        if (xarVarIsCached('Blocks.articles', 'aid')) {
-            $vars['itemid'] = xarVarGetCached('Blocks.articles','aid');
-            $itemtype = xarVarGetCached('Blocks.articles', 'ptid');
+        if (xarVar::isCached('Blocks.articles', 'aid')) {
+            $vars['itemid'] = xarVar::getCached('Blocks.articles','aid');
+            $itemtype = xarVar::getCached('Blocks.articles', 'ptid');
             if (!empty($itemtype) && is_numeric($itemtype)) {
                 $vars['itemtype'] = $itemtype;
             } else {
@@ -73,7 +73,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                                        array('aid' => $vars['itemid']));
                 $vars['itemtype'] = $article['pubtypeid'];
             }
-            $vars['modid'] = xarModGetIDFromName('articles');
+            $vars['modid'] = xarMod::getRegId('articles');
             $keywords = xarMod::apiFunc('keywords','user','getwords',
                                    array('itemid' => $vars['itemid'],
                                             'itemtype' => $vars['itemtype'],
@@ -84,7 +84,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
             $vars['items'] = array();
             foreach ($keywords as $id => $word) {
                //$item['id'] = $id;
-               //$item['keyword'] = xarVarPrepForDisplay($word);
+               //$item['keyword'] = xarVar::prepForDisplay($word);
                // get the list of items to which this keyword is assigned
                //TODO Make itemtype / modid dependant
                 $items = $items + xarMod::apiFunc('keywords','user','getitems',
@@ -120,7 +120,7 @@ class Keywords_KeywordsarticlesBlock extends BasicBlock implements iBlock
                                         'pubdate' => $articles['pubdate'],
                                         'pubtypeid' => $articles['pubtypeid'],
                                         'status' => $articles['status'],
-                                        'link' => xarModURL('articles','user','display',array('aid' => $articles['aid'], 'ptid' => $articles['pubtypeid']))
+                                        'link' => xarController::URL('articles','user','display',array('aid' => $articles['aid'], 'ptid' => $articles['pubtypeid']))
                                         );
                         }
                       }

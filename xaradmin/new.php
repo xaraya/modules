@@ -20,8 +20,8 @@ function keywords_admin_new($args)
 {
     extract($args);
 
-    if (!xarVarFetch('confirm',  'isset', $confirm,  NULL, XARVAR_NOT_REQUIRED)) {return;}
-    if (!xarSecurityCheck('AdminKeywords')) return;
+    if (!xarVar::fetch('confirm',  'isset', $confirm,  NULL, xarVar::NOT_REQUIRED)) {return;}
+    if (!xarSecurity::check('AdminKeywords')) return;
 
     $data = array();
     $data['object'] = xarMod::apiFunc('dynamicdata','user','getobject',
@@ -29,7 +29,7 @@ function keywords_admin_new($args)
     if (!isset($data['object'])) return;
     if (!empty($confirm)) {
         // Confirm authorisation code
-        if (!xarSecConfirmAuthKey()) return;
+        if (!xarSec::confirmAuthKey()) return;
         // check the input values for this object
         $isvalid = $data['object']->checkInput();
         if ($isvalid) {
@@ -38,13 +38,13 @@ function keywords_admin_new($args)
             if (empty($itemid)) return; // throw back
 
             // let's go back to the admin view
-            xarController::redirect(xarModURL('keywords', 'admin', 'view'));
+            xarController::redirect(xarController::URL('keywords', 'admin', 'view'));
             return true;
         }
     }
     $item = array();
     $item['module'] = 'keywords';
-    $hooks = xarModCallHooks('item','new','',$item);
+    $hooks = xarModHooks::call('item','new','',$item);
     if (empty($hooks)) {
         $data['hooks'] = '';
     } elseif (is_array($hooks)) {
@@ -52,7 +52,7 @@ function keywords_admin_new($args)
     } else {
         $data['hooks'] = $hooks;
     }
-    $data['authid'] = xarSecGenAuthKey();
+    $data['authid'] = xarSec::genAuthKey();
     $data['confirm'] = xarML('Create');
 
     return $data;

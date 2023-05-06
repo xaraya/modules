@@ -34,7 +34,7 @@ function keywords_user_displayhook($args)
 
     // When called via hooks, the module name may be empty. Get it from current module.
     if (empty($extrainfo['module'])) {
-        $modname = xarModGetName();
+        $modname = xarMod::getName();
     } else {
         $modname = $extrainfo['module'];
     }
@@ -59,7 +59,7 @@ function keywords_user_displayhook($args)
     }
 
     // @todo: replace this with access prop
-    if (!xarSecurityCheck('ReadKeywords',0, 'Item', "$modid:$itemtype:$itemid")) return '';
+    if (!xarSecurity::check('ReadKeywords',0, 'Item', "$modid:$itemtype:$itemid")) return '';
 
     // get settings currently in force for this module/itemtype
     $data = xarMod::apiFunc('keywords', 'hooks', 'getsettings',
@@ -108,7 +108,7 @@ function keywords_user_displayhook($args)
     // @checkme: cache a cumultive list of keywords encountered during this request ?
     // @fixme: find some way to identify and cache the 'real' current main module/itemtype/item keywords 
     $keys = implode(',',$keywords);
-    xarVarSetCached('Blocks.keywords','keys',$keys);
+    xarVar::setCached('Blocks.keywords','keys',$keys);
 
     // see if we're handling dynamic keywords 
     if (!empty($data['meta_keywords'])) {

@@ -17,11 +17,11 @@
  */
 function keywords_user_search($args)
 {
-if (!xarSecurityCheck('ReadKeywords',0)) return '';
+if (!xarSecurity::check('ReadKeywords',0)) return '';
 
-    if(!xarVarFetch('search',   'isset', $data['search'], NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('bool',     'isset', $bool,           NULL, XARVAR_DONT_SET)) {return;}
-    if(!xarVarFetch('sort',     'isset', $sort,           NULL, XARVAR_DONT_SET)) {return;}
+    if(!xarVar::fetch('search',   'isset', $data['search'], NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('bool',     'isset', $bool,           NULL, xarVar::DONT_SET)) {return;}
+    if(!xarVar::fetch('sort',     'isset', $sort,           NULL, xarVar::DONT_SET)) {return;}
 
     $data['keys'] = array();
     if($data['search'] == '') return $data;

@@ -7,7 +7,7 @@
             <xar:foreach in="$tags" key="$keyword" value="$count">
                 <!-- checkme: where does $count come from? -->
                 <xar:set name="ratio">round(70+80*$count/$max)</xar:set>
-                <a href="#xarModURL('keywords','user','view',array('keyword'=>$keyword))#" style="color: #$color#;font-size:#$ratio#%; text-decoration: none" title="#$count# items">#$keyword#</a>&#160;
+                <a href="#xarController::URL('keywords','user','view',array('keyword'=>$keyword))#" style="color: #$color#;font-size:#$ratio#%; text-decoration: none" title="#$count# items">#$keyword#</a>&#160;
             </xar:foreach>
         </div>
     <xar:else/>

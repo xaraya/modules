@@ -6,7 +6,7 @@
         <div style="padding: 1px;" class="xar-norm-outline">
             <div style="float:right;padding:10px;">
                 <xar:var name="label">Official Icon</xar:var>
-                <img src="#xarTplGetImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
+                <img src="#xarTpl::getImage('module-generic.png', 'base')#" alt="#$label#" width="96" height="96" class="xar-module-icon"/>
             </div>
             <div class="xar-mod-title xar-norm-outline" style="margin-top: 1em; margin-left: 1em; margin-right: 1em; width: auto; border-style: none none dotted none;">
                 What is it?

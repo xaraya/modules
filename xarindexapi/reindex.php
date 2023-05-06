@@ -9,7 +9,7 @@ function indexer_indexapi_reindex(Array $args=array())
 
     $modules = xarMod::apiFunc('modules', 'admin', 'getitems',
         array(
-            'state' => XARMOD_STATE_ANY,
+            'state' => xarMod::STATE_ANY,
             'name' => !empty($module) ? $module : null,
         ));
 
@@ -21,7 +21,7 @@ function indexer_indexapi_reindex(Array $args=array())
                     'itemtype' => 0,
                     'item_id' => 0,
                 ));
-            if ($module['state'] != XARMOD_STATE_ACTIVE) continue;
+            if ($module['state'] != xarMod::STATE_ACTIVE) continue;
             try {
                 $itemtypes = xarMod::apiFunc($module['name'], 'user', 'getitemtypes');
             } catch (Exception $f) {

@@ -20,7 +20,7 @@
  */
 function keywords_userapi_getlist($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurity::check('ReadKeywords')) return;
 
     extract($args);
 

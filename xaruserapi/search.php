@@ -16,7 +16,7 @@
  */
 function keywords_userapi_search($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurity::check('ReadKeywords')) return;
 
     if (empty($args) || count($args) < 1)  return;
 

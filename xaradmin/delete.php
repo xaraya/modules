@@ -15,21 +15,21 @@
  */
 function keywords_admin_delete($args)
 {
-    if (!xarSecurityCheck('ManageKeywords')) return;
+    if (!xarSecurity::check('ManageKeywords')) return;
 
     $data = array();
 
-    if (!xarVarFetch('module_id', 'id',
-        $module_id, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('itemtype', 'id',
-        $itemtype, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('itemid', 'id',
-        $itemid, null, XARVAR_DONT_SET)) return;
-    if (!xarVarFetch('return_url', 'pre:trim:str:1:',
-        $return_url, '', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('module_id', 'id',
+        $module_id, null, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('itemtype', 'id',
+        $itemtype, null, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('itemid', 'id',
+        $itemid, null, xarVar::DONT_SET)) return;
+    if (!xarVar::fetch('return_url', 'pre:trim:str:1:',
+        $return_url, '', xarVar::NOT_REQUIRED)) return;
 
     if (empty($return_url))
-        $return_url = xarModURL('keywords', 'admin', 'stats',
+        $return_url = xarController::URL('keywords', 'admin', 'stats',
             array(
                 'module_id' => $module_id,
                 'itemtype' => $itemtype,
@@ -46,17 +46,17 @@ function keywords_admin_delete($args)
         throw new EmptyParameterException($vars, $msg);
     }
 
-    if (!xarVarFetch('phase', 'pre:trim:lower:enum:confirm',
-        $phase, 'form', XARVAR_NOT_REQUIRED)) return;
+    if (!xarVar::fetch('phase', 'pre:trim:lower:enum:confirm',
+        $phase, 'form', xarVar::NOT_REQUIRED)) return;
 
     $modname = xarMod::getName($module_id);
 
     if ($phase == 'confirm') {
-        if (!xarVarFetch('cancel', 'checkbox',
-            $cancel, false, XARVAR_NOT_REQUIRED)) return;
+        if (!xarVar::fetch('cancel', 'checkbox',
+            $cancel, false, xarVar::NOT_REQUIRED)) return;
         if ($cancel)
             xarController::redirect($return_url);
-        if (!xarSecConfirmAuthKey())
+        if (!xarSec::confirmAuthKey())
             return xarTpl::module('privileges', 'user', 'errors', array('layout' => 'bad_author'));
         // get the index_id for this module/itemtype/item
         $index_id = xarMod::apiFunc('keywords', 'index', 'getid',
@@ -85,7 +85,7 @@ function keywords_admin_delete($args)
         $item = array(
             'label' => xarML('Item #(1)', $itemid),
             'title' => xarML('Display Item #(1)', $itemid),
-            'url' => xarModURL($modname, 'user', 'display',
+            'url' => xarController::URL($modname, 'user', 'display',
                 array('itemtype' => $itemtype, 'itemid' => $itemid)),
         );
     }
@@ -112,7 +112,7 @@ function keywords_admin_delete($args)
                 $modtypes[$module][$typeid] = array(
                     'label' => xarML('Itemtype #(1)', $typeid),
                     'title' => xarML('View itemtype #(1) items', $typeid),
-                    'url' => xarModURL($module, 'user', 'view', array('itemtype' => $typeid)),
+                    'url' => xarController::URL($module, 'user', 'view', array('itemtype' => $typeid)),
                 );
             }
             $modules[$module]['itemtypes'][$typeid] += $modtypes[$module][$typeid];

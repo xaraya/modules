@@ -22,7 +22,7 @@
  */
 function keywords_userapi_getmultiplewords($args)
 {
-    if (!xarSecurityCheck('ReadKeywords')) return;
+    if (!xarSecurity::check('ReadKeywords')) return;
 
     extract($args);
 
