@@ -22,13 +22,13 @@
 function html_admin_createtype($args)
 {
     // Get parameters from input
-    if (!xarVarFetch('tagtype', 'str:1:', $tagtype, '')) return;
+    if (!xarVar::fetch('tagtype', 'str:1:', $tagtype, '')) return;
 
     // Confirm authorisation code.
-    if (!xarSecConfirmAuthKey()) return;
+    if (!xarSec::confirmAuthKey()) return;
 
     // Security Check
-    if(!xarSecurityCheck('AddHTML')) return;
+    if(!xarSecurity::check('AddHTML')) return;
 
     // Check arguments
     if (empty($tagtype)) {
@@ -37,7 +37,7 @@ function html_admin_createtype($args)
     }
 
     // The API function is called
-    $id = xarModAPIFunc('html',
+    $id = xarMod::apiFunc('html',
                         'admin',
                         'createtype',
                         array('tagtype' => $tagtype));
@@ -46,7 +46,7 @@ function html_admin_createtype($args)
         return false; //throw back
     }
 
-    xarController::redirect(xarModURL('html', 'admin', 'viewtypes'));
+    xarController::redirect(xarController::URL('html', 'admin', 'viewtypes'));
 
     // Return
     return true;

@@ -32,7 +32,7 @@ function html_userapi_getalltags($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('ReadHTML')) return;
+    if(!xarSecurity::check('ReadHTML')) return;
 
     // Get database setup
     $dbconn = xarDB::getConn();

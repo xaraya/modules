@@ -23,14 +23,14 @@
 function html_admin_delete()
 {
     // Security Check
-    if(!xarSecurityCheck('ManageHTML')) return;
+    if(!xarSecurity::check('ManageHTML')) return;
 
     // Get parameters from input
-    if (!xarVarFetch('id', 'int:0:', $id)) return;
-    if (!xarVarFetch('confirm', 'int:0:1', $confirm, 0)) return;
+    if (!xarVar::fetch('id', 'int:0:', $id)) return;
+    if (!xarVar::fetch('confirm', 'int:0:1', $confirm, 0)) return;
 
     // Get the current html tag
-    $html = xarModAPIFunc('html',
+    $html = xarMod::apiFunc('html',
                           'user',
                           'gettag',
                           array('id' => $id));
@@ -46,11 +46,11 @@ function html_admin_delete()
         $data['id'] = $id;
 
         // Data to display in the template
-        $data['tag'] = xarVarPrepForDisplay($html['tag']);
+        $data['tag'] = xarVar::prepForDisplay($html['tag']);
         $data['submitlabel'] = xarML('Confirm');
 
         // Generate a one-time authorisation code for this operation
-        $data['authid'] = xarSecGenAuthKey();
+        $data['authid'] = xarSec::genAuthKey();
 
         // Return the template variables defined in this function
         return $data;
@@ -59,14 +59,14 @@ function html_admin_delete()
     // If we get here it means that the user has confirmed the action
 
     // Confirm authorisation code
-    if (!xarSecConfirmAuthKey()) {
+    if (!xarSec::confirmAuthKey()) {
         $msg = xarML('Invalid authorization key for deleting #(1) HTML tag #(2)',
-                    'HTML', xarVarPrepForDisplay($id));
+                    'HTML', xarVar::prepForDisplay($id));
         return xarResponse::notFound();
     }
 
     // Remove the html tag
-    if (!xarModAPIFunc('html',
+    if (!xarMod::apiFunc('html',
                        'admin',
                        'delete',
                        array('id' => $id))) {
@@ -76,7 +76,7 @@ function html_admin_delete()
     xarSession::setVar('statusmsg', xarML('HTML Tag Deleted'));
 
     // Redirect
-    xarController::redirect(xarModURL('html', 'admin', 'set'));
+    xarController::redirect(xarController::URL('html', 'admin', 'set'));
 
     // Return
     return true;

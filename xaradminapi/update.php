@@ -41,7 +41,7 @@ function html_adminapi_update($args)
     }
 
     // Security Check
-    if(!xarSecurityCheck('EditHTML')) return;
+    if(!xarSecurity::check('EditHTML')) return;
     // Get datbase setup
     $dbconn = xarDB::getConn();
     $xartable =& xarDB::getTables();
@@ -54,7 +54,7 @@ function html_adminapi_update($args)
     $result =& $dbconn->Execute($query,array($allowed, $id));
     if (!$result) return;
     // Let any hooks know that we have deleted a html tag
-    xarModCallHooks('item', 'update', $id, '');
+    xarModHooks::call('item', 'update', $id, '');
     // Let the calling process know that we have finished successfully
     return true;
 }
