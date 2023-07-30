@@ -48,6 +48,13 @@ function reminders_user_remove()
     	$data['code'] = '';
     }
 
+	xarTpl::setPageTemplateName('user_full');
+	
+    // If there is no active entry, then bail
+    if ($data['code'] == '') {
+		return $data;    
+    }
+    
     $email_dates = xarMod::apiFunc('reminders', 'user', 'get_remaining_dates', array('array' => $data['item']));
 	// By default we also send an email on the due date
 	$data['remaining'] = count($email_dates) + 1;
@@ -67,7 +74,6 @@ function reminders_user_remove()
     }
 
     $data['debugmode'] = xarModVars::get('reminders', 'debugmode');
-	xarTpl::setPageTemplateName('user_full');
 	return $data;
 }
 ?>
