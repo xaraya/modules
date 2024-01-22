@@ -322,7 +322,7 @@ class PublicationsShortController extends ShortActionController
 
                 // We need a page ID to continue, for now.
                 // TODO: allow this to be expanded to page names.
-                if (empty($params['pid'])) return;
+                if (empty($params['pid'])) return '';
 
                 static $pages = NULL;
 
@@ -345,7 +345,7 @@ class PublicationsShortController extends ShortActionController
                 }
 
                 // Check that the pid is a valid page.
-                if (!isset($pages[$params['pid']])) return;
+                if (!isset($pages[$params['pid']])) return '';
 
 
                 $use_shortest_paths = xarModVars::get('publications', 'shortestpath');
@@ -401,7 +401,7 @@ class PublicationsShortController extends ShortActionController
             break;
 
             default:
-                return;
+                return '';
             break;
             
         }
