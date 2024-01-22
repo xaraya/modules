@@ -48,7 +48,7 @@ class PublicationsShortController extends ShortActionController
 {
     public $pubtypes = array();
     
-    public function decode(Array $data=array())
+    public function decode(Array $data=array()): array
     {
         $token1 = $this->shorturl_decode($this->firstToken());
         switch ($token1) {
@@ -241,7 +241,7 @@ class PublicationsShortController extends ShortActionController
         return $data;
     }
 
-    public function encode(xarRequest $request)
+    public function encode(xarRequest $request): string
     {
         if ($request->getType() == 'admin') return parent::encode($request);
 
