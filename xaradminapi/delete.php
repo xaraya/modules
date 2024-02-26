@@ -27,7 +27,7 @@ function publications_adminapi_delete($args)
     if (!isset($deletetype)) $deletetype = 0;
     
     sys::import('xaraya.structures.query');
-    $table =& xarDB::getTables();
+    $table = xarDB::getTables();
     
     switch ($deletetype) {
         case 0:

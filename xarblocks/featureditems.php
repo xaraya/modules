@@ -74,7 +74,7 @@ class Publications_FeatureditemsBlock extends BasicBlock implements iBlock
         // Load the query class and the publications tables
         sys::import('xaraya.structures.query');
         xarMod::apiLoad('publications');
-        $tables =& xarDB::getTables();
+        $tables = xarDB::getTables();
         
         // Get all the publications types
         sys::import('modules.dynamicdata.class.objects.master');

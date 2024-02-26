@@ -113,7 +113,7 @@ function publications_adminapi_create($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $publicationstable = $xartable['publications'];
 
     // Get next ID in table

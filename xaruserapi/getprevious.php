@@ -45,7 +45,7 @@ function publications_userapi_getprevious($args)
 
     // Create the query
     sys::import('xaraya.structures.query');
-    $tables =& xarDB::getTables();
+    $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['publications']);
     $q->addfield('id');
     $q->addfield('name');

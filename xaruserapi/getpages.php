@@ -27,7 +27,7 @@ function publications_userapi_getpages($args)
 
     // Assemble the query
     sys::import('xaraya.structures.query');
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $q = new Query();
     $q->addtable($xartable['publications'], 'tpages');
     $q->addtable($xartable['publications_types'], 'pt');

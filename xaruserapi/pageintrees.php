@@ -19,7 +19,7 @@ function publications_userapi_pageintrees($args)
         return false;
     }
 
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $dbconn = xarDB::getConn();
 
     // For the page to be somewhere in a tree, identified by the root of that tree,

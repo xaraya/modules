@@ -44,7 +44,7 @@ function publications_userapi_getrelativepages($args)
     }
     
     // FIXME: Combine everything below to single query to avoid the two loops at the end
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     sys::import('xaraya.structures.query');
     $q = new Query();
     $q->addtable($xartable['publications'],'p');

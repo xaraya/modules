@@ -61,7 +61,7 @@ function publications_user_clone()
         if ($clone_translations) {
             // Get the info on all the objects to be cloned
             sys::import('xaraya.structures.query');
-            $tables =& xarDB::getTables();
+            $tables = xarDB::getTables();
             $q = new Query();
             $q->addtable($tables['publications'], 'p');
             $q->addtable($tables['publications_types'], 'pt');

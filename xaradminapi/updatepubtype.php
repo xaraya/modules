@@ -74,7 +74,7 @@ function publications_adminapi_updatepubtype($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $pubtypestable = $xartable['publication_types'];
 
     // Update the publication type (don't allow updates on name)

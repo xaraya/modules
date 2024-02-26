@@ -433,7 +433,7 @@ class PublicationsShortController extends ShortActionController
     
     private function decode_page($token2='', $ptid=0)
     {
-        $xartables =& xarDB::getTables();
+        $xartables = xarDB::getTables();
         $q = new Query('SELECT',$xartables['publications']);
         $q->eq('pubtype_id',$ptid);
         switch ((int)xarModVars::get('publications', 'usetitleforurl')) {
@@ -510,7 +510,7 @@ class PublicationsShortController extends ShortActionController
         } elseif (!empty($row['name']) && in_array($usetitles, array(1,2,3))) {
             // Now come the cases where we distinguish duplicates in the URL
             // For this we need to do another SELECT on the name to see if there are actually duplicates
-            $xartables =& xarDB::getTables();
+            $xartables = xarDB::getTables();
             $q = new Query('SELECT',$xartables['publications']);
             $q->eq('name',$row['name']);
             $q->eq('pubtype_id',$row['pubtype_id']);
@@ -540,7 +540,7 @@ class PublicationsShortController extends ShortActionController
         } elseif (!empty($row['title']) && in_array($usetitles, array(5,6,7))) {
             // Now come the cases where we distinguish duplicates in the URL
             // For this we need to do another SELECT on the name to see if there are actually duplicates
-            $xartables =& xarDB::getTables();
+            $xartables = xarDB::getTables();
             $q = new Query('SELECT',$xartables['publications']);
             $q->eq('title',$row['title']);
             $q->eq('pubtype_id', (int)$row['pubtype_id']);
@@ -591,7 +591,7 @@ class PublicationsShortController extends ShortActionController
     }
     private function getpage($itemid=0)
     {
-        $xartables =& xarDB::getTables();
+        $xartables = xarDB::getTables();
         $q = new Query('SELECT',$xartables['publications']);
         $q->eq('id', (int)$itemid);
         $q->addfield('pubtype_id');

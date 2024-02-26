@@ -18,7 +18,7 @@
 function publications_init()
 {
     sys::import('xaraya.structures.query');
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
 
 # --------------------------------------------------------
 #
@@ -292,7 +292,7 @@ function publications_init()
     *********************************************************************/
     $info = xarMod::getBaseInfo('publications');
     $sysid = $info['systemid'];
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $instances = array(
                        array('header' => 'external', // this keyword indicates an external "wizard"
                              'query'  => xarController::URL('publications', 'admin', 'privileges'),

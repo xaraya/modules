@@ -62,7 +62,7 @@ function publications_adminapi_createpubtype($args)
 
     // Get database setup
     $dbconn = xarDB::getConn();
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $pubtypestable = $xartable['publication_types'];
 
     // Get next ID in table

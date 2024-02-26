@@ -41,7 +41,7 @@ function publications_userapi_gettranslationid($args)
         $locale = $parts[0];
     }
 
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     
     if (empty($args['locale'])) {
         // Return the id of the translation if it exists, or else the base document 

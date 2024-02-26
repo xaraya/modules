@@ -45,7 +45,7 @@ function publications_userapi_get_nextname($args)
 
     // Get the number of publications of this pubtype and increment by 1
     sys::import('xaraya.structures.query');
-    $tables =& xarDB::getTables();
+    $tables = xarDB::getTables();
     $q = new Query('SELECT', $tables['publications']);
     $q->eq('pubtype_id', $args['ptid']);
     $q->addfield('COUNT(*)');

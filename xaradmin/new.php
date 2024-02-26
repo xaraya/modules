@@ -38,7 +38,7 @@ function publications_admin_new($args)
     $data['object']->properties['position']->initialization_celkoparent_id = 'parentpage_id';
     $data['object']->properties['position']->initialization_celkoright_id = 'rightpage_id';
     $data['object']->properties['position']->initialization_celkoleft_id  = 'leftpage_id';
-    $xartable =& xarDB::getTables();
+    $xartable = xarDB::getTables();
     $data['object']->properties['position']->initialization_itemstable = $xartable['publications'];
 
     $data['properties'] = $data['object']->getProperties();
