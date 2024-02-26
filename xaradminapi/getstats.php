@@ -47,7 +47,7 @@ function publications_adminapi_getstats($args)
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
-                    continue;
+                    continue 2;
             }
         } elseif ($field == 'pubdate_month') {
             $dbtype = xarDB::getType();
@@ -67,7 +67,7 @@ function publications_adminapi_getstats($args)
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
-                    continue;
+                    continue 2;
             }
         } elseif ($field == 'pubdate_day') {
             $dbtype = xarDB::getType();
@@ -87,7 +87,7 @@ function publications_adminapi_getstats($args)
                     break;
                 // TODO:  Add SQL queries for Oracle, etc.
                 default:
-                    continue;
+                    continue 2;
             }
         } else {
             $newfields[] = $field;
@@ -101,7 +101,7 @@ function publications_adminapi_getstats($args)
 
     // Database information
     $dbconn = xarDB::getConn();
-    $xartables =& xarDB::getTables();
+    $xartables = xarDB::getTables();
 
     $query = 'SELECT ' . join(', ', $newfields) . ', COUNT(*)
               FROM ' . $xartables['publications'] . '
